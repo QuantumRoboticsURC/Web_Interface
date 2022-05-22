@@ -107,7 +107,7 @@ var angles_map={
 var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
 
-function PresionadoDerecha(self, id){
+function PresionadoDerecha(id){
     console.log(print("presionado" + id));
 
     var x = values_map.joint1;
@@ -175,6 +175,10 @@ function qlimit(l, val){
     return val;
 } 
 
+function PRUEBA(data, joint, sign = 1){
+    console.log(data);
+};
+
 function pressed(data, joint, sign = 1){
     var key = "joint" + String(joint);
     if(joint === 6){
@@ -195,7 +199,7 @@ function pressed(data, joint, sign = 1){
     if(joint === 4){
         var prev = values_map[key];
         values_map[key] = data;
-        //var poss = ikine_brazo(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
+        var poss = ikine_brazo(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
         if(!poss){
             values_map[key] = prev;
         }
@@ -204,7 +208,7 @@ function pressed(data, joint, sign = 1){
     } 
     
     if(joint < 4){
-        //var poss = ikine_brazo(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);          
+        var poss = ikine_brazo(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);          
         if(!poss){
             values_map[key]+=(data*(sign));
         }
@@ -239,7 +243,11 @@ function pressed(data, joint, sign = 1){
             self.S1labelj5.config(bg="#34eb61")
         else:
             self.S1labelj5.config(bg="white")*/
-
+    if(joint == 5){
+        values_map[key] = qlimit(limits_map[key], values_map[key])
+        joint5.publish(values_map[key])   
+    }
+            
     labelInfo.config(text=self.getTxt())
 }
 
@@ -259,7 +267,7 @@ function rad2deg(radians){return radians * (180/math.pi);}
 
 
 //Example: inverseKinematics(1.4,.3,2,1)
-function inverseKinematics(xm, ym, zm, phi_int){     
+function ikine_brazo(xm, ym, zm, phi_int){     
   let Q1 = 0;
   if (xm != 0 || ym != 0 || zm != 0){
     if(xm == 0){

@@ -156,11 +156,11 @@
 															<small class="text-muted">Position X</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary ">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('gripperTxt').value), 1)">&nbsp;-&nbsp;</button>
 																	<div class="input-group">
-																		<input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('gripperTxt').value), 1)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -173,11 +173,11 @@
 															<small class="text-muted">Position Y</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary ">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('gripperTxt').value), 2)">&nbsp;-&nbsp;</button>
 																	<div class="input-group">
-																		<input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('gripperTxt').value), 2)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -190,11 +190,11 @@
 															<small class="text-muted">Position Z</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary ">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('gripperTxt').value), 3)">&nbsp;-&nbsp;</button>
 																	<div class="input-group">
-																		<input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('gripperTxt').value), 3)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -207,9 +207,9 @@
 															<small class="text-muted">Phi</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary ">GO</button>
+																	<button type="button" class="btn btn-secondary " onclick="pressed(parseFloat(document.getElementById('gripperTxt').value), 4)">GO</button>
 																	<div class="input-group">
-																		<input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input type="text" class="form-control" value="0" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 															</div>
 															</div>
@@ -222,11 +222,11 @@
 															<small class="text-muted">Rotacion Gripper</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary ">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('gripperTxt').value), 5)">&nbsp;-&nbsp;</button>
 																	<div class="input-group">
-																		<input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input id="gripperTxt" type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('gripperTxt').value), 5)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -262,11 +262,11 @@
 															<small class="text-muted">Camera</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary ">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('gripperTxt').value), 6)">&nbsp;-&nbsp;</button>
 																	<div class="input-group">
-																		<input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('gripperTxt').value), 6)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -288,7 +288,7 @@
 	</div>
 	<script src="{{url_for('static', filename='js/plugin/gauge.js')}}"></script>
 </body>
-<script src="{{url_for('static', filename='js/ROSManager.js')}}"></script>
+<script src="{{url_for('static', filename='js/arm.js')}}"></script>
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/core/popper.min.js')}}"></script>
