@@ -2,8 +2,8 @@ var ros;
 var robot_IP;
 
 window.onload = function () {
-    //IP de la compu donde esta corriendo ros bridge
-    robot_IP = "192.168.1.6";
+    //IP de la compu donde esta corriendo ros bridge 192.168.1.6
+    robot_IP = "localhost";
 
     ros = new ROSLIB.Ros({
         url: "ws://" + robot_IP + ":9090"
@@ -41,7 +41,7 @@ window.onload = function () {
 
 var listener5 = new ROSLIB.Topic({
   ros : ros,
-  name : '/zedArm/zed_arm/left/image_rect_color/compressed',
+  name : '/zedNav/zed_nav/left/image_rect_color/compressed',
   messageType : 'sensor_msgs/CompressedImage'
 });
 
