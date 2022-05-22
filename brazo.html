@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Quantum Robotics Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+		name='viewport' />
+	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
+	<script src="http://bernii.github.io/gauge.js/dist/gauge.min.js"></script>
+	<script src="{{url_for('static', filename='js/core/jquery.min.js')}}"></script>
+	<script src="{{url_for('static', filename='js/core/bootstrapC.min.js')}}"></script>
+	<script src="{{url_for('static', filename='js/core/Chart.min.js')}}"></script>
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="/" class="logo">
+					<img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
+					Quantum Robotics
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+					<div class="navbar-left navbar-form nav-search mr-md-3">
+						<img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
+						<img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
+					</div>
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item dropdown hidden-caret">
+							<div class="nav-link dropdown-toggle">
+								University Rover Challenge, June 2021.
+								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
+							</div>
+						</li>
+
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<div class="sidebar">
+			<div class="scrollbar-inner sidebar-wrapper">
+				<ul class="nav">
+					<li class="nav-item">
+						<a href="/">
+							<i class="la la-dashboard"></i>
+							<p>Dashboard</p>
+						</a>
+					</li>
+					<li class="nav-item  active">
+						<a href="ciencias">
+							<i class="la la-flask"></i>
+							<p>Science</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="main-panel">
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-6" aria-label="Control manual">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">Manual control</h4>
+								</div>
+								<div class="card-body">
+									<div class="col-md-12">
+										<ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item">Position X</li>
+                                                        </ul>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button" class="btn btn-secondary ">&nbsp;&nbsp;-&nbsp;&nbsp;</button>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                                                                </div>
+                                                                <button type="button" class="btn btn-secondary">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item">Position Y</li>
+                                                        </ul>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button" class="btn btn-secondary ">&nbsp;&nbsp;-&nbsp;&nbsp;</button>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                                                                </div>
+                                                                <button type="button" class="btn btn-secondary">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item">Position Z</li>
+                                                        </ul>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button" class="btn btn-secondary ">&nbsp;&nbsp;-&nbsp;&nbsp;</button>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                                                                </div>
+                                                                <button type="button" class="btn btn-secondary">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item">Phi</li>
+                                                        </ul>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button" class="btn btn-secondary ">GO</button>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                                                                </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item">Rotacion Gripper</li>
+                                                        </ul>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button" class="btn btn-secondary ">&nbsp;&nbsp;-&nbsp;&nbsp;</button>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                                                                </div>
+                                                                <button type="button" class="btn btn-secondary">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item">Gripper</li>
+                                                        </ul>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="btn-toolbar" role="toolbar">
+                                                                <div class="btn-group mr-5 p-1" role="group">
+                                                                    <button type="button" class="btn btn-secondary ">&nbsp;&nbsp;Abrir&nbsp;&nbsp;</button> 
+                                                                </div>    
+                                                
+                                                                <div class="btn-group mr-2 p-1" role="group">
+                                                                    <button type="button" class="btn btn-secondary ">&nbsp;&nbsp;Cerrar&nbsp;&nbsp;</button> 
+                                                                </div>  
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item">Actuador prismatico</li>
+                                                    </ul>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="btn-toolbar" role="toolbar">
+                                                            <div class="btn-group mr-5 p-1" role="group">
+                                                                <button type="button" class="btn btn-secondary ">&nbsp;&nbsp;Abrir&nbsp;&nbsp;</button> 
+                                                            </div>    
+                                            
+                                                            <div class="btn-group mr-2 p-1" role="group">
+                                                                <button type="button" class="btn btn-secondary ">&nbsp;&nbsp;Cerrar&nbsp;&nbsp;</button> 
+                                                            </div>  
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                        <ul class="list-group">
+                                                            <li class="list-group-item">Camera</li>
+                                                        </ul>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button" class="btn btn-secondary ">&nbsp;&nbsp;-&nbsp;&nbsp;</button>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                                                                </div>
+                                                                <button type="button" class="btn btn-secondary">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                          </ul>
+									</div>
+								</div>
+							</div>
+						</div>
+                        <div class="col-md-6" aria-label="mitad derecha">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6" aria-label="Botones directos">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Posiciones directas</h4>
+                                                <p class="card-category">Estado actual: </p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="container">
+                                                    <div class="col-md-12">
+                                                        <div class="btn-group-vertical modal-dialog-centered btn-sm">
+                                                            <button type="button" class="btn btn-secondary">Intermedio</button>
+                                                            <button type="button" class="btn btn-secondary">Home</button>
+                                                            <button type="button" class="btn btn-secondary">Storage</button>
+                                                        </div>
+                                                        <div class="btn-group-vertical modal-dialog-centered btn-sm">
+                                                            <button type="button" class="btn btn-secondary">Pull</button>
+                                                            <button type="button" class="btn btn-secondary">Write</button>
+                                                            <button type="button" class="btn btn-secondary">Floor</button>                                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" aria-label="Posiciones actuales">
+                                    <div class="card">
+                                        <div class="card-body" >
+                                            <p>Position X:</p>
+                                            <p>Position Y:</p>
+                                            <p>Position Z:</p>
+                                            <p>Position Phi:</p>
+                                            <p>Rotacion Gripper:</p>
+                                            <p>Camera:</p>
+                                            <p>Q1:</p>
+                                            <p>Q2:</p>
+                                            <p>Q3:</p>
+                                            <p>Q4:</p>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-12" aria-label="Camera">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+						    </div>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<script src="{{url_for('static', filename='js/plugin/ciencias.js')}}"></script>
+</body>
+
+<script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/core/popper.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/core/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/chartist/chartist.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/jquery-mapael/jquery.mapael.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/jquery-mapael/maps/world_countries.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/chart-circle/circles.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/ready.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/demo.js')}}"></script>
+
+</html>

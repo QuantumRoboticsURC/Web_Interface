@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Quantum Robotics Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+		name='viewport' />
+	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/leds.css')}}">
+<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/eventemitter2.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/keyboardteleop.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/gauge.min.js')}}"></script>
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="/" class="logo">
+					<img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
+					Quantum Robotics
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+					<div class="navbar-left navbar-form nav-search mr-md-3">
+						<img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
+						<img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
+						<img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
+						<img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
+					</div>
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item dropdown hidden-caret">
+							<div class="nav-link dropdown-toggle">
+								University Rover Challenge, June 2022.
+								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
+							</div>
+						</li>
+
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div class="sidebar">
+			<div class="scrollbar-inner sidebar-wrapper">
+				<ul class="nav">
+					<li class="nav-item">
+						<a href="/">
+							<i class="la la-dashboard"></i>
+							<p>Nav</p>
+						</a>
+					</li>
+					<li class="nav-item active">
+						<a href="metrics">
+							<i class="la la-dashboard"></i>
+							<p>Metrics</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="arm">
+							<i class="la la-cogs"></i>
+							<p>Arm</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="main-panel">
+			<div class="content">
+				<div class="container-fluid">
+					<h4 class="page-title">Dashboard Metrics</h4>
+					<div class="row">
+							
+					</div>
+					<div class="row">	
+						<div class="col-lg-6">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">GPS</h4>
+								</div>
+								<div class="card-body">
+									<div class="chart-circle mt-4 mb-3">
+										<p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+									</div>
+								</div>								
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">Battery</h4>
+									<p class="card-category">Voltage</p>
+								</div>
+								<div class="card-body">
+									<div class="text-center" id="labelBattery"></div>
+									<div class="chart-circle mt-4 mb-3">
+										<canvas id="bateria" class="mt-4 mb-3"></canvas>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header">
+											<h4 class="card-title">Traction</h4>											
+										</div>
+										<div class="card-body text-center">
+											<div>Left side traction:
+												<div id="leftTrac"> </div>
+											</div>
+											<br>
+											<div>Rigth side traction:
+												<div id="rigthTrac"> </div>
+											</div>
+									</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title">Navigation</h4>
+									<p class="card-category">Actual mode</p>
+								</div>
+								<div class="card-body">
+								
+									<div class="col-lg-12 text-center">
+										<button type="button" class="btn btn-danger" onclick="auto()">Autonomous</button>
+									</div>
+									
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header">
+											<h4 class="card-title">Speed</h4>
+										</div>
+										<div class="card-body text-center">
+												<div>Angular:
+													<div id="VeloAngular"> </div>
+												</div>
+												<br>
+												<div>Linear:
+													<div id="VeloLinear"> </div>
+												</div>
+												<p id="mensajeROSL"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+	<script src="{{url_for('static', filename='js/plugin/gauge.js')}}"></script>
+</body>
+<script src="{{url_for('static', filename='js/ROSManager.js')}}"></script>
+<script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/core/popper.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/core/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/chartist/chartist.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/jquery-mapael/jquery.mapael.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/jquery-mapael/maps/world_countries.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/chart-circle/circles.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/ready.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/demo.js')}}"></script>
+
+</html>

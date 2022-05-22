@@ -1,1 +1,3 @@
-# Web_Interface
+roscore
+python3 application.py
+roslaunch rosbridge_server rosbridge_websocket.launch
