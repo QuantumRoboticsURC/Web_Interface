@@ -13,8 +13,7 @@
 			<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
 			<link rel="stylesheet" href="{{url_for('static', filename='css/leds.css')}}">
 		<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
-		<script src="https://unpkg.com/mathjs@10.5.3/lib/browser/math.js"></script>
-		
+		<script src="{{url_for('static', filename='js/plugin/math.js')}}"></script>		
 		<script src="{{url_for('static', filename='js/plugin/eventemitter2.min.js')}}"></script>
 		<script src="{{url_for('static', filename='js/plugin/keyboardteleop.min.js')}}"></script>
 		<script src="{{url_for('static', filename='js/plugin/gauge.min.js')}}"></script>
@@ -94,7 +93,7 @@
 									</div>
 									<div class="card-body">
 										<div class="chart-circle mt-4 mb-3">
-											<img id="imgArm" wigth="300" height="300">
+											<img src ="http://192.168.1.6:8080/stream?topic=/zedArm/zed_arm/left_raw/image_raw_color&type=ros_compressed" id="" wigth="400" height="400" style="transform:rotate(180deg);">																	
 										</div>
 									</div>								
 								</div>
