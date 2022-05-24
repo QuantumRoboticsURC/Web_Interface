@@ -86,9 +86,9 @@ var gripper_apertur = 60;   //0 y 60
 var values_map = {
         joint1: .134,   //.4
         joint2: 0,      //.9
-        joint3: .647,
+        joint3: .75,
         joint4: 0,      //phi
-        joint5: 1500,   //rotacion
+        joint5: 0,   //rotacion
         joint8: 140 //camera
     };
 
@@ -102,7 +102,7 @@ var limits_map = {
         q2:[0,161],
         q3:[-165.4,0],
         q4:[-90,90],
-        joint5:[1000,2000], //Tambien tengo 500 y 2500
+        joint5:[-90,90], //Tambien tengo 500 y 2500
         camera:[100,140]
     };
 
@@ -110,7 +110,7 @@ var angles_map={
         q1:0,
         q2:161,
         q3:-165.4,
-        q4:8
+        q4:0
     };
 var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
@@ -126,7 +126,7 @@ function PresionadoDerecha(id){
     if (id === "HOME"){
         x = .134;
         y =  0;
-        z =  .647;
+        z =  .75;
         phi = 0;
     } else if(id === "INTERMEDIO"){
         x = 0;
@@ -153,7 +153,7 @@ function PresionadoDerecha(id){
     values_map.joint2 = y;
     values_map.joint3 = z;
     values_map.joint4 = phi;
-    ikine_brazo(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
+    inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
     }
 
 function publish_angles(){
@@ -162,7 +162,7 @@ function publish_angles(){
     var q3 = angles_map.q3;
     var q4 = angles_map.q4;
 
-    //txt = str(q1)+" "+str(q2)+" "+str(q3)+" "+str(q4)
+    var txt = String(q1)+" "+String(q2)+" "+String(q3)+" "+String(q4)
     //rospy.loginfo(txt)
 
     var msn_q1 = new ROSLIB.Message({
@@ -177,11 +177,15 @@ function publish_angles(){
     var msn_q4 = new ROSLIB.Message({
         data : q4
     });
+    var msn_txt = new ROSLIB.Message({
+        data : txt
+    });
 
     pub_q1.publish(msn_q1);
     pub_q2.publish(msn_q2);
     pub_q3.publish(msn_q3);
     pub_q4.publish(msn_q4);
+    pub_q_string.publish(msn_txt);
 
     //pub_q_string.publish(txt);
 }
@@ -194,51 +198,56 @@ function qlimit(l, val){
         return l[1];
     }
     return val;
-} 
+}
+
+function my_map(in_min, in_max, out_min, out_max, x){
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}        
 
 function pressed(data, joint, sign = 1){
     var key = "joint" + String(joint);
     if(joint === 6){
-        data*=-1;
         var msn = new ROSLIB.Message({
             data : data
         });
         gripper.publish(msn);       
     }
-
     if(joint === 7){
-        data*=-1;
         var msn = new ROSLIB.Message({
             data : data
         });
         lineal.publish(msn);
     }
-
     if(joint === 4){
         var prev = values_map[key];
         values_map[key] = data;
-        var poss = ikine_brazo(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
+        var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
         if(!poss){
             values_map[key] = prev;
         }
+    }else if(joint === 5){   
+        values_map[key]=data;     
+        values_map[key] = qlimit(limits_map[key], values_map[key]);
+        var msn = new ROSLIB.Message({
+            data : my_map(-90,90,1230,1770,values_map[key])
+        });
+        joint5.publish(msn);       
     }else{  
-        values_map[key] += (data*(sign*-1))
+        values_map[key] += (data*sign);
     } 
+
+    if (joint === 2){
+        angles_map.q1+=(data*sign);
+        angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
+        values_map.joint2 = self.angles_map.q1;
+    }
     
-    if(joint < 4){
-        var poss = ikine_brazo(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);          
+    if(joint < 4 && joint != 2){
+        var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);          
         if(!poss){
             values_map[key]+=(data*(sign));
         }
     }   
-
-    if(joint === 5){
-        values_map[key] = qlimit(limits_map[key], values_map[key]);
-        var msn = new ROSLIB.Message({
-            data : values_map[key]
-        });
-        joint5.publish(msn);
-    }
 
     if(joint === 8){
         console.log(parseInt(values_map[key]));
@@ -288,61 +297,78 @@ function getTxt(){
     document.getElementById("Camera").innerHTML = Camera;
 }
 
-//ARIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII YA VAMANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaAS
-
 function rad2deg(radians){return radians * (180/math.pi);}
+function deg2rad(degrees){return degrees * (math.pi/180);}
 
-//NO FUNCIONA ARI LO HIZO MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL
-//Example: inverseKinematics(1.4,.3,2,1)
-function ikine_brazo(xm, ym, zm, phi_int){     
-  let Q1 = 0;
-  if (xm != 0 || ym != 0 || zm != 0){
-    if(xm == 0){
-      if(ym>0){
-        xm = ym;
-        Q1 = math.pi/2;
-      }else if (ym<0){
-        xm = ym;
-        Q1 = math.pi/2;
-      }else if(ym == 0){
-        Q1 = 0; 
-      }
-    }else if (xm < 0){
-      if (ym == 0){
-        Q1 = 0;
-      }else if(ym < 0){
-        //No lo he cambiado #real
-        Q1 = math.re(math.atan2(xm, ym));
+function inverseKinematics(xm, ym, zm, phi_int){ 
+    let Q1 = 0;
+    if (xm != 0 || ym != 0 || zm != 0){
+      if(xm == 0){
+        if(ym>0){
+          xm = ym;
+          Q1 = math.pi/2;
+        }else if (ym<0){
+          xm = ym;
+          Q1 = math.pi/2;
+        }else if(ym == 0){
+          Q1 = 0; 
+        }
+      }else if (xm < 0){
+        if (ym == 0){
+          Q1 = 0;
+        }else if(ym < 0){
+          //No lo he cambiado #real
+          Q1 = math.re(math.atan2(xm, ym));
+        }else{
+          //Tampoco lo he cambiado #real
+          Q1 = math.re(math.atan2(-xm,-ym));
+        }
+                      
       }else{
-        //Tampoco lo he cambiado #real
-        Q1 = math.re(math.atan2(-xm,-ym));
-      }
-                    
-    }else{
-      //Ni idea #real
-      
-      Q1 = math.re(math.atan2(ym,xm));
-    }  
-  }    
-  //Para q1
-  let q1=rad2deg(Q1)
-  //q1=self.qlimit(self.limits_map["q1"],q1)
-  //Para q2
-  let hip=math.sqrt(math.pow(xm,2)+math.pow((zm-l1),2));
-  let phi = math.complex(math.atan2(zm-l1, xm))
-  //beta=acos((-l3^2+l2^2+hip^2)/(2*l2*hip))
-  let beta=math.acos((math.pow(l2,2)+math.pow(hip,2)-math.pow(l3,2))/(2*l2*hip));
-  let Q2=math.add(phi,beta).re;//math.re(phi+beta);
-  let q2=rad2deg(Q2) 
-  //let q2=self.qlimit(self.limits_map["q2"],q2)
+        //Ni idea #real
+        
+        Q1 = math.re(math.atan2(ym,xm));
+      }  
+    }    
+    //Para q1
+    let q1=angles_map.q1
+    q1=qlimit(limits_map.q1,q1);
+    //Para q2
+    let hip=math.sqrt(math.pow(xm,2)+math.pow((zm-l1),2));
+    let phi = math.complex(math.atan2(zm-l1, xm))
+    //beta=acos((-l3^2+l2^2+hip^2)/(2*l2*hip))
+    let beta=math.acos((math.pow(l2,2)+math.pow(hip,2)-math.pow(l3,2))/(2*l2*hip));
+    let Q2=math.add(phi,beta).re;//math.re(phi+beta);
+    let q2=rad2deg(Q2) 
+    q2=qlimit(limits_map.q2,q2);
+    //Para q3  
+    let gamma=math.acos((math.pow(l2,2)+math.pow(l3,2)-math.pow(hip,2))/(2*l2*l3));   
+    let Q3=math.re(gamma-math.pi);
+    let q3=rad2deg(Q3);
+    q3=qlimit(limits_map.q3,q3);
+    let q4 = phi_int - q2 -q3;
+    q4=qlimit(limits_map.q4,q4);
+    
+    let acum = deg2rad(q2);
+    let x2 = l2*math.cos(acum);
+    let y2 = l2*math.sin(acum);
+    acum+=deg2rad(q3);
+    let x3 = x2+l3*math.cos(acum);
+    let y3 = y2+l3*math.sin(acum);
+    acum+=deg2rad(q4);
+    let x4 = x3+l4*math.cos(acum);
+    let y4 = y3+l4*math.sin(acum);
+    console.log("angulos: "+q1 + " "+ q2 + " "+q3+" "+q4);
+    if(y4>limit_z && (x4>limit_chassis || y4>=0)){
+        values_map.joint1 = x3;
+        values_map.joint3 = y3;
 
-  //Para q3  
-  let gamma=math.acos((math.pow(l2,2)+math.pow(l3,2)-math.pow(hip,2))/(2*l2*l3));   
-  let Q3=math.re(gamma-math.pi);
-  let q3=rad2deg(Q3);
-  //let q3=self.qlimit(self.limits_map["q3"],q3)
-  let q4 = phi_int - q2 -q3;
-  //q4=self.qlimit(self.limits_map["q4"],q4)
-  console.log("angulos: "+q1 + " "+ q2 + " "+q3+" "+q4);
-  return Q1;              
-}
+        angles_map.q2=q2;
+        angles_map.q3=q3;
+        angles_map.q4=q4;
+        return true
+    }else{
+        return false;
+    }
+    
+  }

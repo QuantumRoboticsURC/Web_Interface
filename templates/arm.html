@@ -122,14 +122,14 @@
 												<div>
 													<div class="col-md-12">
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('INTERMEDIO');">Intermedio</button>
-															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('HOME');">Home</button>
-															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('STORAGE');">Storage</button>
+															<button type="button" class="btn btn-secondary" onclick="PresionadoDerecha('INTERMEDIO');getTxt();">Intermediate</button>
+															<button type="button" class="btn btn-secondary" onclick="PresionadoDerecha('HOME');getTxt();">Home</button>
+															<button type="button" class="btn btn-secondary" onclick="PresionadoDerecha('STORAGE');getTxt();">Storage</button>
 														</div>
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('PULL');">Pull</button>
-															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('WRITE');">Write</button>
-															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('FLOOR');">Floor</button>                                                    
+															<button type="button" class="btn btn-secondary" onclick="PresionadoDerecha('PULL');getTxt();">Pull</button>
+															<button type="button" class="btn btn-secondary" onclick="PresionadoDerecha('WRITE');getTxt();">Write</button>
+															<button type="button" class="btn btn-secondary" onclick="PresionadoDerecha('FLOOR');getTxt();">Floor</button>                                                    
 														</div>
 													</div>
 												</div>
@@ -140,7 +140,7 @@
 													<p>Position Y: <label  type="text" id="Y"></label></p>
 													<p>Position Z: <label  type="text" id="Z"></label></p>
 													<p>Position Phi: <label  type="text" id="Phi"></label></p>
-													<p>Rotacion Gripper:<label  type="text" id="Rotacion"></label></p>
+													<p>Gripper Rotation: <label  type="text" id="Rotacion"></label></p>
 													<p>Camera: <label  type="text" id="Camera"></label></p>
 													<p>Q1: <label  type="text" id="Q1"></label></p>
 													<p>Q2:<label  type="text" id="Q2"></label></p>
@@ -177,7 +177,7 @@
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
 																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Y_Txt').value), 2)">&nbsp;-&nbsp;</button>
 																	<div class="input-group">
-																		<input id="Y_Txt" type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input id="Y_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Y_Txt').value), 2)">&nbsp;+&nbsp;</button>
 																</div>
@@ -221,14 +221,20 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Rotacion Gripper</small>
+															<small class="text-muted">Gripper Rotation</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Gripper_Txt').value), 5)">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary " onclick="pressed(parseFloat(document.getElementById('Gripper_Txt').value), 5)">GO</button>
 																	<div class="input-group">
-																		<input id="Gripper_Txt" type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input id="Gripper_Txt" type="text" class="form-control" value="0" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Gripper_Txt').value), 5)">&nbsp;+&nbsp;</button>
+
+
+																	<!--<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Gripper_Txt').value), 5)">&nbsp;-&nbsp;</button>
+																	<div class="input-group">
+																		<input id="Gripper_Txt" type="text" class="form-control" value="0" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																	</div>
+																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Gripper_Txt').value), 5)">&nbsp;+&nbsp;</button>-->
 																</div>
 															</div>
 														
@@ -250,7 +256,7 @@
 												<li class="list-group-item ">
 													<div>
 														<div class="row">
-															<small class="text-muted">Actuador prismatico</small>
+															<small class="text-muted">Prismatic actuator</small>
 															<div class="col-md-12">
 																<button type="button" class="btn btn-secondary " onmouseup="pressed(0, 7)" onmousedown="pressed(1, 7)">Abrir</button> 
 																<button type="button" class="btn btn-secondary " onmouseup="pressed(0, 7)" onmousedown="pressed(-1, 7)">Cerrar</button>
@@ -266,7 +272,7 @@
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
 																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Camera_Txt').value), 8)">&nbsp;-&nbsp;</button>
 																	<div class="input-group">
-																		<input id="Camera_Txt" type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input id="Camera_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Camera_Txt').value), 8)">&nbsp;+&nbsp;</button>
 																</div>
