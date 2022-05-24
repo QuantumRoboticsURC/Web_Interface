@@ -73,6 +73,13 @@ var lineal = new ROSLIB.Topic({
     messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
+//Camera 
+var camera = new ROSLIB.Topic({
+    ros : ros,
+    name : 'arm_teleop/cam',
+    messageType : 'std_msgs/Int32',
+    queue_size: 1   
+});
 
 
 var gripper_apertur = 60;   //0 y 60
@@ -82,6 +89,7 @@ var values_map = {
         joint3: .647,
         joint4: 0,      //phi
         joint5: 1500,   //rotacion
+        joint8: 140 //camera
     };
 
 var l1 = 0;
@@ -94,7 +102,8 @@ var limits_map = {
         q2:[0,161],
         q3:[-165.4,0],
         q4:[-90,90],
-        joint5:[1000,2000] //Tambien tengo 500 y 2500
+        joint5:[1000,2000], //Tambien tengo 500 y 2500
+        camera:[100,140]
     };
 
 var angles_map={
@@ -157,11 +166,24 @@ function publish_angles(){
     //txt = str(q1)+" "+str(q2)+" "+str(q3)+" "+str(q4)
     //rospy.loginfo(txt)
 
-    pub_q1.publish(q1);
-    pub_q2.publish(q2);
-    pub_q3.publish(q3);
-    pub_q4.publish(q4);
-    pub_q_string.publish(txt);
+    var msn_q1 = new ROSLIB.Message({
+        data : q1
+    });
+    var msn_q2 = new ROSLIB.Message({
+        data : q2
+    });
+    var msn_q3 = new ROSLIB.Message({
+        data : q3
+    });
+    var msn_q4 = new ROSLIB.Message({
+        data : q4
+    });
+
+    pub_q1.publish(msn_q1);
+    pub_q2.publish(msn_q2);
+    pub_q3.publish(msn_q3);
+    pub_q4.publish(msn_q4);
+    //pub_q_string.publish(txt);
 }
 
 function qlimit(l, val){
@@ -182,16 +204,18 @@ function pressed(data, joint, sign = 1){
     var key = "joint" + String(joint);
     if(joint === 6){
         data*=-1;
-        gripper.publish(data);       
+        var msn = new ROSLIB.Message({
+            data : data
+        });
+        gripper.publish(msn);       
     }
-    /*if(data != 0):
-        self.S1labelj6.config(bg="#34eb61")
-    else:
-        self.S1labelj6.config(bg="white")
-    return None*/
+
     if(joint === 7){
         data*=-1;
-        lineal.publish(data);
+        var msn = new ROSLIB.Message({
+            data : data
+        });
+        lineal.publish(mns);
         return null;
     }
 
@@ -211,43 +235,23 @@ function pressed(data, joint, sign = 1){
         if(!poss){
             values_map[key]+=(data*(sign));
         }
-    }
+    }   
 
-    /*if(joint === 1){    
-        if(data !== 0){
-            S1labelj1.config(bg="#34eb61")
-        } else {
-            S1labelj1.config(bg="white")
-        }
-    }elif(joint == 2):
-        if(data != 0):
-            self.S1labelj2.config(bg="#34eb61")
-        else:
-            self.S1labelj2.config(bg="white")
-    elif(joint == 3):
-        if(data != 0):
-            self.S1labelj3.config(bg="#34eb61")
-        else:
-            self.S1labelj3.config(bg="white")
-    elif(joint == 4):            
-        if(data != 0):
-            self.S1labelj4.config(bg="#34eb61")
-        else:
-            self.S1labelj4.config(bg="white")
-    elif(joint == 5):
-        self.values_map[key] = self.qlimit(self.limits_map[key], self.values_map[key])
-        self.joint5.publish(self.values_map[key])            
-        
-        if(data != 0):
-            self.S1labelj5.config(bg="#34eb61")
-        else:
-            self.S1labelj5.config(bg="white")*/
-    if(joint == 5){
+    if(joint === 5){
         values_map[key] = qlimit(limits_map[key], values_map[key]);
         var msn = new ROSLIB.Message({
             data : values_map[key]
         });
         joint5.publish(msn);
+    }
+
+    if(joint === 8){
+        console.log(parseInt(values_map[key]));
+        values_map[key] = qlimit(limits_map.camera, values_map[key]);
+        var msn = new ROSLIB.Message({
+            data : parseInt(values_map[key])
+        });
+        camera.publish(msn);
     }
     getTxt();
     //labelInfo.config(text=self.getTxt())
@@ -264,7 +268,7 @@ function getTxt(){
     return txt;
 }
 
-
+//ARIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII YA VAMANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAS
 
 function rad2deg(radians){return radians * (180/math.pi);}
 
