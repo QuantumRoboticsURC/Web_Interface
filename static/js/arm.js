@@ -1,7 +1,6 @@
 var ros;
 var robot_IP;
 
-window.onload = function () {
   //IP de la compu donde esta corriendo ros bridge 192.168.1.6
   robot_IP = "localhost";
 
@@ -26,55 +25,55 @@ listener3.subscribe(function(message) {
 var pub_q1 = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/joint1',
-    messageType : 'Float64',
+    messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
 var pub_q2 = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/joint2',
-    messageType : 'Float64',
+    messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
 var pub_q3 = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/joint3',
-    messageType : 'Float64',
+    messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
 var pub_q4 = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/joint4',
-    messageType : 'Float64',
+    messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
 var pub_q_string = new ROSLIB.Topic({
     ros : ros,
     name : 'inverse_kinematics/Q',
-    messageType : 'String',
+    messageType : 'std_msgs/String',
     queue_size: 1   
 });
 //gripper rotacion
 var joint5 = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/joint5',
-    messageType : 'Float64',
+    messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
 //lineal 
 var gripper = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/gripper',
-    messageType : 'Float64',
+    messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
 //lineal 
 var lineal = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/prism',
-    messageType : 'Float64',
+    messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
-}
+
 
 var gripper_apertur = 60;   //0 y 60
 var values_map = {
@@ -244,20 +243,24 @@ function pressed(data, joint, sign = 1){
         else:
             self.S1labelj5.config(bg="white")*/
     if(joint == 5){
-        values_map[key] = qlimit(limits_map[key], values_map[key])
-        joint5.publish(values_map[key])   
+        values_map[key] = qlimit(limits_map[key], values_map[key]);
+        var msn = new ROSLIB.Message({
+            data : values_map[key]
+        });
+        joint5.publish(msn);
     }
-            
-    labelInfo.config(text=self.getTxt())
+    getTxt();
+    //labelInfo.config(text=self.getTxt())
 }
 
 function getTxt(){
     publish_angles();
-    var txt = "Position X = " + String(Math.round(values_map.joint1,2)) + "\n"+"Position Y = " + 
-        String(Math.round(values_map.joint2,2)) + "\n" + "Position Z = " + String(Math.round(values_map.joint3,2)) + "\n";
+    var txt = "Position X = " + String(math.round(values_map.joint1,2)) + "\n"+"Position Y = " + 
+        String(math.round(values_map.joint2,2)) + "\n" + "Position Z = " + String(math.round(values_map.joint3,2)) + "\n";
     txt += "Position Phi = " + String(values_map.joint4)+ "\n" + "Rotacion del gripper = " + String(values_map.joint5) + "\n";
-    txt += "q1:" + String(Math.round(angles_map.q1,2)) + "\nq2:" + String(Math.round(angles_map.q2,2)) + "\n";
-    txt += "q3:"+ String(Math.round(angles_map.q3,2)) + "\nq4:" + String(Math.round(self.angles_map.q4,2));
+    txt += "q1:" + String(math.round(angles_map.q1,2)) + "\nq2:" + String(math.round(angles_map.q2,2)) + "\n";
+    txt += "q3:"+ String(math.round(angles_map.q3,2)) + "\nq4:" + String(math.round(self.angles_map.q4,2));
+    console.log(txt);
     return txt;
 }
 
@@ -265,7 +268,7 @@ function getTxt(){
 
 function rad2deg(radians){return radians * (180/math.pi);}
 
-
+//NO FUNCIONA ARI LO HIZO MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL
 //Example: inverseKinematics(1.4,.3,2,1)
 function ikine_brazo(xm, ym, zm, phi_int){     
   let Q1 = 0;
