@@ -119,33 +119,33 @@
 									<div class="chart-circle mt-4 mb-3">
 										<div class="col-md-6">
 											<div class="card">
-											<div class="container">
-												<div class="col-md-12">
-													<div class="btn-group-vertical modal-dialog-centered btn-sm">
-														<button type="button" class="btn btn-secondary">Intermedio</button>
-														<button type="button" class="btn btn-secondary">Home</button>
-														<button type="button" class="btn btn-secondary">Storage</button>
-													</div>
-													<div class="btn-group-vertical modal-dialog-centered btn-sm">
-														<button type="button" class="btn btn-secondary">Pull</button>
-														<button type="button" class="btn btn-secondary">Write</button>
-														<button type="button" class="btn btn-secondary">Floor</button>                                                    
+												<div class="container">
+													<div class="col-md-12">
+														<div class="btn-group-vertical modal-dialog-centered btn-sm">
+															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('INTERMEDIO');">Intermedio</button>
+															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('HOME');">Home</button>
+															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('STORAGE');">Storage</button>
+														</div>
+														<div class="btn-group-vertical modal-dialog-centered btn-sm">
+															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('PULL');">Pull</button>
+															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('WRITE');">Write</button>
+															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('FLOOR');">Floor</button>                                                    
+														</div>
 													</div>
 												</div>
-											</div>
 										</div>
 											<div class="card">
 												<div class="card-body" >
-													<p>Position X:</p>
-													<p>Position Y:</p>
-													<p>Position Z:</p>
-													<p>Position Phi:</p>
-													<p>Rotacion Gripper:</p>
-													<p>Camera:</p>
-													<p>Q1:</p>
-													<p>Q2:</p>
-													<p>Q3:</p>
-													<p>Q4:</p>
+													<p>Position X: <label  type="text" id="X"></label></p>
+													<p>Position Y: <label  type="text" id="Y"></label></p>
+													<p>Position Z: <label  type="text" id="Z"></label></p>
+													<p>Position Phi: <label  type="text" id="Phi"></label></p>
+													<p>Rotacion Gripper:<label  type="text" id="Rotacion"></label></p>
+													<p>Camera: <label  type="text" id="Camera"></label></p>
+													<p>Q1: <label  type="text" id="Q1"></label></p>
+													<p>Q2:<label  type="text" id="Q2"></label></p>
+													<p>Q3:<label  type="text" id="Q3"></label></p>
+													<p>Q4:<label  type="text" id="Q4"></label></p>
 												</div>
 											</div>
 										</div>

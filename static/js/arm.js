@@ -116,7 +116,7 @@ var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
 
 function PresionadoDerecha(id){
-    console.log(print("presionado" + id));
+   // console.log(print("presionado" + id));
 
     var x = values_map.joint1;
     var y = values_map.joint2;
@@ -183,6 +183,7 @@ function publish_angles(){
     pub_q2.publish(msn_q2);
     pub_q3.publish(msn_q3);
     pub_q4.publish(msn_q4);
+
     //pub_q_string.publish(txt);
 }
 
@@ -195,10 +196,6 @@ function qlimit(l, val){
     }
     return val;
 } 
-
-function PRUEBA(data, joint, sign = 1){
-    console.log(data);
-};
 
 function pressed(data, joint, sign = 1){
     var key = "joint" + String(joint);
@@ -259,16 +256,42 @@ function pressed(data, joint, sign = 1){
 
 function getTxt(){
     publish_angles();
-    var txt = "Position X = " + String(math.round(values_map.joint1,2)) + "\n"+"Position Y = " + 
-        String(math.round(values_map.joint2,2)) + "\n" + "Position Z = " + String(math.round(values_map.joint3,2)) + "\n";
-    txt += "Position Phi = " + String(values_map.joint4)+ "\n" + "Rotacion del gripper = " + String(values_map.joint5) + "\n";
-    txt += "q1:" + String(math.round(angles_map.q1,2)) + "\nq2:" + String(math.round(angles_map.q2,2)) + "\n";
-    txt += "q3:"+ String(math.round(angles_map.q3,2)) + "\nq4:" + String(math.round(self.angles_map.q4,2));
-    console.log(txt);
-    return txt;
+    var X = String(math.round(values_map.joint1,2));
+    var Y = String(math.round(values_map.joint2,2));
+    var Z = String(math.round(values_map.joint3,2));
+    var Phi = String(values_map.joint4);
+    var Rotacion = String(values_map.joint5);
+    var q1 = String(math.round(angles_map.q1,2));
+    var q2 = String(math.round(angles_map.q2,2));
+    var q3 = String(math.round(angles_map.q3,2));
+    var q4 = String(math.round(angles_map.q4,2));
+    var Camera = String(values_map.joint8);
+  
+
+    localStorage.setItem("Q1",q1);
+    localStorage.setItem("Q2",q2);
+    localStorage.setItem("Q3",q3);
+    localStorage.setItem("Q4",q4);
+    localStorage.setItem("X",X);
+    localStorage.setItem("Y",Y);
+    localStorage.setItem("Z",Z);
+    localStorage.setItem("Phi",Phi);
+    localStorage.setItem("Rotacion",Rotacion);
+    localStorage.setItem("Camera",Camera);
+
+    document.getElementById("Q1").innerHTML = q1;
+    document.getElementById("Q2").innerHTML = q2;
+    document.getElementById("Q3").innerHTML = q3;
+    document.getElementById("Q4").innerHTML = q4;
+    document.getElementById("X").innerHTML = X;
+    document.getElementById("Y").innerHTML = Y;
+    document.getElementById("Z").innerHTML = Z;
+    document.getElementById("Phi").innerHTML = Phi;
+    document.getElementById("Rotacion").innerHTML = Rotacion;
+    document.getElementById("Camera").innerHTML = Camera;
 }
 
-//ARIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII YA VAMANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAS
+//ARIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII YA VAMANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaAS
 
 function rad2deg(radians){return radians * (180/math.pi);}
 
@@ -325,4 +348,23 @@ function ikine_brazo(xm, ym, zm, phi_int){
   //q4=self.qlimit(self.limits_map["q4"],q4)
   console.log("angulos: "+q1 + " "+ q2 + " "+q3+" "+q4);
   return Q1;              
+}
+
+function mostrar(){
+
+    var q1 = localStorage.getItem("Q1");
+    var q2 = localStorage.getItem("Q2");
+    var q3 = localStorage.getItem("Q3");
+    var q4 = localStorage.getItem("Q4");
+
+    var X = String(math.round(values_map.joint1,2));
+    var Y = String(math.round(values_map.joint2,2));
+    var Z = String(math.round(values_map.joint3,2));
+    var Phi = String(values_map.joint4);
+    var Rotacion = String(values_map.joint5);
+
+    document.getElementById("Q1").innerHTML = Q1;
+    document.getElementById("Q2").innerHTML = Q2;
+    document.getElementById("Q3").innerHTML = Q3;
+    document.getElementById("Q4").innerHTML = Q4;
 }
