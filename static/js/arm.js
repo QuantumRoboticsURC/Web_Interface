@@ -153,9 +153,8 @@ function PresionadoDerecha(id){
     values_map.joint2 = y;
     values_map.joint3 = z;
     values_map.joint4 = phi;
-    ikine_brazo(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4); //falta
-    labelInfo.config(text=getTxt()); //falta
-}
+    ikine_brazo(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
+    }
 
 function publish_angles(){
     var q1 = angles_map.q1;
@@ -212,8 +211,7 @@ function pressed(data, joint, sign = 1){
         var msn = new ROSLIB.Message({
             data : data
         });
-        lineal.publish(mns);
-        return null;
+        lineal.publish(msn);
     }
 
     if(joint === 4){
@@ -267,7 +265,6 @@ function getTxt(){
     var q4 = String(math.round(angles_map.q4,2));
     var Camera = String(values_map.joint8);
   
-
     localStorage.setItem("Q1",q1);
     localStorage.setItem("Q2",q2);
     localStorage.setItem("Q3",q3);
@@ -348,23 +345,4 @@ function ikine_brazo(xm, ym, zm, phi_int){
   //q4=self.qlimit(self.limits_map["q4"],q4)
   console.log("angulos: "+q1 + " "+ q2 + " "+q3+" "+q4);
   return Q1;              
-}
-
-function mostrar(){
-
-    var q1 = localStorage.getItem("Q1");
-    var q2 = localStorage.getItem("Q2");
-    var q3 = localStorage.getItem("Q3");
-    var q4 = localStorage.getItem("Q4");
-
-    var X = String(math.round(values_map.joint1,2));
-    var Y = String(math.round(values_map.joint2,2));
-    var Z = String(math.round(values_map.joint3,2));
-    var Phi = String(values_map.joint4);
-    var Rotacion = String(values_map.joint5);
-
-    document.getElementById("Q1").innerHTML = Q1;
-    document.getElementById("Q2").innerHTML = Q2;
-    document.getElementById("Q3").innerHTML = Q3;
-    document.getElementById("Q4").innerHTML = Q4;
 }

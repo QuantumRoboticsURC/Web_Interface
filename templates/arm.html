@@ -26,7 +26,7 @@
 			<div class="logo-header">
 				<a href="/" class="logo">
 					<img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
-					Quantum Robotics
+					<small>Quantum Robotics</small>
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
 					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
 					</div>
 					<div class="row">	
 						<div class="col-lg-7">
-							<div class="container">
+							<div class="">
 								<div class="card">
 									<div class="card-header">
 										<h4 class="card-title">Arm Camera</h4>
@@ -119,7 +119,7 @@
 									<div class="chart-circle mt-4 mb-3">
 										<div class="col-md-6">
 											<div class="card">
-												<div class="container">
+												<div>
 													<div class="col-md-12">
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
 															<button type="button" class="btn btn-secondary" onclick="getTxt();PresionadoDerecha('INTERMEDIO');">Intermedio</button>
@@ -153,7 +153,7 @@
 											<div class="card">
 											<ul class="list-group list-group-flush">
 												<li class="list-group-item">
-													<div class="container">
+													<div >
 														<div class="row">
 															<small class="text-muted">Position X</small>
 															<div class="col-md-12">
@@ -170,7 +170,7 @@
 													</div>
 												</li>
 												<li class="list-group-item">
-													<div class="container">
+													<div>
 														<div class="row">
 															<small class="text-muted">Position Y</small>
 															<div class="col-md-12">
@@ -187,7 +187,7 @@
 													</div>
 												</li>
 												<li class="list-group-item">
-													<div class="container">
+													<div>
 														<div class="row">
 															<small class="text-muted">Position Z</small>
 															<div class="col-md-12">
@@ -204,7 +204,7 @@
 													</div>
 												</li>
 												<li class="list-group-item">
-													<div class="container">
+													<div>
 														<div class="row">
 															<small class="text-muted">Phi</small>
 															<div class="col-md-12">
@@ -219,7 +219,7 @@
 													</div>
 												</li>
 												<li class="list-group-item">
-													<div class="container">
+													<div>
 														<div class="row">
 															<small class="text-muted">Rotacion Gripper</small>
 															<div class="col-md-12">
@@ -236,30 +236,30 @@
 													</div>
 												</li>
 												<li class="list-group-item">
-													<div class="container">
+													<div>
 														<div class="row">
 															<small class="text-muted">Gripper</small>
 															<div class="col-md-12">
-																<button type="button" class="btn btn-secondary ">Abrir</button> 
-																<button type="button" class="btn btn-secondary ">Cerrar</button>
+																<button type="button" class="btn btn-secondary " onmouseup="pressed(0, 6)" onmousedown="pressed(1, 6)">Abrir</button> 
+																<button type="button" class="btn btn-secondary " onmouseup="pressed(0, 6)" onmousedown="pressed(-1, 6)">Cerrar</button>
 															</div>
 															
 														</div>
 													</div>
 												</li>
-												<li class="list-group-item">
-													<div class="container">
+												<li class="list-group-item ">
+													<div>
 														<div class="row">
 															<small class="text-muted">Actuador prismatico</small>
 															<div class="col-md-12">
-																<button type="button" class="btn btn-secondary ">Abrir</button> 
-																<button type="button" class="btn btn-secondary ">Cerrar</button>
+																<button type="button" class="btn btn-secondary " onmouseup="pressed(0, 7)" onmousedown="pressed(1, 7)">Abrir</button> 
+																<button type="button" class="btn btn-secondary " onmouseup="pressed(0, 7)" onmousedown="pressed(-1, 7)">Cerrar</button>
 															</div>
 														</div>
 													</div>
 												</li>
 												<li class="list-group-item">
-													<div class="container">
+													<div>
 														<div class="row">
 															<small class="text-muted">Camera</small>
 															<div class="col-md-12">
