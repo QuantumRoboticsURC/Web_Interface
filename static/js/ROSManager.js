@@ -3,10 +3,39 @@ var robot_IP;
 
 window.onload = function () {
     //IP de la compu donde esta corriendo ros bridge 192.168.1.6
-    robot_IP = "192.168.1.5";
+    //robot_IP = "192.168.1.5";
+    robot_IP = "localhost";
 
     ros = new ROSLIB.Ros({
         url: "ws://" + robot_IP + ":9090"
+    });
+
+    var listener = new ROSLIB.Topic({
+      ros : ros,
+      name : '/status_led',
+      messageType : 'std_msgs/Int32'
+    });
+
+    listener.subscribe(function(message) {
+          switch(message.data){
+            case 1:
+              document.getElementById("ledLabel").style.backgroundColor = "#0000ff";
+              document.getElementById("ledText").innerHTML = "Teleoperated";
+              break;
+            case 2:
+              document.getElementById("ledLabel").style.backgroundColor = "#ff0000";
+              document.getElementById("ledText").innerHTML = "Autonomous";
+              break;
+            case 3:
+              document.getElementById("ledLabel").style.backgroundColor = "#00ff00";
+              document.getElementById("ledText").innerHTML = "Successfull arrival";
+              break;
+            default:
+              document.getElementById("ledLabel").style.backgroundColor = "#ffffff";
+              document.getElementById("ledText").innerHTML = " ";
+              break;
+
+          }
     });
 
     var listener2 = new ROSLIB.Topic({
@@ -76,32 +105,4 @@ document.getElementById("imgNav").src = imagedata;
 
           }
     });*/
-}
-
-function manual(){
-  var man = new ROSLIB.Topic({
-    ros : ros,
-    name : '/matrix',
-    messageType : 'std_msgs/Int64'
-  });
-
-  var msn = new ROSLIB.Message({
-    data : 1
-  });
-
-  man.publish(msn);
-}
-
-function auto(){
-  var man = new ROSLIB.Topic({
-    ros : ros,
-    name : '/matrix',
-    messageType : 'std_msgs/Int64'
-  });
-
-  var msn = new ROSLIB.Message({
-    data : 0
-  });
-  
-  man.publish(msn);
 }
