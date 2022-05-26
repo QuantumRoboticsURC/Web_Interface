@@ -2,25 +2,27 @@ var ros;
 var robot_IP;
 
   //IP de la compu donde esta corriendo ros bridge 192.168.1.6
-  robot_IP = "localhost";
-
+  robot_IP = _config.ROSBridge_IP;
   ros = new ROSLIB.Ros({
       url: "ws://" + robot_IP + ":9090"
   });
 
-/*var listener3 = new ROSLIB.Topic({
-    ros : ros,
-    name : '/zedArm/zed_arm/left/image_rect_color/compressed',
-    messageType : 'sensor_msgs/CompressedImage'
-  });
-
-listener3.subscribe(function(message) {
-  //document.getElementById("liveimage").innerHTML = m.data;
-  console.log("image listenerr event fired");
-  var imagedata = "data:image/png;base64," + message.data;
-  document.getElementById("imgArm").src = imagedata;      
-  //document.getElementById("liveimage").src =  m.data;      
-});*/
+  if (_config.is_WebVideo){
+    var topic = _config.topic_Arm_Camera;
+    var src = "http://" + _config.WEB_Video_Server + "/stream?topic=" + topic + "&type=ros_compressed";
+    document.getElementById("Arm_Camera").src = src; 
+  } else {
+    var listener = new ROSLIB.Topic({
+        ros : ros,
+        name : _config.topic_Arm_Camera + '/compressed',
+        messageType : 'sensor_msgs/CompressedImage'
+      });
+    
+    listener.subscribe(function(message) {
+      var imagedata = "data:image/png;base64," + message.data;
+      document.getElementById("Arm_Camera").src = imagedata;      
+    });
+  }  
 
 var pub_q1 = new ROSLIB.Topic({
     ros : ros,

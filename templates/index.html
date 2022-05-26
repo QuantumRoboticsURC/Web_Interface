@@ -7,16 +7,15 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 		name='viewport' />
 	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
-	<!--<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">-->
 	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='css/leds.css')}}">
+	<link rel="shortcut icon" href="#">
+	<!--
+		Usar solo cuando se necesite capturar el video con ROSBridge
+	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+	<script src="{{url_for('static', filename='js/index.js')}}"></script>
+	-->
 
-<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/eventemitter2.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/keyboardteleop.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/gauge.min.js')}}"></script>
+
 </head>
 
 <body>
@@ -90,8 +89,7 @@
 								</div>
 								<div class="card-body">
 									<div class="col-lg-6">
-										<!--src ="http://192.168.1.6:8080/stream?topic=/zedNav/zed_nav/rgb_raw/image_raw_color&type=ros_compressed"-->
-										<img src ="http://192.168.1.6:8080/stream?topic=/zedNav/zed_nav/rgb_raw/image_raw_color&type=ros_compressed" id="" wigth="400" height="400">
+										<img src ="" id="Zed_Camera" wigth="400" height="400">
 									</div>
 								</div>								
 							</div>
@@ -100,309 +98,22 @@
 							<div class="card">
 								<div class="card-header">
 									<h4 class="card-title">Camera 2</h4>
-									<p class="card-category">Zed</p>
+									<p class="card-category">USB</p>
 								</div>
 								<div class="card-body">
 									<div class="col-lg-6">		
-										<!--src ="http://192.168.1.6:8080/stream?topic=/usb_cam_1/image_raw&type=ros_compressed" -->
-										<img src ="http://192.168.1.6:8080/stream?topic=/usb_cam_1/image_raw&type=ros_compressed" id="" wigth="400" height="400" style="transform:rotate(180deg);">
+										<img src ="" id="USB_Camera" wigth="400" height="400" style="transform:rotate(180deg);">
 									</div>
 								</div>								
 							</div>
 						</div>
 					</div>		
-				<!--
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Camara</h4>
-									<p class="card-category">Web Video Server</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<img id="img" wigth="300" height="300"src ="http://192.168.1.6:8080/snapshot?topic=/image_view/output&type=ros_compressed">
-									</div>
-								</div>
-							</div>
-						</div>
-						
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Camara</h4>
-									<p class="card-category">Zed</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<img id="img" src ="http://34.204.181.137:8080/stream?topic=/usb_cam/image_raw&type=mjpeg&quality=80">	
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Camara</h4>
-									<p class="card-category">Trasera</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<img></img>
-											<p id="mensajeROS"></p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Bateria</h4>
-									<p class="card-category">Voltaje</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<canvas id="bateria" class="mt-4 mb-3"></canvas>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Motor</h4>
-									<p class="card-category">Arm Motor 1</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<div id="Motor1" class="mt-4 mb-3">
-											<p>Voltaje</p>
-											<p id="VMotor1"></p>
-											<p>Corriente</p>
-											<p id="CMotor1"></p>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Motor</h4>
-									<p class="card-category">Arm Motor 2</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<div id="Motor2" class="mt-4 mb-3">
-											<p>Voltaje</p>
-											<p id="VMotor2"></p>
-											<p>Corriente</p>
-											<p id="CMotor2"></p>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Motor</h4>
-									<p class="card-category">Air Motor 3</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<div id="Motor3" class="mt-4 mb-3">
-											<p>Voltaje</p>
-											<p id="VMotor3"></p>
-											<p>Corriente</p>
-											<p id="CMotor3"></p>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Motor</h4>
-									<p class="card-category">Air Motor 4</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<div id="Motor4" class="mt-4 mb-3">
-											<p>Voltaje</p>
-											<p id="VMotor4"></p>
-											<p>Corriente</p>
-											<p id="CMotor4"></p>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Motor</h4>
-									<p class="card-category">Drive Motor 1</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<div id="Motor5" class="mt-4 mb-3">
-											<p>Voltaje</p>
-											<p id="VMotor5"></p>
-											<p>Corriente</p>
-											<p id="CMotor5"></p>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Motor</h4>
-									<p class="card-category">Drive Motor 2</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<div id="Motor6" class="mt-4 mb-3">
-											<p>Voltaje</p>
-											<p id="VMotor6"></p>
-											<p>Corriente</p>
-											<p id="CMotor6"></p>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Motor</h4>
-									<p class="card-category">Drive Motor 3</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<div id="Motor7" class="mt-4 mb-3">
-											<p>Voltaje</p>
-											<p id="VMotor7"></p>
-											<p>Corriente</p>
-											<p id="CMotor7"></p>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Motor</h4>
-									<p class="card-category">Drive Motor 4</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<div id="Motor8" class="mt-4 mb-3">
-											<p>Voltaje</p>
-											<p id="VMotor8"></p>
-											<p>Corriente</p>
-											<p id="CMotor8"></p>
-										</div>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Camara</h4>
-									<p class="card-category">Brazo</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<img></img>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Camara</h4>
-									<p class="card-category">Brazo</p>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<img></img>
-									</div>
-								</div>
-								<div class="card-footer">
-									<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
-								</div>
-							</div>
-						</div>
-					</div>-->
 				</div>	
 			</div>
 		</div>
 	</div>
-	<script src="{{url_for('static', filename='js/plugin/gauge.js')}}"></script>
 </body>
 
-<script src="{{url_for('static', filename='js/ROSManager.js')}}"></script>
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/core/popper.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/core/bootstrap.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/chartist/chartist.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/jquery-mapael/jquery.mapael.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/jquery-mapael/maps/world_countries.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/chart-circle/circles.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/ready.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/demo.js')}}"></script>
 
 </html>

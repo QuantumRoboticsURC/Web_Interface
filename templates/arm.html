@@ -7,16 +7,14 @@
 		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 			name='viewport' />
 		<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
-		<!--<link rel="stylesheet"
-			href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">-->
 			<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
 			<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
 			<link rel="stylesheet" href="{{url_for('static', filename='css/leds.css')}}">
-		<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
-		<script src="{{url_for('static', filename='js/plugin/math.js')}}"></script>		
-		<script src="{{url_for('static', filename='js/plugin/eventemitter2.min.js')}}"></script>
-		<script src="{{url_for('static', filename='js/plugin/keyboardteleop.min.js')}}"></script>
-		<script src="{{url_for('static', filename='js/plugin/gauge.min.js')}}"></script>
+			<link rel="shortcut icon" href="#">
+
+			<script src="{{url_for('static', filename='js/config.js')}}"></script>
+			<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+			<script src="{{url_for('static', filename='js/plugin/math.js')}}"></script>		
 	</head>
 
 <body>
@@ -93,7 +91,7 @@
 									</div>
 									<div class="card-body">
 										<div class="chart-circle mt-4 mb-3">
-											<img src ="http://192.168.1.6:8080/stream?topic=/zedArm/zed_arm/left_raw/image_raw_color&type=ros_compressed" id="" wigth="400" height="400" style="transform:rotate(0deg);">
+											<img src = "" id="Arm_Camera" wigth="400" height="400" style="transform:rotate(0deg);">
 										</div>
 									</div>								
 								</div>
@@ -231,11 +229,7 @@
 																	</div>
 																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Gripper_Txt').value), 5)">&nbsp;-&nbsp;</button>
 																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Gripper_Txt').value), 5)">&nbsp;+&nbsp;</button>
-																	<!--<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Gripper_Txt').value), 5)">&nbsp;-&nbsp;</button>
-																	<div class="input-group">
-																		<input id="Gripper_Txt" type="text" class="form-control" value="0" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Gripper_Txt').value), 5)">&nbsp;+&nbsp;</button>-->
+																	
 																</div>
 															</div>
 														
@@ -278,14 +272,12 @@
 																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Camera_Txt').value), 8)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
-														
 														</div>
 													</div>
 												</li>
-											  </ul>
+											</ul>
 											</div>
 										</div>
-									</div>
 									</div>
 								</div>								
 							</div>
@@ -295,23 +287,9 @@
 			</div>
 		</div>
 	</div>
-	<script src="{{url_for('static', filename='js/plugin/gauge.js')}}"></script>
 </body>
 
 <script src="{{url_for('static', filename='js/arm.js')}}"></script>
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/core/popper.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/core/bootstrap.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/chartist/chartist.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/bootstrap-toggle/bootstrap-toggle.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/jquery-mapael/jquery.mapael.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/jquery-mapael/maps/world_countries.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/chart-circle/circles.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/ready.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/demo.js')}}"></script>
 
 </html>
