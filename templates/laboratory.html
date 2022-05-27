@@ -8,14 +8,55 @@
 		name='viewport' />
 	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
-	<link rel="stylesheet" href="{{url_for('static', filename='css/leds.css')}}">
 	<link rel="shortcut icon" href="#">
 
 	<script src="{{url_for('static', filename='js/config.js')}}"></script>
 	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
-	<script src="{{url_for('static', filename='js/plugin/gauge.min.js')}}"></script>
 
+	<style>
+		.column {
+		float: left;
+		width: 25%;
+		padding: 10px;
+		}
+
+		.column img {
+		opacity: 0.8;
+		cursor: pointer;
+		}
+
+		.column img:hover {
+		opacity: 1;
+		}
+
+		.row:after {
+		content: "";
+		display: table;
+		clear: both;
+		}
+
+		.container {
+		position: relative;
+		display: none;
+		}
+
+		#imgtext {
+		position: absolute;
+		bottom: 15px;
+		left: 15px;
+		color: white;
+		font-size: 20px;
+		}
+
+		.closebtn {
+		position: absolute;
+		top: 10px;
+		right: 15px;
+		color: white;
+		font-size: 35px;
+		cursor: pointer;
+		} 
+	</style>
 </head>
 
 <body>
@@ -47,7 +88,6 @@
 								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
 							</div>
 						</li>
-
 					</ul>
 				</div>
 			</nav>
@@ -61,7 +101,7 @@
 							<p>Nav</p>
 						</a>
 					</li>
-					<li class="nav-item active">
+					<li class="nav-item">
 						<a href="metrics">
 							<i class="la la-dashboard"></i>
 							<p>Metrics</p>
@@ -73,7 +113,7 @@
 							<p>Arm</p>
 						</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a href="lab">
 							<i class="la la-flask"></i>
 							<p>Lab</p>
@@ -85,104 +125,44 @@
 		<div class="main-panel">
 			<div class="content">
 				<div class="container-fluid">
-					<h4 class="page-title">Dashboard Metrics</h4>
-					<div class="row">
-							
-					</div>
+					<h4 class="page-title">Dashboard Nav</h4>
 					<div class="row">	
-						<div class="col-lg-6">
+						<div class="col-lg-12">
 							<div class="card">
 								<div class="card-header">
-									<h4 class="card-title">GPS</h4>
+									<h4 class="card-title">Expanded Images</h4>
 								</div>
 								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
-									</div>
+									<div class="container">
+										<span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+										<img id="expandedImg" style="width:100%">
+										<div id="imgtext"></div>
+									</div>	
 								</div>								
 							</div>
 						</div>
-						<div class="col-lg-3">
+					</div>	
+					<div class="row">	
+						<div class="col-lg-12">
 							<div class="card">
 								<div class="card-header">
-									<h4 class="card-title">Battery</h4>
-									<p class="card-category">Voltage</p>
+									<h4 class="card-title">Gallery</h4>
 								</div>
 								<div class="card-body">
-									<div class="text-center" id="labelBattery"></div>
-									<div class="chart-circle mt-4 mb-3">
-										<canvas id="bateria" class="mt-4 mb-3"></canvas>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<div class="card">
-										<div class="card-header">
-											<h4 class="card-title">Traction</h4>											
-										</div>
-										<div class="card-body text-center">
-											<div>Left side traction:
-												<div id="leftTrac"> </div>
-											</div>
-											<br>
-											<div>Rigth side traction:
-												<div id="rigthTrac"> </div>
-											</div>
-									</div>
-									</div>
-								</div>
+									<div class="row" id="imgsContainer">
+										
+									  </div>	
+								</div>								
 							</div>
 						</div>
-						<div class="col-lg-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Navigation</h4>
-									<p class="card-category">Actual mode</p>
-								</div>
-								<div class="card-body">
-								
-									<div class="col-lg-12 text-center">
-										<div id="ledLabel" style="  
-											height: 5vh;
-											width: 2hw;
-											background-color: #ffffff;">	
-										</div>
-										<br>
-										<div><p id="ledText"></p></div>
-									</div>
-									
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<div class="card">
-										<div class="card-header">
-											<h4 class="card-title">Speed</h4>
-										</div>
-										<div class="card-body text-center">
-												<div>Angular:
-													<div id="VeloAngular"> </div>
-												</div>
-												<br>
-												<div>Linear:
-													<div id="VeloLinear"> </div>
-												</div>
-												<p id="mensajeROSL"></p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					</div>		
 				</div>	
 			</div>
 		</div>
 	</div>
-	<script src="{{url_for('static', filename='js/plugin/gauge.js')}}"></script>
 </body>
 
-<script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/metrics.js')}}"></script>
 
+<script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/lab.js')}}"></script>
 </html>

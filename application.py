@@ -3,8 +3,10 @@ import json
 import random
 import time
 from datetime import datetime
+from os import listdir
+from os.path import isfile, join
 
-from flask import Flask, Response, render_template
+from flask import Flask, Response, render_template, jsonify
 
 application = Flask(__name__, static_url_path='/static')
 random.seed()
@@ -13,9 +15,9 @@ random.seed()
 def index():
     return render_template('index.html')
 
-@application.route('/ciencias')
+@application.route('/lab')
 def ciencias():
-    return render_template('ciencias.html')
+    return render_template('laboratory.html')
 
 @application.route('/metrics')
 def metrics():
@@ -82,5 +84,10 @@ def data_bateria():
             time.sleep(1)
 
     return Response(generate_random_data(), mimetype='text/event-stream')
+
+@application.route('/get_img')
+def get_img():
+    lab_img = [f for f in listdir("static/img/lab") if isfile(join("static/img/lab", f))]
+    return jsonify({"lab_imgs": lab_img})
 
 application.run(debug=True, threaded=True, host='0.0.0.0', port=5001)
