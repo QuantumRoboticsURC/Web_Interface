@@ -9,7 +9,7 @@ var robot_IP;
 
   if (_config.is_WebVideo){
     var topic = _config.topic_Arm_Camera;
-    var src = "http://" + _config.WEB_Video_Server + "/stream?topic=" + topic + "&type=ros_compressed";
+    var src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + topic + "&type=ros_compressed";
     document.getElementById("Arm_Camera").src = src; 
   } else {
     var listener = new ROSLIB.Topic({

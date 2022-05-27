@@ -1,8 +1,7 @@
 var ros;
 var robot_IP;
 
-window.onload = function () {
-    robot_IP = _config.ROSBridge_IP;
+robot_IP = _config.ROSBridge_IP;
 
     ros = new ROSLIB.Ros({
         url: "ws://" + robot_IP + ":9090"
@@ -10,11 +9,11 @@ window.onload = function () {
 
     if (_config.is_WebVideo){
         var zed_topic = _config.topic_Zed_Camera;
-        var zed_src = "http://" + _config.WEB_Video_Server + "/stream?topic=" + zed_topic + "&type=ros_compressed";
+        var zed_src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + zed_topic + "&type=ros_compressed";
         document.getElementById("Zed_Camera").src = zed_src; 
 
         var usb_topic = _config.topic_USB_Camera;
-        var usb_src = "http://" + _config.WEB_Video_Server + "/stream?topic=" + usb_topic + "&type=ros_compressed";
+        var usb_src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + usb_topic + "&type=ros_compressed";
         document.getElementById("USB_Camera").src = usb_src; 
     } else {
         var listener = new ROSLIB.Topic({
@@ -39,4 +38,3 @@ window.onload = function () {
           document.getElementById("USB_Camera").src = imagedata;      
         });
     } 
-}

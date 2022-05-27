@@ -9,12 +9,9 @@
 	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
 	<link rel="shortcut icon" href="#">
-	<!--
-		Usar solo cuando se necesite capturar el video con ROSBridge
-	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
-	<script src="{{url_for('static', filename='js/index.js')}}"></script>
-	-->
 
+	<script src="{{url_for('static', filename='js/config.js')}}"></script>
+	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
 
 </head>
 
@@ -47,7 +44,6 @@
 								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
 							</div>
 						</li>
-
 					</ul>
 				</div>
 			</nav>
@@ -114,6 +110,7 @@
 	</div>
 </body>
 
+<script src="{{url_for('static', filename='js/index.js')}}"></script>
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
 
 </html>
