@@ -1,4 +1,4 @@
-window.onload = function() {
+/*window.onload = function() {
     update();
   };
 
@@ -12,7 +12,7 @@ $.get("get_img", function(data, status){
         container.innerHTML += hh;
       }       
   });
-} 
+}*/
 
 function expand(imgs) {
     var expandImg = document.getElementById("expandedImg");
