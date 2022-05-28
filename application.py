@@ -27,6 +27,9 @@ def metrics():
 def arm():
     return render_template('arm.html')    
 
+@application.route('/coordinates')
+def coordinates():
+    return render_template('coordinates.html')  
 
 @application.route('/data_sensor1')
 def data_sensor1():

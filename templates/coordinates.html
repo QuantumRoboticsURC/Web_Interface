@@ -13,50 +13,6 @@
 	<script src="{{url_for('static', filename='js/config.js')}}"></script>
 	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
 
-	<style>
-		.column {
-		float: left;
-		width: 25%;
-		padding: 10px;
-		}
-
-		.column img {
-		opacity: 0.8;
-		cursor: pointer;
-		}
-
-		.column img:hover {
-		opacity: 1;
-		}
-
-		.row:after {
-		content: "";
-		display: table;
-		clear: both;
-		}
-
-		.container {
-		position: relative;
-		display: none;
-		}
-
-		#imgtext {
-		position: absolute;
-		bottom: 15px;
-		left: 15px;
-		color: white;
-		font-size: 20px;
-		}
-
-		.closebtn {
-		position: absolute;
-		top: 10px;
-		right: 15px;
-		color: white;
-		font-size: 35px;
-		cursor: pointer;
-		} 
-	</style>
 </head>
 
 <body>
@@ -113,13 +69,13 @@
 							<p>Arm</p>
 						</a>
 					</li>
-					<li class="nav-item active">
+					<li class="nav-item">
 						<a href="lab">
 							<i class="la la-flask"></i>
 							<p>Lab</p>
 						</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a href="coordinates">
 							<i class="la la-map"></i>
 							<p>Coor Converter</p>
@@ -133,31 +89,89 @@
 				<div class="container-fluid">
 					<h4 class="page-title">Dashboard Nav</h4>
 					<div class="row">	
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="card">
 								<div class="card-header">
-									<h4 class="card-title">Expanded Images</h4>
+									<h4 class="card-title">GMS (grados, minutos, segundos)</h4>
 								</div>
 								<div class="card-body">
-									<div class="container">
-										<span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
-										<img id="expandedImg" style="width:100%">
-										<div id="imgtext"></div>
-									</div>	
+									<div class="form-group">
+										<h6>Latitude</h6>
+
+										<label for="lat">Choose a hemisphere:</label>
+
+										<select name="lat" id="lat" onchange="dmsversdd()">
+											<option value="nord">N</option>
+											<option value="sud">S</option>
+										</select>
+										<div class="row">
+											
+											<div class="col-md-3">
+												<input class="form-control sexagesimal" id="latitude_degres" type="textbox" onkeyup="dmsversdd()">
+											</div>
+											<div class="col-md-1">
+												<label for="latitude_degres">&deg;</label>
+											</div>
+											<div class="col-md-3">
+												<input class="form-control sexagesimal" id="latitude_minutes" type="textbox" onkeyup="dmsversdd()">
+											</div>
+											<div class="col-md-1">
+												<label for="latitude_minutes">'</label>
+											</div>
+											<div class="col-md-3">
+												<input class="form-control sexagesimalsec" id="latitude_secondes" type="textbox" onkeyup="dmsversdd()">
+											</div>
+											<div class="col-md-1">
+												<label for="latitude_secondes">''</label>
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<h6>Longitude</h6>
+
+										<label for="lon">Choose a hemisphere:</label>
+
+										<select name="lon" id="lon" onchange="dmsversdd()">
+											<option value="est">E</option>
+											<option value="ouest">W</option>
+										</select>
+										<div class="row">
+											
+											<div class="col-md-3">
+												<input class="form-control sexagesimal" id="longitude_degres" type="textbox" onkeyup="dmsversdd()">
+											</div>
+											<div class="col-md-1">
+												<label for="longitude_degres">&deg;</label>
+											</div>
+											<div class="col-md-3">
+												<input class="form-control sexagesimal" id="longitude_minutes" type="textbox" onkeyup="dmsversdd()">
+											</div>
+											<div class="col-md-1">
+												<label for="longitude_minutes">'</label>
+											</div>
+											<div class="col-md-3">
+												<input class="form-control sexagesimalsec" id="longitude_secondes" type="textbox" onkeyup="dmsversdd()">
+											</div>
+											<div class="col-md-1">
+												<label for="longitude_secondes">''</label>
+											</div>
+										</div>
+									</div>
 								</div>								
 							</div>
 						</div>
-					</div>	
-					<div class="row">	
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="card">
 								<div class="card-header">
-									<h4 class="card-title">Gallery</h4>
-								</div>
+									<h4 class="card-title">GD (grados decimales)</h4>								</div>
 								<div class="card-body">
-									<div class="row" id="imgsContainer">
-										
-									  </div>	
+									<h6>Latitude</h6>
+									<div class="col-lg-6" id="label_lat">	
+									</div>
+									<h6>Longitude</h6>
+									<div class="col-lg-6" id="label_lon">	
+									</div>
 								</div>								
 							</div>
 						</div>
@@ -168,7 +182,7 @@
 	</div>
 </body>
 
-
+<script src="{{url_for('static', filename='js/coordinates.js')}}"></script>
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/lab.js')}}"></script>
+
 </html>
