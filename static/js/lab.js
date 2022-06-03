@@ -1,10 +1,10 @@
-/*window.onload = function() {
+window.onload = function() {
     update();
   };
 
 function update() {
 $.get("get_img", function(data, status){
-    var container = document.getElementById("imgsContainer");
+    var container = document.getElementById("imgsContainerBucket");
     for (const element of data.lab_imgs) {
         var hh = '<div class="column">'+
                     '<img src="static/img/lab/'+element+'" alt="'+element.split(".")[0]+'" onclick="expand(this);">'+
@@ -12,7 +12,7 @@ $.get("get_img", function(data, status){
         container.innerHTML += hh;
       }       
   });
-}*/
+}
 
 function expand(imgs) {
     var expandImg = document.getElementById("expandedImg");

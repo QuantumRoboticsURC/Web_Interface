@@ -90,7 +90,7 @@ def data_bateria():
 
 @application.route('/get_img')
 def get_img():
-    lab_img = [f for f in listdir("static/img/lab") if isfile(join("static/img/lab", f))]
+    lab_img = [f for f in listdir("static/img/lab/bucket") if isfile(join("static/img/lab/bucket", f))]
     return jsonify({"lab_imgs": lab_img})
 
 application.run(debug=True, threaded=True, host='0.0.0.0', port=5001)
