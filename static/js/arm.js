@@ -155,6 +155,11 @@ function PresionadoDerecha(id){
         y =  0;
         z =  .75;
         phi = 90
+    }else if (id === "VERTICAL"){
+        x = 0;
+        y =  0;
+        z =  5.2;
+        phi = 90
     }
     values_map.joint1 = x;
     values_map.joint2 = y;
