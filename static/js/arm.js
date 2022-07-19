@@ -271,7 +271,7 @@ function pressed(data, joint, sign = 1){
     }   
 
     if(joint === 8){
-        console.log(parseInt(values_map[key]));
+        //console.log(parseInt(values_map[key]));
         values_map[key] = qlimit(limits_map.camera, values_map[key]);
         var msn = new ROSLIB.Message({
             data : parseInt(values_map[key])
@@ -389,9 +389,112 @@ function inverseKinematics(xm, ym, zm, phi_int){
         angles_map.q2=q2;
         angles_map.q3=q3;
         angles_map.q4=q4;
+        arm_interface(angles_map.q2,angles_map.q3,angles_map.q4);        
         return true
     }else{
+        arm_interface(angles_map.q2,angles_map.q3,angles_map.q4);
         return false;
     }
     
   }
+
+  //Función de gráfica
+function arm_interface(q2,q3,q4){    
+	//Transformación a coordenadas rectangulares
+    let acum = deg2rad(q2);
+	let x2=l2*math.cos(acum);
+	let y2=l2*math.sin(acum);
+    acum+=deg2rad(q3);
+	let x3=x2+l3*math.cos(acum);
+	let y3=y2+l3*math.sin(acum);
+    console.log(acum);
+    console.log(acum);
+    acum+=deg2rad(q4);
+	let x4=x3+l4*math.cos(acum);
+	let y4=y3+l4*math.sin(acum);    
+	//Gráfica
+	var armData={
+  		labels:[],//x label
+  		datasets:[{
+    		//Joint 2
+    			label:"joint 2",//legend
+    			data:[
+      				{x:0,y:0},
+      				{x:x2,y:y2}
+    			],
+    			lineTension: 0, //linea recta
+    			fill: false, //rellenar debajo de la linea
+    			borderColor:'blue',//color de línea
+    			backgroundColor:'transparent',//color de fondo
+    			pointBorderColor:'blue',//apariencia de los puntos
+    			pointBackgroundColor: 'blue',
+    			pointRadius:2,
+    			pointStyle:'rectRounded',
+    			showLine: true
+  		},
+  		{
+    		//Joint 3
+    			label:"joint 3",//legend
+    			data:[
+      				{x:x2,y:y2},
+      				{x:x3,y:y3}
+    			],
+    			lineTension: 0, //linea recta
+    			fill: false, //rellenar debajo de la linea
+    			borderColor:'red',//color de línea
+    			backgroundColor:'transparent',//color de fondo
+    			pointBorderColor:'red',//apariencia de los puntos
+    			pointBackgroundColor: 'red',
+    			pointRadius:2,
+    			pointStyle:'rectRounded',
+    			showLine: true
+  		},
+  		{
+    		//Joint 4  
+    			label:"joint 4",//legend
+    			data:[
+      				{x:x3,y:y3},
+      				{x:x4,y:y4}
+    			],
+    			lineTension: 0, //linea recta
+    			fill: false, //rellenar debajo de la linea
+    			borderColor:'green',//color de línea
+    			backgroundColor:'transparent',//color de fondo
+    			pointBorderColor:'green',//apariencia de los puntos
+    			pointBackgroundColor: 'green',
+    			pointRadius:2,
+    			pointStyle:'rectRounded',
+    			showLine: true
+  		}]
+	}
+	var chartOptions = {
+  		legend:{
+    			display:false //Ocultar labels
+  		},
+  		scales:{
+    			xAxes:[{
+      				ticks:{
+        				beginAtZero:true,
+        				min:-6,
+        				max:6
+      				}
+    			}],
+    			yAxes:[{
+      				ticks:{
+        				beginAtZero:true,
+        				min:-6,
+                        max:6                        
+      				}
+    			}]
+  		},    
+        animation: {
+            duration: 0
+        }
+	};
+	new Chart("Arm_Graphic",{
+  		type: "scatter",
+  		data: armData,
+  		options: chartOptions
+	});
+}
+
