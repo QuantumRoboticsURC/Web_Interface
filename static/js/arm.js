@@ -24,6 +24,20 @@ var robot_IP;
     });
   }  
 
+
+var listener_Joystick = new ROSLIB.Topic({
+    ros : ros,
+    name : '/goal',
+    messageType : 'std_msgs/String'
+  });
+
+listener_Joystick.subscribe(function(message) {
+  //var imagedata = "data:image/png;base64," + message.data;
+  values = message.data.split(" ");
+  values_map.joint3 = values[2];
+  inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
+});
+
 var pub_q1 = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/joint1',
@@ -92,7 +106,7 @@ var values_map = {
         joint4: 0,      //phi
         joint5: 0,   //rotacion
         joint8: 140 //camera
-    };
+};
 
 var l1 = 0;
 var l2 = 2.6;
