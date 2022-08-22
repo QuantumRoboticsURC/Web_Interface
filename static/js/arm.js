@@ -1,38 +1,37 @@
 var ros;
 var robot_IP;
 
-  //IP de la compu donde esta corriendo ros bridge 192.168.1.6
-  robot_IP = _config.ROSBridge_IP;
-  ros = new ROSLIB.Ros({
-      url: "ws://" + robot_IP + ":9090"
-  });
-
-  if (_config.is_WebVideo){
+//IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
+robot_IP = _config.ROSBridge_IP;
+ros = new ROSLIB.Ros({
+    url: "ws://" + robot_IP + ":9090"
+});
+//Camera
+if (_config.is_WebVideo){
     var topic = _config.topic_Arm_Camera;
     var src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + topic + "&type=ros_compressed";
     document.getElementById("Arm_Camera").src = src; 
-  } else {
+} else {
     var listener = new ROSLIB.Topic({
         ros : ros,
         name : _config.topic_Arm_Camera + '/compressed',
         messageType : 'sensor_msgs/CompressedImage'
-      });
-    
-    listener.subscribe(function(message) {
-      var imagedata = "data:image/png;base64," + message.data;
-      document.getElementById("Arm_Camera").src = imagedata;      
     });
-  }  
 
+    listener.subscribe(function(message) {
+        var imagedata = "data:image/png;base64," + message.data;
+        document.getElementById("Arm_Camera").src = imagedata;      
+    });
+}  
 
+//Joystick
 var listener_Joystick = new ROSLIB.Topic({
     ros : ros,
     name : '/goal',
     messageType : 'std_msgs/String'
-  });
+});
 
 listener_Joystick.subscribe(function(message) {
-  //var imagedata = "data:image/png;base64," + message.data;
   values = message.data.split(" ");
   values_map.joint1 += parseFloat(values[0]);  
   values_map.joint2 += parseFloat(values[1]);
@@ -75,7 +74,7 @@ var pub_q_string = new ROSLIB.Topic({
     messageType : 'std_msgs/String',
     queue_size: 1   
 });
-//gripper rotacion
+//gripper rotation
 var joint5 = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/joint5',
@@ -104,78 +103,79 @@ var camera = new ROSLIB.Topic({
     queue_size: 1   
 });
 
-
+//Initial values
 var gripper_apertur = 60;   //0 y 60
 var values_map = {
-        joint1: .134,   //.4
-        joint2: 0,      //.9
-        joint3: .75,
-        joint4: 0,      //phi
-        joint5: 0,   //rotacion
-        joint8: 140 //camera
+    joint1: .134,   //.4
+    joint2: 0,      //.9
+    joint3: .75,
+    joint4: 0,      //phi
+    joint5: 0,   //rotacion
+    joint8: 140 //camera
 };
-
 var l1 = 0;
 var l2 = 2.6;
 var l3 = 2.6;
 var l4 = .9;
 
+//Limits
 var limits_map = {
-        q1:[-90,90],
-        q2:[0,161],
-        q3:[-165.4,0],
-        q4:[-135,90],
-        joint5:[-90,90], //Tambien tengo 500 y 2500
-        camera:[90,140]
-    };
+    q1:[-90,90],
+    q2:[0,161],
+    q3:[-165.4,0],
+    q4:[-135,90],
+    joint5:[-90,90], 
+    camera:[90,140]
+};
 
 var angles_map={
-        q1:0,
-        q2:161,
-        q3:-165.4,
-        q4:0
-    };
+    q1:0,
+    q2:161,
+    q3:-165.4,
+    q4:0
+};
 var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
 
-function PresionadoDerecha(id){
+// Predefined positions
+function predefinedPosition(position){
 
     var x = values_map.joint1;
     var y = values_map.joint2;
     var z = values_map.joint3;
     var phi = values_map.joint4;
 
-    if (id === "HOME"){
+    if (position === "HOME"){
         x = .134;
         y =  0;
         z =  .75;
         phi = 0;
-    } else if(id === "INTERMEDIO"){
+    } else if(position === "INTERMEDIATE"){
         x = 0;
         y = 0;
         z = 3.677;
         phi = 0;
-    }else if(id === "PULL"){
+    }else if(position === "PULL"){
         x = 3.33;
         y = 0;
         z = 3.35;
         phi = 0;
-    }else if (id === "WRITE"){
+    }else if (position === "WRITE"){
         x = 3.33;
         y = 0;
         z = 1.35;
         phi = 0;        
-    }else if (id === "FLOOR"){
+    }else if (position === "FLOOR"){
         x = 3.28
         y = 0
         z = -.1
         phi = -90
-    }else if (id === "STORAGE"){
+    }else if (position === "STORAGE"){
         x = .134;
         y =  0;
         z =  .75;
         phi = 90
-    }else if (id === "VERTICAL"){
+    }else if (position === "VERTICAL"){
         x = 0;
         y =  0;
         z =  5.2;
@@ -195,31 +195,18 @@ function publish_angles(){
     var q4 = angles_map.q4;
 
     var txt = String(q1)+" "+String(q2)+" "+String(q3)+" "+String(q4)
-    //rospy.loginfo(txt)
 
-    var msn_q1 = new ROSLIB.Message({
-        data : q1
-    });
-    var msn_q2 = new ROSLIB.Message({
-        data : q2
-    });
-    var msn_q3 = new ROSLIB.Message({
-        data : q3
-    });
-    var msn_q4 = new ROSLIB.Message({
-        data : q4
-    });
-    var msn_txt = new ROSLIB.Message({
-        data : txt
-    });
+    var msn_q1 = new ROSLIB.Message({data : q1});
+    var msn_q2 = new ROSLIB.Message({data : q2});
+    var msn_q3 = new ROSLIB.Message({data : q3});
+    var msn_q4 = new ROSLIB.Message({data : q4});
+    var msn_txt = new ROSLIB.Message({data : txt});
 
     pub_q1.publish(msn_q1);
     pub_q2.publish(msn_q2);
     pub_q3.publish(msn_q3);
     pub_q4.publish(msn_q4);
     pub_q_string.publish(msn_txt);
-
-    //pub_q_string.publish(txt);
 }
 
 function qlimit(l, val){
@@ -234,31 +221,52 @@ function qlimit(l, val){
 
 function my_map(in_min, in_max, out_min, out_max, x){
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}        
-function go(data, joint, sign = 1){
-    var key = "joint" + String(joint);
+}
+
+// Gripper go to particular location
+function go(data){
+    var key = "joint5";
     values_map[key]=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({
-        data : my_map(-90,90,1230,1770,data)
-    });
+    var msn = new ROSLIB.Message({data : my_map(-90,90,1230,1770,data)});
     joint5.publish(msn);
     getTxt();
 }
+
+// Rotate gripper N grades
+function griperRotation(data){
+    var key = "joint5";
+    values_map[key]+=data;
+    values_map[key] = qlimit(limits_map[key], values_map[key]);
+    var msn = new ROSLIB.Message({
+        data : my_map(-90,90,1230,1770,values_map[key])
+    });
+    joint5.publish(msn); 
+    getTxt();
+}
+// Open gripper
+function moveGripper(data){    
+    var msn = new ROSLIB.Message({data : data});
+    gripper.publish(msn);           
+}
+// Open linear
+function movePrismatic(data){    
+    var msn = new ROSLIB.Message({data : data});
+    lineal.publish(msn);
+}
+
+// Move general camera
+function moveCamera(data){
+    key = "joint8";
+    values_map[key] += (data);    
+    values_map[key] = qlimit(limits_map.camera, values_map[key]);
+    var msn = new ROSLIB.Message({data : parseInt(values_map[key])});
+    camera.publish(msn);
+    getTxt();
+}
+
 function pressed(data, joint, sign = 1){
     var key = "joint" + String(joint);
-    if(joint === 6){
-        var msn = new ROSLIB.Message({
-            data : data
-        });        
-        gripper.publish(msn);       
-    }
-    if(joint === 7){
-        var msn = new ROSLIB.Message({
-            data : data
-        });
-        lineal.publish(msn);
-    }
     if(joint === 4){
         var prev = values_map[key];        
         values_map[key]+=(data*sign);
@@ -266,13 +274,6 @@ function pressed(data, joint, sign = 1){
         if(!poss){
             values_map[key] = prev;
         }
-    }else if(joint === 5){   
-        values_map[key]+=(data*sign);    
-        values_map[key] = qlimit(limits_map[key], values_map[key]);
-        var msn = new ROSLIB.Message({
-            data : my_map(-90,90,1230,1770,values_map[key])
-        });
-        joint5.publish(msn); 
     }else{  
         values_map[key] += (data*sign);
     } 
@@ -288,17 +289,7 @@ function pressed(data, joint, sign = 1){
         if(!poss){
             values_map[key]+=(data*(sign));
         }
-    }   
-
-    if(joint === 8){
-        values_map[key] = qlimit(limits_map.camera, values_map[key]);
-        var msn = new ROSLIB.Message({
-            data : parseInt(values_map[key])
-        });
-        camera.publish(msn);
-    }
-    getTxt();
-    //labelInfo.config(text=self.getTxt())
+    }    
 }
 
 function getTxt(){
