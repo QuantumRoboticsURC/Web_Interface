@@ -34,8 +34,15 @@ var listener_Joystick = new ROSLIB.Topic({
 listener_Joystick.subscribe(function(message) {
   //var imagedata = "data:image/png;base64," + message.data;
   values = message.data.split(" ");
-  values_map.joint3 = values[2];
+  values_map.joint1 += parseFloat(values[0]);  
+  values_map.joint2 += parseFloat(values[1]);
+  values_map.joint3 += parseFloat(values[2]);
+  values_map.joint4 += parseFloat(values[3]);
+  
+  values_map.joint5 += parseFloat(values[4]);
+  console.log(values);
   inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
+  getTxt();
 });
 
 var pub_q1 = new ROSLIB.Topic({
@@ -132,7 +139,6 @@ var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
 
 function PresionadoDerecha(id){
-   // console.log(print("presionado" + id));
 
     var x = values_map.joint1;
     var y = values_map.joint2;
@@ -285,7 +291,6 @@ function pressed(data, joint, sign = 1){
     }   
 
     if(joint === 8){
-        //console.log(parseInt(values_map[key]));
         values_map[key] = qlimit(limits_map.camera, values_map[key]);
         var msn = new ROSLIB.Message({
             data : parseInt(values_map[key])
@@ -395,7 +400,6 @@ function inverseKinematics(xm, ym, zm, phi_int){
     acum+=deg2rad(q4);
     let x4 = x3+l4*math.cos(acum);
     let y4 = y3+l4*math.sin(acum);
-    console.log("angulos: "+q1 + " "+ q2 + " "+q3+" "+q4);
     if(y4>limit_z && (x4>limit_chassis || y4>=0)){
         values_map.joint1 = x3;
         values_map.joint3 = y3;
@@ -421,8 +425,6 @@ function arm_interface(q2,q3,q4){
     acum+=deg2rad(q3);
 	let x3=x2+l3*math.cos(acum);
 	let y3=y2+l3*math.sin(acum);
-    console.log(acum);
-    console.log(acum);
     acum+=deg2rad(q4);
 	let x4=x3+l4*math.cos(acum);
 	let y4=y3+l4*math.sin(acum);    
