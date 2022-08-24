@@ -277,19 +277,18 @@ function pressed(data, joint, sign = 1){
     }else{  
         values_map[key] += (data*sign);
     } 
-
     if (joint === 2){
         angles_map.q1+=(data*sign);
         angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
         values_map.joint2 = self.angles_map.q1;
     }
-    
     if(joint < 4 && joint != 2){
         var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);          
         if(!poss){
             values_map[key]+=(data*(sign));
         }
     }    
+    getTxt();
 }
 
 function getTxt(){
