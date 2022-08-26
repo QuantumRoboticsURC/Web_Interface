@@ -169,7 +169,7 @@ function predefinedPosition(position){
         x = 3.28
         y = 0
         z = -.1
-        phi = -90
+        phi = 0
     }else if (position === "STORAGE"){
         x = .134;
         y =  0;
@@ -221,6 +221,19 @@ function qlimit(l, val){
 
 function my_map(in_min, in_max, out_min, out_max, x){
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+
+// Gripper go to phi
+function go_phi(data){
+    var key = "joint4";
+    var prev = values_map[key];        
+    values_map[key]=data;
+    var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
+    if(!poss){
+        values_map[key] = prev;
+    }   
+    getTxt();
 }
 
 // Gripper go to particular location
