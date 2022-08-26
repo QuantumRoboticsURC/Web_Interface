@@ -224,7 +224,7 @@ function my_map(in_min, in_max, out_min, out_max, x){
 }
 
 
-// Gripper go to phi
+// go to phi
 function go_phi(data){
     var key = "joint4";
     var prev = values_map[key];        
@@ -233,6 +233,18 @@ function go_phi(data){
     if(!poss){
         values_map[key] = prev;
     }   
+    getTxt();
+}
+
+// 
+function phi(data){
+    var key = "joint4";
+    var prev = values_map[key];        
+    values_map[key]+=data;
+    var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
+    if(!poss){
+        values_map[key] = prev;
+    }
     getTxt();
 }
 
@@ -278,23 +290,20 @@ function moveCamera(data){
     getTxt();
 }
 
+//Rotate
+function rotate(data){
+    angles_map.q1+=data;
+    angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
+    values_map.joint2 = self.angles_map.q1;
+    getTxt();
+}
+
+//Buttons related to inverse kinematics
 function pressed(data, joint, sign = 1){
     var key = "joint" + String(joint);
-    if(joint === 4){
-        var prev = values_map[key];        
-        values_map[key]+=(data*sign);
-        var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
-        if(!poss){
-            values_map[key] = prev;
-        }
-    }else{  
-        values_map[key] += (data*sign);
-    } 
-    if (joint === 2){
-        angles_map.q1+=(data*sign);
-        angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
-        values_map.joint2 = self.angles_map.q1;
-    }
+
+    values_map[key] += (data*sign);
+
     if(joint < 4 && joint != 2){
         var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);          
         if(!poss){

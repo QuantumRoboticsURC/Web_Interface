@@ -152,7 +152,7 @@
 											<div class="card">
 												<div class="card-body" >
 													<p>Position X: <label  type="text" id="X"></label></p>
-													<p>Position Y: <label  type="text" id="Y"></label></p>
+													<p>Rotation: <label  type="text" id="Y"></label></p>
 													<p>Position Z: <label  type="text" id="Z"></label></p>
 													<p>Position Phi: <label  type="text" id="Phi"></label></p>
 													<p>Gripper Rotation: <label  type="text" id="Rotacion"></label></p>
@@ -188,14 +188,14 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Position Y</small>
+															<small class="text-muted">Rotation</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
 																	<div class="input-group">
 																		<input id="Y_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Y_Txt').value), 2)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Y_Txt').value), 2)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary " onclick="rotate(-parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary" onclick="rotate(parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -229,8 +229,8 @@
 																	<div class="input-group">
 																		<input id="Phi_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Phi_Txt').value), 4)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Phi_Txt').value), 4)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary " onclick="phi(-parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary" onclick="phi(parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;+&nbsp;</button>
 															</div>
 															</div>
 														</div>
