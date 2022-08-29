@@ -44,6 +44,18 @@ listener_Joystick.subscribe(function(message) {
   getTxt();
 });
 
+//Joystick
+var listener_predefined = new ROSLIB.Topic({
+    ros : ros,
+    name : '/predefined',
+    messageType : 'std_msgs/String'
+});
+
+listener_predefined.subscribe(function(message) {
+    predefinedPosition(message.data);
+    console.log(message.data)
+});
+
 var pub_q1 = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/joint1',
