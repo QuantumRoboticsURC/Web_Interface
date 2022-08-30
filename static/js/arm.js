@@ -20,7 +20,7 @@ if (_config.is_WebVideo){
 
     listener.subscribe(function(message) {
         var imagedata = "data:image/png;base64," + message.data;
-        document.getElementById("Arm_Camera").src = imagedata;      
+        document.getElementById("Arm_Camera").src = imagedata;
     });
 }  
 
@@ -132,7 +132,7 @@ var l4 = .9;
 
 //Limits
 var limits_map = {
-    q1:[-90,90],
+    q1:[-95,90],
     q2:[0,161],
     q3:[-165.4,0],
     q4:[-135,90],
@@ -174,8 +174,9 @@ function predefinedPosition(position){
         phi = 90
     }else if (position === "BOX"){
         x = 0;
-        y =  -95;
-        z =  3.68;
+        //y = -95;
+        z = 3.68;
+        phi = 0;
     }
     /*if (position === "HOME"){
         x = .134;
@@ -218,7 +219,7 @@ function predefinedPosition(position){
     values_map.joint3 = z;
     values_map.joint4 = phi;
     inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-    griperRotation(values_map.joint2);
+    go_rotation(values_map.joint2);
     }
 
 function publish_angles(){
@@ -324,6 +325,14 @@ function moveCamera(data){
 }
 
 //Rotate
+function go_rotation(data){
+    angles_map.q1=data;
+    angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
+    values_map.joint2 = self.angles_map.q1;
+    getTxt();
+}
+
+//Rotate
 function rotate(data){
     angles_map.q1+=data;
     angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
@@ -385,7 +394,7 @@ function getTxt(){
 function rad2deg(radians){return radians * (180/math.pi);}
 function deg2rad(degrees){return degrees * (math.pi/180);}
 
-function inverseKinematics(xm, ym, zm, phi_int){ 
+function inverseKinematics(xm, ym, zm, phi_int){
     let Q1 = 0;
     if (xm != 0 || ym != 0 || zm != 0){
       if(xm == 0){
@@ -411,7 +420,6 @@ function inverseKinematics(xm, ym, zm, phi_int){
                       
       }else{
         //Ni idea #real
-        
         Q1 = math.re(math.atan2(ym,xm));
       }  
     }    
