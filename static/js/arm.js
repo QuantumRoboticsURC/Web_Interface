@@ -157,7 +157,27 @@ function predefinedPosition(position){
     var z = values_map.joint3;
     var phi = values_map.joint4;
 
-    if (position === "HOME"){
+    if(position === "INTERMEDIATE"){
+        x = 0;
+        y = 0;
+        z = 3.677;
+        phi = 0;
+    }else if (position === "FLOOR"){
+        x = 3.28
+        y = 0
+        z = -.1
+        phi = 0
+    }else if (position === "STORAGE"){
+        x = .134;
+        y =  0;
+        z =  .75;
+        phi = 90
+    }else if (position === "BOX"){
+        x = 0;
+        y =  -95;
+        z =  3.68;
+    }
+    /*if (position === "HOME"){
         x = .134;
         y =  0;
         z =  .75;
@@ -192,12 +212,13 @@ function predefinedPosition(position){
         y =  0;
         z =  5.2;
         phi = 90
-    }
+    }*/
     values_map.joint1 = x;
     values_map.joint2 = y;
     values_map.joint3 = z;
     values_map.joint4 = phi;
     inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+    griperRotation(values_map.joint2);
     }
 
 function publish_angles(){
