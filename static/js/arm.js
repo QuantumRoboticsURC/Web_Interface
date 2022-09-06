@@ -159,22 +159,22 @@ function predefinedPosition(position){
 
     if(position === "INTERMEDIATE"){
         x = 0;
-        y = 0;
+        y = -5;
         z = 3.677;
         phi = 0;
     }else if (position === "FLOOR"){
         x = 3.28
-        y = 0
+        y = -5
         z = -.1
         phi = 0
     }else if (position === "STORAGE"){
         x = .134;
-        y =  0;
+        y =  -5;
         z =  .75;
         phi = 90
     }else if (position === "BOX"){
         x = 0;
-        //y = -95;
+        y = -94;
         z = 3.68;
         phi = 0;
     }
@@ -396,7 +396,7 @@ function deg2rad(degrees){return degrees * (math.pi/180);}
 
 function inverseKinematics(xm, ym, zm, phi_int){
     let Q1 = 0;
-    if (xm != 0 || ym != 0 || zm != 0){
+    /*if (xm != 0 || ym != 0 || zm != 0){
       if(xm == 0){
         if(ym>0){
           xm = ym;
@@ -422,7 +422,8 @@ function inverseKinematics(xm, ym, zm, phi_int){
         //Ni idea #real
         Q1 = math.re(math.atan2(ym,xm));
       }  
-    }    
+    }    */
+    Q1 = math.re(math.atan2(ym,xm));
     //Para q1
     let q1=angles_map.q1
     q1=qlimit(limits_map.q1,q1);
