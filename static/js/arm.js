@@ -33,15 +33,19 @@ var listener_Joystick = new ROSLIB.Topic({
 
 listener_Joystick.subscribe(function(message) {
   values = message.data.split(" ");
-  values_map.joint1 += parseFloat(values[0]);  
-  values_map.joint2 += parseFloat(values[1]);
-  values_map.joint3 += parseFloat(values[2]);
-  values_map.joint4 += parseFloat(values[3]);
+  if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.8 || values[4]!=-0.05){
+    console.log("entra a if_")
+  values_map.joint1 += parseFloat(values[0]);  //x
+  values_map.joint2 += parseFloat(values[1]); //y
+  values_map.joint3 += parseFloat(values[2]); //z
+  values_map.joint4 += parseFloat(values[3]); //phi
   
-  values_map.joint5 += parseFloat(values[4]);
+  values_map.joint5 += parseFloat(values[4]); //rotation
   console.log(values);
+
   inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
   getTxt();
+};
 });
 
 //Joystick
@@ -424,10 +428,10 @@ function inverseKinematics(xm, ym, zm, phi_int){
       }  
     }    */
     Q1 = math.re(math.atan2(ym,xm));
-    console.log("Q1",Q1)
+    //console.log("Q1",Q1)
     //Para q1
     let q1=angles_map.q1
-    console.log("q1",q1) //marca -5 en lugar de 0 
+    //console.log("q1",q1) //marca -5 en lugar de 0 
 
     q1=qlimit(limits_map.q1,q1);
     //Para q2
@@ -437,7 +441,7 @@ function inverseKinematics(xm, ym, zm, phi_int){
     //console.log("xm",xm)
     //console.log("hip", hip)
     let phi = math.complex(math.atan2(zm-l1, xm))
-    console.log("phi",phi)
+    //console.log("phi",phi)
 
     //beta=acos((-l3^2+l2^2+hip^2)/(2*l2*hip))
     let beta=math.acos((math.pow(l2,2)+math.pow(hip,2)-math.pow(l3,2))/(2*l2*hip)); //da negativo cuando no funciona 
@@ -452,9 +456,9 @@ function inverseKinematics(xm, ym, zm, phi_int){
     let Q3=math.re(gamma-math.pi);
     let q3=rad2deg(Q3);
     q3=qlimit(limits_map.q3,q3);
-    console.log("gamma",gamma)
-    console.log("Q3",Q3)
-    console.log("q3",q3)
+    //console.log("gamma",gamma)
+  //  console.log("Q3",Q3)
+    //console.log("q3",q3)
 
     let q4 = phi_int - q2 -q3;
     q4=qlimit(limits_map.q4,q4);
@@ -470,7 +474,7 @@ function inverseKinematics(xm, ym, zm, phi_int){
     acum+=deg2rad(q4);
     let x4 = x3+l4*math.cos(acum);
     let y4 = y3+l4*math.sin(acum);
-    console.log(y4); //NAN
+    //console.log(y4); //NAN
     if(y4>limit_z && (x4>limit_chassis || y4>=0)){
         values_map.joint1 = x3;
         values_map.joint3 = y3;
