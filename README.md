@@ -68,7 +68,7 @@
 1. Start the servers:
    ```sh
     $ rosrun web_video_server web_video_server
-    $ rosrun rosbridge-server rosbridge-websocket
+    $ roslaunch rosbridge_server rosbridge_websocket.launch
     $ python3 application.py
    ```
 2. Adapt the variables in `static/js/config.js`
