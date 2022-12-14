@@ -32,20 +32,20 @@ var listener_Joystick = new ROSLIB.Topic({
 });
 
 listener_Joystick.subscribe(function(message) {
-  values = message.data.split(" ");
-  if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0){
-    console.log("entra a if_")
-  values_map.joint1 += parseFloat(values[0]);  //x
-  values_map.joint2 += parseFloat(values[1]); //y
-  values_map.joint3 += parseFloat(values[2]); //z
-  values_map.joint4 += parseFloat(values[3]); //phi
-  
-  values_map.joint5 += parseFloat(values[4]); //rotation
-  console.log(values);
+    values = message.data.split(" ");
+    if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0){
+        console.log("entra a if_")
+        values_map.joint1 += parseFloat(values[0]);  //x
+        values_map.joint2 += parseFloat(values[1]); //y
+        values_map.joint3 += parseFloat(values[2]); //z
+        values_map.joint4 += parseFloat(values[3]); //phi
 
-  inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
-  getTxt();
-};
+        values_map.joint5 += parseFloat(values[4]); //rotation
+        console.log(values);
+
+        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
+        getTxt();
+    };
 });
 
 //Joystick
@@ -60,36 +60,19 @@ listener_predefined.subscribe(function(message) {
     console.log(message.data)
 });
 
-var pub_q1 = new ROSLIB.Topic({
+var pub_arm = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/joint1',
-    messageType : 'std_msgs/Float64',
-    queue_size: 1   
+    name : 'arm_teleop',
+    messageType : 'custom_messages/arm',
+    queue_size: 1
 });
-var pub_q2 = new ROSLIB.Topic({
-    ros : ros,
-    name : 'arm_teleop/joint2',
-    messageType : 'std_msgs/Float64',
-    queue_size: 1   
-});
-var pub_q3 = new ROSLIB.Topic({
-    ros : ros,
-    name : 'arm_teleop/joint3',
-    messageType : 'std_msgs/Float64',
-    queue_size: 1   
-});
-var pub_q4 = new ROSLIB.Topic({
-    ros : ros,
-    name : 'arm_teleop/joint4',
-    messageType : 'std_msgs/Float64',
-    queue_size: 1   
-});
-var pub_q_string = new ROSLIB.Topic({
-    ros : ros,
-    name : 'inverse_kinematics/Q',
-    messageType : 'std_msgs/String',
-    queue_size: 1   
-});
+/*
+joint1 Float 64
+joint2 Float 64
+joint3 Float 64
+joint4 Float 64
+Inverse_kinematics String
+*/
 //gripper rotation
 var joint5 = new ROSLIB.Topic({
     ros : ros,
@@ -161,27 +144,6 @@ function predefinedPosition(position){
     var z = values_map.joint3;
     var phi = values_map.joint4;
 
-    /*if(position === "INTERMEDIATE"){
-        x = 0;
-        y = -5;
-        z = 3.677;
-        phi = 0;
-    }else if (position === "FLOOR"){
-        x = 3.28
-        y = -5
-        z = -.1
-        phi = 0
-    }else if (position === "STORAGE"){
-        x = .134;
-        y =  -5;
-        z =  .75;
-        phi = 90
-    }else if (position === "BOX"){
-        x = 0;
-        y = -94;
-        z = 3.68
-        phi = 0;
-    }*/
     if (position === "HOME"){
         x = .134;
         y =  -5;
@@ -218,7 +180,7 @@ function predefinedPosition(position){
         z =  5.2;
         phi = 90
     }
-    
+
     values_map.joint1 = x;
     values_map.joint2 = y;
     values_map.joint3 = z;
@@ -401,33 +363,6 @@ function deg2rad(degrees){return degrees * (math.pi/180);}
 
 function inverseKinematics(xm, ym, zm, phi_int){
     let Q1 = 0;
-    /*if (xm != 0 || ym != 0 || zm != 0){
-      if(xm == 0){
-        if(ym>0){
-          xm = ym;
-          Q1 = math.pi/2;
-        }else if (ym<0){
-          xm = ym;
-          Q1 = math.pi/2;
-        }else if(ym == 0){
-          Q1 = 0; 
-        }
-      }else if (xm < 0){
-        if (ym == 0){
-          Q1 = 0;
-        }else if(ym < 0){
-          //No lo he cambiado #real
-          Q1 = math.re(math.atan2(xm, ym));
-        }else{
-          //Tampoco lo he cambiado #real
-          Q1 = math.re(math.atan2(-xm,-ym));
-        }
-                      
-      }else{
-        //Ni idea #real
-        Q1 = math.re(math.atan2(ym,xm));
-      }  
-    }    */
     Q1 = math.re(math.atan2(ym,xm));
     //console.log("Q1",Q1)
     //Para q1
