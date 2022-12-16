@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Quantum Robotics Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+		name='viewport' />
+	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
+	<link rel="shortcut icon" href="#">
+
+	<script src="{{url_for('static', filename='js/config.js')}}"></script>
+	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Datos de tabla -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/datatables.min.css">
+    <script src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/datatables.min.js"></script>
+
+    
+
+    <!-- Hojas de estilo bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="Archivos/style.css">
+   
+  
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="/" class="logo">
+					<img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
+					<small>Quantum Robotics</small>
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+					<div class="navbar-left navbar-form nav-search mr-md-3">
+						<img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
+						<img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
+						<img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
+						<img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
+					</div>
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item dropdown hidden-caret">
+							<div class="nav-link dropdown-toggle">
+								University Rover Challenge, June 2022.
+								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div class="sidebar">
+			<div class="scrollbar-inner sidebar-wrapper">
+				<ul class="nav">
+					<li class="nav-item active">
+						<a href="/">
+							<i class="la la-camera"></i>
+							<p>Nav</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="metrics">
+							<i class="la la-dashboard"></i>
+							<p>Metrics</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="arm">
+							<i class="la la-cogs"></i>
+							<p>Arm</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="lab">
+							<i class="la la-flask"></i>
+							<p>Lab</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="rocks">
+							<i class="la la-th-list"></i>
+							<p>Rocks</p>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="coordinates">
+							<i class="la la-map"></i>
+							<p>Coor Converter</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="main-panel">
+			<div class="content">
+				<div class="container-fluid">
+					<h4 class="page-title">Rocks classification</h4>
+					
+
+
+                    <div class="container-fluid p-5">
+
+
+                        <div class="table-responsive" id="mydatatable-container" style="background-color: white; border-radius: 1.5rem; padding: 3%;">
+                            
+                            <select id="searchInput">
+                                <option value="all">Todas</option>
+                                <option value="Ígnea">Ígnea</option>
+                                <option value="Sedimentaria">Sedimentaria</option>
+                                <option value="Metamórfica">Metamórfica</option>
+                            </select>
+                
+                            <table class="records_list table table-striped table-bordered table-hover" id="mydatatable">
+                                <h4 style="text-align: right;">Buscar por ID</h4>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 25%;">Piedra</th>
+                                        <th>Descripción</th>
+                                     
+                                    </tr>
+                                </thead>
+                                
+                                <tbody id="fbody">
+                                   <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/granito.jpg" class="rocas" >
+                                            Granito<br>ID: 01</td>
+                                        <td>Tipo:	Ígnea<br>
+                                            Textura: Intermedia-gruesa<br>
+                                            Color: Gris, amarillo, rojo claro<br>
+                                            Minerales esenciales: Cuarzo, feldespato potásico y plagioclasa<br>
+                                           ID: 01
+                                            </td>
+                                 
+                                    </tr>
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/granodiorita.jpg" class="rocas" >
+                                            Granodiorita<br>ID: 02</td>
+                                        <td>Tipo:	Ígnea<br>
+                                            Textura: Fino-gruesa<br>
+                                            Color: Gris, blanco, rosado<br>
+                                            Minerales esenciales: Cuarzo, feldespatos<br>
+                                            ID: 02
+                                            </td>
+                                  
+                                    </tr>
+                                  
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/Sienita.jpg" class="rocas" >
+                                            Sienita<br>ID: 03</td>
+                                        <td>Tipo:	Ígnea<br>
+                                            Textura: 	Intermedio, Grueso<br>
+                                            Color: Blanquizco con café brillante, gris rosáceo<br>
+                                            Minerales esenciales: Ortoclasa, plagioclasa, auguita y magnetita<br>
+                                            ID: 03
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/Monzonita.jpg" class="rocas" >
+                                            Monzonita<br>ID: 04</td>
+                                        <td>Tipo:	Ígnea<br>
+                                            Textura: 	Fanerítica<br>
+                                            Color: Rosa con tonalidades blancas y negras<br>
+                                            Minerales esenciales: Cuarzo, Feldespato, Plagioclasa<br>
+                                            ID: 04
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/Diorita.jpg" class="rocas" >
+                                            Diorita<br>ID: 05</td>
+                                        <td>Tipo:	Ígnea<br>
+                                            Textura: 		Intermedio, Grueso<br>
+                                            Color: Blanco-negro o levemente gris-verde<br>
+                                            Minerales esenciales: Plagioclasa sódica, Biotita, Anfíbol, Piroxeno, Cuarzo<br>
+                                            ID: 05
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/gabro.jpg" class="rocas" >
+                                            Gabro<br>ID: 06 </td>
+                                        <td>Tipo:	Ígnea<br>
+                                            Textura: 		Intermedio, Grueso<br>
+                                            Color: Verde oscuro a negro<br>
+                                            Minerales esenciales: Plagioclasa cálcica, Piroxeno, Olivino, Hornblenda, Hiperstena<br>
+                                            ID: 06
+                                            <br>
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/Dunita.jpg" class="rocas" >
+                                            Dunita<br>ID: 07</td>
+                                        <td>Tipo:	Ígnea<br>
+                                            Textura: 		Intermedio, Grueso<br>
+                                            Color: Verde oscuro a negro<br>
+                                            Minerales esenciales: Olivino, piroxenos y anfíboles<br>
+                                            ID: 07
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/Conglomerado.webp" class="rocas" >
+                                            Conglomerado<br>ID: 08</td>
+                                        <td>Tipo:	Sedimentaria<br>
+                                            Textura: 		Grueso<br>
+                                            Color: Negro, gris, marrón<br>
+                                            Minerales esenciales: granito, cuarcita y andesita<br>
+                                            ID: 08
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/brecha.webp" class="rocas" >
+                                            Brecha<br>ID: 09</td>
+                                        <td>Tipo:	Sedimentaria<br>
+                                            Textura: 		Irregular<br>
+                                            Color: Variable<br>
+                                            Minerales esenciales: clastos, brecha de guijas o gránulo<br>
+                                            ID: 09
+                                            
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/arenisca.jpg" class="rocas" >
+                                            Arenisca<br>ID: 10</td>
+                                        <td>Tipo:	Sedimentaria<br>
+                                            Textura: 		Intermedio-grueso<br>
+                                            Color: Variable, comúnmente gris, café o rojo<br>
+                                            Minerales esenciales: Arenisca, cuarzo o feldespato<br>
+                                            ID: 10
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/Arcosa.webp" class="rocas" >
+                                            Arcosa<br>ID: 11</td>
+                                        <td>Tipo:	Sedimentaria<br>
+                                            Textura: Detrítica<br>
+                                            Color: Rosado, rojo, amarillo<br>
+                                            Minerales esenciales: cuarzo y minerales de feldespatos<br>
+                                            ID: 11
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/Grauvaca.jpg" class="rocas" >
+                                            Grauvaca<br>ID: 12</td>
+                                        <td>Tipo:	Sedimentaria<br>
+                                            Textura: Detrítica<br>
+                                            Color: Negros, gises<br>
+                                            Minerales esenciales: Cuarzo , feldespato,  roca o líticos<br>
+                                            ID: 12
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                       
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/limolita.jpg" class="rocas" >
+                                            Limolita<br>ID: 13</td>
+                                        <td>Tipo:	Sedimentaria<br>
+                                            Textura: Fina<br>
+                                            Color: Gris, rojo, verde<br>
+                                            Minerales esenciales: Hematita, goetita y ferrihidrita<br>
+                                            ID: 13
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Anfibolita.jpg" class="rocas" >
+                                            Anfibolita<br>ID: 14</td>
+                                        <td>Tipo:	Metamórfica<br>
+                                            Textura: Intermedio-Grueso<br>
+                                            Color: Verdes, marrones o negros<br>
+                                            Minerales esenciales: anfíbol, cuarzo, clinopiroxeno, granate.<br>
+                                            ID: 14
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Corneana.jpg" class="rocas" >
+                                            Corneana<br>ID: 15</td>
+                                        <td>Tipo:	Metamórfica<br>
+                                            Textura: Granoblastica-masiva<br>
+                                            Color: Gris oscuro con tonalidades marrones y verdes<br>
+                                            Minerales esenciales:  Cuarzo, granates, epidota, biotita, sericita, clorita, grafito.<br>
+                                            ID: 15
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Cuarcita.jpg" class="rocas" >
+                                            Cuarcita<br>ID: 16</td>
+                                        <td>Tipo:	Metamórfica<br>
+                                            Textura: Intermedio-Grueso<br>
+                                            Color: 	Blanco, gris, rosado o rojizo<br>
+                                            Minerales esenciales:  Cuarzo<br>
+                                            ID: 16
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Eclogita.jpg" class="rocas" >
+                                            Eclogita<br>ID: 17</td>
+                                        <td>Tipo:	Metamórfica<br>
+                                            Textura: Intermedio-Grueso<br>
+                                            Color: 	Blanco, verde, gris, rosado o rojizo<br>
+                                            Minerales esenciales:  Granate, Piroxeno<br>
+                                            ID: 17
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Espilita.jpg" class="rocas" >
+                                            Espilita<br>ID: 18</td>
+                                        <td>Tipo:	Metamórfica<br>
+                                            Textura: Suave-Grueso<br>
+                                            Color: 	Gris, Verde<br>
+                                            Minerales esenciales:  Albita, Clorita, Calcita<br>
+                                            ID: 18
+                                            
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Esquisito.jpg" class="rocas" >
+                                            Esquisito<br>ID: 19</td>
+                                        <td>Tipo:	Metamórfica<br>
+                                            Textura: 	Esquistosa<br>
+                                            Color: 	Verde, café, rojizo<br>
+                                            Minerales esenciales:  mica, clorita, talco, hornblenda<br>
+                                            ID: 19
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                
+                   <!-- Termina tabla -->  
+                    
+                   
+                   <script type="text/javascript">
+
+                    $("#searchInput").change(function () {
+                        if(this.value != "") 
+                        {
+                        //Dividir los valores a buscar
+                        var data = this.value.split(" ");
+                        //Busca en las filas
+                        var jo = $("#fbody").find("tr");
+                    
+                        if (this.value == "" || this.value=="all") {
+                            
+                            jo.show();
+                            return;
+                        }
+            
+                        //Oculta las filas
+                        jo.hide();
+            
+                        //Filtra los resultados
+                        jo.filter(function (i, v) {
+                            var $t = $(this);
+                            for (var d = 0; d < data.length; ++d) {
+                                if ($t.is(":contains('" + data[d] + "')")) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        })
+                        //Muestra los resultados que coincidan
+                        .show();
+                        }
+                        }).focus(function () {
+                        this.value = "";
+                        $(this).css({
+                            "color": "black"
+                        });
+                        $(this).unbind('focus');
+                        }).css({
+                        "color": "#C0C0C0"
+                        });
+            
+            
+            
+            
+                        //Crea la funcion de filtrar
+                        $(document).ready(function() {
+                            $('#mydatatable tfoot th').each( function () {
+                                var title = $(this).text();
+                                $(this).html( '<input type="text" placeholder="Filtrar.." />' );
+                            } );
+                        //Se usa plug in jason para los datos universales de la tabla en español
+                            var table = $('#mydatatable').DataTable({
+                                "dom": 'B<"float-left"i><"float-right"f>t<"float-left"l><"float-right"p><"clearfix">',
+                                "responsive": false,
+                                "language": {
+                                    "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                                },
+                                //Orden ascendente o descendente
+                                "order": [[ 0, "desc" ]],
+                                "initComplete": function () {
+                                    this.api().columns().every( function () {
+                                        var that = this;
+                        
+                                        $( 'input', this.footer() ).on( 'keyup change', function () {
+                                            if ( that.search() !== this.value ) {
+                                                that
+                                                    .search( this.value )
+                                                    .draw();
+                                                }
+                                        });
+                                    })
+                                }
+                            });
+                        });
+                        </script>
+            
+
+							
+				</div>	
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="{{url_for('static', filename='js/index.js')}}"></script>
+<script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
+
+</html>
