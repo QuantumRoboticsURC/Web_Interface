@@ -66,34 +66,16 @@ var pub_arm = new ROSLIB.Topic({
     messageType : 'custom_messages/arm',
     queue_size: 1
 });
+
 /*
 joint1 Float 64
 joint2 Float 64
 joint3 Float 64
 joint4 Float 64
+joint5 Int32 gripper rotation
 Inverse_kinematics String
 */
-//gripper rotation
-var joint5 = new ROSLIB.Topic({
-    ros : ros,
-    name : 'arm_teleop/joint5',
-    messageType : 'std_msgs/Int32',
-    queue_size: 1   
-});
-//lineal 
-var gripper = new ROSLIB.Topic({
-    ros : ros,
-    name : 'arm_teleop/gripper',
-    messageType : 'std_msgs/Float64',
-    queue_size: 1   
-});
-//lineal 
-var lineal = new ROSLIB.Topic({
-    ros : ros,
-    name : 'arm_teleop/prism',
-    messageType : 'std_msgs/Float64',
-    queue_size: 1   
-});
+
 //Camera 
 var camera = new ROSLIB.Topic({
     ros : ros,
@@ -189,25 +171,17 @@ function predefinedPosition(position){
     go_rotation(values_map.joint2);
     }
 
-function publish_angles(){
-    var q1 = angles_map.q1;
-    var q2 = angles_map.q2;
-    var q3 = angles_map.q3;
-    var q4 = angles_map.q4;
-
-    var txt = String(q1)+" "+String(q2)+" "+String(q3)+" "+String(q4)
-
-    var msn_q1 = new ROSLIB.Message({data : q1});
-    var msn_q2 = new ROSLIB.Message({data : q2});
-    var msn_q3 = new ROSLIB.Message({data : q3});
-    var msn_q4 = new ROSLIB.Message({data : q4});
-    var msn_txt = new ROSLIB.Message({data : txt});
-
-    pub_q1.publish(msn_q1);
-    pub_q2.publish(msn_q2);
-    pub_q3.publish(msn_q3);
-    pub_q4.publish(msn_q4);
-    pub_q_string.publish(msn_txt);
+function publish_angles(){    
+    var message = new ROSLIB.Message({
+        joint1: values_map.joint1,
+        joint2: values_map.joint2,
+        joint3: values_map.joint3,
+        joint4: values_map.joint4,
+        joint5: values_map.joint5,
+        gripper: 0,
+        prism: 0
+    }); 
+    pub_arm.publish(message);
 }
 
 function qlimit(l, val){   //limites
@@ -223,7 +197,6 @@ function qlimit(l, val){   //limites
 function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
-
 
 // go to phi
 function go_phi(data){
