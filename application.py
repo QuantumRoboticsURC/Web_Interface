@@ -19,6 +19,10 @@ def index():
 def ciencias():
     return render_template('laboratory.html')
 
+@application.route('/rocks')
+def rocks():
+    return render_template('rocks.html')
+
 @application.route('/metrics')
 def metrics():
     return render_template('metrics.html')    
@@ -30,6 +34,10 @@ def arm():
 @application.route('/coordinates')
 def coordinates():
     return render_template('coordinates.html')  
+
+
+
+
 
 @application.route('/data_sensor1')
 def data_sensor1():
