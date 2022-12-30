@@ -34,16 +34,12 @@ var listener_Joystick = new ROSLIB.Topic({
 listener_Joystick.subscribe(function(message) {
     values = message.data.split(" ");
     if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0){
-        console.log("entra a if_")
-        values_map.joint1 += parseFloat(values[0]);  //x
-        values_map.joint2 += parseFloat(values[1]); //y
-        values_map.joint3 += parseFloat(values[2]); //z
-        values_map.joint4 += parseFloat(values[3]); //phi
-
+        values_map.x += parseFloat(values[0]);  //x
+        angles_map.q1 += parseFloat(values[1]); //y
+        values_map.y += parseFloat(values[2]); //z
+        values_map.phi += parseFloat(values[3]); //phi
         angles_map.gripper += parseFloat(values[4]); //rotation
-        console.log(values);
-
-        inverseKinematics(values_map.joint1, values_map.joint3, values_map.joint4);
+        inverseKinematics(values_map.x, values_map.y, values_map.phi);
         getTxt();
     };
 });
@@ -57,7 +53,6 @@ var listener_predefined = new ROSLIB.Topic({
 
 listener_predefined.subscribe(function(message) {
     predefinedPosition(message.data);
-    console.log(message.data)
 });
 
 var pub_arm = new ROSLIB.Topic({
@@ -66,17 +61,6 @@ var pub_arm = new ROSLIB.Topic({
     messageType : 'custom_messages/arm',
     queue_size: 1
 });
-
-/*
-float64 joint1
-float64 joint2
-float64 joint3
-float64 joint4 # Phi
-int32 joint5 #Gripper rotation
-float64 gripper #lineal
-float64 prism
-string inverse_kinematics
-*/
 
 //Camera 
 var camera = new ROSLIB.Topic({
@@ -87,13 +71,13 @@ var camera = new ROSLIB.Topic({
 });
 
 //Initial values
-var gripper_apertur = 60;   //0 y 60
 var values_map = {
-    joint1: .134,   //.4
-    joint3: .75,
-    joint4: 0,      //phi
-    joint8: 140 //camera
+    x: .134,   //.4
+    y: .75,
+    phi: 0      //phi
 };
+
+camera = 140;
 var lineal_actuators = {
     gripper : 0,
     prism : 0
@@ -125,55 +109,51 @@ var limit_chassis = 1.1; //11cm del chasis
 
 // Predefined positions
 function predefinedPosition(position){
-
-    var x = values_map.joint1;
-    var y = angles_map.q1;
-    var z = values_map.joint3;
-    var phi = values_map.joint4;
-
-    if (position === "HOME"){
-        x = .134;
-        y =  -5;
-        z =  .75;
-        phi = 0;
-    } else if(position === "INTERMEDIATE"){
-        x = 0;
-        y = -5;
-        z = 3.677;
-        phi = 0;
-    }else if(position === "PULL"){
-        x = 3.33;
-        y = -5;
-        z = 3.35;
-        phi = 0;
-    }else if (position === "WRITE"){
-        x = 3.33;
-        y = -5;
-        z = 1.35;
-        phi = 0;        
-    }else if (position === "FLOOR"){
-        x = 3.28
-        y = -5
-        z = -.1
-        phi = 0
-    }else if (position === "STORAGE"){
-        x = .134;
-        y =  -5;
-        z =  .75;
-        phi = 90
-    }else if (position === "VERTICAL"){
-        x = 0;
-        y =  -5;
-        z =  5.2;
-        phi = 90
+    switch(position){
+        case "HOME":
+            values_map.x = .134;
+            angles_map.q1 =  -5;
+            values_map.y = .75;
+            values_map.phi = 0;
+            break;
+        case "INTERMEDIATE":
+            values_map.x = 0;
+            angles_map.q1 = -5;
+            values_map.y = 3.677;
+            values_map.phi = 0;
+            break
+        case "PULL":
+            values_map.x = 3.33;
+            angles_map.q1 = -5;
+            values_map.y = 3.35;
+            values_map.phi = 0;
+            break
+        case "WRITE":
+            values_map.x = 3.33;
+            angles_map.q1 = -5;
+            values_map.y = 1.35;
+            values_map.phi = 0;        
+            break
+        case "FLOOR":
+            values_map.x = 3.28
+            angles_map.q1 = -5
+            values_map.y = -.1
+            values_map.phi = 0
+            break
+        case "STORAGE":
+            values_map.x = .134;
+            angles_map.q1 =  -5;
+            values_map.y =  .75;
+            values_map.phi = 90
+            break
+        case "VERTICAL":
+            values_map.x = 0;
+            angles_map.q1 =  -5;
+            values_map.y =  5.2;
+            values_map.phi = 90;   
     }
-
-    values_map.joint1 = x;
-    values_map.q1 = y;
-    values_map.joint3 = z;
-    values_map.joint4 = phi;
-    inverseKinematics(values_map.joint1, values_map.joint3, values_map.joint4);
-    }
+    inverseKinematics(values_map.x, values_map.y, values_map.phi);
+}
 
 function publish_angles(){    
     var message = new ROSLIB.Message({
@@ -190,25 +170,20 @@ function publish_angles(){
 
 // go to phi
 function go_phi(data){
-    var key = "joint4";
-    var prev = values_map[key];        
-    values_map[key]=data;
-    var poss = inverseKinematics(values_map.joint1, values_map.joint3, self.values_map.joint4);            
-    if(!poss){
-        values_map[key] = prev;
-    }   
+    var prev = values_map.phi;
+    values_map.phi=data;
+    var poss = inverseKinematics(values_map.x, values_map.y, self.values_map.phi);            
+    if(!poss)
+        values_map[key] = prev;    
     getTxt();
 }
 
-// 
 function phi(data){
-    var key = "joint4";
-    var prev = values_map[key];        
-    values_map[key]+=data;
-    var poss = inverseKinematics(values_map.joint1, values_map.joint3, self.values_map.joint4);            
-    if(!poss){
-        values_map[key] = prev;
-    }
+    var prev = values_map.phi;
+    values_map.phi+=data;
+    var poss = inverseKinematics(values_map.x, values_map.y, self.values_map.phi);            
+    if(!poss)
+        values_map[key] = prev;    
     getTxt();
 }
 
@@ -221,8 +196,8 @@ function go(data){
 
 // Rotate gripper N grades
 function griperRotation(data){
-    values_map[key]+=data;
-    values_map[key] = qlimit(limits_map[key], values_map[key]);
+    angles_map.gripper+=data;
+    angles_map.gripper = qlimit(limits_map.gripper, angles_map.gripper);
     getTxt();
 }
 
@@ -239,10 +214,9 @@ function movePrismatic(data){
 
 // Move general camera
 function moveCamera(data){
-    key = "joint8";
-    values_map[key] += (data);    
-    values_map[key] = qlimit(limits_map.camera, values_map[key]);
-    var msn = new ROSLIB.Message({data : parseInt(values_map[key])});
+    camera += data;
+    camera = qlimit(limits_map.camera, camera);
+    var msn = new ROSLIB.Message({data : parseInt(camera)});
     camera.publish(msn);
     getTxt();
 }
@@ -262,22 +236,16 @@ function rotate(data){
 }
 
 //Buttons related to inverse kinematics
-function pressed(data, joint){
-    var key = "joint" + String(joint);
+function pressed(data, axis){
+    var key = String(axis);
     values_map[key] += data
-    var poss = inverseKinematics(values_map.joint1, values_map.joint3, self.values_map.joint4);          
-    
-    if(!poss){
+    var poss = inverseKinematics(values_map.x, values_map.y, self.values_map.phi);
+    if(!poss)
         values_map[key]-=data;
-    }       
     getTxt();
 }
 
 function inverseKinematics(xm, zm, phi_int){
-    //Para q1
-    let q1=angles_map.q1
-    q1=qlimit(limits_map.q1,q1);
-
     //Para q2
     let hip=math.sqrt(math.pow(xm,2)+math.pow((zm-l1),2));    
     let phi = math.complex(math.atan2(zm-l1, xm))
@@ -322,7 +290,6 @@ function inverseKinematics(xm, zm, phi_int){
     }    
 }
 
-
 function qlimit(l, val){   //limites
     if (val < l[0]){ //inferior
         return l[0];
@@ -342,16 +309,16 @@ function deg2rad(degrees){return degrees * (math.pi/180);}
 
 function getTxt(){
     publish_angles();
-    var X = String(math.round(values_map.joint1,2));    
-    var Z = String(math.round(values_map.joint3,2));
-    var Phi = String(values_map.joint4);
-    var Rotacion = String(angles_map.gripper);
+    var X = String(math.round(values_map.x,2));    
+    var Z = String(math.round(values_map.y,2));
+    var Phi = String(values_map.phi);
+    var Rotacion = String(angles_map.gripper);    
     var q1 = String(math.round(angles_map.q1,2));
     var Y = q1;
     var q2 = String(math.round(angles_map.q2,2));
     var q3 = String(math.round(angles_map.q3,2));
     var q4 = String(math.round(angles_map.q4,2));
-    var Camera = String(values_map.joint8);
+    var Camera = String(values_map.camera);
   
     localStorage.setItem("Q1",q1);
     localStorage.setItem("Q2",q2);
@@ -473,4 +440,3 @@ function arm_interface(q2,q3,q4){
   		options: chartOptions
 	});
 }
-
