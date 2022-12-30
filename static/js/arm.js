@@ -40,10 +40,10 @@ listener_Joystick.subscribe(function(message) {
         values_map.joint3 += parseFloat(values[2]); //z
         values_map.joint4 += parseFloat(values[3]); //phi
 
-        values_map.joint5 += parseFloat(values[4]); //rotation
+        angles_map.gripper += parseFloat(values[4]); //rotation
         console.log(values);
 
-        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
+        inverseKinematics(values_map.joint1, values_map.joint3, values_map.joint4);
         getTxt();
     };
 });
@@ -68,12 +68,14 @@ var pub_arm = new ROSLIB.Topic({
 });
 
 /*
-joint1 Float 64
-joint2 Float 64
-joint3 Float 64
-joint4 Float 64
-joint5 Int32 gripper rotation
-Inverse_kinematics String
+float64 joint1
+float64 joint2
+float64 joint3
+float64 joint4 # Phi
+int32 joint5 #Gripper rotation
+float64 gripper #lineal
+float64 prism
+string inverse_kinematics
 */
 
 //Camera 
@@ -88,12 +90,14 @@ var camera = new ROSLIB.Topic({
 var gripper_apertur = 60;   //0 y 60
 var values_map = {
     joint1: .134,   //.4
-    joint2: 0,      //.9
     joint3: .75,
     joint4: 0,      //phi
-    joint5: 0,   //rotacion
     joint8: 140 //camera
 };
+var lineal_actuators = {
+    gripper : 0,
+    prism : 0
+}
 var l1 = 0;
 var l2 = 2.6;
 var l3 = 2.6;
@@ -105,7 +109,7 @@ var limits_map = {
     q2:[0,161],
     q3:[-165.4,0],
     q4:[-135,90],
-    joint5:[-90,90], 
+    gripper:[-90,90], 
     camera:[90,140]
 };
 
@@ -113,7 +117,8 @@ var angles_map={
     q1:0,
     q2:161,
     q3:-165.4,
-    q4:0
+    q4:0,
+    gripper:0
 };
 var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
@@ -122,7 +127,7 @@ var limit_chassis = 1.1; //11cm del chasis
 function predefinedPosition(position){
 
     var x = values_map.joint1;
-    var y = values_map.joint2;
+    var y = angles_map.q1;
     var z = values_map.joint3;
     var phi = values_map.joint4;
 
@@ -164,38 +169,23 @@ function predefinedPosition(position){
     }
 
     values_map.joint1 = x;
-    values_map.joint2 = y;
+    values_map.q1 = y;
     values_map.joint3 = z;
     values_map.joint4 = phi;
-    inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-    go_rotation(values_map.joint2);
+    inverseKinematics(values_map.joint1, values_map.joint3, values_map.joint4);
     }
 
 function publish_angles(){    
     var message = new ROSLIB.Message({
-        joint1: values_map.joint1,
-        joint2: values_map.joint2,
-        joint3: values_map.joint3,
-        joint4: values_map.joint4,
-        joint5: values_map.joint5,
-        gripper: 0,
-        prism: 0
+        joint1: angles_map.q1,
+        joint2: angles_map.q2,
+        joint3: angles_map.q3,
+        joint4: angles_map.q4,
+        joint5: angles_map.gripper,
+        gripper: lineal_actuators.gripper,
+        prism: lineal_actuators.prism
     }); 
     pub_arm.publish(message);
-}
-
-function qlimit(l, val){   //limites
-    if (val < l[0]){ //inferior
-        return l[0];
-    }
-    if (val > l[1]){ //superior 
-        return l[1];
-    }
-    return val;
-}
-
-function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
-    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 // go to phi
@@ -203,7 +193,7 @@ function go_phi(data){
     var key = "joint4";
     var prev = values_map[key];        
     values_map[key]=data;
-    var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
+    var poss = inverseKinematics(values_map.joint1, values_map.joint3, self.values_map.joint4);            
     if(!poss){
         values_map[key] = prev;
     }   
@@ -215,7 +205,7 @@ function phi(data){
     var key = "joint4";
     var prev = values_map[key];        
     values_map[key]+=data;
-    var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
+    var poss = inverseKinematics(values_map.joint1, values_map.joint3, self.values_map.joint4);            
     if(!poss){
         values_map[key] = prev;
     }
@@ -224,34 +214,27 @@ function phi(data){
 
 // Gripper go to particular location
 function go(data){
-    var key = "joint5";
-    values_map[key]=data;
-    values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({data : my_map(-90,90,1230,1770,data)});
-    joint5.publish(msn);
+    angles_map.gripper=data;
+    angles_map.gripper = qlimit(limits_map.gripper, values_map.gripper);    
     getTxt();
 }
 
 // Rotate gripper N grades
 function griperRotation(data){
-    var key = "joint5";
     values_map[key]+=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({
-        data : my_map(-90,90,1230,1770,values_map[key])
-    });
-    joint5.publish(msn); 
     getTxt();
 }
+
 // Open gripper
 function moveGripper(data){    
-    var msn = new ROSLIB.Message({data : data});
-    gripper.publish(msn);           
+    lineal_actuators.gripper = data;
+    getTxt();  
 }
 // Open linear
 function movePrismatic(data){    
-    var msn = new ROSLIB.Message({data : data});
-    lineal.publish(msn);
+    lineal_actuators.prism = data;
+    getTxt();
 }
 
 // Move general camera
@@ -268,7 +251,6 @@ function moveCamera(data){
 function go_rotation(data){
     angles_map.q1=data;
     angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
-    values_map.joint2 = self.angles_map.q1;
     getTxt();
 }
 
@@ -276,33 +258,96 @@ function go_rotation(data){
 function rotate(data){
     angles_map.q1+=data;
     angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
-    values_map.joint2 = self.angles_map.q1;
     getTxt();
 }
 
 //Buttons related to inverse kinematics
-function pressed(data, joint, sign = 1){
+function pressed(data, joint){
     var key = "joint" + String(joint);
-
-    values_map[key] += (data*sign);
-
-    if(joint < 4 && joint != 2){
-        var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);          
-        if(!poss){
-            values_map[key]+=(data*(sign));
-        }
-    }    
+    values_map[key] += data
+    var poss = inverseKinematics(values_map.joint1, values_map.joint3, self.values_map.joint4);          
+    
+    if(!poss){
+        values_map[key]-=data;
+    }       
     getTxt();
 }
 
+function inverseKinematics(xm, zm, phi_int){
+    //Para q1
+    let q1=angles_map.q1
+    q1=qlimit(limits_map.q1,q1);
+
+    //Para q2
+    let hip=math.sqrt(math.pow(xm,2)+math.pow((zm-l1),2));    
+    let phi = math.complex(math.atan2(zm-l1, xm))
+    let beta=math.acos((math.pow(l2,2)+math.pow(hip,2)-math.pow(l3,2))/(2*l2*hip)); //da negativo cuando no funciona 
+    let Q2=math.add(phi,beta).re;//math.re(phi+beta);
+    let q2=rad2deg(Q2)
+    q2=qlimit(limits_map.q2,q2);
+
+    //Para q3  
+    let gamma=math.re(math.acos((math.pow(l2,2)+math.pow(l3,2)-math.pow(hip,2))/(2*l2*l3)));   
+    let Q3=math.re(gamma-math.pi);
+    let q3=rad2deg(Q3);
+    q3=qlimit(limits_map.q3,q3);
+
+    //Para q4
+    let q4 = phi_int - q2 -q3;
+    q4=qlimit(limits_map.q4,q4);
+    values_map.joint4 = q4+q2+q3;
+
+    // Verificar que no rompa algo
+    let acum = deg2rad(q2);
+    let x2 = l2*math.cos(acum);
+    let y2 = l2*math.sin(acum);
+    acum+=deg2rad(q3);
+    let x3 = x2+l3*math.cos(acum);
+    let y3 = y2+l3*math.sin(acum);
+    acum+=deg2rad(q4);
+    let x4 = x3+l4*math.cos(acum);
+    let y4 = y3+l4*math.sin(acum);    
+    if(y4>limit_z && (x4>limit_chassis || y4>=0)){
+        values_map.joint1 = x3;
+        values_map.joint3 = y3;
+
+        angles_map.q2=q2;
+        angles_map.q3=q3;
+        angles_map.q4=q4;
+        arm_interface(angles_map.q2,angles_map.q3,angles_map.q4);        
+        return true
+    }else{
+        arm_interface(angles_map.q2,angles_map.q3,angles_map.q4);
+        return false;
+    }    
+}
+
+
+function qlimit(l, val){   //limites
+    if (val < l[0]){ //inferior
+        return l[0];
+    }
+    if (val > l[1]){ //superior 
+        return l[1];
+    }
+    return val;
+}
+
+function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+function rad2deg(radians){return radians * (180/math.pi);}
+function deg2rad(degrees){return degrees * (math.pi/180);}
+
 function getTxt(){
     publish_angles();
-    var X = String(math.round(values_map.joint1,2));
-    var Y = String(math.round(values_map.joint2,2));
+    var X = String(math.round(values_map.joint1,2));    
     var Z = String(math.round(values_map.joint3,2));
     var Phi = String(values_map.joint4);
-    var Rotacion = String(values_map.joint5);
+    var Rotacion = String(angles_map.gripper);
     var q1 = String(math.round(angles_map.q1,2));
+    var Y = q1;
     var q2 = String(math.round(angles_map.q2,2));
     var q3 = String(math.round(angles_map.q3,2));
     var q4 = String(math.round(angles_map.q4,2));
@@ -330,75 +375,6 @@ function getTxt(){
     document.getElementById("Rotacion").innerHTML = Rotacion;
     document.getElementById("Camera").innerHTML = Camera;
 }
-
-function rad2deg(radians){return radians * (180/math.pi);}
-function deg2rad(degrees){return degrees * (math.pi/180);}
-
-function inverseKinematics(xm, ym, zm, phi_int){
-    let Q1 = 0;
-    Q1 = math.re(math.atan2(ym,xm));
-    //console.log("Q1",Q1)
-    //Para q1
-    let q1=angles_map.q1
-    //console.log("q1",q1) //marca -5 en lugar de 0 
-
-    q1=qlimit(limits_map.q1,q1);
-    //Para q2
-    let hip=math.sqrt(math.pow(xm,2)+math.pow((zm-l1),2));
-    //console.log("zm",zm)
-    //console.log("l1",l1)
-    //console.log("xm",xm)
-    //console.log("hip", hip)
-    let phi = math.complex(math.atan2(zm-l1, xm))
-    //console.log("phi",phi)
-
-    //beta=acos((-l3^2+l2^2+hip^2)/(2*l2*hip))
-    let beta=math.acos((math.pow(l2,2)+math.pow(hip,2)-math.pow(l3,2))/(2*l2*hip)); //da negativo cuando no funciona 
-    let Q2=math.add(phi,beta).re;//math.re(phi+beta);
-    let q2=rad2deg(Q2) 
-    //console.log("beta",beta)
-    //console.log("Q2",Q2)
-    //console.log("q2",q2)
-    q2=qlimit(limits_map.q2,q2);
-    //Para q3  
-    let gamma=math.re(math.acos((math.pow(l2,2)+math.pow(l3,2)-math.pow(hip,2))/(2*l2*l3)));   
-    let Q3=math.re(gamma-math.pi);
-    let q3=rad2deg(Q3);
-    q3=qlimit(limits_map.q3,q3);
-    //console.log("gamma",gamma)
-  //  console.log("Q3",Q3)
-    //console.log("q3",q3)
-
-    let q4 = phi_int - q2 -q3;
-    q4=qlimit(limits_map.q4,q4);
-    values_map.joint4 = q4+q2+q3;
-
-    
-    let acum = deg2rad(q2);
-    let x2 = l2*math.cos(acum);
-    let y2 = l2*math.sin(acum);
-    acum+=deg2rad(q3);
-    let x3 = x2+l3*math.cos(acum);
-    let y3 = y2+l3*math.sin(acum);
-    acum+=deg2rad(q4);
-    let x4 = x3+l4*math.cos(acum);
-    let y4 = y3+l4*math.sin(acum);
-    //console.log(y4); //NAN
-    if(y4>limit_z && (x4>limit_chassis || y4>=0)){
-        values_map.joint1 = x3;
-        values_map.joint3 = y3;
-
-        angles_map.q2=q2;
-        angles_map.q3=q3;
-        angles_map.q4=q4;
-        arm_interface(angles_map.q2,angles_map.q3,angles_map.q4);        
-        return true
-    }else{
-        arm_interface(angles_map.q2,angles_map.q3,angles_map.q4);
-        return false;
-    }
-    
-  }
 
   //Función de gráfica
 function arm_interface(q2,q3,q4){    
