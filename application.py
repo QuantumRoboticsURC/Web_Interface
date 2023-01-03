@@ -38,7 +38,6 @@ def coordinates():
 
 
 
-
 @application.route('/data_sensor1')
 def data_sensor1():
     def generate_random_data():
