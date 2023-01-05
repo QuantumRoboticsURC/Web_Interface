@@ -36,10 +36,10 @@ listener_Joystick.subscribe(function(message) {
     if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0){
         values_map.x += parseFloat(values[0]);  //x
         angles_map.q1 += parseFloat(values[1]); //y
-        values_map.y += parseFloat(values[2]); //z
+        values_map.z += parseFloat(values[2]); //z
         values_map.phi += parseFloat(values[3]); //phi
         angles_map.gripper += parseFloat(values[4]); //rotation
-        inverseKinematics(values_map.x, values_map.y, values_map.phi);
+        inverseKinematics(values_map.z, values_map.z, values_map.phi);
         getTxt();
     };
 });
@@ -73,7 +73,7 @@ var camera = new ROSLIB.Topic({
 //Initial values
 var values_map = {
     x: .134,   //.4
-    y: .75,
+    z: .75,
     phi: 0      //phi
 };
 
@@ -113,56 +113,56 @@ function predefinedPosition(position){
         case "HOME":
             values_map.x = .134;
             angles_map.q1 =  -5;
-            values_map.y = .75;
+            values_map.z = .75;
             values_map.phi = 0;
             break;
         case "INTERMEDIATE":
             values_map.x = 0;
             angles_map.q1 = -5;
-            values_map.y = 3.677;
+            values_map.z = 3.677;
             values_map.phi = 0;
             break
         case "PULL":
             values_map.x = 3.33;
             angles_map.q1 = -5;
-            values_map.y = 3.35;
+            values_map.z = 3.35;
             values_map.phi = 0;
             break
         case "WRITE":
             values_map.x = 3.33;
             angles_map.q1 = -5;
-            values_map.y = 1.35;
+            values_map.z = 1.35;
             values_map.phi = 0;        
             break
         case "FLOOR":
             values_map.x = 3.28
             angles_map.q1 = -5
-            values_map.y = -.1
+            values_map.z = -.1
             values_map.phi = 0
             break
         case "STORAGE":
             values_map.x = .134;
             angles_map.q1 =  -5;
-            values_map.y =  .75;
+            values_map.z =  .75;
             values_map.phi = 90
             break
         case "VERTICAL":
             values_map.x = 0;
             angles_map.q1 =  -5;
-            values_map.y =  5.2;
+            values_map.z =  5.2;
             values_map.phi = 90;   
     }
-    inverseKinematics(values_map.x, values_map.y, values_map.phi);
+    inverseKinematics(values_map.x, values_map.z, values_map.phi);
 }
 
 function publish_angles(){    
     var message = new ROSLIB.Message({
-        joint1: angles_map.q1,
-        joint2: angles_map.q2,
-        joint3: angles_map.q3,
-        joint4: angles_map.q4,
-        joint5: angles_map.gripper,
-        gripper: lineal_actuators.gripper,
+        q1: angles_map.q1,
+        q2: angles_map.q2,
+        q3: angles_map.q3,
+        phi: angles_map.q4,
+        gripper_rotation: angles_map.gripper,
+        gripper_lineal: lineal_actuators.gripper,
         prism: lineal_actuators.prism
     }); 
     pub_arm.publish(message);
@@ -172,7 +172,7 @@ function publish_angles(){
 function go_phi(data){
     var prev = values_map.phi;
     values_map.phi=data;
-    var poss = inverseKinematics(values_map.x, values_map.y, self.values_map.phi);            
+    var poss = inverseKinematics(values_map.x, values_map.z, self.values_map.phi);            
     if(!poss)
         values_map[key] = prev;    
     getTxt();
@@ -181,7 +181,7 @@ function go_phi(data){
 function phi(data){
     var prev = values_map.phi;
     values_map.phi+=data;
-    var poss = inverseKinematics(values_map.x, values_map.y, self.values_map.phi);            
+    var poss = inverseKinematics(values_map.x, values_map.z, self.values_map.phi);            
     if(!poss)
         values_map[key] = prev;    
     getTxt();
@@ -195,7 +195,7 @@ function go(data){
 }
 
 // Rotate gripper N grades
-function griperRotation(data){
+function gripperRotation(data){
     angles_map.gripper+=data;
     angles_map.gripper = qlimit(limits_map.gripper, angles_map.gripper);
     getTxt();
@@ -239,7 +239,7 @@ function rotate(data){
 function pressed(data, axis){
     var key = String(axis);
     values_map[key] += data
-    var poss = inverseKinematics(values_map.x, values_map.y, self.values_map.phi);
+    var poss = inverseKinematics(values_map.x, values_map.z, self.values_map.phi);
     if(!poss)
         values_map[key]-=data;
     getTxt();
@@ -310,7 +310,7 @@ function deg2rad(degrees){return degrees * (math.pi/180);}
 function getTxt(){
     publish_angles();
     var X = String(math.round(values_map.x,2));    
-    var Z = String(math.round(values_map.y,2));
+    var Z = String(math.round(values_map.z,2));
     var Phi = String(values_map.phi);
     var Rotacion = String(angles_map.gripper);    
     var q1 = String(math.round(angles_map.q1,2));
