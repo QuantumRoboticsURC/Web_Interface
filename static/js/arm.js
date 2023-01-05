@@ -166,6 +166,7 @@ function publish_angles(){
         prism: lineal_actuators.prism
     }); 
     pub_arm.publish(message);
+    console.log(message);
 }
 
 // go to phi
