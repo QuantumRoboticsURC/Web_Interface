@@ -20,38 +20,7 @@
 
 <body>
 	<div class="wrapper">
-		<div class="main-header">
-			<div class="logo-header">
-				<a href="/" class="logo">
-					<img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
-					<small>Quantum Robotics</small>
-				</a>
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
-			</div>
-			<nav class="navbar navbar-header navbar-expand-lg">
-				<div class="container-fluid">
-					<div class="navbar-left navbar-form nav-search mr-md-3">
-						<img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
-						<img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
-						<img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
-						<img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
-					</div>
-					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-						<li class="nav-item dropdown hidden-caret">
-							<div class="nav-link dropdown-toggle">
-								University Rover Challenge, June 2023.
-								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
-							</div>
-						</li>
-
-					</ul>
-				</div>
-			</nav>
-		</div>
+		
 		
 		<div clas="sidebar">
             {% include "sb.html"%}
