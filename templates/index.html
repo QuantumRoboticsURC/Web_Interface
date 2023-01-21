@@ -40,7 +40,7 @@
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item dropdown hidden-caret">
 							<div class="nav-link dropdown-toggle">
-								University Rover Challenge, June 2022.
+								University Rover Challenge, June 2023.
 								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
 							</div>
 						</li>
@@ -48,48 +48,12 @@
 				</div>
 			</nav>
 		</div>
-		<div class="sidebar">
-			<div class="scrollbar-inner sidebar-wrapper">
-				<ul class="nav">
-					<li class="nav-item active">
-						<a href="/">
-							<i class="la la-camera"></i>
-							<p>Nav</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="metrics">
-							<i class="la la-dashboard"></i>
-							<p>Metrics</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="arm">
-							<i class="la la-cogs"></i>
-							<p>Arm</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="lab">
-							<i class="la la-flask"></i>
-							<p>Lab</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="rocks">
-							<i class="la la-th-list"></i>
-							<p>Rocks</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="coordinates">
-							<i class="la la-map"></i>
-							<p>Coor Converter</p>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+
+
+		<div clas="sidebar">
+            {% include "sb.html"%}
+        </div>
+		
 		<div class="main-panel">
 			<div class="content">
 				<div class="container-fluid">
