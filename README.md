@@ -2,7 +2,7 @@
 
 <!-- PROJECT LOGO -->
 <br />
-<img src="static/img/avance.gif" alt="Logo" width="80" height="80">
+<img src="static/img/avance.gif" alt="Logo" width="400" height="280">
 <br />
 <div align="center">
   <a href="qrteam.space">
