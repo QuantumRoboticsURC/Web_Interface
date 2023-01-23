@@ -2,7 +2,8 @@
 
 <!-- PROJECT LOGO -->
 <br />
-<img src="static/img/avance.gif" alt="Logo" width="400" height="280">
+<h3>Avances invierno Carlos</h3>
+<img src="static/img/avance.gif" alt="Logo" width="600" height="400">
 <br />
 <div align="center">
   <a href="qrteam.space">
