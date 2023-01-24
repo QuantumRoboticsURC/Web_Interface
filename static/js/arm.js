@@ -191,13 +191,15 @@ function phi(data){
 // Gripper go to particular location
 function go(data){
     angles_map.gripper=data;
-    angles_map.gripper = qlimit(limits_map.gripper, values_map.gripper);    
+    console.log(data)
+    angles_map.gripper = qlimit(limits_map.gripper, angles_map.gripper);    
     getTxt();
 }
 
 // Rotate gripper N grades
 function gripperRotation(data){
     angles_map.gripper+=data;
+    console.log(angles_map.gripper)
     angles_map.gripper = qlimit(limits_map.gripper, angles_map.gripper);
     getTxt();
 }
