@@ -2195,9 +2195,10 @@ body {
   left: 0;
   top: 0;
 }
-.sidebar .nav .nav-item.active a i {
+.sidebar .nav .nav-item.active .a .i {
   color: #4d7cfe;
 }
+
 .sidebar .nav .nav-item a {
   display: flex;
   align-items: center;
@@ -6674,7 +6675,6 @@ body {
 /*# sourceMappingURL=ready.css.map */
 
 
-
 .rocas{
   max-width: 200px;
   height: auto;
@@ -6693,7 +6693,6 @@ td{
 }
 
 
-
 #mydatatable tfoot input{
   width: 100% !important;
 }
@@ -6701,21 +6700,46 @@ td{
   display: table-header-group !important;
 }
 
-
 .cajacartas{
   margin-left: 10%;
   width: auto;
   height: auto;
   
 }
-
-
-
 .card-text{
   text-align: center;
 }
-
 .card-img-top{
   height: 180px;
 }
 
+.sponsors{
+  margin-top: 450px;
+  
+}
+.img-sponsors{
+  
+  float: left;
+  margin-top: 5px;
+  margin-bottom:5px ;
+  margin-left: 16px;
+  
+}
+
+.img-sponsors1{
+  
+  float: left;
+  margin-top: 7px;
+  margin-bottom:10px ;
+  margin-left: 30px;
+  
+}
+
+.img-sponsors2{
+  
+  float: left;
+  margin-top: 7px;
+  margin-bottom:10px ;
+  margin-left: 60px;
+  
+}
