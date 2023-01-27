@@ -7,8 +7,8 @@
 		name='viewport' />
 	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
-	<link rel="shortcut icon" href="#">
-
+	<link rel="shortcut icon" href="/static/img/QLogo.png">
+    
 	<script src="{{url_for('static', filename='js/config.js')}}"></script>
 	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
     
@@ -16,10 +16,43 @@
 <body>
     
 
+    <div class="main-header">
+        <div class="logo-header">
+            <a href="/" class="logo">
+                <img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
+                <small>Quantum Robotics</small>
+            </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+                data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+        </div>
+        <nav class="navbar navbar-header navbar-expand-lg">
+            <div class="container-fluid">
+                <div class="navbar-left navbar-form nav-search mr-md-3">
+                    <img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
+                    <img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
+                    <img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
+                    <img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
+                </div>
+                <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+                    <li class="nav-item dropdown hidden-caret">
+                        <div class="nav-link dropdown-toggle">
+                            University Rover Challenge, June 2023.
+                            <img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    
+
     <div class="sidebar">
         <div class="scrollbar-inner sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a href="/">
                         <i class="la la-camera"></i>
                         <p>Nav</p>
@@ -56,6 +89,18 @@
                     </a>
                 </li>
             </ul>
+        
+
+            <div class="sponsors">
+                <img src="{{url_for('static', filename='img/maxon.png')}}" width="200" height="30" class="img-sponsors1" >
+                <img src="{{url_for('static', filename='img/P&G.png')}}" width="65" height="25" class="img-sponsors">
+                <img src="{{url_for('static', filename='img/gillette.png')}}" width="80" height="25" class="img-sponsors">
+                <img src="{{url_for('static', filename='img/protocase.png')}}" width="60" height="40" class="img-sponsors">
+                <img src="{{url_for('static', filename='img/protej.png')}}" width="70" height="18" class="img-sponsors2">
+                <img src="{{url_for('static', filename='img/skykof.png')}}" width="45" height="30" class="img-sponsors">
+                
+            </div>
+
         </div>
     </div>
 </body>
