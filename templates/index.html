@@ -58,12 +58,39 @@
 			<div class="content">
 				<div class="container-fluid">
 					<h4 class="page-title">Dashboard Nav</h4>
+					
+					<label for="topics">Seleccione el tópico para cámara ZED</label>
+					<select name="zed-topic">
+						<option value="">No image</option>
+						{% for topic in topics %}
+							<option value="{{topic}}">{{topic}}</option>
+						{% endfor %}
+					</select>
+					<label for="topics">Seleccione el tópico para cámara USB</label>
+					<select name="usb-topic">
+						<option value="">No image</option>
+
+						{% for topic in topics %}
+							<option value="{{topic}}">{{topic}}</option>
+						{% endfor %}
+					</select>
+					<label for="topics">Seleccione el tópico para cámara Arm</label>
+					<select name="arm-topic">
+						<option value="">No image</option>
+
+						{% for topic in topics %}
+							<option value="{{topic}}">{{topic}}</option>
+						{% endfor %}
+					</select>
+					<input type="button" value="Aplicar">
+					
 					<div class="row">	
 						<div class="col-lg-6">
 							<div class="card">
 								<div class="card-header">
 									<h4 class="card-title">Camera 1</h4>
 									<p class="card-category">Zed</p>
+									<p class="card-category" id="disp-zed-topic"></p>
 								</div>
 								<div class="card-body">
 									<div class="col-lg-6">
@@ -77,12 +104,40 @@
 								<div class="card-header">
 									<h4 class="card-title">Camera 2</h4>
 									<p class="card-category">USB</p>
+									<p class="card-category" id="disp-usb-topic"></p>
+
 								</div>
 								<div class="card-body">
 									<div class="col-lg-6">		
 										<img src ="" id="USB_Camera" wigth="400" height="400" style="transform:rotate(180deg);">
 									</div>
 								</div>								
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Arm Camera</h4>
+										<p class="card-category" id="disp-arm-topic"></p>
+
+									</div>
+									<div class="card-body">
+										<div class="chart-circle mt-4 mb-3">
+											<img src = "" id="Arm_Camera" wigth="400" height="400" style="transform:rotate(0deg);">
+										</div>
+									</div>								
+								</div>
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Arm Graphic</h4>
+									</div>
+									<div class="card-body">
+										<div class="chart-circle mt-4 mb-3" style="width:600px;height:600px;text-align:center;">
+											<canvas id="Arm_Graphic" style="width:100%;height:100%;margin: 0 auto;"></canvas>											
+										</div>
+									</div>								
+								</div>
 							</div>
 						</div>
 					</div>		

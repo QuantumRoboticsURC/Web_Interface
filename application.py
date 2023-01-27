@@ -6,14 +6,23 @@ from datetime import datetime
 from os import listdir
 from os.path import isfile, join
 
-from flask import Flask, Response, render_template, jsonify
+import numpy as np
+import rospy
+from flask import Flask, Response, jsonify, render_template
+from pydoc_data.topics import topics
 
 application = Flask(__name__, static_url_path='/static')
 random.seed()
 
 @application.route('/')
 def index():
-    return render_template('index.html')
+    topics = list(dict(rospy.get_published_topics()).keys())
+    topics.sort()
+    topicos = [topic for topic in topics if "raw" in topic]
+    #topicsList = [topic for topic in topics.keys()]
+    #topics = topics.sort()
+    #topics = ["zed","usb","motor","salir","paso","asd","zed1"]
+    return render_template('index.html',topics=topicos)
 
 @application.route('/lab')
 def ciencias():
