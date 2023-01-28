@@ -6714,11 +6714,13 @@ td{
 }
 
 .sponsors{
-  margin-top: 450px;
+  margin-top: 45px;
+  grid-template-columns: 3;
+  grid-template-rows: 2;
+
   
 }
 .img-sponsors{
-  
   float: left;
   margin-top: 5px;
   margin-bottom:5px ;
