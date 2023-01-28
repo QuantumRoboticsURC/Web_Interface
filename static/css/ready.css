@@ -6714,9 +6714,8 @@ td{
 }
 
 .sponsors{
-  margin-top: 45px;
-  grid-template-columns: 3;
-  grid-template-rows: 2;
+  bottom: 0%;
+  position: absolute;
 
   
 }
