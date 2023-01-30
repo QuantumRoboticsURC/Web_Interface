@@ -5220,6 +5220,8 @@ body {
   background: #ff646d;
 }
 
+
+
 /*     Progress Card    */
 .progress-card {
   margin-bottom: 25px;
@@ -5950,6 +5952,7 @@ body {
   font-size: 13px;
   margin-bottom: 5px;
 }
+
 .user-box .u-text .btn {
   font-size: 12px;
 }
@@ -6292,6 +6295,38 @@ body {
 .btn-simple-primary:hover {
   color: #1D62F0;
   text-decoration: none;
+}
+.btn{
+  border-color:white;
+}
+.btn-look-one{
+  text-align: center;
+  width: fit-content;
+  background-color: #18b4da
+}
+.btn-look-two{
+  text-align: center;
+  width: fit-content;
+  background-color: #0C76C4
+}
+.btn-look-value{
+  color:#000;
+  background-color: #F4F4F4;
+  border-color:#18b4da;
+}
+.btn-look-value-plus{
+  border-color:white;
+  font-size:10px;
+  text-align: center;
+  background-color: #0C76C4;
+
+}
+.btn-look-value-minus{
+  border-color:white;
+  font-size:10px;
+  text-align: center;
+  background-color: #18b4da;
+
 }
 
 .btn-simple-info {
