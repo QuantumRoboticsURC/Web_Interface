@@ -6311,8 +6311,25 @@ body {
   border-color:white;
   margin-left:0%;
 }
-.btn-group{
 
+.col-lg-5.card{
+  width: fit-content;
+}
+
+.btn-group{
+  margin: auto 0;
+  width:fit-content;
+
+}
+.list-group{
+  width:fit-content;
+}
+.list-group-item{
+  width:fit-content;
+}
+.row{
+  position: relative;
+  width:fit-content;
 }
 .btn-look-one{
   width:30%;
@@ -6337,7 +6354,7 @@ body {
 }
 .btn-look-value-plus{
 
-  width:20%;
+  width:10%;
   border-color:white;
   font-size:10px;
   text-align: center;
@@ -6345,7 +6362,7 @@ body {
 
 }
 .btn-look-value-minus{
-  width:20%;
+  width:10%;
   border-color:white;
   font-size:10px;
   text-align: center;
