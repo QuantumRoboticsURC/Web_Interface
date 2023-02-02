@@ -1,4 +1,5 @@
-/*!
+
+  /*!
 
  =========================================================
  * Ready Bootstrap Dashboard (Bootstrap 4)
@@ -92,6 +93,7 @@ p {
 
 h4.page-title {
   font-size: 22px;
+
   font-weight: 600;
   color: #333333;
   line-height: 30px;
@@ -2195,9 +2197,10 @@ body {
   left: 0;
   top: 0;
 }
-.sidebar .nav .nav-item.active a i {
+.sidebar .nav .nav-item.active .a .i {
   color: #4d7cfe;
 }
+
 .sidebar .nav .nav-item a {
   display: flex;
   align-items: center;
@@ -5219,6 +5222,8 @@ body {
   background: #ff646d;
 }
 
+
+
 /*     Progress Card    */
 .progress-card {
   margin-bottom: 25px;
@@ -5455,7 +5460,7 @@ body {
 }
 
 .form-control.input-full {
-  width: 100% !important;
+  width: 50% !important;
 }
 
 .has-success .form-control {
@@ -5532,6 +5537,15 @@ body {
 }
 .form-control:disabled, .form-control[readonly] {
   opacity: 0.6 !important;
+}
+.form-control{
+  width:20%;
+}
+.form-control-go{
+  width:100%;
+}
+.col-md-12{
+  width:100%;
 }
 
 /*     Table    */
@@ -5949,6 +5963,7 @@ body {
   font-size: 13px;
   margin-bottom: 5px;
 }
+
 .user-box .u-text .btn {
   font-size: 12px;
 }
@@ -6291,6 +6306,68 @@ body {
 .btn-simple-primary:hover {
   color: #1D62F0;
   text-decoration: none;
+}
+.btn{
+  border-color:white;
+  margin-left:0%;
+}
+
+.col-lg-5.card{
+  width: fit-content;
+}
+
+.btn-group{
+  margin: auto 0;
+  width:fit-content;
+
+}
+.list-group{
+  width:fit-content;
+}
+.list-group-item{
+  width:fit-content;
+}
+.row{
+  position: relative;
+  width:fit-content;
+}
+.btn-look-one{
+  width:30%;
+  text-align: center;
+  width: fit-content;
+  background-color: #18b4da
+  
+}
+.btn-look-two{
+  width:30%;
+  text-align: center;
+  width: fit-content;
+  background-color: #0C76C4
+}
+.btn-look-value{
+  text-align:left;
+  width:30%;
+  color:#000;
+  background-color: #F4F4F4;
+  border-color:#18b4da;
+  margin-left:0%
+}
+.btn-look-value-plus{
+
+  width:10%;
+  border-color:white;
+  font-size:10px;
+  text-align: center;
+  background-color: #0C76C4;
+
+}
+.btn-look-value-minus{
+  width:10%;
+  border-color:white;
+  font-size:10px;
+  text-align: center;
+  background-color: #18b4da;
+
 }
 
 .btn-simple-info {
@@ -6672,3 +6749,79 @@ body {
 }
 
 /*# sourceMappingURL=ready.css.map */
+
+
+.rocas{
+  max-width: 200px;
+  height: auto;
+  float:left
+
+}
+
+td{
+  font-family: Montserrat ;
+  src: url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap);
+  font-weight: bold;
+}
+
+.titulo_piedra{
+  text-align: center;
+}
+
+
+#mydatatable tfoot input{
+  width: 100% !important;
+}
+#mydatatable tfoot {
+  display: table-header-group !important;
+}
+
+.cajacartas{
+  margin-left: 10%;
+  width: auto;
+  height: auto;
+  
+}
+.card-text{
+  text-align: center;
+}
+.card-img-top{
+  height: 180px;
+}
+
+.sponsors{
+  bottom: 0%;
+  position: absolute;
+
+  
+}
+.img-sponsors{
+  float: left;
+  margin-top: 5px;
+  margin-bottom:5px ;
+  margin-left: 16px;
+  
+}
+
+.img-sponsors1{
+  
+  float: left;
+  margin-top: 7px;
+  margin-bottom:10px ;
+  margin-left: 30px;
+  
+}
+
+.img-sponsors2{
+  
+  float: left;
+  margin-top: 7px;
+  margin-bottom:10px ;
+  margin-left: 60px;
+  
+}
+
+@media only screen and (max-width: 460px){
+
+
+}
