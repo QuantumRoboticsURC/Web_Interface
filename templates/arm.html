@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+	<body onload="StartGraphic()">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<title>Quantum Robotics Dashboard</title>
@@ -11,7 +11,6 @@
 			<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
 			<link rel="stylesheet" href="{{url_for('static', filename='css/leds.css')}}">
 			<link rel="shortcut icon" href="#">
-
 			<script src="{{url_for('static', filename='js/config.js')}}"></script>
 			<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
 			<script src="{{url_for('static', filename='js/plugin/math.js')}}"></script>
@@ -54,42 +53,11 @@
 				</div>
 			</nav>
 		</div>
-		<div class="sidebar">
-			<div class="scrollbar-inner sidebar-wrapper">
-				<ul class="nav">
-					<li class="nav-item">
-						<a href="/">
-							<i class="la la-camera"></i>
-							<p>Nav</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="metrics">
-							<i class="la la-dashboard"></i>
-							<p>Metrics</p>
-						</a>
-					</li>
-					<li class="nav-item active">
-						<a href="arm">
-							<i class="la la-cogs"></i>
-							<p>Arm</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="lab">
-							<i class="la la-flask"></i>
-							<p>Lab</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="coordinates">
-							<i class="la la-map"></i>
-							<p>Coor Converter</p>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+		
+		<div clas="sidebar">
+            {% include "sb.html"%}
+        </div>
+
 		<div class="main-panel">
 			<div class="content">
 				<div class="container-fluid">
@@ -135,16 +103,16 @@
 													<!--Predefined positions-->
 													<div class="col-md-12">
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border-color:#F4F4F4; color:white">Intermediate</button>
-															<button type="button" class="btn btn-secondary" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Home</button>
-															<button type="button" class="btn btn-secondary" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border-color:#F4F4F4; color:white">Storage</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px;">Intermediate</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px;">Home</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px;">Storage</button>
 														</div>
 														<hr>
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary" onclick="predefinedPosition('PULL');getTxt();" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Pull</button>
-															<button type="button" class="btn btn-secondary" onclick="predefinedPosition('WRITE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border-color:#F4F4F4; color:white">Write</button>
-															<button type="button" class="btn btn-secondary" onclick="predefinedPosition('FLOOR');getTxt();" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Floor</button>
-															<button type="button" class="btn btn-secondary" onclick="predefinedPosition('BOX');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border-color:#F4F4F4; color:white">Box</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('PULL');getTxt();" style="margin-bottom: 25px;">Pull</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('WRITE');getTxt();" style="margin-bottom: 25px;">Write</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('FLOOR');getTxt();" style="margin-bottom: 25px;">Floor</button>      
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('VERTICAL');getTxt();" style="margin-bottom: 25px;">Vertical</button>                                                    
                                               
 														</div>
 													</div>
@@ -163,6 +131,7 @@
 													<p>Q2:<label  type="text" id="Q2"></label></p>
 													<p>Q3:<label  type="text" id="Q3"></label></p>
 													<p>Q4:<label  type="text" id="Q4"></label></p>
+													
 												</div>
 											</div>
 										</div>
@@ -172,15 +141,15 @@
 												<li class="list-group-item">
 													<div >
 														<div class="row">
-															<medium class="text-muted">Position X</medium>
+															<small class="text-muted">Position X</small>
 															<div class="col-md-12">
 																
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
 																	<div class="input-group">
 																		<input id="X_Txt" type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="pressed(-parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="pressed(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -190,15 +159,15 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<medium class="text-muted">Rotation</medium>
+															<small class="text-muted">Rotation</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button style="background-color:#F4F4F4; border-color:#18B4DA; color:black" type="button" class="btn btn-secondary " onclick="go_rotation(parseFloat(document.getElementById('Y_Txt').value))">GO</button>																
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_rotation(parseFloat(document.getElementById('Y_Txt').value))">GO</button>																
 																	<div class="input-group">
 																		<input id="Y_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="rotate(-parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="rotate(parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="rotate(-parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="rotate(parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -208,14 +177,14 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<medium class="text-muted">Position Z</medium>
+															<small class="text-muted">Position Z</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
 																	<div class="input-group">
 																		<input id="Z_Txt" type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="pressed(-parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="pressed(parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -225,15 +194,15 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<medium class="text-muted">Phi</medium>
+															<small class="text-muted">Phi</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button style="background-color:#F4F4F4; border-color:#18B4DA; color:black" type="button" class="btn btn-secondary " onclick="go_phi(parseFloat(document.getElementById('Phi_Txt').value))">GO</button>
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_phi(parseFloat(document.getElementById('Phi_Txt').value))">GO</button>
 																	<div class="input-group">
 																		<input id="Phi_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="phi(-parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="phi(parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="phi(-parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="phi(parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;+&nbsp;</button>
 															</div>
 															</div>
 														</div>
@@ -242,15 +211,15 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<medium class="text-muted">Gripper Rotation</medium>
+															<small class="text-muted">Gripper Rotation</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button style="background-color:#F4F4F4; border-color:#18B4DA; color:black" type="button" class="btn btn-secondary " onclick="go(parseFloat(document.getElementById('Gripper_Txt').value))">GO</button>
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Gripper_Txt').value))">GO</button>
 																	<div class="input-group">
 																		<input id="Gripper_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="griperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="griperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="griperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="griperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
 																	
 																</div>
 															</div>
@@ -261,11 +230,10 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<medium class="text-muted">Gripper</medium>
+															<small class="text-muted">Gripper</small>
 															<div class="col-md-12">
-																<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onmouseup="moveGripper(0)" onmousedown="moveGripper(1)">Close</button>
-
-																<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onmouseup="moveGripper(0)" onmousedown="moveGripper(-1)">Open</button> 																
+																<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveGripper(0)" onmousedown="moveGripper(1)">Close</button>
+																<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveGripper(0)" onmousedown="moveGripper(-1)">Open</button> 																
 															</div>
 															
 														</div>
@@ -274,10 +242,10 @@
 												<li class="list-group-item ">
 													<div>
 														<div class="row">
-															<medium class="text-muted">End tool</medium>
+															<small class="text-muted">End tool</small>
 															<div class="col-md-12">
-																<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Close</button>
-																<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Open</button> 																
+																<button type="button" class="btn btn-secondary btn-look-one" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Open</button>
+																<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Close</button> 																
 															</div>
 														</div>
 													</div>
@@ -285,14 +253,14 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<medium class="text-muted">Camera</medium>
+															<small class="text-muted">Camera</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
 																	<div class="input-group">
 																		<input id="Camera_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														</div>
