@@ -19,6 +19,10 @@ def index():
 def ciencias():
     return render_template('laboratory.html')
 
+@application.route('/rocks')
+def rocks():
+    return render_template('rocks.html')
+
 @application.route('/metrics')
 def metrics():
     return render_template('metrics.html')    
