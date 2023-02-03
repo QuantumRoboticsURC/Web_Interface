@@ -6076,11 +6076,26 @@ body {
 
 /*    Button    */
 .btn {
-  padding: 8px 16px;
+  padding: 4% 10%;
   font-size: 14px;
   opacity: 0.9;
   border-radius: 3px;
 }
+
+.btn-look-value-minus{
+  width: 48.3%;
+}
+
+.btn-look-value-plus{
+  width: 48.3%;
+}
+
+.btn-look-value{
+  margin: 0%;
+  width: 50%;
+}
+
+
 .btn:hover, .btn:focus {
   opacity: 1;
 }
@@ -6094,7 +6109,7 @@ body {
 
 .btn-sm {
   font-size: 12px;
-  padding: 7px 13px;
+  padding: 7px 0px;
 }
 
 .btn-xs {
@@ -6714,12 +6729,11 @@ td{
 }
 
 .sponsors{
-  bottom: 0%;
-  position: absolute;
-
+  margin-top: 450px;
   
 }
 .img-sponsors{
+  
   float: left;
   margin-top: 5px;
   margin-bottom:5px ;
@@ -6744,3 +6758,4 @@ td{
   margin-left: 60px;
   
 }
+
