@@ -5546,6 +5546,16 @@ body {
 }
 .col-md-12{
   width:100%;
+  float: left;
+}
+.list-group-lab{
+  
+}
+.LAB{
+  size-adjust: 50%;
+  position: absolute;
+  margin-left:45%;
+  margin-bottom:100%;
 }
 
 /*     Table    */
@@ -6298,7 +6308,23 @@ body {
   color: #607D8B;
   text-decoration: none;
 }
-
+.card-body{
+  width:fit-content;
+}
+.graph{
+  height:fit-content;
+}
+.control{
+  margin-left:10%;
+  width:fit-content;
+}
+.card-title-1{
+  width:fit-content;
+}
+.graph{
+  display:relative;
+  right:0%;
+}
 .btn-simple-primary {
   color: #1D62F0;
   text-decoration: none;
@@ -6314,6 +6340,7 @@ body {
 
 .col-lg-5.card{
   width: fit-content;
+
 }
 
 .btn-group{
@@ -6337,6 +6364,9 @@ body {
   width: fit-content;
   background-color: #18b4da
   
+}
+.card-body{
+
 }
 .btn-look-two{
   width:40%;
