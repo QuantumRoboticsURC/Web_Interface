@@ -6340,6 +6340,7 @@ body {
 
 .col-lg-5.card{
   width: fit-content;
+ 
 
 }
 
@@ -6362,13 +6363,10 @@ body {
   width:40%;
   text-align: center;
   width: fit-content;
-  background-color: #18b4da
+  background-color: #18b4da;
   
 }
-.testing{
-  background-color: red;
 
-}
 .btn-look-two{
   width:40%;
   text-align: center;
