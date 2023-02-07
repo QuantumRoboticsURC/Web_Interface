@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 
@@ -72,6 +70,73 @@
 							<div class="">
 								<div class="card">
 									<div class="card-header">
+										<h4 class="card-title">Lab</h4>
+									</div>
+										<ul class="list-group list-group-flush">
+											<li class="list-group-item">
+												<div>
+													<div class="row">
+														<small class="text-muted">Centrifuge</small>
+														<div class="col-md-12">
+															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveGripper(0)" onmousedown="moveGripper(1)">Before</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveGripper(0)" onmousedown="moveGripper(-1)">After</button> 																
+														</div>
+														
+													</div>
+												</div>
+											</li>
+											<li class="list-group-item ">
+												<div>
+													<div class="row">
+														<small class="text-muted">End tool</small>
+														<div class="col-md-12">
+															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Sudan</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Sudan</button> 																
+															<center><button type="button" class="btn btn-secondary btn-look-three" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">GENERAL PHOTO</button></center> 
+														</div>
+													</div>
+												</div>
+											</li>
+											<li class="list-group-item ">
+												<div>
+													<div class="row">
+														<small class="text-muted">End tool</small>
+														<div class="col-md-12">
+															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">lugol</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">lugol</button> 																
+															<center><button type="button" class="btn btn-secondary btn-look-three" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">GENERAL UP</button></center> 
+														</div>
+													</div>
+												</div>
+											</li>
+											<li class="list-group-item ">
+												<div>
+													<div class="row">
+														<small class="text-muted">End tool</small>
+														<div class="col-md-12">
+															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">biuret</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">biuret</button> 																
+														 
+														</div>
+													</div>
+												</div>
+											</li>
+										</ul>
+										<div class="card LAB">
+											<div class="card-header">
+												<h4 class="card-title">Arm Graphic</h4>
+											</div>
+											<div class="card-body">
+												<div class="chart-circle mt-4 mb-3" style="width:300px;height:300px;text-align:center;">
+													<canvas id="Arm_Graphic" style="width:100%;height:100%;margin: 0 auto;"></canvas>											
+												</div>
+											</div>								
+										</div>
+									</div>
+							
+								</div>
+								<div class="card">
+									<div class="card-header">
 										<h4 class="card-title">Arm Camera</h4>
 									</div>
 									<div class="card-body">
@@ -80,20 +145,11 @@
 										</div>
 									</div>								
 								</div>
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">Arm Graphic</h4>
-									</div>
-									<div class="card-body">
-										<div class="chart-circle mt-4 mb-3" style="width:600px;height:600px;text-align:center;">
-											<canvas id="Arm_Graphic" style="width:100%;height:100%;margin: 0 auto;"></canvas>											
-										</div>
-									</div>								
-								</div>
-							</div>
+
+						
 						</div>
 						<div class="col-lg-5">
-							<div class="card">
+							<div class="card control">
 								<div class="card-header">
 									<h4 class="card-title">Control</h4>
 								</div>
@@ -107,14 +163,14 @@
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
 															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px;">Intermediate</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px;">Home</button>
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px;">Storage</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px;">Ground Extraction</button>
 														</div>
 														<hr>
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('PULL');getTxt();" style="margin-bottom: 25px;">Pull</button>
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('WRITE');getTxt();" style="margin-bottom: 25px;">Write</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('FLOOR');getTxt();" style="margin-bottom: 25px;">Floor</button>      
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('VERTICAL');getTxt();" style="margin-bottom: 25px;">Vertical</button>                                                    
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('PULL');getTxt();" style="margin-bottom: 25px;">Horizontal</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('WRITE');getTxt();" style="margin-bottom: 25px;">Center Servo</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('FLOOR');getTxt();" style="margin-bottom: 25px;">Left Servo</button>      
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('VERTICAL');getTxt();" style="margin-bottom: 25px;">Right Servo</button>                                                    
                                               
 														</div>
 													</div>
@@ -142,12 +198,12 @@
 												<li class="list-group-item">
 													<div >
 														<div class="row">
-															<small class="text-muted">Position X</small>
+															<small class="text-muted">Rotation</small>
 															<div class="col-md-12">
 																
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
 																	<div class="input-group">
-																		<input id="X_Txt" type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input id="X_Txt" type="text" class="form-control" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="pressed(-parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;-&nbsp;</button>
 																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="pressed(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
@@ -160,12 +216,12 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Rotation</small>
+															<small class="text-muted">Yellow Jacket Axis 2</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
 																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_rotation(parseFloat(document.getElementById('Y_Txt').value))">GO</button>																
 																	<div class="input-group">
-																		<input id="Y_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input id="Y_Txt" type="text" class="form-control-go" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="rotate(-parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
 																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="rotate(parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
@@ -178,11 +234,11 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Position Z</small>
+															<small class="text-muted">Servo Axis 3:</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
 																	<div class="input-group">
-																		<input id="Z_Txt" type="text" class="form-control" value="0.2" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input id="Z_Txt" type="text" class="form-control" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="pressed(-parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;-&nbsp;</button>
 																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="pressed(parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;+&nbsp;</button>
@@ -195,7 +251,7 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Phi</small>
+															<small class="text-muted">Servo Left:</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
 																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_phi(parseFloat(document.getElementById('Phi_Txt').value))">GO</button>
@@ -212,15 +268,15 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Gripper Rotation</small>
+															<small class="text-muted">Servo Center: </small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
 																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Gripper_Txt').value))">GO</button>
 																	<div class="input-group">
 																		<input id="Gripper_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="griperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="griperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="gripperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="gripperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
 																	
 																</div>
 															</div>
@@ -231,26 +287,23 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Gripper</small>
+															<small class="text-muted">Servo Right: </small>
 															<div class="col-md-12">
-																<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveGripper(0)" onmousedown="moveGripper(1)">Close</button>
-																<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveGripper(0)" onmousedown="moveGripper(-1)">Open</button> 																
+																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Gripper_Txt').value))">GO</button>
+																	<div class="input-group">
+																		<input id="Gripper_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																	</div>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="gripperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="gripperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
+																	
+																</div>
 															</div>
-															
+														
 														</div>
 													</div>
 												</li>
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<small class="text-muted">End tool</small>
-															<div class="col-md-12">
-																<button type="button" class="btn btn-secondary btn-look-one" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Open</button>
-																<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Close</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
+
 												<li class="list-group-item">
 													<div>
 														<div class="row">
@@ -270,10 +323,14 @@
 											</ul>
 											</div>
 										</div>
+								
 									</div>
 								</div>								
 							</div>
 						</div>
+
+					
+
 					</div>
 				</div>
 			</div>
