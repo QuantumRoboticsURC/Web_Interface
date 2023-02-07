@@ -12,6 +12,9 @@
 
 	<script src="{{url_for('static', filename='js/config.js')}}"></script>
 	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+	<script src="{{url_for('static', filename='js/plugin/math.js')}}"></script>
+	<script src="{{url_for('static', filename='js/plugin/Chart.min.js')}}"></script>
+	<script src="/static/js/plugin/Chart.js"> </script>
 
 	<style>
 		.column {
@@ -183,6 +186,10 @@
 											<img src="{{url_for('static', filename='img/lab/afterlugol2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
 										</div>
 									</div>		
+									<div class="row">
+										<div class="testing"><button class="btn" type="button" onclick="moveServo()">AAAAAAAAAAAAaa</button></div>
+										
+									</div>
 								</div>								
 							</div>
 						</div>
@@ -245,5 +252,5 @@
 
 
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
-<script src="{{url_for('static', filename='js/lab.js')}}"></script>
+<script src="{{url_for('static', filename='js/arm_lab.js')}}"></script>
 </html>
