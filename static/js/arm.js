@@ -160,7 +160,7 @@ function predefinedPosition(position){
     var y = values_map.joint2;
     var z = values_map.joint3;
     var phi = values_map.joint4;
-
+    
     /*if(position === "INTERMEDIATE"){
         x = 0;
         y = -5;
@@ -182,51 +182,70 @@ function predefinedPosition(position){
         z = 3.68
         phi = 0;
     }*/
+    
     if (position === "HOME"){
         x = .134;
         y =  -5;
         z =  .75;
         phi = 0;
-    } else if(position === "INTERMEDIATE"){
+        
+    } 
+    else if(position === "INTERMEDIATE"){
         x = 0;
         y = -5;
         z = 3.677;
         phi = 0;
-    }else if(position === "PULL"){
+        
+    }
+    else if(position === "PULL"){
         x = 3.33;
         y = -5;
         z = 3.35;
         phi = 0;
-    }else if (position === "WRITE"){
+        
+    }
+    else if (position === "WRITE"){
         x = 3.33;
         y = -5;
         z = 1.35;
-        phi = 0;        
-    }else if (position === "FLOOR"){
-        x = 3.28
-        y = -5
-        z = -.1
-        phi = 0
-    }else if (position === "STORAGE"){
+        phi = 0;  
+           
+    }
+    else if (position === "FLOOR"){
+        x = 3.28;
+        y = -5;
+        z = -.1;
+        phi = 0;
+        
+    }
+    else if (position === "STORAGE"){
         x = .134;
         y =  -5;
         z =  .75;
-        phi = 90
-    }else if (position === "VERTICAL"){
+        phi = 90;
+        
+    }
+    else if (position === "VERTICAL"){
         x = 0;
         y =  -5;
         z =  5.2;
-        phi = 90
+        phi = 90;
+        
     }
-    
+
     values_map.joint1 = x;
     values_map.joint2 = y;
     values_map.joint3 = z;
     values_map.joint4 = phi;
     inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
     go_rotation(values_map.joint2);
+    return position;
     }
+function StateMachine(position){
+    
 
+    return true;
+}
 function publish_angles(){
     var q1 = angles_map.q1;
     var q2 = angles_map.q2;
@@ -491,7 +510,10 @@ function inverseKinematics(xm, ym, zm, phi_int){
     }
     
   }
-
+function StartGraphic(){
+    inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+    go_rotation(values_map.joint2);
+}
   //Función de gráfica
 function arm_interface(q2,q3,q4){    
 	//Transformación a coordenadas rectangulares
