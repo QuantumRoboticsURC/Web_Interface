@@ -1,8 +1,8 @@
 var ros;
 var robot_IP;
-var ros = new ROSLIB.Ros({
-    url : 'wss://echo.websocket.org'
-  });
+ros = new ROSLIB.Ros({
+    url: "ws://" + "localhost"+ ":9090"
+});
 
 class ArmTeleop{
     constructor(){

@@ -19,6 +19,10 @@ def index():
 def ciencias():
     return render_template('laboratory.html')
 
+@application.route('/arm_lab')
+def arm_lab():
+    return render_template('arm_lab.html')
+
 @application.route('/rocks')
 def rocks():
     return render_template('rocks.html')
