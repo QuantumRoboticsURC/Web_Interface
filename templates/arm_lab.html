@@ -115,6 +115,7 @@
 														<small class="text-muted">End tool</small>
 														<div class="col-md-12">
 															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">biuret</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">biuret</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">biuret</button> 																
 														 
 														</div>
@@ -339,6 +340,7 @@
 </body>
 
 <script src="{{url_for('static', filename='js/arm.js')}}"></script>
+
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
 
 </html>

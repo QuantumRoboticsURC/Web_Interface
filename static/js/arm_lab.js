@@ -1,9 +1,11 @@
 var ros;
 var robot_IP;
-ros = new ROSLIB.Ros({
-    url: "ws://" + "localhost"+ ":9090"
-});
 
+//IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
+robot_IP = _config.ROSBridge_IP;
+ros = new ROSLIB.Ros({
+    url: "ws://" + robot_IP + ":9090"
+});
 class ArmTeleop{
     constructor(){
         
@@ -13,13 +15,12 @@ class ArmTeleop{
             messageType : "lab_arm/arm_lab",
             queue_size:1
         });
-        this.testing = new ROSLIB.Topic({
-            ros:ros,
-            name: 'test',
-            messageType: "lab_arm/test",
-            queue_size:1
+         this.pub_q1 = new ROSLIB.Topic({
+            ros : ros,
+            name : 'arm_laboratory/joint1',
+            messageType : 'std_msgs/Float64',
+            queue_size: 1   
         });
-
         this.limits_map = {
             "q1":(-180,0),
             "q2":(-8,164),
@@ -47,16 +48,16 @@ class ArmTeleop{
             servo1:this.angles_map.q4,
             servo2:this.angles_map.q5,
             servo3:this.angles_map.q6,
-            centriguga:this.angles_map.q7,
+            centrifuga:this.angles_map.q7,
             screenshot:"a"
 
         });
-        var m2 = new ROSLIB.Message({
-            q:5
-        });
-        this.arm.publish(message);
-        this.testing.publish(m2);
-        console.log(message)
+        var mess = new ROSLIB.Message({data:this.angles_map.q2})
+        this.arm.publish('/talker', 'lab_arm/arm_lab',message);
+        this.pub_q1.publish(mess);
+        
+        console.log(mess);
+        console.log(message);
         
     }
     moveServo1(){
