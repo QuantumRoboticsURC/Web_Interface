@@ -11,33 +11,28 @@ class ArmTeleop{
         
         this.arm = new ROSLIB.Topic({
             ros: ros,
-            name: "arm_laboratory",
-            messageType : "lab_arm/arm_lab",
+            name: 'arm_laboratory',
+            messageType : 'lab_arm/arm_lab',
             queue_size:1
         });
-         this.pub_q1 = new ROSLIB.Topic({
-            ros : ros,
-            name : 'arm_laboratory/joint1',
-            messageType : 'std_msgs/Float64',
-            queue_size: 1   
-        });
+
         this.limits_map = {
-            "q1":(-180,0),
-            "q2":(-8,164),
-            "q3":(-155,90),
-            "q4": (0,120),
-            "q5": (0,80),
-            "q6":(0,110),
-            "q7":(-10,10)
+            q1:[-180,0],
+            q2:[-8,164],
+            q3:[155,90],
+            q4: [0,120],
+            q5: [0,80],
+            q6:[0,110],
+            q7:[-10,10]
         }
         this.angles_map={
-            "q1":0.0,
-            "q2":90.0,
-            "q3":-155,
-            "q4":0,
-            "q5":0,
-            "q6":0,
-            "q7":0
+            q1:0.0,
+            q2:90.0,
+            q3:-155,
+            q4:0,
+            q5:0,
+            q6:0,
+            q7:0
         }  
     }
     publishMessages(){
@@ -52,16 +47,30 @@ class ArmTeleop{
             screenshot:"a"
 
         });
-        var mess = new ROSLIB.Message({data:this.angles_map.q2})
-        this.arm.publish('/talker', 'lab_arm/arm_lab',message);
-        this.pub_q1.publish(mess);
-        
+        this.arm.publish(message);
         console.log(mess);
         console.log(message);
         
     }
-    moveServo1(){
-        this.angles_map.q4 = this.angles_map.q4+5;
+    moveServo(servo_id){
+        switch(servo_id){
+            case 1:
+                if(this.angles_map.q4>this.limits_map.q4[0] && this.angles_map.q4<this.limits_map.q4[1]){
+                    this.angles_map.q4+=5;
+                }
+                break;
+            case 2: 
+                if(this.angles_map.q5>this.limits_map.q5[0] && this.angles_map.q5<this.limits_map.q5[1]){
+                    this.angles_map.q5+=5;
+                }
+                break;
+            case 3:
+                if(this.angles_map.q6>this.limits_map.q6[0] && this.angles_map.q6<this.limits_map.q6[1]){
+                    this.angles_map.q6+=5;
+                } 
+                break;
+
+        }
 
     }
 }
@@ -72,8 +81,8 @@ function test(){
     arm.publishMessages();
 }
 function moveServo(){
-    arm.moveServo1();
-    test()
+    arm.moveServo();
+
 
 
 }
