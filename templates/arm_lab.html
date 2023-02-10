@@ -164,14 +164,14 @@
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
 															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px;">Intermediate</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px;">Home</button>
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px;">Ground Extraction</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('GROUND');getTxt();" style="margin-bottom: 25px;">Ground Extraction</button>
 														</div>
 														<hr>
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('PULL');getTxt();" style="margin-bottom: 25px;">Horizontal</button>
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('WRITE');getTxt();" style="margin-bottom: 25px;">Center Servo</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('FLOOR');getTxt();" style="margin-bottom: 25px;">Left Servo</button>      
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('VERTICAL');getTxt();" style="margin-bottom: 25px;">Right Servo</button>                                                    
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('HORIZONTAL');getTxt();" style="margin-bottom: 25px;">Horizontal</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('LEFT');getTxt();" style="margin-bottom: 25px;">Left Servo</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('CENTER');getTxt();" style="margin-bottom: 25px;">Center Servo</button>      
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('RIGHT');getTxt();" style="margin-bottom: 25px;">Right Servo</button>                                                    
                                               
 														</div>
 													</div>
@@ -340,7 +340,7 @@
 </body>
 
 <script src="{{url_for('static', filename='js/arm_lab.js')}}"></script>
-<script src="{{url_for('static', filename='js/arm.js')}}"></script>
+<!--<script src="{{url_for('static', filename='js/arm.js')}}"></script>-->
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
 
 </html>

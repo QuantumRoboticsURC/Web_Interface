@@ -97,3 +97,48 @@ function moveServos(servo_id,servo_dir){
     arm.moveServo(servo_id,servo_dir);
     arm.publishMessages();
 }
+
+function predefinedPosition(position){
+    switch(position){
+        case "HOME":
+            arm.angles_map.q1=0;
+            arm.angles_map.q2=90;
+            arm.angles_map.q3=-155;
+            break;
+        case "INTERMEDIATE":
+            arm.angles_map.q1=0;
+            arm.angles_map.q2=90;
+            arm.angles_map.q3=-90;
+            break
+        case "GROUND":
+            arm.angles_map.q1=0;
+            arm.angles_map.q2=-8;
+            arm.angles_map.q3=-61;
+            break
+        case "HORIZONTAL":
+            arm.angles_map.q1=0;
+            arm.angles_map.q2=0;
+            arm.angles_map.q3=0;
+            break
+        case "LEFT":
+            arm.angles_map.q1=-123;
+            arm.angles_map.q2=139;
+            arm.angles_map.q3=-146;
+            break
+        case "CENTER":
+            arm.angles_map.q1=-95;
+            arm.angles_map.q2=155;
+            arm.angles_map.q3=-151;
+            break
+        case "RIGHT":
+            arm.angles_map.q1=-149;
+            arm.angles_map.q2=139;
+            arm.angles_map.q3=-141;  
+    }
+    arm.publishMessages();
+    
+}
+
+function getTxt(){
+console.log("hola");
+}
