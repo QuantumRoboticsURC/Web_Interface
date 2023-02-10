@@ -19,7 +19,7 @@ class ArmTeleop{
         this.limits_map = {
             q1:[-180,0],
             q2:[-8,164],
-            q3:[155,90],
+            q3:[0,245],
             q4: [0,120],
             q5: [0,80],
             q6:[0,110],
@@ -142,3 +142,42 @@ function predefinedPosition(position){
 function getTxt(){
 console.log("hola");
 }
+function go_axis3_servo(data){
+    arm.angles_map.q3=data
+    if (arm.angles_map.q3<arm.limits_map.q3[0]){
+     arm.angles_map.q3=arm.limits_map.q3[0]
+    }else if (arm.angles_map.q3>arm.limits_map.q3[1]){
+     arm.angles_map.q3=arm.limits_map.q3[1]
+    }
+    arm.publishMessages();
+ }
+
+function go_left_servo(data){
+   arm.angles_map.q4=data
+   if (arm.angles_map.q4<arm.limits_map.q4[0]){
+    arm.angles_map.q4=arm.limits_map.q4[0]
+   }else if (arm.angles_map.q4>arm.limits_map.q4[1]){
+    arm.angles_map.q4=arm.limits_map.q4[1]
+   }
+   arm.publishMessages();
+}
+
+function go_center_servo(data){
+    arm.angles_map.q5=data
+    if (arm.angles_map.q5<arm.limits_map.q5[0]){
+     arm.angles_map.q5=arm.limits_map.q5[0]
+    }else if (arm.angles_map.q5>arm.limits_map.q5[1]){
+     arm.angles_map.q5=arm.limits_map.q5[1]
+    }
+    arm.publishMessages();
+ }
+
+ function go_right_servo(data){
+    arm.angles_map.q6=data
+    if (arm.angles_map.q6<arm.limits_map.q6[0]){
+     arm.angles_map.q6=arm.limits_map.q6[0]
+    }else if (arm.angles_map.q6>arm.limits_map.q6[1]){
+     arm.angles_map.q6=arm.limits_map.q6[1]
+    }
+    arm.publishMessages();
+ }
