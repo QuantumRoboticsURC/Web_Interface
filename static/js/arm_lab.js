@@ -48,41 +48,52 @@ class ArmTeleop{
 
         });
         this.arm.publish(message);
-        console.log(mess);
         console.log(message);
         
     }
-    moveServo(servo_id){
+    moveServo(servo_id,servo_dir){
         switch(servo_id){
             case 1:
-                if(this.angles_map.q4>this.limits_map.q4[0] && this.angles_map.q4<this.limits_map.q4[1]){
-                    this.angles_map.q4+=5;
+                if(this.angles_map.q4>=this.limits_map.q4[0] && this.angles_map.q4<=this.limits_map.q4[1]){
+                    if(servo_dir=="+"){
+                        this.angles_map.q4= this.angles_map.q4+5;
+                    }
+                    else{
+                        this.angles_map.q4-= this.angles_map.q4-5;
+                    }
+                    
                 }
                 break;
             case 2: 
-                if(this.angles_map.q5>this.limits_map.q5[0] && this.angles_map.q5<this.limits_map.q5[1]){
-                    this.angles_map.q5+=5;
+                if(this.angles_map.q5>=this.limits_map.q5[0] && this.angles_map.q5<=this.limits_map.q5[1]){
+                    if(servo_dir=="+"){
+                        this.angles_map.q5=this.angles_map.q5+5;
+                    }
+                    else{
+                        this.angles_map.q5= this.angles_map.q5-5;
+                    }
                 }
                 break;
             case 3:
-                if(this.angles_map.q6>this.limits_map.q6[0] && this.angles_map.q6<this.limits_map.q6[1]){
-                    this.angles_map.q6+=5;
+                if(this.angles_map.q6>=this.limits_map.q6[0] && this.angles_map.q6<=this.limits_map.q6[1]){
+                    if(servo_dir=="+"){
+                        this.angles_map.q6= this.angles_map.q6+5;
+                    }
+                    else{
+                        this.angles_map.q6= this.angles_map.q6-5;;
+                    }
                 } 
                 break;
-
         }
 
     }
 }
 let arm = new ArmTeleop();
-function test(){
-    
+function test(){   
     console.log("AAAAAAAAAAAAAAA");
     arm.publishMessages();
 }
-function moveServo(){
-    arm.moveServo();
-
-
-
+function moveServos(servo_id,servo_dir){
+    arm.moveServo(servo_id,servo_dir);
+    arm.publishMessages();
 }

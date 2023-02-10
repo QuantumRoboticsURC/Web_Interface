@@ -241,8 +241,8 @@
 																	<div class="input-group">
 																		<input id="Z_Txt" type="text" class="form-control" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="pressed(-parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="pressed(parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(1,'-')">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(1,'+')">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -259,8 +259,8 @@
 																	<div class="input-group">
 																		<input id="Phi_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="phi(-parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="phi(parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(1,'-')">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(1,'+')">&nbsp;+&nbsp;</button>
 															</div>
 															</div>
 														</div>
@@ -276,8 +276,8 @@
 																	<div class="input-group">
 																		<input id="Gripper_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="gripperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="gripperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(2,'-')">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(2,'+')">&nbsp;+&nbsp;</button>
 																	
 																</div>
 															</div>
@@ -295,8 +295,8 @@
 																	<div class="input-group">
 																		<input id="Gripper_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="gripperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="gripperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(3,'-')">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(3,'+')">&nbsp;+&nbsp;</button>
 																	
 																</div>
 															</div>
@@ -340,7 +340,7 @@
 </body>
 
 <script src="{{url_for('static', filename='js/arm_lab.js')}}"></script>
-
+<script src="{{url_for('static', filename='js/arm.js')}}"></script>
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
 
 </html>
