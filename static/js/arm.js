@@ -182,7 +182,8 @@ function predefinedPosition(position){
         z = 3.68
         phi = 0;
     }*/
-    
+ if (position === "INTERMEDIATE"){ 
+
     if (position === "HOME"){
         x = .134;
         y =  -5;
@@ -232,7 +233,7 @@ function predefinedPosition(position){
         phi = 90;
         
     }
-
+ }
     values_map.joint1 = x;
     values_map.joint2 = y;
     values_map.joint3 = z;
