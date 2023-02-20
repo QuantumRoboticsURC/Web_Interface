@@ -39,11 +39,20 @@ listener_Joystick.subscribe(function(message) {
   values_map.joint2 += parseFloat(values[1]); //y
   values_map.joint3 += parseFloat(values[2]); //z
   values_map.joint4 += parseFloat(values[3]); //phi
-  
-  values_map.joint5 += parseFloat(values[4]); //rotation
+  values_map.joint5 += parseFloat(values[4]); //gripper rotation
+  values_map.joint8 += parseFloat(values[5]); // camera
+  values_map.joint5=qlimit(limits_map["joint5"], values_map["joint5"]);
+  values_map.joint8=qlimit(limits_map.camera, values_map["joint8"]);
   console.log(values);
-
+    var msn = new ROSLIB.Message({
+    data : parseInt(my_map(-90,90,138,312,values_map["joint5"]))});
+    joint5.publish(msn); 
+    var msn2 = new ROSLIB.Message({data : parseFloat(values_map["joint8"])});
+    camera.publish(msn2);
   inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
+
+
+
   getTxt();
 };
 });
@@ -94,7 +103,7 @@ var pub_q_string = new ROSLIB.Topic({
 var joint5 = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/joint5',
-    messageType : 'std_msgs/Int32',
+    messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
 //lineal 
@@ -115,7 +124,7 @@ var lineal = new ROSLIB.Topic({
 var camera = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/cam',
-    messageType : 'std_msgs/Int32',
+    messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
 
@@ -185,49 +194,49 @@ function predefinedPosition(position){
     
     if (position === "HOME"){
         x = .134;
-        y =  -5;
+        y =  0;
         z =  .75;
         phi = 0;
         
     } 
     else if(position === "INTERMEDIATE"){
         x = 0;
-        y = -5;
+        y = 0;
         z = 3.677;
         phi = 0;
         
     }
     else if(position === "PULL"){
         x = 3.33;
-        y = -5;
+        y = 0;
         z = 3.35;
         phi = 0;
         
     }
     else if (position === "WRITE"){
         x = 3.33;
-        y = -5;
+        y = 0;
         z = 1.35;
         phi = 0;  
            
     }
     else if (position === "FLOOR"){
         x = 3.28;
-        y = -5;
+        y = 0;
         z = -.1;
         phi = 0;
         
     }
     else if (position === "STORAGE"){
         x = .134;
-        y =  -5;
+        y =  0;
         z =  .75;
         phi = 90;
         
     }
     else if (position === "VERTICAL"){
         x = 0;
-        y =  -5;
+        y =  0;
         z =  5.2;
         phi = 90;
         
@@ -311,18 +320,19 @@ function go(data){
     var key = "joint5";
     values_map[key]=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({data : my_map(-90,90,1230,1770,data)});
+    var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,138,312,values_map[key]))});
     joint5.publish(msn);
     getTxt();
 }
 
 // Rotate gripper N grades
 function griperRotation(data){
+
     var key = "joint5";
     values_map[key]+=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
     var msn = new ROSLIB.Message({
-        data : my_map(-90,90,1230,1770,values_map[key])
+        data : parseInt(my_map(-90,90,138,312,values_map[key]))
     });
     joint5.publish(msn); 
     getTxt();
@@ -343,7 +353,7 @@ function moveCamera(data){
     key = "joint8";
     values_map[key] += (data);    
     values_map[key] = qlimit(limits_map.camera, values_map[key]);
-    var msn = new ROSLIB.Message({data : parseInt(values_map[key])});
+    var msn = new ROSLIB.Message({data : parseFloat(values_map[key])});
     camera.publish(msn);
     getTxt();
 }

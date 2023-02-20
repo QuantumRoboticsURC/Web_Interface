@@ -19,7 +19,7 @@ class ArmTeleop{
         this.limits_map = {
             q1:[-180,0],
             q2:[-8,164],
-            q3:[0,245],
+            q3:[0,245], //Cambio de límites
             q4: [0,120],
             q5: [0,80],
             q6:[0,110],
@@ -51,50 +51,78 @@ class ArmTeleop{
         console.log(message);
         
     }
-    moveServo(servo_id,servo_dir){
-        switch(servo_id){
-            case 1:
-                if(this.angles_map.q4>=this.limits_map.q4[0] && this.angles_map.q4<=this.limits_map.q4[1]){
+        moveServo(servo_id,servo_dir,servo_step){
+            switch(servo_id){
+                case 1:
                     if(servo_dir=="+"){
-                        this.angles_map.q4= this.angles_map.q4+5;
+                        var step = this.angles_map.q4+servo_step;
                     }
                     else{
-                        this.angles_map.q4-= this.angles_map.q4-5;
+                        var step = this.angles_map.q4-servo_step;
                     }
-                    
-                }
-                break;
-            case 2: 
-                if(this.angles_map.q5>=this.limits_map.q5[0] && this.angles_map.q5<=this.limits_map.q5[1]){
+                    console.log(step);
+                    if(step>=this.limits_map.q4[0] && step<=this.limits_map.q4[1]){
+                        if(step<=this.limits_map.q4[0]){
+                            this.angles_map.q4=this.limits_map.q4[0];
+                        }
+                        else if(step>=this.limits_map.q4[1]){
+                            this.angles_map.q4=this.limits_map.q4[1];
+                        }
+                        else{
+                            this.angles_map.q4=step;
+                        }
+                    }
+                    break;
+                case 2: 
                     if(servo_dir=="+"){
-                        this.angles_map.q5=this.angles_map.q5+5;
+                        var step = this.angles_map.q5+servo_step;
                     }
                     else{
-                        this.angles_map.q5= this.angles_map.q5-5;
+                        var step = this.angles_map.q5-servo_step;
                     }
-                }
-                break;
-            case 3:
-                if(this.angles_map.q6>=this.limits_map.q6[0] && this.angles_map.q6<=this.limits_map.q6[1]){
-                    if(servo_dir=="+"){
-                        this.angles_map.q6= this.angles_map.q6+5;
+                    if(step>=this.limits_map.q5[0] && step<=this.limits_map.q5[1]){
+                        if(step<=this.limits_map.q5[0]){
+                            this.angles_map.q5=this.limits_map.q5[0];
+                        }
+                        else if(step>=this.limits_map.q5[1]){
+                            this.angles_map.q5=this.limits_map.q5[1];
+                        }
+                        else{
+                            this.angles_map.q5=step;
+                        }
                     }
-                    else{
-                        this.angles_map.q6= this.angles_map.q6-5;;
-                    }
-                } 
-                break;
+                    break;
+                case 3:
+                        if(servo_dir=="+"){
+                            var step = this.angles_map.q6+servo_step;
+                        }
+                        else{
+                            var step = this.angles_map.q6-servo_step;
+                        }
+                        if(step>=this.limits_map.q6[0] && step<=this.limits_map.q6[1]){
+                            if(step<=this.limits_map.q6[0]){
+                                this.angles_map.q6=this.limits_map.q6[0];
+                            }
+                            else if(step>=this.limits_map.q6[1]){
+                                this.angles_map.q6=this.limits_map.q6[1];
+                            }
+                            else{
+                                this.angles_map.q6=step;
+                            }
+                        }
+                    break;
+            }
+    
         }
 
     }
-}
 let arm = new ArmTeleop();
 function test(){   
     console.log("AAAAAAAAAAAAAAA");
     arm.publishMessages();
 }
-function moveServos(servo_id,servo_dir){
-    arm.moveServo(servo_id,servo_dir);
+function moveServos(servo_id,servo_dir,servo_step){
+    arm.moveServo(servo_id,servo_dir,servo_step);
     arm.publishMessages();
 }
 
@@ -140,7 +168,29 @@ function predefinedPosition(position){
 }
 
 function getTxt(){
-console.log("hola");
+    arm.publishMessages();
+    var Rotation = String(arm.angles_map.q1);
+    var YellowJacketAxis2 = String(arm.angles_map.q2);
+    var ServoAxis3 = String(arm.angles_map.q3);
+    var Servo_Left = String(arm.angles_map.q4);
+    var Servo_Center = String(arm.angles_map.q5);
+    var Servo_Right = String(arm.angles_map.q6);
+
+  
+    localStorage.setItem("Rotation",Rotation);
+    localStorage.setItem("YellowJacketAxis2",YellowJacketAxis2);
+    localStorage.setItem("ServoAxis3",ServoAxis3);
+    localStorage.setItem("Servo_Left",Servo_Left);
+    localStorage.setItem("Servo_Center",Servo_Center);
+    localStorage.setItem("Servo_Right",Servo_Right);
+
+    document.getElementById("Rotation").innerHTML = Rotation;
+    document.getElementById("YJ").innerHTML = YellowJacketAxis2;
+    document.getElementById("Axis3").innerHTML = ServoAxis3;
+    document.getElementById("SL").innerHTML = Servo_Left;
+    document.getElementById("SC").innerHTML = Servo_Center;
+    document.getElementById("SR").innerHTML = Servo_Right;
+  
 }
 function go_axis3_servo(data){
     arm.angles_map.q3=data
