@@ -111,19 +111,41 @@ class ArmTeleop{
                             }
                         }
                     break;
+                case 4:
+                    if(servo_dir=="+"){
+                        var step = this.angles_map.q3+servo_step;
+                    }
+                    else{
+                        var step = this.angles_map.q3-servo_step;
+                    }
+                    if(step>=this.limits_map.q3[0] && step<=this.limits_map.q3[1]){
+                        if(step<=this.limits_map.q3[0]){
+                            this.angles_map.q6=this.limits_map.q3[0];
+                        }
+                        else if(step>=this.limits_map.q3[1]){
+                            this.angles_map.q3=this.limits_map.q3[1];
+                        }
+                        else{
+                            this.angles_map.q3=step;
+                        }
+                    }
+                    break;
             }
     
         }
+        
 
     }
 let arm = new ArmTeleop();
-function test(){   
-    console.log("AAAAAAAAAAAAAAA");
-    arm.publishMessages();
-}
+
+var l2=2.4;
+var l3=2;
+
+
+
 function moveServos(servo_id,servo_dir,servo_step){
     arm.moveServo(servo_id,servo_dir,servo_step);
-    arm.publishMessages();
+    getTxt();
 }
 
 function predefinedPosition(position){
@@ -131,40 +153,60 @@ function predefinedPosition(position){
         case "HOME":
             arm.angles_map.q1=0;
             arm.angles_map.q2=90;
-            arm.angles_map.q3=-155;
+            arm.angles_map.q3=0;
             break;
         case "INTERMEDIATE":
             arm.angles_map.q1=0;
             arm.angles_map.q2=90;
-            arm.angles_map.q3=-90;
+            arm.angles_map.q3=65;
             break
         case "GROUND":
             arm.angles_map.q1=0;
             arm.angles_map.q2=-8;
-            arm.angles_map.q3=-61;
+            arm.angles_map.q3=94;
             break
         case "HORIZONTAL":
             arm.angles_map.q1=0;
             arm.angles_map.q2=0;
-            arm.angles_map.q3=0;
+            arm.angles_map.q3=155;
             break
         case "LEFT":
             arm.angles_map.q1=-123;
             arm.angles_map.q2=139;
-            arm.angles_map.q3=-146;
+            arm.angles_map.q3=9;
             break
         case "CENTER":
             arm.angles_map.q1=-95;
             arm.angles_map.q2=155;
-            arm.angles_map.q3=-151;
+            arm.angles_map.q3=4;
             break
         case "RIGHT":
             arm.angles_map.q1=-149;
             arm.angles_map.q2=139;
-            arm.angles_map.q3=-141;  
+            arm.angles_map.q3=14;  
     }
-    arm.publishMessages();
+    getTxt();
     
+}
+
+function go_rotation(data){
+    arm.angles_map.q1=data
+    if (arm.angles_map.q1<arm.limits_map.q1[0]){
+     arm.angles_map.q1=arm.limits_map.q1[0]
+    }else if (arm.angles_map.q1>arm.limits_map.q1[1]){
+     arm.angles_map.q1=arm.limits_map.q1[1]
+    }
+    getTxt();
+}
+
+function go_yellow(data){
+    arm.angles_map.q2=data
+    if (arm.angles_map.q2<arm.limits_map.q2[0]){
+     arm.angles_map.q2=arm.limits_map.q2[0]
+    }else if (arm.angles_map.q2>arm.limits_map.q2[1]){
+     arm.angles_map.q2=arm.limits_map.q2[1]
+    }
+    getTxt();
 }
 
 function getTxt(){
@@ -178,19 +220,103 @@ function getTxt(){
 
   
     localStorage.setItem("Rotation",Rotation);
-    localStorage.setItem("YellowJacketAxis2",YellowJacketAxis2);
-    localStorage.setItem("ServoAxis3",ServoAxis3);
-    localStorage.setItem("Servo_Left",Servo_Left);
-    localStorage.setItem("Servo_Center",Servo_Center);
-    localStorage.setItem("Servo_Right",Servo_Right);
+    localStorage.setItem("YJ",YellowJacketAxis2);
+    localStorage.setItem("Axis3",ServoAxis3);
+    localStorage.setItem("LS",Servo_Left);
+    localStorage.setItem("CS",Servo_Center);
+    localStorage.setItem("RS",Servo_Right);
 
     document.getElementById("Rotation").innerHTML = Rotation;
     document.getElementById("YJ").innerHTML = YellowJacketAxis2;
     document.getElementById("Axis3").innerHTML = ServoAxis3;
-    document.getElementById("SL").innerHTML = Servo_Left;
-    document.getElementById("SC").innerHTML = Servo_Center;
-    document.getElementById("SR").innerHTML = Servo_Right;
+    document.getElementById("LS").innerHTML = Servo_Left;
+    document.getElementById("CS").innerHTML = Servo_Center;
+    document.getElementById("RS").innerHTML = Servo_Right;
   
+}
+function rad2deg(radians){return radians * (180/math.pi);}
+ function deg2rad(degrees){return degrees * (math.pi/180);}
+ function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+ function arm_interface(q2,q3){    
+	//Transformación a coordenadas rectangulares
+    let acum = deg2rad(q2);
+	let x2=l2*math.cos(acum);
+	let y2=l2*math.sin(acum);
+    var q3n=my_map(0,245,-155,90,q3);
+    console.log(q3n)
+    acum+=deg2rad(q3n);
+	let x3=x2+l3*math.cos(acum);
+	let y3=y2+l3*math.sin(acum);    
+	//Gráfica
+	var armData={
+  		labels:[],//x label
+  		datasets:[{
+    		//Joint 2
+    			label:"joint 2",//legend
+    			data:[
+      				{x:0,y:0},
+      				{x:x2,y:y2}
+    			],
+    			lineTension: 0, //linea recta
+    			fill: false, //rellenar debajo de la linea
+    			borderColor:'blue',//color de línea
+    			backgroundColor:'transparent',//color de fondo
+    			pointBorderColor:'blue',//apariencia de los puntos
+    			pointBackgroundColor: 'blue',
+    			pointRadius:2,
+    			pointStyle:'rectRounded',
+    			showLine: true
+  		},
+  		{
+    		//Joint 3
+    			label:"joint 3",//legend
+    			data:[
+      				{x:x2,y:y2},
+      				{x:x3,y:y3}
+    			],
+    			lineTension: 0, //linea recta
+    			fill: false, //rellenar debajo de la linea
+    			borderColor:'red',//color de línea
+    			backgroundColor:'transparent',//color de fondo
+    			pointBorderColor:'red',//apariencia de los puntos
+    			pointBackgroundColor: 'red',
+    			pointRadius:2,
+    			pointStyle:'rectRounded',
+    			showLine: true
+  		}]
+	}
+	var chartOptions = {
+  		legend:{
+    			display:false //Ocultar labels
+  		},
+  		scales:{
+    			xAxes:[{
+      				ticks:{
+        				beginAtZero:true,
+        				min:-6,
+        				max:6
+      				}
+    			}],
+    			yAxes:[{
+      				ticks:{
+        				beginAtZero:true,
+        				min:-6,
+                        max:6                        
+      				}
+    			}]
+  		},    
+        animation: {
+            duration: 0
+        }
+	};
+	new Chart("Arm_Graphic",{
+  		type: "scatter",
+  		data: armData,
+  		options: chartOptions
+	});
 }
 function go_axis3_servo(data){
     arm.angles_map.q3=data
@@ -199,7 +325,7 @@ function go_axis3_servo(data){
     }else if (arm.angles_map.q3>arm.limits_map.q3[1]){
      arm.angles_map.q3=arm.limits_map.q3[1]
     }
-    arm.publishMessages();
+    getTxt();
  }
 
 function go_left_servo(data){
@@ -209,7 +335,7 @@ function go_left_servo(data){
    }else if (arm.angles_map.q4>arm.limits_map.q4[1]){
     arm.angles_map.q4=arm.limits_map.q4[1]
    }
-   arm.publishMessages();
+   getTxt();
 }
 
 function go_center_servo(data){
@@ -219,7 +345,7 @@ function go_center_servo(data){
     }else if (arm.angles_map.q5>arm.limits_map.q5[1]){
      arm.angles_map.q5=arm.limits_map.q5[1]
     }
-    arm.publishMessages();
+    getTxt();
  }
 
  function go_right_servo(data){
@@ -229,5 +355,23 @@ function go_center_servo(data){
     }else if (arm.angles_map.q6>arm.limits_map.q6[1]){
      arm.angles_map.q6=arm.limits_map.q6[1]
     }
-    arm.publishMessages();
+    getTxt();
  }
+ function move_rotation(data, sign=1){
+    arm.angles_map.q1+=data*sign
+    if (arm.angles_map.q1<arm.limits_map.q1[0]){
+    arm.angles_map.q1=arm.limits_map.q1[0]
+    }else if (arm.angles_map.q1>arm.limits_map.q1[1]){
+    arm.angles_map.q1=arm.limits_map.q1[1]
+    }
+    getText();
+}
+function move_yellow(data, sign=1){
+    arm.angles_map.q2+=data*sign
+    if (arm.angles_map.q2<arm.limits_map.q2[0]){
+    arm.angles_map.q2=arm.limits_map.q2[0]
+    }else if (arm.angles_map.q2>arm.limits_map.q2[1]){
+    arm.angles_map.q2=arm.limits_map.q2[1]
+    }
+    getText();
+}

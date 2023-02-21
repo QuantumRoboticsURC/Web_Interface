@@ -202,12 +202,15 @@
 															<small class="text-muted">Rotation</small>
 															<div class="col-md-12">
 																
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
+																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
+																																	
 																	<div class="input-group">
+																		<button type="button" class="btn btn-secondary btn-look-value" onclick="go_rotation(parseFloat(document.getElementById('X_Txt').value))">GO</button>	
 																		<input id="X_Txt" type="text" class="form-control" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="pressed(-parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="pressed(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
+
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="move_rotation(parseFloat(document.getElementById('X_Txt').value), -1)">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="move_rotation(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -220,12 +223,12 @@
 															<small class="text-muted">Yellow Jacket Axis 2</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_rotation(parseFloat(document.getElementById('Y_Txt').value))">GO</button>																
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_yellow(parseFloat(document.getElementById('Y_Txt').value))">GO</button>																
 																	<div class="input-group">
 																		<input id="Y_Txt" type="text" class="form-control-go" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="rotate(-parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="rotate(parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="move_yellow(parseFloat(document.getElementById('Y_Txt').value),-1)">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="move_yellow(parseFloat(document.getElementById('Y_Txt').value),1)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -242,8 +245,8 @@
 																	<div class="input-group">
 																		<input id="Axis3_Txt" type="text" class="form-control" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(1,'-')">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(1,'+')">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(4,'-')">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(4,'+')">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -297,7 +300,7 @@
 																		<input id="Right_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(3,'-',parseInt(document.getElementById('Right_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(1,'+',parseInt(document.getElementById('Right_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(3,'+',parseInt(document.getElementById('Right_Txt').value))">&nbsp;+&nbsp;</button>
 																	
 																</div>
 															</div>
