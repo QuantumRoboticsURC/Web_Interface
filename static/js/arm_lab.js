@@ -28,7 +28,7 @@ class ArmTeleop{
         this.angles_map={
             q1:0.0,
             q2:90.0,
-            q3:-155,
+            q3:0,
             q4:0,
             q5:0,
             q6:0,
@@ -36,6 +36,13 @@ class ArmTeleop{
         }  
     }
     publishMessages(){
+        this.angles_map.q1=qlimit(this.limits_map.q1,this.angles_map.q1)
+        this.angles_map.q2=qlimit(this.limits_map.q2,this.angles_map.q2)
+        this.angles_map.q3=qlimit(this.limits_map.q3,this.angles_map.q3)
+        this.angles_map.q4=qlimit(this.limits_map.q4,this.angles_map.q4)
+        this.angles_map.q5=qlimit(this.limits_map.q5,this.angles_map.q5)
+        this.angles_map.q6=qlimit(this.limits_map.q6,this.angles_map.q6)
+        this.angles_map.q7=qlimit(this.limits_map.q7,this.angles_map.q7)
         var message = new ROSLIB.Message({
             joint1:this.angles_map.q1,
             joint2:this.angles_map.q2,
@@ -55,79 +62,34 @@ class ArmTeleop{
             switch(servo_id){
                 case 1:
                     if(servo_dir=="+"){
-                        var step = this.angles_map.q4+servo_step;
+                        this.angles_map.q4+=servo_step;
                     }
                     else{
-                        var step = this.angles_map.q4-servo_step;
-                    }
-                    console.log(step);
-                    if(step>=this.limits_map.q4[0] && step<=this.limits_map.q4[1]){
-                        if(step<=this.limits_map.q4[0]){
-                            this.angles_map.q4=this.limits_map.q4[0];
-                        }
-                        else if(step>=this.limits_map.q4[1]){
-                            this.angles_map.q4=this.limits_map.q4[1];
-                        }
-                        else{
-                            this.angles_map.q4=step;
-                        }
+                        this.angles_map.q4-=servo_step;
                     }
                     break;
                 case 2: 
                     if(servo_dir=="+"){
-                        var step = this.angles_map.q5+servo_step;
+                        this.angles_map.q5+=servo_step;
                     }
                     else{
-                        var step = this.angles_map.q5-servo_step;
-                    }
-                    if(step>=this.limits_map.q5[0] && step<=this.limits_map.q5[1]){
-                        if(step<=this.limits_map.q5[0]){
-                            this.angles_map.q5=this.limits_map.q5[0];
-                        }
-                        else if(step>=this.limits_map.q5[1]){
-                            this.angles_map.q5=this.limits_map.q5[1];
-                        }
-                        else{
-                            this.angles_map.q5=step;
-                        }
+                        this.angles_map.q5-=servo_step;
                     }
                     break;
                 case 3:
                         if(servo_dir=="+"){
-                            var step = this.angles_map.q6+servo_step;
+                            this.angles_map.q6+=servo_step;
                         }
                         else{
-                            var step = this.angles_map.q6-servo_step;
-                        }
-                        if(step>=this.limits_map.q6[0] && step<=this.limits_map.q6[1]){
-                            if(step<=this.limits_map.q6[0]){
-                                this.angles_map.q6=this.limits_map.q6[0];
-                            }
-                            else if(step>=this.limits_map.q6[1]){
-                                this.angles_map.q6=this.limits_map.q6[1];
-                            }
-                            else{
-                                this.angles_map.q6=step;
-                            }
+                            this.angles_map.q6-=servo_step;
                         }
                     break;
                 case 4:
                     if(servo_dir=="+"){
-                        var step = this.angles_map.q3+servo_step;
+                        this.angles_map.q3+=servo_step;
                     }
                     else{
-                        var step = this.angles_map.q3-servo_step;
-                    }
-                    if(step>=this.limits_map.q3[0] && step<=this.limits_map.q3[1]){
-                        if(step<=this.limits_map.q3[0]){
-                            this.angles_map.q6=this.limits_map.q3[0];
-                        }
-                        else if(step>=this.limits_map.q3[1]){
-                            this.angles_map.q3=this.limits_map.q3[1];
-                        }
-                        else{
-                            this.angles_map.q3=step;
-                        }
+                        this.angles_map.q3-=servo_step;
                     }
                     break;
             }
@@ -138,10 +100,31 @@ class ArmTeleop{
     }
 let arm = new ArmTeleop();
 
-var l2=2.4;
-var l3=2;
+var l2=3.5;
+var l3=2.5;
 
 
+//Joystick //HAY que checar con Control
+var listener_Joystick = new ROSLIB.Topic({
+    ros : ros,
+    name : '/goal',
+    messageType : 'std_msgs/String'
+});
+
+listener_Joystick.subscribe(function(message) {
+  values = message.data.split(" ");
+  if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0){
+    console.log("entra a if_")
+  arm.values_map.joint1 += parseFloat(values[0]);  //rotation
+  arm.values_map.joint2 += parseFloat(values[1]); //yellow yacket axiz 2
+  arm.values_map.joint3 += parseFloat(values[2]); //servo axis 3
+  arm.values_map.joint4 += parseFloat(values[3]); //Left servo
+  arm.values_map.joint5 += parseFloat(values[4]); //Center Servo
+  arm.values_map.joint6 += parseFloat(values[5]); //Right Servo
+  arm.values_map.joint7 += parseFloat(values[6]); //Centrifuge 
+  getTxt();
+};
+});
 
 function moveServos(servo_id,servo_dir,servo_step){
     arm.moveServo(servo_id,servo_dir,servo_step);
@@ -188,24 +171,48 @@ function predefinedPosition(position){
     getTxt();
     
 }
-
-function go_rotation(data){
-    arm.angles_map.q1=data
-    if (arm.angles_map.q1<arm.limits_map.q1[0]){
-     arm.angles_map.q1=arm.limits_map.q1[0]
-    }else if (arm.angles_map.q1>arm.limits_map.q1[1]){
-     arm.angles_map.q1=arm.limits_map.q1[1]
+function qlimit(l, val){   //limites
+    if (val < l[0]){ //inferior
+        return l[0];
+    }
+    if (val > l[1]){ //superior 
+        return l[1];
+    }
+    return val;
+}
+function go(data,q){
+    switch(q){
+        case 1:
+            arm.angles_map.q1=data;
+            break;
+        case 2:
+            arm.angles_map.q2=data;
+            break;
+        case 3:
+            arm.angles_map.q3=data;
+            break;
+        case 4:
+            arm.angles_map.q4=data;
+            break;
+        case 5:
+            arm.angles_map.q5=data;
+            break;
+        case 6:
+            arm.angles_map.q6=data;
+            break;
     }
     getTxt();
 }
-
-function go_yellow(data){
-    arm.angles_map.q2=data
-    if (arm.angles_map.q2<arm.limits_map.q2[0]){
-     arm.angles_map.q2=arm.limits_map.q2[0]
-    }else if (arm.angles_map.q2>arm.limits_map.q2[1]){
-     arm.angles_map.q2=arm.limits_map.q2[1]
-    }
+ function move_rotation(data, sign=1){
+    arm.angles_map.q1+=data*sign;
+    getTxt();
+}
+function move_yellow(data, sign=1){
+    arm.angles_map.q2+=data*sign;
+    getTxt();
+}
+function moveCentrifuge(data){
+    arm.angles_map.q7=data;
     getTxt();
 }
 
@@ -217,6 +224,7 @@ function getTxt(){
     var Servo_Left = String(arm.angles_map.q4);
     var Servo_Center = String(arm.angles_map.q5);
     var Servo_Right = String(arm.angles_map.q6);
+    var Centrifuge = String(arm.angles_map.q7);
 
   
     localStorage.setItem("Rotation",Rotation);
@@ -225,6 +233,7 @@ function getTxt(){
     localStorage.setItem("LS",Servo_Left);
     localStorage.setItem("CS",Servo_Center);
     localStorage.setItem("RS",Servo_Right);
+    localStorage.setItem("Centrifuge",Centrifuge);
 
     document.getElementById("Rotation").innerHTML = Rotation;
     document.getElementById("YJ").innerHTML = YellowJacketAxis2;
@@ -232,11 +241,12 @@ function getTxt(){
     document.getElementById("LS").innerHTML = Servo_Left;
     document.getElementById("CS").innerHTML = Servo_Center;
     document.getElementById("RS").innerHTML = Servo_Right;
-  
+    document.getElementById("Centrifuge").innerHTML = Centrifuge;
+    arm_interface(arm.angles_map.q2,arm.angles_map.q3);
 }
 function rad2deg(radians){return radians * (180/math.pi);}
- function deg2rad(degrees){return degrees * (math.pi/180);}
- function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
+function deg2rad(degrees){return degrees * (math.pi/180);}
+function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
@@ -317,61 +327,4 @@ function rad2deg(radians){return radians * (180/math.pi);}
   		data: armData,
   		options: chartOptions
 	});
-}
-function go_axis3_servo(data){
-    arm.angles_map.q3=data
-    if (arm.angles_map.q3<arm.limits_map.q3[0]){
-     arm.angles_map.q3=arm.limits_map.q3[0]
-    }else if (arm.angles_map.q3>arm.limits_map.q3[1]){
-     arm.angles_map.q3=arm.limits_map.q3[1]
-    }
-    getTxt();
- }
-
-function go_left_servo(data){
-   arm.angles_map.q4=data
-   if (arm.angles_map.q4<arm.limits_map.q4[0]){
-    arm.angles_map.q4=arm.limits_map.q4[0]
-   }else if (arm.angles_map.q4>arm.limits_map.q4[1]){
-    arm.angles_map.q4=arm.limits_map.q4[1]
-   }
-   getTxt();
-}
-
-function go_center_servo(data){
-    arm.angles_map.q5=data
-    if (arm.angles_map.q5<arm.limits_map.q5[0]){
-     arm.angles_map.q5=arm.limits_map.q5[0]
-    }else if (arm.angles_map.q5>arm.limits_map.q5[1]){
-     arm.angles_map.q5=arm.limits_map.q5[1]
-    }
-    getTxt();
- }
-
- function go_right_servo(data){
-    arm.angles_map.q6=data
-    if (arm.angles_map.q6<arm.limits_map.q6[0]){
-     arm.angles_map.q6=arm.limits_map.q6[0]
-    }else if (arm.angles_map.q6>arm.limits_map.q6[1]){
-     arm.angles_map.q6=arm.limits_map.q6[1]
-    }
-    getTxt();
- }
- function move_rotation(data, sign=1){
-    arm.angles_map.q1+=data*sign
-    if (arm.angles_map.q1<arm.limits_map.q1[0]){
-    arm.angles_map.q1=arm.limits_map.q1[0]
-    }else if (arm.angles_map.q1>arm.limits_map.q1[1]){
-    arm.angles_map.q1=arm.limits_map.q1[1]
-    }
-    getText();
-}
-function move_yellow(data, sign=1){
-    arm.angles_map.q2+=data*sign
-    if (arm.angles_map.q2<arm.limits_map.q2[0]){
-    arm.angles_map.q2=arm.limits_map.q2[0]
-    }else if (arm.angles_map.q2>arm.limits_map.q2[1]){
-    arm.angles_map.q2=arm.limits_map.q2[1]
-    }
-    getText();
 }

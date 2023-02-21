@@ -78,8 +78,8 @@
 													<div class="row">
 														<small class="text-muted">Centrifuge</small>
 														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveGripper(0)" onmousedown="moveGripper(1)">Before</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveGripper(0)" onmousedown="moveGripper(-1)">After</button> 																
+															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(-10)">Left</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(10)">Right</button> 																
 														</div>
 														
 													</div>
@@ -186,10 +186,7 @@
 													<p>Left Servo: <label  type="text" id="LS"></label></p>
 													<p>Center Sevo: <label  type="text" id="CS"></label></p>
 													<p>Right Servo <label  type="text" id="RS"></label></p>
-													<p>Q1: <label  type="text" id="Q1"></label></p>
-													<p>Q2:<label  type="text" id="Q2"></label></p>
-													<p>Q3:<label  type="text" id="Q3"></label></p>
-													<p>Q4:<label  type="text" id="Q4"></label></p>
+													<p>Centrifuge <label  type="text" id="Centrifuge"></label></p>
 												</div>
 											</div>
 										</div>
@@ -205,8 +202,8 @@
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
 																																	
 																	<div class="input-group">
-																		<button type="button" class="btn btn-secondary btn-look-value" onclick="go_rotation(parseFloat(document.getElementById('X_Txt').value))">GO</button>	
-																		<input id="X_Txt" type="text" class="form-control" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('X_Txt').value),1)">GO</button>	
+																		<input id="X_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 
 																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="move_rotation(parseFloat(document.getElementById('X_Txt').value), -1)">&nbsp;-&nbsp;</button>
@@ -223,9 +220,9 @@
 															<small class="text-muted">Yellow Jacket Axis 2</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_yellow(parseFloat(document.getElementById('Y_Txt').value))">GO</button>																
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Y_Txt').value),2)">GO</button>																
 																	<div class="input-group">
-																		<input id="Y_Txt" type="text" class="form-control-go" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input id="Y_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="move_yellow(parseFloat(document.getElementById('Y_Txt').value),-1)">&nbsp;-&nbsp;</button>
 																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="move_yellow(parseFloat(document.getElementById('Y_Txt').value),1)">&nbsp;+&nbsp;</button>
@@ -241,12 +238,12 @@
 															<small class="text-muted">Servo Axis 3:</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_axis3_servo(parseFloat(document.getElementById('Axis3_Txt').value))">GO</button>
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Axis3_Txt').value),3)">GO</button>
 																	<div class="input-group">
-																		<input id="Axis3_Txt" type="text" class="form-control" value="1" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																		<input id="Axis3_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(4,'-')">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(4,'+')">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(4,'-',parseInt(document.getElementById('Axis3_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(4,'+',parseInt(document.getElementById('Axis3_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -259,7 +256,7 @@
 															<small class="text-muted">Servo Left:</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_left_servo(parseFloat(document.getElementById('Left_Txt').value))">GO</button>
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Left_Txt').value),4)">GO</button>
 																	<div class="input-group">
 																		<input id="Left_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
@@ -276,7 +273,7 @@
 															<small class="text-muted">Servo Center: </small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_center_servo(parseFloat(document.getElementById('Center_Txt').value))">GO</button>
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Center_Txt').value),5)">GO</button>
 																	<div class="input-group">
 																		<input id="Center_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
@@ -295,7 +292,7 @@
 															<small class="text-muted">Servo Right: </small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go_right_servo(parseFloat(document.getElementById('Right_Txt').value))">GO</button>
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Right_Txt').value),6)">GO</button>
 																	<div class="input-group">
 																		<input id="Right_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
