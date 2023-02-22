@@ -185,49 +185,49 @@ function predefinedPosition(position){
     
     if (position === "HOME"){
         x = .134;
-        y =  -5;
+        y =  0;
         z =  .75;
         phi = 0;
         
     } 
     else if(position === "INTERMEDIATE"){
         x = 0;
-        y = -5;
+        y = 0;
         z = 3.677;
         phi = 0;
         
     }
     else if(position === "PULL"){
         x = 3.33;
-        y = -5;
+        y = 0;
         z = 3.35;
         phi = 0;
         
     }
     else if (position === "WRITE"){
         x = 3.33;
-        y = -5;
+        y = 0;
         z = 1.35;
         phi = 0;  
            
     }
     else if (position === "FLOOR"){
         x = 3.28;
-        y = -5;
+        y = 0;
         z = -.1;
         phi = 0;
         
     }
     else if (position === "STORAGE"){
         x = .134;
-        y =  -5;
+        y =  0;
         z =  .75;
         phi = 90;
         
     }
     else if (position === "VERTICAL"){
         x = 0;
-        y =  -5;
+        y = 0;
         z =  5.2;
         phi = 90;
         
