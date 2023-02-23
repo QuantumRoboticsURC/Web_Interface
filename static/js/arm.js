@@ -4,7 +4,7 @@ var robot_IP;
 //IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
 robot_IP = _config.ROSBridge_IP;
 ros = new ROSLIB.Ros({
-    url: "ws://" + robot_IP + ":9090"
+    url: "ws://" + "10.48.69.252" + ":9090"
 });
 //Camera
 if (_config.is_WebVideo){
@@ -49,9 +49,8 @@ listener_Joystick.subscribe(function(message) {
     joint5.publish(msn); 
     var msn2 = new ROSLIB.Message({data : parseFloat(values_map["joint8"])});
     camera.publish(msn2);
+    console.log("AAAAAAAAAAAAAa");
   inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
-
-
 
   getTxt();
 };
