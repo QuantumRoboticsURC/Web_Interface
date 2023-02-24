@@ -1,6 +1,6 @@
 var ros;
 var robot_IP;
-
+var bot;
 //IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
 robot_IP = _config.ROSBridge_IP;
 ros = new ROSLIB.Ros({
@@ -33,19 +33,36 @@ var listener_Joystick = new ROSLIB.Topic({
 
 listener_Joystick.subscribe(function(message) {
   values = message.data.split(" ");
-  if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0){
+  if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0 || values[5]!=0.0|| values[6]!=0.0){
     console.log("entra a if_")
   values_map.joint1 += parseFloat(values[0]);  //x
   values_map.joint2 += parseFloat(values[1]); //y
   values_map.joint3 += parseFloat(values[2]); //z
   values_map.joint4 += parseFloat(values[3]); //phi
-  
-  values_map.joint5 += parseFloat(values[4]); //rotation
-  console.log(values);
-
+  values_map.joint5 += parseFloat(values[4]); //gripper rotation
+  values_map.joint8 += parseFloat(values[5]); // camera
+  values_map.joint5=qlimit(limits_map["joint5"], values_map["joint5"]);
+  values_map.joint8=qlimit(limits_map.camera, values_map["joint8"]);
+  if(values[4]!=0){
+    var msn = new ROSLIB.Message({
+        data : parseInt(my_map(-90,90,138,312,values_map["joint5"]))});
+       joint5.publish(msn); 
+  }
+  if(values[5]!=0){
+    var msn2 = new ROSLIB.Message({data : parseFloat(values_map["joint8"])});
+    camera.publish(msn2);
+  }
+  go_rotation(values_map.joint2);
   inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
   getTxt();
-};
+} 
+if(bot){
+    var msn = new ROSLIB.Message({data : parseFloat(values[6])});
+    lineal.publish(msn);
+}
+
+
+
 });
 
 //Joystick
@@ -311,7 +328,7 @@ function go(data){
     var key = "joint5";
     values_map[key]=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({data : my_map(-90,90,1230,1770,data)});
+    var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,138,312,data))});
     joint5.publish(msn);
     getTxt();
 }
@@ -322,7 +339,7 @@ function griperRotation(data){
     values_map[key]+=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
     var msn = new ROSLIB.Message({
-        data : my_map(-90,90,1230,1770,values_map[key])
+        data : parseInt(my_map(-90,90,138,312,values_map[key]))
     });
     joint5.publish(msn); 
     getTxt();
@@ -333,9 +350,16 @@ function moveGripper(data){
     gripper.publish(msn);           
 }
 // Open linear
-function movePrismatic(data){    
+function movePrismatic(data){   
+    if(data==1 || data==-1){
+        bot = false;
+    }else{
+        bot=true;
+    }
     var msn = new ROSLIB.Message({data : data});
     lineal.publish(msn);
+    
+
 }
 
 // Move general camera
