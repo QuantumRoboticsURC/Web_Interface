@@ -33,7 +33,7 @@ var listener_Joystick = new ROSLIB.Topic({
 
 listener_Joystick.subscribe(function(message) {
   values = message.data.split(" ");
-  if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0){
+  if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=0.0 || values[5]!=0.0){
     console.log("entra a if_")
   values_map.joint1 += parseFloat(values[0]);  //x
   values_map.joint2 += parseFloat(values[1]); //y
@@ -44,9 +44,11 @@ listener_Joystick.subscribe(function(message) {
   values_map.joint5=qlimit(limits_map["joint5"], values_map["joint5"]);
   values_map.joint8=qlimit(limits_map.camera, values_map["joint8"]);
   console.log(values);
+  if (values[4]!=0){
     var msn = new ROSLIB.Message({
     data : parseInt(my_map(-90,90,138,312,values_map["joint5"]))});
-    joint5.publish(msn); 
+    joint5.publish(msn);
+  } 
     var msn2 = new ROSLIB.Message({data : parseFloat(values_map["joint8"])});
     camera.publish(msn2);
     console.log("AAAAAAAAAAAAAa");
