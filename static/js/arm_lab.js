@@ -4,7 +4,7 @@ var robot_IP;
 //IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
 robot_IP = _config.ROSBridge_IP;
 ros = new ROSLIB.Ros({
-    url: "ws://" + robot_IP + ":9090"
+    url: "ws://" + "localhost" + ":9090"
 });
 class ArmTeleop{
     constructor(){
@@ -15,6 +15,18 @@ class ArmTeleop{
             messageType : 'lab_arm/arm_lab',
             queue_size:1
         });
+        this.joint1= new ROSLIB.Topic({
+            ros: ros,
+            name: 'arm_laboratory/joint1',
+            messageType: 'std_msgs/Float64',
+            queue_size:1
+        })
+        this.joint2= new ROSLIB.Topic({
+            ros: ros,
+            name: 'arm_laboratory/joint2',
+            messageType: 'std_msgs/Float64',
+            queue_size:1
+        })
 
         this.limits_map = {
             q1:[-180,0],
@@ -44,8 +56,6 @@ class ArmTeleop{
         this.angles_map.q6=qlimit(this.limits_map.q6,this.angles_map.q6)
         this.angles_map.q7=qlimit(this.limits_map.q7,this.angles_map.q7)
         var message = new ROSLIB.Message({
-            joint1:this.angles_map.q1,
-            joint2:this.angles_map.q2,
             joint3:this.angles_map.q3,
             servo1:this.angles_map.q4,
             servo2:this.angles_map.q5,
@@ -54,11 +64,19 @@ class ArmTeleop{
             screenshot:"a"
 
         });
+        var message2 =new ROSLIB.Message({
+            data:this.angles_map.q1
+        })
+        var message3=new ROSLIB.Message({
+            data:this.angles_map.q2
+        })
         this.arm.publish(message);
         console.log(message);
+        this.joint1.publish(message2);
+        this.joint2.publish(message3);
         
     }
-        moveServo(servo_id,servo_dir,servo_step){
+        moveServos(servo_id,servo_dir,servo_step){
             switch(servo_id){
                 case 1:
                     if(servo_dir=="+"){
@@ -93,7 +111,7 @@ class ArmTeleop{
                     }
                     break;
             }
-    
+            getTxt();
         }
         
 
@@ -103,33 +121,6 @@ let arm = new ArmTeleop();
 var l2=3.5;
 var l3=2.5;
 
-
-//Joystick //HAY que checar con Control
-var listener_Joystick = new ROSLIB.Topic({
-    ros : ros,
-    name : '/goal',
-    messageType : 'std_msgs/String'
-});
-
-listener_Joystick.subscribe(function(message) {
-  values = message.data.split(" ");
-  if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0){
-    console.log("entra a if_")
-  arm.values_map.joint1 += parseFloat(values[0]);  //rotation
-  arm.values_map.joint2 += parseFloat(values[1]); //yellow yacket axiz 2
-  arm.values_map.joint3 += parseFloat(values[2]); //servo axis 3
-  arm.values_map.joint4 += parseFloat(values[3]); //Left servo
-  arm.values_map.joint5 += parseFloat(values[4]); //Center Servo
-  arm.values_map.joint6 += parseFloat(values[5]); //Right Servo
-  arm.values_map.joint7 += parseFloat(values[6]); //Centrifuge 
-  getTxt();
-};
-});
-
-function moveServos(servo_id,servo_dir,servo_step){
-    arm.moveServo(servo_id,servo_dir,servo_step);
-    getTxt();
-}
 
 function predefinedPosition(position){
     switch(position){
