@@ -49,7 +49,7 @@ listener_Joystick.subscribe(function(message) {
        joint5.publish(msn); 
   }
   if(values[5]!=0){
-    var msn2 = new ROSLIB.Message({data : parseFloat(values_map["joint8"])});
+    var msn2 = new ROSLIB.Message({data : parseFloat(my_map(90,140,0,180,values_map["joint8"]))});
     camera.publish(msn2);
   }
   go_rotation(values_map.joint2);
@@ -158,7 +158,7 @@ var limits_map = {
     q3:[-165.4,0],
     q4:[-135,90],
     joint5:[-90,90], 
-    camera:[90,140]
+    camera:[90,180]
 };
 
 var angles_map={
@@ -635,4 +635,3 @@ function arm_interface(q2,q3,q4){
   		options: chartOptions
 	});
 }
-
