@@ -71,7 +71,9 @@ class ArmTeleop{
             data:this.angles_map.q2
         })
         this.arm.publish(message);
+        console.log("______")
         console.log(message);
+        console.log("_____")
         this.joint1.publish(message2);
         this.joint2.publish(message3);
         
@@ -174,22 +176,22 @@ function qlimit(l, val){   //limites
 function go(data,q){
     switch(q){
         case 1:
-            arm.angles_map.q1=data;
+            arm.angles_map.q1=(arm.limits_map.q1,data);
             break;
         case 2:
-            arm.angles_map.q2=data;
+            arm.angles_map.q2=(arm.limits_map.q2,data);
             break;
         case 3:
-            arm.angles_map.q3=data;
+            arm.angles_map.q3=(arm.limits_map.q3,data);
             break;
         case 4:
-            arm.angles_map.q4=data;
+            arm.angles_map.q4=(arm.limits_map.q4,data);
             break;
         case 5:
-            arm.angles_map.q5=data;
+            arm.angles_map.q5=(arm.limits_map.q5,data);
             break;
         case 6:
-            arm.angles_map.q6=data;
+            arm.angles_map.q6=(arm.limits_map.q6,data);
             break;
     }
     getTxt();
