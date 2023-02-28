@@ -8,7 +8,7 @@
 		name='viewport' />
 	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
-	<link rel="shortcut icon" href="#">
+	<link rel="shortcut icon" href="/static/img/QLogo.png">
 
 	<script src="{{url_for('static', filename='js/config.js')}}"></script>
 	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
@@ -123,21 +123,10 @@
 								<div class="card-header">
 									<h4 class="card-title">Sudan</h4>
 								</div>
+
 								<div class="card-body">
-									<h6>After</h6>
-									<div class="row" id="imgsContainer">
-										<div class="col-md-4">
-											<img src="{{url_for('static', filename='img/lab/sudan0.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
-										</div>
-										<div class="col-md-4">
-											<img src="{{url_for('static', filename='img/lab/sudan1.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
-										</div>
-										<div class="col-md-4">
-											<img src="{{url_for('static', filename='img/lab/sudan2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
-										</div>
-									</div>
 									<h6>Before</h6>
-									<div class="row" id="imgsContainer">
+									<div class="column" id="imgsContainer">
 										<div class="col-md-4">
 											<img src="{{url_for('static', filename='img/lab/aftersudan0.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
 										</div>
@@ -147,7 +136,19 @@
 										<div class="col-md-4">
 											<img src="{{url_for('static', filename='img/lab/aftersudan2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
 										</div>
-									</div>		
+									</div>
+									<h6>After</h6>
+									<div class="column" id="imgsContainer">
+										<div class="col-md-4">
+											<img src="{{url_for('static', filename='img/lab/sudan0.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
+										</div>
+										<div class="col-md-4">
+											<img src="{{url_for('static', filename='img/lab/sudan1.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
+										</div>
+										<div class="col-md-4">
+											<img src="{{url_for('static', filename='img/lab/sudan2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
+										</div>
+									</div>											
 								</div>								
 							</div>
 						</div>
@@ -159,20 +160,8 @@
 									<h4 class="card-title">Lugol</h4>
 								</div>
 								<div class="card-body">
-									<h6>After</h6>
-									<div class="row" id="imgsContainer">
-										<div class="col-md-4">
-											<img src="{{url_for('static', filename='img/lab/lugol0.png')}}" onerror="this.onerror=null; this.src=''" onclick="expand(this);">
-										</div>
-										<div class="col-md-4">
-											<img src="{{url_for('static', filename='img/lab/lugol1.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
-										</div>
-										<div class="col-md-4">
-											<img src="{{url_for('static', filename='img/lab/lugol2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
-										</div>
-									</div>
 									<h6>Before</h6>
-									<div class="row" id="imgsContainer">
+									<div class="column" id="imgsContainer">
 										<div class="col-md-4">
 											<img src="{{url_for('static', filename='img/lab/afterlugol0.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
 										</div>
@@ -182,7 +171,19 @@
 										<div class="col-md-4">
 											<img src="{{url_for('static', filename='img/lab/afterlugol2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
 										</div>
-									</div>		
+									</div>
+									<h6>After</h6>
+									<div class="column" id="imgsContainer">
+										<div class="col-md-4">
+											<img src="{{url_for('static', filename='img/lab/lugol0.png')}}" onerror="this.onerror=null; this.src=''" onclick="expand(this);">
+										</div>
+										<div class="col-md-4">
+											<img src="{{url_for('static', filename='img/lab/lugol1.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
+										</div>
+										<div class="col-md-4">
+											<img src="{{url_for('static', filename='img/lab/lugol2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
+										</div>
+									</div>											
 								</div>								
 							</div>
 						</div>
@@ -194,8 +195,20 @@
 									<h4 class="card-title">Biuret</h4>
 								</div>
 								<div class="card-body">
+									<h6>Before</h6>
+									<div class="column" id="imgsContainer">
+										<div class="col-md-4">
+											<img src="{{url_for('static', filename='img/lab/afterbiuret0.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
+										</div>
+										<div class="col-md-4">
+											<img src="{{url_for('static', filename='img/lab/afterbiuret1.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
+										</div>
+										<div class="col-md-4">
+											<img src="{{url_for('static', filename='img/lab/afterbiuret2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
+										</div>
+									</div>	
 									<h6>After</h6>
-									<div class="row" id="imgsContainer">
+									<div class="column" id="imgsContainer">
 										<div class="col-md-4">
 											<img src="{{url_for('static', filename='img/lab/biuret0.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
 										</div>
@@ -206,18 +219,7 @@
 											<img src="{{url_for('static', filename='img/lab/biuret2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
 										</div>
 									</div>
-									<h6>Before</h6>
-									<div class="row" id="imgsContainer">
-										<div class="col-md-4">
-											<img src="{{url_for('static', filename='img/lab/afterbiuret0.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
-										</div>
-										<div class="col-md-4">
-											<img src="{{url_for('static', filename='img/lab/afterbiuret1.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
-										</div>
-										<div class="col-md-4">
-											<img src="{{url_for('static', filename='img/lab/afterbiuret2.png')}}"onerror="this.onerror=null; this.src=''"onclick="expand(this);">
-										</div>
-									</div>		
+										
 								</div>								
 							</div>
 						</div>
