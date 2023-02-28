@@ -6681,6 +6681,9 @@ body {
   float:left
 
 }
+.minerales{
+  color: rgb(3, 159, 221);
+}
 
 td{
   font-family: Montserrat ;
