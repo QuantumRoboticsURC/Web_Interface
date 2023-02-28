@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>Quantum Robotics Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+		name='viewport' />
+	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
+	<link rel="shortcut icon" href="/static/img/QLogo.png">
+
+	<script src="{{url_for('static', filename='js/config.js')}}"></script>
+	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="jquery.js"></script> 
+
+
+    <!-- Datos de tabla -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/datatables.min.css">
+    <script src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/datatables.min.js"></script>
+
+    
+
+    <!-- Hojas de estilo bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+   
+  
+
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<div class="logo-header">
+				<a href="/" class="logo">
+					<img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
+					<small>Quantum Robotics</small>
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
+			</div>
+
+			<nav class="navbar navbar-header navbar-expand-lg">
+				<div class="container-fluid">
+					<div class="navbar-left navbar-form nav-search mr-md-3">
+						<img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
+						<img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
+						<img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
+						<img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
+					</div>
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item dropdown hidden-caret">
+							<div class="nav-link dropdown-toggle">
+								University Rover Challenge, June 2022.
+								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		
+
+        <div clas="sidebar">
+            {% include "sb.html"%}
+        </div>
+        
+
+
+		<div class="main-panel">
+			<div class="content">
+				<div class="container-fluid">
+					<h4 class="page-title">Rocks classification</h4>
+					
+
+
+                    <div class="container-fluid p-5">
+
+
+                        <div class="table-responsive" id="mydatatable-container" style="background-color: white; border-radius: 1.5rem; padding: 3%;">
+                            
+                            <select id="searchInput">
+                                <option value="all">All</option>
+                                <option value="Igneous">Igneous</option>
+                                <option value="Sedimentary">Sedimentary</option>
+                                <option value="Metamorphic">Metamorphic</option>
+                            </select>
+                
+                            <table class="records_list table table-striped table-bordered table-hover" id="mydatatable">
+                                
+                                <thead>
+                                    <tr>
+                                        <th style="width: 25%;">Rock</th>
+                                        <th>Description</th>
+                                     
+                                    </tr>
+                                </thead>
+                                
+                                <tbody id="fbody">
+                                   <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/granito.jpg" class="rocas" >
+                                            Granite<br>ID: 01</td>
+                                            <td>   <p>Type:	Igneous<br>
+                                                    Texture: Intermediate-thick<br>
+                                                    Color: gray, yellow, light red <br>
+                                                    </p>
+                                                    <p class="minerales">
+                                                    Essential minerals: quartz, potassium feldspar and  plagioclase<br>
+                                                    </p>
+                                                    <p>
+                                                     ID: 01
+                                                    </p>
+                                            </td>
+                                 
+                                    </tr>
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/granodiorita.jpg" class="rocas" >
+                                            Granodiorite<br>ID: 02</td>
+                                            <td><p>Type:	Igneous<br>
+                                            Texture: fine-thick<br>
+                                            Color: gray, white, pink<br></p>
+                                            <p class="minerales">Essential minerals: quartz, feldespars</p><br>
+                                            <p> ID: 02</p>
+                                            </td>
+                                  
+                                    </tr>
+                                  
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/Sienita.jpg" class="rocas" >
+                                            Syenite<br>ID: 03</td>
+                                        <td><p>Type:	Igneous<br>
+                                            Texture: 	intermediate, thick<br>
+                                            Color: white with bright brown, pinkish gray</p> 
+                                            <p class="minerales">Essential minerals: Orthoclase, plagioclase, augite y magnetite</p><br>
+                                            <p>ID: 03</p>
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/Monzonita.jpg" class="rocas" >
+                                            Monzonite<br>ID: 04</td>
+                                        <td><p>Type:	Igneous<br>
+                                            Texture: 	Phaneritic<br>
+                                            Color: pink with white and black shades</p>
+
+                                            <p class="minerales">Essential minerals: quartz, felderpar, plagioclase</p>
+                                            <p>ID: 04</p>
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/Diorita.jpg" class="rocas" >
+                                            Diorite<br>ID: 05</td>
+                                        <td><p>Type:	Igneous<br>
+                                            Texture: intermediate, thick<br>
+                                            Color: white-black or lightly gray-green</p><br>
+                                            <p class="minerales">Essential minerals: sodium plagioclase, Biotite, amphibole, pyroxene, quartz</p>
+                                            <p>ID: 05</p>
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/gabro.jpg" class="rocas" >
+                                            Gabbro<br>ID: 06 </td>
+                                        <td><p>Type:	Igneous<br>
+                                            Texture: 		intermediate, thick<br>
+                                            Color: dark green to black</p>
+                                            <p class="minerales">Essential minerals: calcium plagioclase, pyroxene, olivine, hornblende, hipersthena<br>
+                                            <p>ID: 06</p>
+                                            <br>
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/igneas/Dunita.jpg" class="rocas" >
+                                            Dunite<br>ID: 07</td>
+                                        <td><p>Type:	Igneous<br>
+                                            Texture: 		intermediate, thick<br>
+                                            Color: dark green to black</p>
+                                            <p class="minerales">Essential minerals: olivine, pyroxenes y amphibolees</p>
+                                            <p>ID: 07</p>
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/Conglomerado.webp" class="rocas" >
+                                            Conglomerate<br>ID: 08</td>
+                                        <td><p>Type:	Sedimentary<br>
+                                            Texture: 		thick<br>
+                                            Color: black, gray, brown</p>
+                                            <p class="minerales">Essential minerals: granite, quartzite and andesite</p>
+                                            <p>ID: 08</p>
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/brecha.webp" class="rocas" >
+                                            Breccia<br>ID: 09</td>
+                                        <td><p>Type:	Sedimentary<br>
+                                            Texture: 		Irregular<br>
+                                            Color: Variable</p>
+                                            <p class="minerales">Essential minerals: clasts, pebble breccia or granule</p>
+                                            <p>ID: 09</p>
+                                            
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/arenisca.jpg" class="rocas" >
+                                            Sandstone<br>ID: 10</td>
+                                        <td><p>Type:	Sedimentary<br>
+                                            Texture: 		intermediate-thick<br>
+                                            Color: Variable, commonly gray, brown or red</p>
+                                            <p class="minerales">Essential minerals: Sandstone, quartz o felderpar</p>
+                                            <p>ID: 10</p>
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/Arcosa.webp" class="rocas" >
+                                            Arcosa<br>ID: 11</td>
+                                        <td><p>Type:	Sedimentary<br>
+                                            Texture: Detrital<br>
+                                            Color: pink, red, yellow</p>
+                                            <p class="minerales">Essential minerals: quartz and felderpar minerals</p>
+                                            <p>ID: 11</p>
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/Grauvaca.jpg" class="rocas" >
+                                            Greywacke<br>ID: 12</td>
+                                        <td><p>Type:	Sedimentary<br>
+                                            Texture: detrital<br>
+                                            Color: blacks, grays</p>
+                                            <p class="minerales">Essential minerals: quartz , felderpar,  rock or lithic</p>
+                                            <p>ID: 12</p>
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                       
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/sedimentareas/limolita.jpg" class="rocas" >
+                                            Siltstone<br>ID: 13</td>
+                                        <td><p>Type:	Sedimentary<br>
+                                            Texture: Fine<br>
+                                            Color: gray, red, green</p>
+                                            <p class="minerales">Essential minerals: Hematite, goethite and ferrihydrite</p>
+                                            <p>ID: 13</p>
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Anfibolita.jpg" class="rocas" >
+                                            Amphibolite<br>ID: 14</td>
+                                        <td><p>Type:	Metamorphic<br>
+                                            Texture: intermediate-thick<br>
+                                            Color: greens, marrones o negros</p>
+                                            <p class="minerales">Essential minerals: amphibole, quartz, clinopyroxene, granate.<br></p>
+                                            <p>ID: 14</p>
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Corneana.jpg" class="rocas" >
+                                            Corneal<br>ID: 15</td>
+                                        <td><p>Type:	Metamorphic<br>
+                                            Texture: Granoblastica-masiva<br>
+                                            Color: dark gray with brown and green shades</p>
+                                            <p class="minerales">Essential minerals:  quartz, garnets, epidote, biotite, sericite, chlorite, graphite.<br></p>
+                                            <p>ID: 15</p>
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Cuarcita.jpg" class="rocas" >
+                                            Quartzite<br>ID: 16</td>
+                                        <td><p>Type:	Metamorphic<br>
+                                            Texture: intermediate-thick<br>
+                                            Color: 	white, gray, pink or redish<br></p>
+                                            <p class="minerales">Essential minerals:  quartz<br></p>
+                                            <p>ID: 16</p>
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Eclogita.jpg" class="rocas" >
+                                            Eclogite<br>ID: 17</td>
+                                        <td><p>Type:	Metamorphic<br>
+                                            Texture: intermediate-thick<br>
+                                            Color: 	white, green, gray, pink or redish</p>
+                                            <p class="minerales">Essential minerals:  Granate, pyroxene<br></p>
+                                            <p>ID: 17</p>
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Espilita.jpg" class="rocas" >
+                                            Spilite<br>ID: 18</td>
+                                        <td><p>Type:	Metamorphic<br>
+                                            Texture: soft-thick<br>
+                                            Color: 	gray, green</p>
+                                            <p class="minerales">Essential minerals: Albite, Chlorite, Calcite</p>
+                                            <p>ID: 18</p>
+                                            
+                                            
+                                            
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                    <tr>
+                                        <td class="titulo_piedra">
+                                            <img src="static/img/rocas/metamorficas/Esquisito.jpg" class="rocas" >
+                                            Schistous<br>ID: 19</td>
+                                        <td><p>Type:	Metamorphic<br>
+                                            Texture: 	schistous<br>
+                                            Color: 	green, brown, redish<br></p>
+                                            <p class="minerales">Essential minerals:  mica, chlorite, talc, hornblende</p>
+                                            <p>ID: 19</p>
+                                            </td>
+                                  
+                                    </tr>
+                
+                
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                
+                   <!-- Termina tabla -->  
+                    
+                   
+                   <script type="text/javascript">
+
+                    $("#searchInput").change(function () {
+                        if(this.value != "") 
+                        {
+                        //Dividir los valores a buscar
+                        var data = this.value.split(" ");
+                        //Busca en las filas
+                        var jo = $("#fbody").find("tr");
+                    
+                        if (this.value == "" || this.value=="all") {
+                            
+                            jo.show();
+                            return;
+                        }
+            
+                        //Oculta las filas
+                        jo.hide();
+            
+                        //Filtra los resultados
+                        jo.filter(function (i, v) {
+                            var $t = $(this);
+                            for (var d = 0; d < data.length; ++d) {
+                                if ($t.is(":contains('" + data[d] + "')")) {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        })
+                        //Muestra los resultados que coincidan
+                        .show();
+                        }
+                        }).focus(function () {
+                        this.value = "";
+                        $(this).css({
+                            "color": "black"
+                        });
+                        $(this).unbind('focus');
+                        }).css({
+                        "color": "#C0C0C0"
+                        });
+            
+            
+            
+            
+                        //Crea la funcion de filtrar
+                        $(document).ready(function() {
+                            $('#mydatatable tfoot th').each( function () {
+                                var title = $(this).text();
+                                $(this).html( '<input type="text" placeholder="Filtrar.." />' );
+                            } );
+                        //Se usa plug in jason para los datos universales de la tabla en español
+                            var table = $('#mydatatable').DataTable({
+                                "dom": 'B<"float-left"i><"float-right"f>t<"float-left"l><"float-right"p><"clearfix">',
+                                "responsive": false,
+                                "language": {
+                                    "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                                },
+                                //Orden ascendente o descendente
+                                "order": [[ 0, "desc" ]],
+                                "initComplete": function () {
+                                    this.api().columns().every( function () {
+                                        var that = this;
+                        
+                                        $( 'input', this.footer() ).on( 'keyup change', function () {
+                                            if ( that.search() !== this.value ) {
+                                                that
+                                                    .search( this.value )
+                                                    .draw();
+                                                }
+                                        });
+                                    })
+                                }
+                            });
+                        });
+                        </script>
+            
+
+							
+				</div>	
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="{{url_for('static', filename='js/index.js')}}"></script>
+<script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
+
+</html>
