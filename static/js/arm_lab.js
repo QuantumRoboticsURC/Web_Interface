@@ -150,12 +150,12 @@ function predefinedPosition(position){
     switch(position){
         case "HOME":
             arm.angles_map.q1=0;
-            arm.angles_map.q2=180;
+            arm.angles_map.q2=90;
             arm.angles_map.q3=15;
             break;
         case "INTERMEDIATE":
             arm.angles_map.q1=0;
-            arm.angles_map.q2=180;
+            arm.angles_map.q2=90;
             arm.angles_map.q3=70;
             break
         case "GROUND":
