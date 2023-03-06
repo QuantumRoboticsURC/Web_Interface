@@ -43,7 +43,7 @@ class ArmTeleop{
 
         this.limits_map = {
             q1:[-180,0],
-            q2:[92,180],
+            q2:[0,180],
             q3:[0,245], //Cambio de límites
             q4: [0,120],
             q5: [0,50],
@@ -52,8 +52,8 @@ class ArmTeleop{
         }
         this.angles_map={
             q1:0.0,
-            q2:180.0,
-            q3:70,
+            q2:90.0,
+            q3:15,
             q4:0,
             q5:0,
             q6:0,
@@ -160,8 +160,8 @@ function predefinedPosition(position){
             break
         case "GROUND":
             arm.angles_map.q1=0;
-            arm.angles_map.q2=103;
-            arm.angles_map.q3=100;
+            arm.angles_map.q2=15;
+            arm.angles_map.q3=70;
             break
         case "HORIZONTAL":
             arm.angles_map.q1=0;
@@ -179,9 +179,9 @@ function predefinedPosition(position){
             arm.angles_map.q3=4;
             break
         case "RIGHT":
-            arm.angles_map.q1=-149;
-            arm.angles_map.q2=139;
-            arm.angles_map.q3=14;
+            arm.angles_map.q1=-165;
+            arm.angles_map.q2=107;
+            arm.angles_map.q3=40;
     }
     getTxt();
     
