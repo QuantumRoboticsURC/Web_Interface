@@ -1,5 +1,4 @@
-
-  /*!
+/*!
 
  =========================================================
  * Ready Bootstrap Dashboard (Bootstrap 4)
@@ -93,7 +92,6 @@ p {
 
 h4.page-title {
   font-size: 22px;
-
   font-weight: 600;
   color: #333333;
   line-height: 30px;
@@ -5222,8 +5220,6 @@ body {
   background: #ff646d;
 }
 
-
-
 /*     Progress Card    */
 .progress-card {
   margin-bottom: 25px;
@@ -5460,7 +5456,7 @@ body {
 }
 
 .form-control.input-full {
-  width: 50% !important;
+  width: 100% !important;
 }
 
 .has-success .form-control {
@@ -5537,25 +5533,6 @@ body {
 }
 .form-control:disabled, .form-control[readonly] {
   opacity: 0.6 !important;
-}
-.form-control{
-  width:20%;
-}
-.form-control-go{
-  width:100%;
-}
-.col-md-12{
-  width:100%;
-  float: left;
-}
-.list-group-lab{
-  
-}
-.LAB{
-  size-adjust: 50%;
-  position: absolute;
-  margin-left:45%;
-  margin-bottom:100%;
 }
 
 /*     Table    */
@@ -5973,7 +5950,6 @@ body {
   font-size: 13px;
   margin-bottom: 5px;
 }
-
 .user-box .u-text .btn {
   font-size: 12px;
 }
@@ -6308,23 +6284,7 @@ body {
   color: #607D8B;
   text-decoration: none;
 }
-.card-body{
-  width:fit-content;
-}
-.graph{
-  height:fit-content;
-}
-.control{
-  margin-left:10%;
-  width:fit-content;
-}
-.card-title-1{
-  width:fit-content;
-}
-.graph{
-  display:relative;
-  right:0%;
-}
+
 .btn-simple-primary {
   color: #1D62F0;
   text-decoration: none;
@@ -6332,78 +6292,6 @@ body {
 .btn-simple-primary:hover {
   color: #1D62F0;
   text-decoration: none;
-}
-.btn{
-  border-color:white;
-  margin-left:0%;
-}
-
-.col-lg-5.card{
-  width: fit-content;
- 
-
-}
-
-.btn-group{
-  margin: auto 0;
-  width:fit-content;
-
-}
-.list-group{
-  width:fit-content;
-}
-.list-group-item{
-  width:fit-content;
-}
-.row{
-  position: relative;
-  width:fit-content;
-}
-.btn-look-one{
-  width:40%;
-  text-align: center;
-  width: fit-content;
-  background-color: #18b4da;
-  
-}
-
-.btn-look-two{
-  width:40%;
-  text-align: center;
-  width: fit-content;
-  background-color: #0C76C4
-}
-.btn-look-three{
-  width:40%;
-  text-align: center;
-  width: fit-content;
-  left:0%;
-  background-color: #0C76C4
-}
-.btn-look-value{
-  text-align:left;
-  width:30%;
-  color:#000;
-  background-color: #F4F4F4;
-  border-color:#18b4da;
-  margin-left:0%
-}
-.btn-look-value-plus{
-
-  width:10%;
-  border-color:white;
-  font-size:10px;
-  text-align: center;
-  background-color: #0C76C4;
-
-}
-.btn-look-value-minus{
-  width:10%;
-  border-color:white;
-  font-size:10px;
-  text-align: center;
-  background-color: #18b4da;
-
 }
 
 .btn-simple-info {
@@ -6793,6 +6681,9 @@ body {
   float:left
 
 }
+.minerales{
+  color: rgb(3, 159, 221);
+}
 
 td{
   font-family: Montserrat ;
@@ -6857,7 +6748,3 @@ td{
   
 }
 
-@media only screen and (max-width: 460px){
-
-
-}
