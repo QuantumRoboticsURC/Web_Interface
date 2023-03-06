@@ -15,9 +15,21 @@ class ArmTeleop{
             messageType : 'servos/arm_lab',
             queue_size:1
         });
-        this.servoc = new ROSLIB.Topic({
+        this.servoright = new ROSLIB.Topic({
             ros:ros,
             name:'servo_right',
+            messageType: 'std_msgs/Int32',
+            queue_size:1
+        });
+        this.servocenter = new ROSLIB.Topic({
+            ros:ros,
+            name:'servo_center',
+            messageType: 'std_msgs/Int32',
+            queue_size:1
+        });
+        this.servoleft = new ROSLIB.Topic({
+            ros:ros,
+            name:'servo_left',
             messageType: 'std_msgs/Int32',
             queue_size:1
         });
@@ -39,7 +51,13 @@ class ArmTeleop{
             name: 'arm_teleop/joint2_lab',
             messageType: 'std_msgs/Float64',
             queue_size:1
-        })
+        });
+        this.camera = new ROSLIB.Topic({
+            ros : ros,
+            name : 'arm_teleop/cam',
+            messageType : 'std_msgs/Int32',
+            queue_size: 1   
+        });
 
         this.limits_map = {
             q1:[-180,0],
@@ -89,11 +107,20 @@ class ArmTeleop{
         var message5 = new ROSLIB.Message({
             data:this.angles_map.q6
         });
+        var message6 = new ROSLIB.Message({
+            data:this.angles_map.q5
+        });
+        var message7 = new ROSLIB.Message({
+            data:this.angles_map.q4
+        });
         this.joint3.publish(message4);
         this.arm.publish(message);
         this.joint1.publish(message2);
         this.joint2.publish(message3);
-        this.servoc.publish(message5);
+        this.servoright.publish(message5);
+        this.servocenter.publish(message6);
+        this.servoleft.publish(message7);
+
     }
      my_map(in_min, in_max, out_min, out_max, x){ //map arduino
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
