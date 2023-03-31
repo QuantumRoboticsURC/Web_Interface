@@ -171,6 +171,7 @@ var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
 
 // Predefined positions
+var State = ["HOME","HOME"]
 function predefinedPosition(position){
 
     var x = values_map.joint1;
@@ -199,7 +200,11 @@ function predefinedPosition(position){
         z = 3.68
         phi = 0;
     }*/
-    
+    before = State[0];
+    State[0] = State[1];
+    State[1] = before;
+    State[1]=position;
+
     if (position === "HOME"){
         x = .134;
         y =  0;
@@ -254,14 +259,136 @@ function predefinedPosition(position){
     values_map.joint2 = y;
     values_map.joint3 = z;
     values_map.joint4 = phi;
-    inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-    go_rotation(values_map.joint2);
+    StateMachine(position);
     return position;
     }
 function StateMachine(position){
-    
+        
+    const secondaryButton1 = document.getElementById('secondary button1');
+    const secondaryButton2 = document.getElementById('secondary button2');
+    const secondaryButton3 = document.getElementById('secondary button3');
+    const secondaryButton4 = document.getElementById('secondary button4');
+    const secondaryButton5 = document.getElementById('secondary button5');
+    const secondaryButton6 = document.getElementById('secondary button6');
 
-    return true;
+    const buttonToKeepEnabled = document.getElementById('principal button');
+
+    if ((State[0] === "INTERMEDIATE" && State[1]==="HOME" || State[1] === "INTERMEDIATE" && State[0]==="HOME")){
+        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+        go_rotation(values_map.joint2);
+        secondaryButton2.disabled = false;
+        secondaryButton3.disabled = false;
+        secondaryButton4.disabled = false;
+        secondaryButton5.disabled = false;
+        secondaryButton6.disabled = false;
+    }
+    if (State[1]=== "HOME"){
+        secondaryButton2.disabled = true;
+        secondaryButton3.disabled = true;
+        secondaryButton4.disabled = true;
+        secondaryButton5.disabled = true;
+        secondaryButton6.disabled = true;
+
+    }
+    if (State[0] === "INTERMEDIATE" && State[1]==="INTERMEDIATE" || State[1] === "INTERMEDIATE" && State[0]==="INTERMEDIATE"){
+        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+        go_rotation(values_map.joint2);
+        
+    }
+    
+    if (State[0] === "INTERMEDIATE" && State[1]==="PULL" || State[1] === "INTERMEDIATE" && State[0]==="PULL"){
+        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+        go_rotation(values_map.joint2);
+        secondaryButton1.disabled = false;
+        secondaryButton2.disabled = false;
+        secondaryButton4.disabled = false;
+        secondaryButton5.disabled = false;
+        secondaryButton6.disabled = false;
+        
+    }
+    if (State[1]=== "PULL"){
+        secondaryButton1.disabled = true;
+        secondaryButton2.disabled = true;
+        secondaryButton4.disabled = true;
+        secondaryButton5.disabled = true;
+        secondaryButton6.disabled = true;
+
+    }
+    if (State[0] === "INTERMEDIATE" && State[1]==="WRITE" || State[1] === "INTERMEDIATE" && State[0]==="WRITE"){
+        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+        go_rotation(values_map.joint2);
+        secondaryButton1.disabled = false;
+        secondaryButton2.disabled = false;
+        secondaryButton3.disabled = false;
+        secondaryButton5.disabled = false;
+        secondaryButton6.disabled = false;
+        
+    }
+    if (State[1]=== "WRITE"){
+        secondaryButton1.disabled = true;
+        secondaryButton2.disabled = true;
+        secondaryButton3.disabled = true;
+        secondaryButton5.disabled = true;
+        secondaryButton6.disabled = true;
+
+    }
+    if (State[0] === "INTERMEDIATE" && State[1]==="FLOOR" || State[1] === "INTERMEDIATE" && State[0]==="FLOOR"){
+        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+        go_rotation(values_map.joint2);
+        secondaryButton1.disabled = false;
+        secondaryButton2.disabled = false;
+        secondaryButton3.disabled = false;
+        secondaryButton4.disabled = false;
+        secondaryButton6.disabled = false;
+    }
+    if (State[1]=== "FLOOR"){
+        secondaryButton1.disabled = true;
+        secondaryButton2.disabled = true;
+        secondaryButton3.disabled = true;
+        secondaryButton4.disabled = true;
+        secondaryButton6.disabled = true;
+
+    }
+    if (State[0] === "INTERMEDIATE" && State[1]==="STORAGE" || State[1] === "INTERMEDIATE" && State[0]==="STORAGE"){
+        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+        go_rotation(values_map.joint2);
+        secondaryButton1.disabled = false;
+        secondaryButton3.disabled = false;
+        secondaryButton4.disabled = false;
+        secondaryButton5.disabled = false;
+        secondaryButton6.disabled = false;
+    }
+    
+    if (State[1]=== "STORAGE"){
+        secondaryButton1.disabled = true;
+        secondaryButton3.disabled = true;
+        secondaryButton4.disabled = true;
+        secondaryButton5.disabled = true;
+        secondaryButton6.disabled = true;
+
+    }
+    if (State[0] === "INTERMEDIATE" && State[1]==="VERTICAL" || State[1] === "INTERMEDIATE" && State[0]==="VERTICAL"){
+        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+        go_rotation(values_map.joint2);
+        secondaryButton1.disabled = false;
+        secondaryButton2.disabled = false;
+        secondaryButton3.disabled = false;
+        secondaryButton4.disabled = false;
+        secondaryButton5.disabled = false;
+    }
+    if (State[1]=== "VERTICAL"){
+        secondaryButton1.disabled = true;
+        secondaryButton2.disabled = true;
+        secondaryButton3.disabled = true;
+        secondaryButton4.disabled = true;
+        secondaryButton5.disabled = true;
+
+    }
+        //disabledButton();
+        //Activatebuttons();
+    console.log(State[0]);
+    console.log(State[1]);
+
 }
 function publish_angles(){
     var q1 = angles_map.q1;
