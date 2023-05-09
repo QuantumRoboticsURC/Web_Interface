@@ -435,6 +435,7 @@ function go_phi(data){
     if(!poss){
         values_map[key] = prev;
     }   
+    document.getElementById("Phi_Txt").value = 5;
     getTxt();
 }
 
@@ -457,6 +458,7 @@ function go(data){
     values_map[key] = qlimit(limits_map[key], values_map[key]);
     var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,138,312,data))});
     joint5.publish(msn);
+    document.getElementById("Gripper_Txt").value = 5;
     getTxt();
 }
 
@@ -504,6 +506,8 @@ function go_rotation(data){
     angles_map.q1=data;
     angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
     values_map.joint2 = self.angles_map.q1;
+    document.getElementById("Y_Txt").value = 5;
+
     getTxt();
 }
 
@@ -553,7 +557,6 @@ function getTxt(){
     localStorage.setItem("Phi",Phi);
     localStorage.setItem("Rotacion",Rotacion);
     localStorage.setItem("Camera",Camera);
-
     document.getElementById("Q1").innerHTML = q1;
     document.getElementById("Q2").innerHTML = q2;
     document.getElementById("Q3").innerHTML = q3;
@@ -564,6 +567,7 @@ function getTxt(){
     document.getElementById("Phi").innerHTML = Phi;
     document.getElementById("Rotacion").innerHTML = Rotacion;
     document.getElementById("Camera").innerHTML = Camera;
+
 }
 
 function rad2deg(radians){return radians * (180/math.pi);}
