@@ -202,7 +202,6 @@ function predefinedPosition(position){
     }*/
     before = State[0];
     State[0] = State[1];
-    State[1] = before;
     State[1]=position;
 
     if (position === "HOME"){

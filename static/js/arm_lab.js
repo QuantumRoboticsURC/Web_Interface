@@ -58,6 +58,12 @@ class ArmTeleop{
             messageType : 'std_msgs/Int32',
             queue_size: 1   
         });
+        this.centrifugadora= new ROSLIB.Topic({
+            ros : ros,
+            name : 'centrifuge',
+            messageType : 'std_msgs/Float64',
+            queue_size: 1  
+        })
 
         this.limits_map = {
             q1:[-180,0],
@@ -113,6 +119,9 @@ class ArmTeleop{
         var message7 = new ROSLIB.Message({
             data:this.angles_map.q4
         });
+        var message8 = new ROSLIB.Message({
+            data:this.angles_map.q7
+        })
         this.joint3.publish(message4);
         this.arm.publish(message);
         this.joint1.publish(message2);
@@ -120,6 +129,7 @@ class ArmTeleop{
         this.servoright.publish(message5);
         this.servocenter.publish(message6);
         this.servoleft.publish(message7);
+        this.centrifugadora.publish(message8);
 
     }
      my_map(in_min, in_max, out_min, out_max, x){ //map arduino
