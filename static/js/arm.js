@@ -202,7 +202,6 @@ function predefinedPosition(position){
     }*/
     before = State[0];
     State[0] = State[1];
-    State[1] = before;
     State[1]=position;
 
     if (position === "HOME"){
@@ -276,14 +275,14 @@ function StateMachine(position){
     if ((State[0] === "INTERMEDIATE" && State[1]==="HOME" || State[1] === "INTERMEDIATE" && State[0]==="HOME")){
         inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
         go_rotation(values_map.joint2);
-        secondaryButton2.disabled = false;
+        
         secondaryButton3.disabled = false;
         secondaryButton4.disabled = false;
         secondaryButton5.disabled = false;
         secondaryButton6.disabled = false;
     }
     if (State[1]=== "HOME"){
-        secondaryButton2.disabled = true;
+        
         secondaryButton3.disabled = true;
         secondaryButton4.disabled = true;
         secondaryButton5.disabled = true;
@@ -352,7 +351,7 @@ function StateMachine(position){
     if (State[0] === "INTERMEDIATE" && State[1]==="STORAGE" || State[1] === "INTERMEDIATE" && State[0]==="STORAGE"){
         inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
         go_rotation(values_map.joint2);
-        secondaryButton1.disabled = false;
+        
         secondaryButton3.disabled = false;
         secondaryButton4.disabled = false;
         secondaryButton5.disabled = false;
@@ -360,7 +359,7 @@ function StateMachine(position){
     }
     
     if (State[1]=== "STORAGE"){
-        secondaryButton1.disabled = true;
+        
         secondaryButton3.disabled = true;
         secondaryButton4.disabled = true;
         secondaryButton5.disabled = true;
@@ -384,8 +383,11 @@ function StateMachine(position){
         secondaryButton5.disabled = true;
 
     }
-        //disabledButton();
-        //Activatebuttons();
+    if (State[0]==="HOME" && State[1]==="STORAGE" || State [1]=== "HOME" && State[0]==="STORAGE"){
+        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+        go_rotation(values_map.joint2);
+    
+    }
     console.log(State[0]);
     console.log(State[1]);
 
@@ -435,6 +437,7 @@ function go_phi(data){
     if(!poss){
         values_map[key] = prev;
     }   
+    document.getElementById("Phi_Txt").value = 5;
     getTxt();
 }
 
@@ -457,6 +460,7 @@ function go(data){
     values_map[key] = qlimit(limits_map[key], values_map[key]);
     var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,138,312,data))});
     joint5.publish(msn);
+    document.getElementById("Gripper_Txt").value = 5;
     getTxt();
 }
 
@@ -504,6 +508,8 @@ function go_rotation(data){
     angles_map.q1=data;
     angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
     values_map.joint2 = self.angles_map.q1;
+    document.getElementById("Y_Txt").value = 5;
+
     getTxt();
 }
 
@@ -553,7 +559,6 @@ function getTxt(){
     localStorage.setItem("Phi",Phi);
     localStorage.setItem("Rotacion",Rotacion);
     localStorage.setItem("Camera",Camera);
-
     document.getElementById("Q1").innerHTML = q1;
     document.getElementById("Q2").innerHTML = q2;
     document.getElementById("Q3").innerHTML = q3;
@@ -564,6 +569,7 @@ function getTxt(){
     document.getElementById("Phi").innerHTML = Phi;
     document.getElementById("Rotacion").innerHTML = Rotacion;
     document.getElementById("Camera").innerHTML = Camera;
+
 }
 
 function rad2deg(radians){return radians * (180/math.pi);}
