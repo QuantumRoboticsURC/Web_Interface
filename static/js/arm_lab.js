@@ -63,7 +63,14 @@ class ArmTeleop{
             name : 'centrifuge',
             messageType : 'std_msgs/Float64',
             queue_size: 1  
-        })
+        });
+        //Leds
+        this.pub_led = new ROSLIB.Topic({
+            ros : ros,
+            name : 'led_state',
+            messageType : 'std_msgs/Bool',
+            queue_size: 1   
+        });
 
         this.limits_map = {
             q1:[-180,0],
@@ -81,8 +88,10 @@ class ArmTeleop{
             q4:0,
             q5:0,
             q6:0,
-            q7:0
-        }  
+            q7:0,
+            
+        }
+        this.led = false;  
     }
     publishMessages(){
         this.angles_map.q1=qlimit(this.limits_map.q1,this.angles_map.q1)
@@ -172,6 +181,13 @@ class ArmTeleop{
                     }
                     break;
             }
+            getTxt();
+        }
+        led_signal(data){
+            console.log(data)
+            this.led = data
+            var msn = new ROSLIB.Message({data:true})
+            this.pub_led.publish(msn)
             getTxt();
         }
         
@@ -267,6 +283,10 @@ function moveCentrifuge(data){
     arm.angles_map.q7=data;
     getTxt();
 }
+function change_led(data){
+    arm.led_signal(data);
+    getTxt();
+}
 
 function getTxt(){
     arm.publishMessages();
@@ -277,7 +297,7 @@ function getTxt(){
     var Servo_Center = String(arm.angles_map.q5);
     var Servo_Right = String(arm.angles_map.q6);
     var Centrifuge = String(arm.angles_map.q7);
-
+    var LED = String(arm.led);
   
     localStorage.setItem("Rotation",Rotation);
     localStorage.setItem("YJ",YellowJacketAxis2);
@@ -286,6 +306,7 @@ function getTxt(){
     localStorage.setItem("CS",Servo_Center);
     localStorage.setItem("RS",Servo_Right);
     localStorage.setItem("Centrifuge",Centrifuge);
+    localStorage.setItem("LED",LED);
 
     document.getElementById("Rotation").innerHTML = Rotation;
     document.getElementById("YJ").innerHTML = YellowJacketAxis2;
@@ -294,6 +315,7 @@ function getTxt(){
     document.getElementById("CS").innerHTML = Servo_Center;
     document.getElementById("RS").innerHTML = Servo_Right;
     document.getElementById("Centrifuge").innerHTML = Centrifuge;
+    document.getElementById("LED").innerHTML = LED;
     arm_interface(arm.angles_map.q2,arm.angles_map.q3);
 }
 function rad2deg(radians){return radians * (180/math.pi);}

@@ -188,6 +188,7 @@
 													<p>Center Sevo: <label  type="text" id="CS"></label></p>
 													<p>Right Servo <label  type="text" id="RS"></label></p>
 													<p>Centrifuge <label  type="text" id="Centrifuge"></label></p>
+													<p>Led Signal:<label  type="text" id="LED"></label></p>
 												</div>
 											</div>
 										</div>
@@ -319,6 +320,17 @@
 																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
 																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li class="list-group-item ">
+													<div>
+														<div class="row">
+															<medium class="text-muted">Led Signal</medium>
+															<div class="col-md-12">
+																<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="change_led(true)">ON</button>
+																<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary "onclick="change_led(false)" onmousedown="movePrismatic(-1)">OFF</button> 																
 															</div>
 														</div>
 													</div>
