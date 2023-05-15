@@ -186,7 +186,7 @@ class ArmTeleop{
         led_signal(data){
             console.log(data)
             this.led = data
-            var msn = new ROSLIB.Message({data:true})
+            var msn = new ROSLIB.Message({data:data})
             this.pub_led.publish(msn)
             getTxt();
         }
