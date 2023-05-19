@@ -171,6 +171,7 @@
 													<p>Position Phi: <label  type="text" id="Phi"></label></p>
 													<p>Gripper Rotation: <label  type="text" id="Rotacion"></label></p>
 													<p>Camera: <label  type="text" id="Camera"></label></p>
+													<p>Camera Antenna: <label  type="text" id="CameraA"></label></p>
 													<p>Q1: <label  type="text" id="Q1"></label></p>
 													<p>Q2:<label  type="text" id="Q2"></label></p>
 													<p>Q3:<label  type="text" id="Q3"></label></p>
@@ -305,8 +306,24 @@
 																	<div class="input-group">
 																		<input id="Camera_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value),1)">&nbsp;-&nbsp;</button>
+																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value),1)">&nbsp;+&nbsp;</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li class="list-group-item">
+													<div>
+														<div class="row">
+															<medium class="text-muted">Camera Antenna</medium>
+															<div class="col-md-12">
+																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
+																	<div class="input-group">
+																		<input id="CameraA_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																	</div>
+																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="moveCamera(-parseFloat(document.getElementById('CameraA_Txt').value),2)">&nbsp;-&nbsp;</button>
+																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="moveCamera(parseFloat(document.getElementById('CameraA_Txt').value),2)">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														</div>

@@ -137,11 +137,10 @@ var camera = new ROSLIB.Topic({
     messageType : 'std_msgs/Int32',
     queue_size: 1   
 });
-//Leds
-var pub_led = new ROSLIB.Topic({
+var cameraA = new ROSLIB.Topic({
     ros : ros,
-    name : 'led_state',
-    messageType : 'std_msgs/Bool',
+    name : 'arm_teleop/camA',
+    messageType : 'std_msgs/Int32',
     queue_size: 1   
 });
 
@@ -154,7 +153,8 @@ var values_map = {
     joint4: 0,      //phi
     joint5: 0,   //rotacion
     joint8: 140, //camera
-    led:0
+    led:0,
+    joint9: 45
 };
 var l1 = 0;
 var l2 = 2.6;
@@ -168,7 +168,8 @@ var limits_map = {
     q3:[-165.4,0],
     q4:[-135,90],
     joint5:[-90,90], 
-    camera:[90,180]
+    camera:[90,180],
+    cameraA:[0,180]
 };
 
 var angles_map={
@@ -504,12 +505,23 @@ function movePrismatic(data){
 }
 
 // Move general camera
-function moveCamera(data){
-    key = "joint8";
-    values_map[key] += (data);    
-    values_map[key] = qlimit(limits_map.camera, values_map[key]);
-    var msn = new ROSLIB.Message({data : parseInt(values_map[key])});
-    camera.publish(msn);
+function moveCamera(data,camera){
+
+    if(camera==1){
+        console.log(data);
+        key = "joint8";
+        values_map[key] += (data);    
+        values_map[key] = qlimit(limits_map.camera, values_map[key]);
+        var msn = new ROSLIB.Message({data : parseInt(values_map[key])});
+        camera.publish(msn);
+    }else{
+        key="joint9";
+        values_map[key] += (data);    
+        values_map[key] = qlimit(limits_map.cameraA, values_map[key]);
+        var msn = new ROSLIB.Message({data : parseInt(values_map[key])});
+        cameraA.publish(msn);
+    }
+
     getTxt();
 }
 
@@ -522,19 +534,7 @@ function go_rotation(data){
 
     getTxt();
 }
-function led_signal(data){
-    console.log(data)
-    values_map.led = data
-    if(data){
-        var msn = new ROSLIB.Message({data:true})
-        pub_led.publish(msn)
-    }
-    else{
-        var msn = new ROSLIB.Message({data:false})
-        pub_led.publish(msn)
-    }
-    getTxt();
-}
+
 
 //Rotate
 function rotate(data){
@@ -571,7 +571,8 @@ function getTxt(){
     var q3 = String(math.round(angles_map.q3,2));
     var q4 = String(math.round(angles_map.q4,2));
     var Camera = String(values_map.joint8);
-    var LED = String(values_map.led);
+    var CameraA=String(values_map.joint9);
+
 
     localStorage.setItem("Q1",q1);
     localStorage.setItem("Q2",q2);
@@ -582,8 +583,8 @@ function getTxt(){
     localStorage.setItem("Z",Z);
     localStorage.setItem("Phi",Phi);
     localStorage.setItem("Rotacion",Rotacion);
-    localStorage.setItem("LED",LED);
     localStorage.setItem("Camera",Camera);
+    localStorage.setItem("CameraA",CameraA)
     document.getElementById("Q1").innerHTML = q1;
     document.getElementById("Q2").innerHTML = q2;
     document.getElementById("Q3").innerHTML = q3;
@@ -594,7 +595,8 @@ function getTxt(){
     document.getElementById("Phi").innerHTML = Phi;
     document.getElementById("Rotacion").innerHTML = Rotacion;
     document.getElementById("Camera").innerHTML = Camera;
-    document.getElementById("LED").innerHTML = LED;
+    document.getElementById("CameraA").innerHTML = CameraA;
+   
 
 }
 
