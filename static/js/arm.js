@@ -167,8 +167,8 @@ var limits_map = {
     q2:[0,161],
     q3:[-165.4,0],
     q4:[-135,90],
-    joint5:[-90,90], 
-    camera:[90,180],
+    joint5:[-45,45], 
+    camera:[0,180],
     cameraA:[0,180]
 };
 
@@ -269,8 +269,10 @@ function predefinedPosition(position){
     values_map.joint2 = y;
     values_map.joint3 = z;
     values_map.joint4 = phi;
-    StateMachine(position);
-    return position;
+    //StateMachine(position);
+    //return position;
+    inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+    go_rotation(values_map.joint2);
     }
 function StateMachine(position){
         
@@ -469,7 +471,7 @@ function go(data){
     var key = "joint5";
     values_map[key]=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,138,312,data))});
+    var msn = new ROSLIB.Message({data : parseInt(my_map(-45,45,191,281,data))});
     joint5.publish(msn);
     document.getElementById("Gripper_Txt").value = 5;
     getTxt();
@@ -481,7 +483,7 @@ function griperRotation(data){
     values_map[key]+=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
     var msn = new ROSLIB.Message({
-        data : parseInt(my_map(-90,90,138,312,values_map[key]))
+        data : parseInt(my_map(-45,45,191,281,values_map[key]))
     });
     joint5.publish(msn); 
     getTxt();
@@ -505,9 +507,9 @@ function movePrismatic(data){
 }
 
 // Move general camera
-function moveCamera(data,camera){
+function moveCamera(data,cam){
 
-    if(camera==1){
+    if(cam==1){
         console.log(data);
         key = "joint8";
         values_map[key] += (data);    
