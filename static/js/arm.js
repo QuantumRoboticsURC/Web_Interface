@@ -164,7 +164,7 @@ var l4 = .9;
 //Limits
 var limits_map = {
     q1:[-95,90],
-    q2:[10,161],
+    q2:[20,161],
     q3:[-165.4,0],
     q4:[-135,90],
     joint5:[-45,45], 
@@ -216,16 +216,16 @@ function predefinedPosition(position){
     State[1]=position;
 
     if (position === "HOME"){
-        x = .134;
+        x = .15;
         y =  0;
-        z =  .75;
+        z =  .74;
         phi = 0;
         
     } 
     else if(position === "INTERMEDIATE"){
         x = 0;
         y = 0;
-        z = 3.677;
+        z = 2.78;
         phi = 0;
         
     }
@@ -263,6 +263,12 @@ function predefinedPosition(position){
         z =  5.2;
         phi = 90;
         
+    }
+    else if (position === "BOX"){
+        x=0.35;
+        y=80;
+        z=2.24;
+        phi=-60;
     }
 
     values_map.joint1 = x;
