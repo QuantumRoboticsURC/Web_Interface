@@ -247,7 +247,7 @@ function predefinedPosition(position){
         x = 3.28;
         y = 0;
         z = -.1;
-        phi = 0;
+        phi = -90;
         
     }
     else if (position === "STORAGE"){
@@ -268,7 +268,13 @@ function predefinedPosition(position){
         x=0.35;
         y=80;
         z=2.24;
-        phi=-60;
+        phi=-20;
+    }
+    else if (position === "FlOOR2"){
+        x=2.48;
+        y=0;
+        z=-1.2;
+        phi=6.17;
     }
 
     values_map.joint1 = x;
