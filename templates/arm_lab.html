@@ -78,9 +78,9 @@
 													<div class="row">
 														<small class="text-muted">Centrifuge</small>
 														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(0.045)">Slow</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(0.05)">Slow</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(.7)">Fast</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(-0.045)">Slow Negativo</button> 													 																
+															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(-0.05)">Slow Negativo</button> 													 																
 														</div>
 														
 													</div>
@@ -89,11 +89,10 @@
 											<li class="list-group-item ">
 												<div>
 													<div class="row">
-														<small class="text-muted">End tool</small>
+														<small class="text-muted">Left Servo</small>
 														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Sudan</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Sudan</button> 																
-															<center><button type="button" class="btn btn-secondary btn-look-three" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">GENERAL PHOTO</button></center> 
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="go(150,4);getTxt();" style="margin-bottom: 25px;">Close</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="go(0,4);getTxt();" style="margin-bottom: 25px;">Open</button>																
 														</div>
 													</div>
 												</div>
@@ -101,24 +100,20 @@
 											<li class="list-group-item ">
 												<div>
 													<div class="row">
-														<small class="text-muted">End tool</small>
+														<small class="text-muted">Center Servo</small>
 														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">lugol</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">lugol</button> 																
-															<center><button type="button" class="btn btn-secondary btn-look-three" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">GENERAL UP</button></center> 
-														</div>
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="go(170,5);getTxt();" style="margin-bottom: 25px;">Close</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="go(0,5);getTxt();" style="margin-bottom: 25px;">Open</button>
 													</div>
 												</div>
 											</li>
 											<li class="list-group-item ">
 												<div>
 													<div class="row">
-														<small class="text-muted">End tool</small>
+														<small class="text-muted">Right Servo</small>
 														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">biuret</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">biuret</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">biuret</button> 																
-														 
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="go(167,6);getTxt();" style="margin-bottom: 25px;">Close</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="go(0,6);getTxt();" style="margin-bottom: 25px;">Open</button>
 														</div>
 													</div>
 												</div>

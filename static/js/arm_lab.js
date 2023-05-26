@@ -73,21 +73,21 @@ class ArmTeleop{
         });
 
         this.limits_map = {
-            q1:[-180,0],
-            q2:[0,180],
-            q3:[0,245], //Cambio de límites
-            q4: [0,120],
-            q5: [0,50],
-            q6:[0,150],
+            q1:[0,180],
+            q2:[-30,180],
+            q3:[0,642], //Cambio de límites
+            q4: [0,150],
+            q5: [0,170],
+            q6:[0,167],
             q7:[-10,10]
         }
         this.angles_map={
             q1:0.0,
             q2:90.0,
-            q3:15,
-            q4:0,
-            q5:0,
-            q6:0,
+            q3:210,
+            q4:150,
+            q5:170,
+            q6:167,
             q7:0,
             
         }
@@ -203,18 +203,18 @@ function predefinedPosition(position){
     switch(position){
         case "HOME":
             arm.angles_map.q1=0;
-            arm.angles_map.q2=90;
-            arm.angles_map.q3=15;
+            arm.angles_map.q2=145;
+            arm.angles_map.q3=194;
             break;
         case "INTERMEDIATE":
             arm.angles_map.q1=0;
-            arm.angles_map.q2=90;
-            arm.angles_map.q3=70;
+            arm.angles_map.q2=65;
+            arm.angles_map.q3=325;
             break
         case "GROUND":
             arm.angles_map.q1=0;
-            arm.angles_map.q2=15;
-            arm.angles_map.q3=70;
+            arm.angles_map.q2=-30;
+            arm.angles_map.q3=325;
             break
         case "HORIZONTAL":
             arm.angles_map.q1=0;
@@ -227,14 +227,14 @@ function predefinedPosition(position){
             arm.angles_map.q3=9;
             break
         case "CENTER":
-            arm.angles_map.q1=-95;
-            arm.angles_map.q2=155;
-            arm.angles_map.q3=4;
+            arm.angles_map.q1=153;
+            arm.angles_map.q2=105;
+            arm.angles_map.q3=230;
             break
         case "RIGHT":
-            arm.angles_map.q1=-165;
-            arm.angles_map.q2=107;
-            arm.angles_map.q3=40;
+            arm.angles_map.q1=130;
+            arm.angles_map.q2=115;
+            arm.angles_map.q3=225;
     }
     getTxt();
     
