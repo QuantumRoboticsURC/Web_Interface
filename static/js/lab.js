@@ -7,15 +7,47 @@ ros = new ROSLIB.Ros({
     url: "ws://" + robot_IP + ":9090"
 });
 
-var getPhoto= new ROSLIB.Service({
+
+
+
+/*
+var listener = new ROSLIB.Topic({
   ros:ros,
-  name:
+  name : "/usb_cam/image_raw/compressed",
+  messgaeType: "sensor_msgs/CompressedImage"
 });
 
+
+listener.subscribe(function(message){
+  var imagedata = "data:image/png;base64,"+message.data;
+  document.getElementById("biuret1").src=imagedata;
+  console.log("Prueba")
+});
+*/
+
+var service = new ROSLIB.Service({
+  ros:ros,
+  name : "/camera_info",
+  servicType:"/camera_manager/camera_photo"
+
+});
+request = new ROSLIB.ServiceRequest({
+  choice:0
+
+});
+console.log("Prueba1");
+service.callService(request,function(result){
+  console.log("Prueba2");
+  var imagedata = "data:image/png;base64,"+result.cam.data;
+  document.getElementById("biuret1").src=imagedata;
+  console.log("Prueba3")
+  
+});
 
 window.onload = function() {
     update();
   };
+
 
 
 
