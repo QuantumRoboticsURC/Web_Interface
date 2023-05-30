@@ -4,7 +4,7 @@ var robot_IP;
 //IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
 robot_IP = _config.ROSBridge_IP;
 ros = new ROSLIB.Ros({
-    url: "ws://" + "localhost" + ":9090"
+    url: "ws://" + robot_IP + ":9090"
 });
 class ArmTeleop{
     constructor(){
@@ -345,7 +345,8 @@ function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
     let acum = deg2rad(q2);
 	let x2=l2*math.cos(acum);
 	let y2=l2*math.sin(acum);
-    var q3n=my_map(330,492,330,492,q3);
+    var q3n=my_map(285,462,-177,0,q3);
+ 
     console.log(q3n)
     acum+=deg2rad(q3n);
 	let x3=x2+l3*math.cos(acum);

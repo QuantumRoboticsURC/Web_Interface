@@ -10,8 +10,8 @@ window.onload = function () {
 
     var listener = new ROSLIB.Topic({
       ros : ros,
-      name : '/status_led',
-      messageType : 'std_msgs/Int32'
+      name : '/matrix_signal',
+      messageType : 'std_msgs/Int8'
     });
 
     listener.subscribe(function(message) {
