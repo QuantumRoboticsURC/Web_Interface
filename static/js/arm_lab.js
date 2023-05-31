@@ -101,7 +101,15 @@ class ArmTeleop{
         }
         this.led = false;  
     }
+    led_signal(data){
+        console.log(data)
+        this.led = data
+        var msn = new ROSLIB.Message({data:data})
+        this.pub_led.publish(msn)
+        getTxt();
+    }
     publishMessages(){
+        this.led_signal(false)
         this.angles_map.q1=qlimit(this.limits_map.q1,this.angles_map.q1)
         this.angles_map.q2=qlimit(this.limits_map.q2,this.angles_map.q2)
         this.angles_map.q3=qlimit(this.limits_map.q3,this.angles_map.q3)
@@ -158,6 +166,7 @@ class ArmTeleop{
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
         moveServos(servo_id,servo_dir,servo_step){
+           
             switch(servo_id){
                 case 1:
                     if(servo_dir=="+"){
@@ -209,13 +218,7 @@ class ArmTeleop{
             }
             getTxt();
         }
-        led_signal(data){
-            console.log(data)
-            this.led = data
-            var msn = new ROSLIB.Message({data:data})
-            this.pub_led.publish(msn)
-            getTxt();
-        }
+
         
 
     }
