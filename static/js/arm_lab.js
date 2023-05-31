@@ -1,6 +1,6 @@
 var ros;
 var robot_IP;
-
+var ledstate = false;
 //IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
 robot_IP = _config.ROSBridge_IP;
 ros = new ROSLIB.Ros({
@@ -103,13 +103,18 @@ class ArmTeleop{
     }
     led_signal(data){
         console.log(data)
+        ledstate=data;
         this.led = data
         var msn = new ROSLIB.Message({data:data})
         this.pub_led.publish(msn)
-        getTxt();
+        var LED = String(this.led);
+        localStorage.setItem("LED",LED);
+        document.getElementById("LED").innerHTML = LED;
+
+        //getTxt();
     }
     publishMessages(){
-        this.led_signal(false)
+        
         this.angles_map.q1=qlimit(this.limits_map.q1,this.angles_map.q1)
         this.angles_map.q2=qlimit(this.limits_map.q2,this.angles_map.q2)
         this.angles_map.q3=qlimit(this.limits_map.q3,this.angles_map.q3)
@@ -160,7 +165,12 @@ class ArmTeleop{
         this.servoleft.publish(message7);
         this.centrifugadora.publish(message8);
         this.cameraA.publish(message9);
-
+        if(ledstate){
+            console.log(ledstate)
+            var msn = new ROSLIB.Message({data:false})
+            this.pub_led.publish(msn)
+            ledstate= false;
+        }
     }
      my_map(in_min, in_max, out_min, out_max, x){ //map arduino
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -330,11 +340,12 @@ function moveCentrifuge(data){
 }
 function change_led(data){
     arm.led_signal(data);
-    getTxt();
+    //getTxt();
 }
 
 function getTxt(){
     arm.publishMessages();
+    
     var Rotation = String(arm.angles_map.q1);
     var YellowJacketAxis2 = String(arm.angles_map.q2);
     var ServoAxis3 = String(arm.angles_map.q3);
@@ -342,8 +353,6 @@ function getTxt(){
     var Servo_Center = String(arm.angles_map.q5);
     var Servo_Right = String(arm.angles_map.q6);
     var Centrifuge = String(arm.angles_map.q7);
-    var LED = String(arm.led);
-  
     localStorage.setItem("Rotation",Rotation);
     localStorage.setItem("YJ",YellowJacketAxis2);
     localStorage.setItem("Axis3",ServoAxis3);
@@ -351,7 +360,7 @@ function getTxt(){
     localStorage.setItem("CS",Servo_Center);
     localStorage.setItem("RS",Servo_Right);
     localStorage.setItem("Centrifuge",Centrifuge);
-    localStorage.setItem("LED",LED);
+  
 
     document.getElementById("Rotation").innerHTML = Rotation;
     document.getElementById("YJ").innerHTML = YellowJacketAxis2;
@@ -360,7 +369,7 @@ function getTxt(){
     document.getElementById("CS").innerHTML = Servo_Center;
     document.getElementById("RS").innerHTML = Servo_Right;
     document.getElementById("Centrifuge").innerHTML = Centrifuge;
-    document.getElementById("LED").innerHTML = LED;
+   
     arm_interface(arm.angles_map.q2,arm.angles_map.q3);
 }
 function rad2deg(radians){return radians * (180/math.pi);}
