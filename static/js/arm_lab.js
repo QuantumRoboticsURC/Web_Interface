@@ -477,3 +477,30 @@ function publish_coordanates(){
     })
     coordenates.publish(message);
 }
+
+function Camera_on_off(cam,status){
+    switch(cam){
+        case(1):
+            if (status){
+                console.log("on")
+            } else{
+                console.log("off")
+            }
+            break;
+        case(2):
+            if (status){
+                console.log("on")
+            } else{
+                console.log("off")
+            }
+            break;
+        case(3):
+            if (status){
+                console.log("on")
+            } else{
+                console.log("off")
+            }
+        break;
+            break;
+    }
+}
