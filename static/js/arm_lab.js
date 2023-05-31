@@ -445,3 +445,23 @@ function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
   		options: chartOptions
 	});
 }
+
+coordenates = new ROSLIB.Topic({
+    ros:ros,
+    name:'ublox/gps_goal',
+    messageType: 'sensor_msgs/NavSatFix',
+    queue_size:1
+})
+
+function publish_coordanates(){
+    latitud=document.getElementById('Latitud_Txt').value;
+    longitudl=document.getElementById('Longitud_Txt').value;
+    console.log(latitud);
+    coordenadas=latitud+","+longitudl;
+    console.log(coordenadas);
+    var message =new ROSLIB.Message({
+        latitude: parseFloat(latitud),
+        longitude: parseFloat(longitudl)
+    })
+    coordenates.publish(message);
+}
