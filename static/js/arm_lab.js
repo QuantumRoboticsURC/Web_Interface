@@ -67,8 +67,14 @@ class ArmTeleop{
         //Leds
         this.pub_led = new ROSLIB.Topic({
             ros : ros,
-            name : 'led_state',
+            name : 'status_led',
             messageType : 'std_msgs/Bool',
+            queue_size: 1   
+        });
+        this.cameraA = new ROSLIB.Topic({
+            ros : ros,
+            name : 'arm_teleop/camA',
+            messageType : 'std_msgs/Int32',
             queue_size: 1   
         });
 
@@ -77,9 +83,10 @@ class ArmTeleop{
             q2:[-30,180],
             q3:[285,462], //Cambio de límites
             q4: [0,150],
-            q5: [0,170],
-            q6:[0,167],
-            q7:[-10,10]
+            q5: [0,173],
+            q6:[0,171],
+            q7:[-10,10],
+            q8:[0,180]
         }
         this.angles_map={
             q1:0.0,
@@ -89,6 +96,7 @@ class ArmTeleop{
             q5:170,
             q6:167,
             q7:0,
+            q8:45
             
         }
         this.led = false;  
@@ -101,6 +109,7 @@ class ArmTeleop{
         this.angles_map.q5=qlimit(this.limits_map.q5,this.angles_map.q5)
         this.angles_map.q6=qlimit(this.limits_map.q6,this.angles_map.q6)
         this.angles_map.q7=qlimit(this.limits_map.q7,this.angles_map.q7)
+        this.angles_map.q8=qlimit(this.limits_map.q8,this.angles_map.q8)
         var message = new ROSLIB.Message({
             joint3:my_map(-162,0,330,492,this.angles_map.q3),
             servo1:this.angles_map.q4,
@@ -131,6 +140,9 @@ class ArmTeleop{
         var message8 = new ROSLIB.Message({
             data:this.angles_map.q7
         })
+        var message9 = new ROSLIB.Message({
+            data:this.angles_map.q8
+        })
         this.joint3.publish(message4);
         //this.arm.publish(message);
         this.joint1.publish(message2);
@@ -139,6 +151,7 @@ class ArmTeleop{
         this.servocenter.publish(message6);
         this.servoleft.publish(message7);
         this.centrifugadora.publish(message8);
+        this.cameraA.publish(message9);
 
     }
      my_map(in_min, in_max, out_min, out_max, x){ //map arduino
@@ -183,9 +196,16 @@ class ArmTeleop{
                         //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
                     }
                     
-                  
-                   
                     break;
+                case 5:
+                    if(servo_dir=="+"){
+                        this.angles_map.q8+=servo_step;
+                        //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
+                    }
+                    else{
+                        this.angles_map.q8-=servo_step;
+                        //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
+                    }
             }
             getTxt();
         }
@@ -225,27 +245,32 @@ function predefinedPosition(position){
         case "GROUNDINTERMEDIATE":
             arm.angles_map.q1=0;
             arm.angles_map.q2=45;
-            arm.angles_map.q3=415;
+            arm.angles_map.q3=430;
+            break
+        case "SECONDINT":
+                arm.angles_map.q1=90;
+                arm.angles_map.q2=60;
+                arm.angles_map.q3=400;
             break
         case "SERVOSTEP":
             arm.angles_map.q1=90;
             arm.angles_map.q2=130;
-            arm.angles_map.q3=330;
+            arm.angles_map.q3=340;
             break
         case "LEFT":
             arm.angles_map.q1=170;
             arm.angles_map.q2=106;
-            arm.angles_map.q3=329;
+            arm.angles_map.q3=331;
             break
         case "CENTER":
             arm.angles_map.q1=148;
-            arm.angles_map.q2=104;
-            arm.angles_map.q3=329;
+            arm.angles_map.q2=103;
+            arm.angles_map.q3=336;
             break
         case "RIGHT":
             arm.angles_map.q1=125;
-            arm.angles_map.q2=113;
-            arm.angles_map.q3=324;
+            arm.angles_map.q2=108;
+            arm.angles_map.q3=330;
     }
     getTxt();
     
@@ -263,6 +288,7 @@ function go(data,q){
     switch(q){
         case 1:
             arm.angles_map.q1=(arm.limits_map.q1,data);
+            document.getElementById("Left_Txt").value = 5;
             
             break;
         case 2:

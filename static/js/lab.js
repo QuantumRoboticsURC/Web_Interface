@@ -35,14 +35,16 @@ request = new ROSLIB.ServiceRequest({
   choice:0
 
 });
-console.log("Prueba1");
-service.callService(request,function(result){
-  console.log("Prueba2");
-  var imagedata = "data:image/png;base64,"+result.cam.data;
-  document.getElementById("biuret1").src=imagedata;
-  console.log("Prueba3")
-  
-});
+
+function takePicture(parameter){
+  service.callService(request,function(result){
+    var imagedata = "data:image/png;base64,"+result.cam.data;
+    document.getElementById(parameter).src=imagedata;
+
+  });
+};
+
+
 
 window.onload = function() {
     update();

@@ -78,9 +78,9 @@
 													<div class="row">
 														<small class="text-muted">Centrifuge</small>
 														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(0.07)">Slow</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(0.09)">Slow</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(.7)">Fast</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(-0.07)">Slow Negativo</button> 													 																
+															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(-0.09)">Slow Negativo</button> 													 																
 														</div>
 														
 													</div>
@@ -112,7 +112,7 @@
 													<div class="row">
 														<small class="text-muted">Right Servo</small>
 														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="go(167,6);getTxt();" style="margin-bottom: 25px;">Close</button>
+															<button type="button" class="btn btn-secondary btn-look-one" onclick="go(170,6);getTxt();" style="margin-bottom: 25px;">Close</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onclick="go(0,6);getTxt();" style="margin-bottom: 25px;">Open</button>
 														</div>
 													</div>
@@ -162,15 +162,15 @@
 															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px;">Intermediate</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px;">Home</button>
 															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('GROUND');getTxt();" style="margin-bottom: 25px;">Ground Extraction</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('GROUNDINTERMEDIATE');getTxt();" style="margin-bottom: 25px;">Ground Intermediate</button>
 														</div>
 														<hr>
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('GROUNDINTERMEDIATE');getTxt();" style="margin-bottom: 25px;">Ground Intermediate</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('SECONDINT');getTxt();" style="margin-bottom: 25px;">Second Intermediate</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('SERVOSTEP');getTxt();" style="margin-bottom: 25px;">Servo Intermediate</button>
 															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('LEFT');getTxt();" style="margin-bottom: 25px;">Left Servo</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('CENTER');getTxt();" style="margin-bottom: 25px;">Center Servo</button>      
 															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('RIGHT');getTxt();" style="margin-bottom: 25px;">Right Servo</button>                                                    
-                                              
 														</div>
 													</div>
 												</div>
@@ -314,13 +314,14 @@
 																	<div class="input-group">
 																		<input id="Camera_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="arm.moveServos(5,'-',parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="arm.moveServos(5,'+',parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														</div>
 													</div>
 												</li>
+	
 												<li class="list-group-item ">
 													<div>
 														<div class="row">
