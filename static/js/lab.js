@@ -40,19 +40,12 @@ function takePicture(parameter){
   service.callService(request,function(result){
     var imagedata = "data:image/png;base64,"+result.cam.data;
     document.getElementById(parameter).src=imagedata;
-
   });
 };
-
-
 
 window.onload = function() {
     update();
   };
-
-
-
-
 
 function update() {
 $.get("get_img", function(data, status){
