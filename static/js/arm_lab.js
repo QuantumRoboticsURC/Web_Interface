@@ -477,30 +477,66 @@ function publish_coordanates(){
     })
     coordenates.publish(message);
 }
-
+var antenna_on = new ROSLIB.Service({
+    ros : ros,
+    name : '/camera_antenna/start_capture',
+    serviceType : 'std_srvs/Empty'
+    });
+var antenna_off = new ROSLIB.Service({
+    ros : ros,
+    name : '/camera_antenna/stop_capture',
+    serviceType : 'std_srvs/Empty'
+    });
+var centrifuge_on = new ROSLIB.Service({
+    ros : ros,
+    name : '/zedm/zed_node/start_remote_stream',
+    serviceType : 'std_srvs/Empty'
+    });
+var centrifuge_off = new ROSLIB.Service({
+    ros : ros,
+    name : '/zedm/zed_node/stop_remote_stream',
+    serviceType : 'std_srvs/Empty'
+    });
+var arm_on = new ROSLIB.Service({
+    ros : ros,
+    name : '/camera_arm/start_capture',
+    serviceType : 'std_srvs/Empty'
+    });
+var arm_off = new ROSLIB.Service({
+    ros : ros,
+    name : '/camera_arm/stop_capture',
+    serviceType : 'std_srvs/Empty'
+    });
 function Camera_on_off(cam,status){
     switch(cam){
         case(1):
             if (status){
-                console.log("on")
+                var request = new ROSLIB.ServiceRequest({});
+                antenna_on.callService(request,function(){console.log("on")});
+                
             } else{
-                console.log("off")
+                var request2 = new ROSLIB.ServiceRequest({});
+                antenna_off.callService(request2,function(){console.log("off")});
+                
             }
             break;
         case(2):
             if (status){
-                console.log("on")
+                var request3 = new ROSLIB.ServiceRequest({});
+                centrifuge_on.callService(request3,function(){console.log("on")});    
             } else{
-                console.log("off")
+                var request4 = new ROSLIB.ServiceRequest({});
+                centrifuge_off.callService(request4,function(){console.log("off")});
             }
             break;
         case(3):
             if (status){
-                console.log("on")
+                var request5 = new ROSLIB.ServiceRequest({});
+                arm_on.callService(request5,function(){console.log("on")});    
             } else{
-                console.log("off")
+                var request6 = new ROSLIB.ServiceRequest({});
+                arm_off.callService(request6,function(){console.log("off")});
             }
-        break;
             break;
     }
 }

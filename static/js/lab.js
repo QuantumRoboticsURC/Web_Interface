@@ -37,6 +37,7 @@ request = new ROSLIB.ServiceRequest({
 });
 
 function takePicture(parameter){
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   service.callService(request,function(result){
     var imagedata = "data:image/png;base64,"+result.cam.data;
     document.getElementById(parameter).src=imagedata;
