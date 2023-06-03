@@ -88,12 +88,12 @@ var antenna_off = new ROSLIB.Service({
   });
 var centrifuge_on = new ROSLIB.Service({
   ros : ros,
-  name : '/zedm/zed_node/start_remote_stream',
+  name : '/zed2i/zed_node/start_remote_stream',
   serviceType : 'std_srvs/Empty'
   });
 var centrifuge_off = new ROSLIB.Service({
   ros : ros,
-  name : '/zedm/zed_node/stop_remote_stream',
+  name : '/zed2i/zed_node/stop_remote_stream',
   serviceType : 'std_srvs/Empty'
   });
 var arm_on = new ROSLIB.Service({
