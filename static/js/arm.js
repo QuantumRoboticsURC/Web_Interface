@@ -167,7 +167,7 @@ var limits_map = {
     q2:[20,161],
     q3:[-165.4,0],
     q4:[-135,90],
-    joint5:[-45,45], 
+    joint5:[-90,90], 
     camera:[0,180],
     cameraA:[0,180]
 };
@@ -483,7 +483,7 @@ function go(data){
     var key = "joint5";
     values_map[key]=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({data : parseInt(my_map(-45,45,191,281,data))});
+    var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,146,326,data))});
     joint5.publish(msn);
     document.getElementById("Gripper_Txt").value = 5;
     getTxt();
@@ -495,7 +495,7 @@ function griperRotation(data){
     values_map[key]+=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
     var msn = new ROSLIB.Message({
-        data : parseInt(my_map(-45,45,191,281,values_map[key]))
+        data : parseInt(my_map(-90,90,146,326,values_map[key]))
     });
     joint5.publish(msn); 
     getTxt();

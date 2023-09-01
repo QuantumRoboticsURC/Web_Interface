@@ -147,6 +147,72 @@
 										</div>
 									</div>
 								</div>
+							
+								<div class="row">
+									<div class="col-md-12">
+										<div class="card">
+											<div class="card-header">
+												<h4 class="card-title">Coordinates</h4>
+											</div>
+											<div class="card-body text-center">
+												<div class="row">
+													<div class="col-md-12">				
+														<medium class="text-muted">Latitud</medium>
+														<div class="input-group">
+															<input id="Latitud_Txt" type="text" class="form-control-go" value="38.39865" aria-label="Input group example" aria-describedby="btnGroupAddon">
+														</div>
+														<medium class="text-muted">Longitud</medium>
+														<div class="input-group">
+															<input id="Longitud_Txt" type="text" class="form-control-go" value="-110.79025 " aria-label="Input group example" aria-describedby="btnGroupAddon">
+														</div>
+														<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="publish_coordinates()">&nbsp;Publish Goal&nbsp;</button> 																
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="card">
+												<div class="card-header">
+													<h4 class="card-title">Cameras</h4>
+												</div>
+												<li class="list-group-item ">
+													<div>
+														<div class="row">
+															<medium class="text-muted">Camera antenna</medium>
+															<div class="col-md-12">				
+																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(1,0)">&nbsp;Off&nbsp;</button>
+																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(1,1)">&nbsp;0n&nbsp;</button> 																
+															</div>
+														</div>
+													</div>
+												</li>
+												<li class="list-group-item ">
+													<div>
+														<div class="row">
+															<medium class="text-muted">Camera centrifuge</medium>
+															<div class="col-md-12">				
+																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(2,0)">&nbsp;Off&nbsp;</button>
+																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(2,1)">&nbsp;0n&nbsp;</button> 																
+															</div>
+														</div>
+													</div>
+												</li>
+												<li class="list-group-item ">
+													<div>
+														<div class="row">
+															<medium class="text-muted">Camera arm</medium>
+															<div class="col-md-12">				
+																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(3,0)">&nbsp;Off&nbsp;</button>
+																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(3,1)">&nbsp;0n&nbsp;</button> 																
+															</div>
+														</div>
+													</div>
+												</li>
+											</div>
+										</div>
+								</div>
 							</div>
 						</div>
 					</div>
