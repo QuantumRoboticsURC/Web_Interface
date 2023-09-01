@@ -152,7 +152,7 @@ var values_map = {
     joint3: .75,
     joint4: 0,      //phi
     joint5: 0,   //rotacion
-    joint8: 140, //camera
+    joint8: 80, //camera
     led:0,
     joint9: 45
 };

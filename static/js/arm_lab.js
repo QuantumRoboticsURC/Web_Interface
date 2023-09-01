@@ -80,7 +80,7 @@ class ArmTeleop{
 
         this.limits_map = {
             q1:[0,180],
-            q2:[-30,180],
+            q2:[0,150],
             q3:[285,462], //Cambio de límites
             q4: [0,150],
             q5: [0,173],
