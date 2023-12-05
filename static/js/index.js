@@ -1,11 +1,26 @@
 var ros;
 var robot_IP;
-
+var bot;
 robot_IP = _config.ROSBridge_IP;
 
-    ros = new ROSLIB.Ros({
-        url: "ws://" + robot_IP + ":9090"
+ros = new ROSLIB.Ros({
+    url: "ws://" + robot_IP + ":9090"
     });
+var camara_topic= 1;
+var simpledrive = new ROSLIB.Topic ({
+  ros : ros,
+  name : 'SD_WI',
+  messageType: 'std_msgs/Bool',
+  queue_size: 10
+})
+function change_camera(camera){
+    window.camara_topic = camera;
+
+}
+function activate_simpledrive(activation){
+  simpledrive.publish(new ROSLIB.Message({data:activation}));
+  console.log(activation);
+}
 
     if (_config.is_WebVideo){
         var zed_topic = _config.topic_Zed_Camera;
