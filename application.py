@@ -37,7 +37,11 @@ def arm():
 
 @application.route('/coordinates')
 def coordinates():
-    return render_template('coordinates.html')  
+    return render_template('coordinates.html') 
+
+@application.route('/strat_profile')
+def strat_profile():
+    return render_template('strat_profile.html')  
 
 
 

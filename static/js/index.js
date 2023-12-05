@@ -33,22 +33,25 @@ function activate_simpledrive(activation){
     } else {
         var listener = new ROSLIB.Topic({
             ros : ros,
-            name : _config.topic_Zed_Camera + '/compressed',
-            messageType : 'sensor_msgs/CompressedImage'
+            name : '/image_raw',
+            messageType : 'sensor_msgs/msg/Image'
           });
         
         listener.subscribe(function(message) {
-          var imagedata = "data:image/png;base64," + message.data;
-          document.getElementById("Zed_Camera").src = imagedata;      
+          console.log(message.data)
+          var imagedata = "data:image/png;base64" + message.data;
+          document.getElementById("Zed_Camera").src = imagedata;
+          document.getElementById("Zed_Camera").height =message.height;
+          document.getElementById("Zed_Camera").width =message.width;     
         });
 
-        var listener = new ROSLIB.Topic({
+        var listener2 = new ROSLIB.Topic({
             ros : ros,
             name : _config.topic_USB_Camera + '/compressed',
             messageType : 'sensor_msgs/CompressedImage'
           });
         
-        listener.subscribe(function(message) {
+        listener2.subscribe(function(message) {
           var imagedata = "data:image/png;base64," + message.data;
           document.getElementById("USB_Camera").src = imagedata;      
         });
