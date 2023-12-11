@@ -49,7 +49,7 @@
 			</nav>
 		</div>
 
-
+		
 		<div class="sidebar">
             {% include "sb.html"%}
         </div>
@@ -58,6 +58,9 @@
 			<div class="content">
 				<div class="container-fluid">
 					<h4 class="page-title">Dashboard Nav</h4>
+					<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('USB0');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">USB0</button>
+					<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('USB1');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">USB1</button>
+					<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('Zed');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Zed</button>
 					<div class="row">	
 						<div class="col-lg-6">
 							<div class="card">
@@ -67,24 +70,20 @@
 								</div>
 								<div class="card-body">
 									<div class="col-lg-6">
-										<img src ="" id="Zed_Camera" wigth="400" height="400">
+										<img src ="" id="Zed_Camera" width="640" height="480">
 									</div>
-								</div>								
+								</div>	
 							</div>
 						</div>
-						<div class="col-lg-6">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Camera 2</h4>
-									<p class="card-category">USB</p>
-								</div>
-								<div class="card-body">
-									<div class="col-lg-6">		
-										<img src ="" id="USB_Camera" wigth="400" height="400" style="transform:rotate(180deg);">
-									</div>
-								</div>								
+						<div class= "card">
+							<div class="card card-header">
+								<h4 class="card title">Simple Drive</h4>
 							</div>
-						</div>
+							<div class="class body">
+								<div class="col-lg-6">
+								<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="activate_simpledrive(true);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">ON
+									<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="activate_simpledrive(false);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">OFF
+							</div>	
 					</div>		
 				</div>	
 			</div>
