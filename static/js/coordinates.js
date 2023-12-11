@@ -1,3 +1,15 @@
+var ros;
+var robot_IP;
+var bot;
+
+var status = 0;
+var statusTestjaja = 0; 
+//IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
+robot_IP = _config.ROSBridge_IP;
+ros = new ROSLIB.Ros({
+    url: "ws://" + robot_IP + ":9090"
+});
+
 function dmsversdd(){
     var lat = document.getElementById("lat").value;
     var lat_degrees = parseFloat(document.getElementById('latitude_degrees').value) || 0;
@@ -49,4 +61,36 @@ function ddmversdd(){
     }
     document.getElementById('label_lat').innerText = lat_geo;
     document.getElementById('label_lon').innerText = lon_geo;
+}
+
+function setStatus(status){
+
+	goBottonStatus = status;
+    console.log("Status jajaja: " + goBottonStatus);
+	
+}
+
+function botonClick() {
+    console.log("Status jaja: " + goBottonStatus);
+
+    var statusMessage = new ROSLIB.Message({
+        data: goBottonStatus
+    });
+    statusPublisher.publish(statusMessage);
+}
+
+var statusPublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/status_topic',
+    messageType: 'std_msgs/Int32'
+});
+
+
+function getTxt(){
+
+	var status = 0;
+	
+	localStorage.setItem("Status", status);
+	document.getElementById("Status").innerHTML = goBottonStatus;
+
 }

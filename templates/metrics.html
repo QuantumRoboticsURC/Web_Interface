@@ -66,16 +66,7 @@
 					</div>
 					<div class="row">	
 						<div class="col-lg-6">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">GPS</h4>
-								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
-									</div>
-								</div>								
-							</div>
+							
 						</div>
 						<div class="col-lg-3">
 							<div class="card">
@@ -94,41 +85,25 @@
 								<div class="col-md-12">
 									<div class="card">
 										<div class="card-header">
-											<h4 class="card-title">Traction</h4>											
+											<h4 class="card-title">Velocidades</h4>
 										</div>
 										<div class="card-body text-center">
-											<div>Left side traction:
-												<div id="leftTrac"> </div>
-											</div>
-											<br>
-											<div>Rigth side traction:
-												<div id="rigthTrac"> </div>
-											</div>
+												<div>Linearx:
+													<div id="VeloLinear"> </div>
+												</div>
+												<br>
+												<div>Lineary:
+													<div id="VeloLineary"> </div>
+												</div>
+												<p id="mensajeROSL"></p>
+										</div>
 									</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-lg-3">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Navigation</h4>
-									<p class="card-category">Actual mode</p>
-								</div>
-								<div class="card-body">
-								
-									<div class="col-lg-12 text-center">
-										<div id="ledLabel" style="  
-											height: 5vh;
-											width: 2hw;
-											background-color: #ffffff;">	
-										</div>
-										<br>
-										<div><p id="ledText"></p></div>
-									</div>
-									
-								</div>
-							</div>
+							
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card">
@@ -173,44 +148,7 @@
 									</div>
 									<div class="row">
 										<div class="col-md-12">
-											<div class="card">
-												<div class="card-header">
-													<h4 class="card-title">Cameras</h4>
-												</div>
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Camera antenna</medium>
-															<div class="col-md-12">				
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(1,0)">&nbsp;Off&nbsp;</button>
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(1,1)">&nbsp;0n&nbsp;</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Camera centrifuge</medium>
-															<div class="col-md-12">				
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(2,0)">&nbsp;Off&nbsp;</button>
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(2,1)">&nbsp;0n&nbsp;</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Camera arm</medium>
-															<div class="col-md-12">				
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(3,0)">&nbsp;Off&nbsp;</button>
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(3,1)">&nbsp;0n&nbsp;</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
-											</div>
+											
 										</div>
 								</div>
 							</div>

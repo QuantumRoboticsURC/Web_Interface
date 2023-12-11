@@ -16,6 +16,7 @@
 </head>
 
 <body>
+	
 	<div class="wrapper">
 		<div class="main-header">
 			<div class="logo-header">
@@ -56,151 +57,51 @@
 				<div class="container-fluid">
 					<h4 class="page-title">Dashboard Nav</h4>
 					<div class="row">	
-						<div class="col-lg-4">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">DMS (Degrees, Minutes, Seconds)</h4>
-								</div>
-								<div class="card-body">
-									<div class="form-group">
-										<h6>Latitude</h6>
-
-										<label for="lat">Choose a hemisphere:</label>
-
-										<select name="lat" id="lat" onchange="dmsversdd()">
-											<option value="nord">N +</option>
-											<option value="sud">S -</option>
-										</select>
-										<div class="row">
-											
-											<div class="col-md-3">
-												<input class="form-control sexagesimal" id="latitude_degrees" type="textbox" onkeyup="dmsversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="latitude_degrees">&deg;</label>
-											</div>
-											<div class="col-md-3">
-												<input class="form-control sexagesimal" id="latitude_minutes" type="textbox" onkeyup="dmsversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="latitude_minutes">'</label>
-											</div>
-											<div class="col-md-3">
-												<input class="form-control sexagesimalsec" id="latitude_seconds" type="textbox" onkeyup="dmsversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="latitude_seconds">''</label>
-											</div>
-										</div>
-									</div>
+						<div class="col-lg-4">									
 									
-									<div class="form-group">
-										<h6>Longitude</h6>
-
-										<label for="lon">Choose a hemisphere:</label>
-
-										<select name="lon" id="lon" onchange="dmsversdd()">
-											<option value="est">E +</option>
-											<option value="ouest">W -</option>
-										</select>
-										<div class="row">
-											
-											<div class="col-md-3">
-												<input class="form-control sexagesimal" id="longitude_degrees" type="textbox" onkeyup="dmsversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="longitude_degrees">&deg;</label>
-											</div>
-											<div class="col-md-3">
-												<input class="form-control sexagesimal" id="longitude_minutes" type="textbox" onkeyup="dmsversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="longitude_minutes">'</label>
-											</div>
-											<div class="col-md-3">
-												<input class="form-control sexagesimalsec" id="longitude_seconds" type="textbox" onkeyup="dmsversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="longitude_seconds">''</label>
-											</div>
-										</div>
-									</div>
 								</div>								
 							</div>
 						</div>
+						
+										<div class="card">
+											<div class="card-header">
+												<h4 class="card-title">Coordinates</h4>
+											</div>
+											<big class="text-center">Objective</big>
+											
+											<div class="card-body text-center">
+											
+																									
+											
+														<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="setStatus(0);getTxt()">&nbsp;GNSS only&nbsp;</button>
+														<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="setStatus(1);getTxt()">&nbsp;ARUCO&nbsp;</button> 
+														<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="setStatus(2);getTxt()">&nbsp;Hammer&nbsp;</button> 		
+														<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="setStatus(3);getTxt()">&nbsp;Bottle&nbsp;</button> 
+												<div class="row">
+													<div class="col-md-12">
+													
+													
+													
+																	
+														<big class="text-center">Latitud</big>
+														
+														<div class="input-group">
+															<input id="Latitud_Txt" type="text" class="form-control-go" value="38.39865" aria-label="Input group example" aria-describedby="btnGroupAddon">
+														</div>
+														<big class="text-center">Longitud</big>
+														
+														<div class="input-group">
+														
+															<input id="Longitud_Txt" type="text" class="form-control-go" value="-110.79025 " aria-label="Input group example" aria-describedby="btnGroupAddon">
+														</div>
+														
+														<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="publish_coordinates(); botonClick()">&nbsp;Go&nbsp;</button>
+														 				
 						<div class="col-lg-4">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">DDM (Degrees, Decimal, Minutes)</h4>
-								</div>
-								<div class="card-body">
-									<div class="form-group">
-										<h6>Latitude</h6>
-
-										<label for="lat">Choose a hemisphere:</label>
-
-										<select name="lat" id="lat_ddm" onchange="ddmversdd()">
-											<option value="nord">N +</option>
-											<option value="sud">S -</option>
-										</select>
-										<div class="row">
-											
-											<div class="col-md-3">
-												<input class="form-control sexagesimal" id="latitude_degrees_ddm" type="textbox" onkeyup="ddmversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="latitude_degrees">&deg;</label>
-											</div>
-											<div class="col-md-3">
-												<input class="form-control sexagesimal" id="latitude_minutes_ddm" type="textbox" onkeyup="ddmversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="latitude_minutes">'</label>
-											</div>
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<h6>Longitude</h6>
-
-										<label for="lon">Choose a hemisphere:</label>
-
-										<select name="lon" id="lon_ddm" onchange="ddmversdd()">
-											<option value="est">E +</option>
-											<option value="ouest">W -</option>
-										</select>
-										<div class="row">
-											
-											<div class="col-md-3">
-												<input class="form-control sexagesimal" id="longitude_degrees_ddm" type="textbox" onkeyup="ddmversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="longitude_degrees">&deg;</label>
-											</div>
-											<div class="col-md-3">
-												<input class="form-control sexagesimal" id="longitude_minutes_ddm" type="textbox" onkeyup="ddmversdd()">
-											</div>
-											<div class="col-md-1">
-												<label for="longitude_minutes">'</label>
-											</div>
-										</div>
-									</div>
-								</div>								
-							</div>
+							
 						</div>
 						<div class="col-lg-4">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">DD (Decimal Degrees)</h4>								</div>
-								<div class="card-body">
-									<h6>Latitude</h6>
-									<div class="col-lg-6" id="label_lat">	
-									</div>
-									<h6>Longitude</h6>
-									<div class="col-lg-6" id="label_lon">	
-									</div>
-								</div>								
-							</div>
+							
 						</div>
 					</div>		
 				</div>	
