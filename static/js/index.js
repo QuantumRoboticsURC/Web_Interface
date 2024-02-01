@@ -28,12 +28,12 @@ function activate_simpledrive(activation){
         document.getElementById("Zed_Camera").src = zed_src; 
 
         var usb_topic = _config.topic_USB_Camera;
-        var usb_src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + usb_topic + "&type=ros_compressed";
+        var usb_src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + usb_topic + "&type=ros_compressed ";
         document.getElementById("USB_Camera").src = usb_src; 
     } else {
         var listener = new ROSLIB.Topic({
             ros : ros,
-            name : _config.topic_Zed_Camera + '/compressed',
+            name : _config.topic_Zed_Camera + '/compressed image',
             messageType : 'sensor_msgs/CompressedImage'
           });
         

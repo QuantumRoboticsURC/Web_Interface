@@ -60,7 +60,7 @@
 </head>
 
 <body>
-	<!--<div class="wrapper">
+	<div class="wrapper">
 		<div class="main-header">
 			<div class="logo-header">
 				<a href="/" class="logo">
@@ -106,14 +106,19 @@
 							<div class="card">
 								<div class="card-header">
 									<h4 class="card-title">Expanded Images</h4><br>
-									<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="handleImage(true);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Choose picture
+									<!--button id = "secondary button3" type="button" class="btn btn-secondary" onclick="handleimage(true);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Choose picture -->
+										<body>
+											<input type="file" id="imageInput" accept="image/*" onclick="handleimage(true)">
+											
+											<canvas id="canvas" width="640" height="480" style="display:none">"Choose picture";"> </canvas>
+											<div id="result"></div>
+											<div id="colorBar" style="width: 20px; height: 200px; margin-top: 10px; background: linear-gradient(to bottom, white, #ffffff, #000000, black);"></div>
+											<div id="colorSquare" style="width: 50px; height: 50px; margin-top: 10px;"></div>
+											<div id="originalImage" style="margin-top: 20px;"></div>
+												
+											</body>
 											
 								</div>
-								<body>
-									<input type="file" id="imageInput" accept="image/*">
-									<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
-									<div id="result"></div>
-									<div id="colorBar" style="width: 20px; height: 200px; margin-top: 10px; background: linear-gradient(to bottom, white, #ffffff, #000000, black);"></div>		
 								<div class="card-body">
 									<div class="container">
 										<span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
@@ -123,6 +128,7 @@
 								</div>								
 							</div>
 						</div>
+						
 					</div>
 					<div class="row">	
 						<div class="col-lg-12">
@@ -226,8 +232,6 @@
 											<img src="{{url_for('static', filename='img/lab/biuret2.png')}}" id ="biuret_a3" onerror="this.onerror=null; this.src=''"onclick="takePicture('biuret_a3');">
 										</div>
 									</div>
-										
-								</div>								
 							</div>
 						</div>
 					</div>	
@@ -249,69 +253,9 @@
 				</div>	
 			</div>
 		</div>
-	</div> -->
+	</div>																		
 </body> 
 
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/lab.js')}}"></script>
 </html>
-
-<!--Código para tomar la foto y el analísis
-	<body>
-		<input type="file" id="imageInput" accept="image/*">
-		<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
-		<div id="result"></div>
-		<div id="colorBar" style="width: 20px; height: 200px; margin-top: 10px; background: linear-gradient(to bottom, white, #ffffff, #000000, black);"></div>
-
-		<script>
-			document.getElementById('imageInput').addEventListener('change', handleImage);
-
-			function handleImage(event) {
-				const imageInput = event.target;
-				const canvas = document.getElementById('canvas');
-				const resultElement = document.getElementById('result');
-				const colorBar = document.getElementById('colorBar');
-				const context = canvas.getContext('2d');
-
-				const file = imageInput.files[0];
-				const reader = new FileReader();
-
-				reader.onload = function (e) {
-					const img = new Image();
-					img.src = e.target.result;
-
-					img.onload = function () {
-						context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-						// Obtener los datos de píxeles
-						const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-						const pixels = imageData.data;
-
-						// Calcular el color promedio
-						let totalRed = 0;
-						let totalGreen = 0;
-						let totalBlue = 0;
-
-						for (let i = 0; i < pixels.length; i += 4) {
-							totalRed += pixels[i];
-							totalGreen += pixels[i + 1];
-							totalBlue += pixels[i + 2];
-						}
-
-						const totalPixels = pixels.length / 4;
-						const averageRed = Math.round(totalRed / totalPixels);
-						const averageGreen = Math.round(totalGreen / totalPixels);
-						const averageBlue = Math.round(totalBlue / totalPixels);
-
-						// Para mostrar el resultado
-						resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
-
-						// Para ctualizar la barra de colores
-						colorBar.style.background = `linear-gradient(to bottom, white, rgb(${averageRed}, ${averageGreen}, ${averageBlue}), black)`;
-					};
-				};
-
-				reader.readAsDataURL(file);
-			}
-		</script>
-	</body> -->

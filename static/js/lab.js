@@ -60,10 +60,67 @@ $.get("get_img", function(data, status){
   });
 }
 
-function expand(imgs) {
+function handleimage(imgs) {
+  
+    document.getElementById('imageInput').addEventListener('change', handleImage);
     var expandImg = document.getElementById("expandedImg");
     var imgText = document.getElementById("imgtext");
     expandImg.src = imgs.src;
     imgText.innerHTML = imgs.alt;
     expandImg.parentElement.style.display = "block";
-} 
+
+    function handleImage(event) {
+      const imageInput = event.target;
+      const canvas = document.getElementById('canvas');
+      const resultElement = document.getElementById('result');
+      const colorBar = document.getElementById('colorBar');
+      const context = canvas.getContext('2d');
+
+      const file = imageInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const img = new Image();
+        img.src = e.target.result;
+
+        img.onload = function () {
+          context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          // Obtener los datos de píxeles
+          const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+          const pixels = imageData.data;
+
+          // Calcular el color promedio
+          let totalRed = 0;
+          let totalGreen = 0;
+          let totalBlue = 0;
+
+          for (let i = 0; i < pixels.length; i += 4) {
+            totalRed += pixels[i];
+            totalGreen += pixels[i + 1];
+            totalBlue += pixels[i + 2];
+          }
+
+          const totalPixels = pixels.length / 4;
+          const averageRed = Math.round(totalRed / totalPixels);
+          const averageGreen = Math.round(totalGreen / totalPixels);
+          const averageBlue = Math.round(totalBlue / totalPixels);
+
+          // Para mostrar el resultado en código rgb
+          resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
+
+          // Cuadro del color promedio
+          colorSquare.style.background = `rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
+
+          // Barra de colores
+          colorBar.style.background = `linear-gradient(to bottom, white, rgb(${averageRed}, ${averageGreen}, ${averageBlue}), black)`;
+
+          // Mostrar la imagen original al lado
+          const originalImage = new Image();
+          originalImage.src = e.target.result;
+          originalImageContainer.innerHTML = '';
+          originalImageContainer.appendChild(originalImage);
+        };
+      };
+
+      reader.readAsDataURL(file); } }
