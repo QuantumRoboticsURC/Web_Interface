@@ -53,7 +53,7 @@ function botonClick() {
 
 var statusPublisher = new ROSLIB.Topic({
     ros: ros,
-    name: '/status_topic',
+    name: '/target_type',
     messageType: 'std_msgs/Int32'
 });
 
