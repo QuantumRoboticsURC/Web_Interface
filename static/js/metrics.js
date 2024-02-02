@@ -48,10 +48,12 @@ window.onload = function () {
     listener2.subscribe(function(message) {
           var angular = message.angular.z;
           var linear = message.linear.x;
+          var lineary = message.linear.y;
           document.getElementById("VeloAngular").innerHTML=(angular * 100).toFixed(2) + ' %';
           document.getElementById("VeloLinear").innerHTML=(linear * 100).toFixed(2) + ' %';
-          document.getElementById("leftTrac").innerHTML=((angular+linear)*303).toFixed(2) + ' RPM';
-          document.getElementById("rigthTrac").innerHTML=Math.abs((-angular+linear)*303).toFixed(2) + ' RPM';
+          document.getElementById("VeloLineary").innerHTML=(lineary * 100).toFixed(2) + ' %';
+          //document.getElementById("leftTrac").innerHTML=((angular+linear)*303).toFixed(2) + ' RPM';
+          //document.getElementById("rigthTrac").innerHTML=Math.abs((-angular+linear)*303).toFixed(2) + ' RPM';
     });
 }
 
@@ -75,67 +77,4 @@ function publish_coordinates(){
   
   coordinates.publish(message);
   console.log("hola")
-}
-var antenna_on = new ROSLIB.Service({
-  ros : ros,
-  name : '/camera_antenna/start_capture',
-  serviceType : 'std_srvs/Empty'
-  });
-var antenna_off = new ROSLIB.Service({
-  ros : ros,
-  name : '/camera_antenna/stop_capture',
-  serviceType : 'std_srvs/Empty'
-  });
-var centrifuge_on = new ROSLIB.Service({
-  ros : ros,
-  name : '/zed2i/zed_node/start_remote_stream',
-  serviceType : 'std_srvs/Empty'
-  });
-var centrifuge_off = new ROSLIB.Service({
-  ros : ros,
-  name : '/zed2i/zed_node/stop_remote_stream',
-  serviceType : 'std_srvs/Empty'
-  });
-var arm_on = new ROSLIB.Service({
-  ros : ros,
-  name : '/camera_arm/start_capture',
-  serviceType : 'std_srvs/Empty'
-  });
-var arm_off = new ROSLIB.Service({
-  ros : ros,
-  name : '/camera_arm/stop_capture',
-  serviceType : 'std_srvs/Empty'
-  });
-function Camera_on_off(cam,status){
-  switch(cam){
-      case(1):
-          if (status){
-              var request = new ROSLIB.ServiceRequest({});
-              antenna_on.callService(request,function(){console.log("on")});
-              
-          } else{
-              var request2 = new ROSLIB.ServiceRequest({});
-              antenna_off.callService(request2,function(){console.log("off")});
-              
-          }
-          break;
-      case(2):
-          if (status){
-              var request3 = new ROSLIB.ServiceRequest({});
-              centrifuge_on.callService(request3,function(){console.log("on")});    
-          } else{
-              var request4 = new ROSLIB.ServiceRequest({});
-              centrifuge_off.callService(request4,function(){console.log("off")});
-          }
-          break;
-      case(3):
-          if (status){
-              var request5 = new ROSLIB.ServiceRequest({});
-              arm_on.callService(request5,function(){console.log("on")});    
-          } else{
-              var request6 = new ROSLIB.ServiceRequest({});
-              arm_off.callService(request6,function(){console.log("off")});
-          }
-          break;
-  }
 }
