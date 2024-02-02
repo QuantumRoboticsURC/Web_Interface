@@ -24,7 +24,7 @@ function activate_simpledrive(activation){
 
     if (_config.is_WebVideo){
         var zed_topic = _config.topic_Zed_Camera;
-        var zed_src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + zed_topic + "&type=ros_compressed";
+        var zed_src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + zed_topic + "&type=mjpeg";
         document.getElementById("Zed_Camera").src = zed_src; 
 
         var usb_topic = _config.topic_USB_Camera;
@@ -33,13 +33,8 @@ function activate_simpledrive(activation){
     } else {
         var listener = new ROSLIB.Topic({
             ros : ros,
-<<<<<<< HEAD
             name : _config.topic_Zed_Camera + '/compressed image',
             messageType : 'sensor_msgs/CompressedImage'
-=======
-            name : '/image_raw',
-            messageType : 'sensor_msgs/msg/Image'
->>>>>>> be226964413cf3285416a1f2245afbaa8af1ed3e
           });
         
         listener.subscribe(function(message) {
