@@ -106,20 +106,17 @@ function handleimage(imgs) {
           const averageGreen = Math.round(totalGreen / totalPixels);
           const averageBlue = Math.round(totalBlue / totalPixels);
 
-          // Para mostrar el resultado en código rgb
-          resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
+         // Para mostrar el resultado
+         resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
 
-          // Cuadro del color promedio
-          colorSquare.style.background = `rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
+         // Actualizar el cuadro del color promedio
+         colorSquare.style.background = `rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
 
-          // Barra de colores
-          colorBar.style.background = `linear-gradient(to bottom, white, rgb(${averageRed}, ${averageGreen}, ${averageBlue}), black)`;
+         // Para actualizar la barra de colores
+         colorBar.style.background = `linear-gradient(to bottom, white, rgb(${averageRed}, ${averageGreen}, ${averageBlue}), black)`;
 
-          // Mostrar la imagen original al lado
-          const originalImage = new Image();
-          originalImage.src = e.target.result;
-          originalImageContainer.innerHTML = '';
-          originalImageContainer.appendChild(originalImage);
+         // Mostrar la imagen seleccionada al lado
+         selectedImageContainer.innerHTML = `<img src="${e.target.result}" alt="Selected Image">`;
         };
       };
 
