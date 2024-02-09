@@ -144,6 +144,13 @@ var cameraA = new ROSLIB.Topic({
     queue_size: 1   
 });
 
+var emergency = new ROSLIB.Topic({
+    ros : ros,
+    name : 'arm_teleop/emergency',
+    messageType : 'std_msgs/Bool',
+    queue_size: 10
+});
+
 //Initial values
 var gripper_apertur = 60;   //0 y 60
 var values_map = {
@@ -157,14 +164,14 @@ var values_map = {
     joint9: 45
 };
 var l1 = 0;
-var l2 = 2.6;
-var l3 = 2.6;
-var l4 = .9;
+var l2 = 3.5;
+var l3 = 5.5;
+var l4 = 1.7;
 
 //Limits
 var limits_map = {
-    q1:[-95,90],
-    q2:[20,161],
+    q1:[-90,90],
+    q2:[0,160],
     q3:[-165.4,0],
     q4:[-135,90],
     joint5:[-90,90], 
@@ -174,7 +181,7 @@ var limits_map = {
 
 var angles_map={
     q1:0,
-    q2:161,
+    q2:0,
     q3:-165.4,
     q4:0
 };
@@ -216,16 +223,16 @@ function predefinedPosition(position){
     State[1]=position;
 
     if (position === "HOME"){
-        x = .15;
+        x = 2.25;
         y =  0;
-        z =  .74;
+        z =  1.02;
         phi = 0;
         
     } 
     else if(position === "INTERMEDIATE"){
-        x = 0;
+        x = 2;
         y = 0;
-        z = 2.78;
+        z = 4.28;
         phi = 0;
         
     }
@@ -251,9 +258,9 @@ function predefinedPosition(position){
         
     }
     else if (position === "STORAGE"){
-        x = .134;
+        x = 2.25;
         y =  0;
-        z =  .75;
+        z = 1.02;
         phi = 90;
         
     }
@@ -556,6 +563,11 @@ function rotate(data){
     angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
     values_map.joint2 = self.angles_map.q1;
     getTxt();
+}
+
+function Emergency(data){
+    console.log(data)
+    emergency.publish(true);
 }
 
 //Buttons related to inverse kinematics
