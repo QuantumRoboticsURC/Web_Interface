@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com -->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../static/css/style2.css">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+	<title>Quantum Robotics Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+		name='viewport' />
+
+	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
+	<link rel="shortcut icon" href="#">
+
+	<script src="{{url_for('static', filename='js/config.js')}}"></script>
+	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+</head>
+
+<body>
+  <nav class="sidebar close">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img src="../static/img/QLogo.png" alt="">
+        </span>
+
+        <div class="text logo-text">
+          <span class="name">Quantum</span>
+          <span class="profession">Robotics</span>
+        </div>
+      </div>
+
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+      <div class="menu">
+
+        
+
+        <ul class="menu-links">
+          <li class="nav-link">
+            <a href="metrics">
+              <i class='bx bx-bar-chart-alt-2 icon'></i>
+              <span class="text nav-text">Metrics</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="/">
+              <i class='bx bx-grid-alt icon'></i>
+              <span class="text nav-text">Control</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="arm">
+              <i class='bx bx-bot icon'></i>
+              <span class="text nav-text">Arm</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="lab">
+              <i class='bx bx-atom icon'></i>
+              <span class="text nav-text">Laboratory</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="strat_profile">
+              <i class='bx bx-palette icon'></i>
+              <span class="text nav-text">Stratigraphic Profile</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="coordinates">
+              <i class='bx bx-map-alt icon'></i>
+              <span class="text nav-text">Autonomous Navigation</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+      </div>
+    </div>
+
+  </nav>
+
+
+
+
+  <section class="home">
+    <div class="navbar">
+      <img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26" style="margin-top: 1.3%; margin-left: 2%;" >
+      <span style="margin-left: 2%;margin-top: 1.3%; margin-right: 50%;"> University Rover Challenge, June 2024.</span>
+
+      <div class="navbar-left navbar-form nav-search mr-md-3" style="margin-top: 1.2%; margin-left: 1.2%;">
+        <img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
+        <img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
+        <img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
+        <img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
+    </div>
+        
+    </div>
+
+
+      <div class="bloque">
+				<div class="container-fluid">
+					<h4 style="margin-top: 2%; margin-bottom: 2%;">Dashboard Nav</h4>
+					
+
+          <!--Tarjetas pequeñas-->
+          <div class= "card"  style="width: 25%; float:left; padding: 2%; margin-left: 0%;" >
+            <h4 style="margin-bottom: 4%;">Cameras</h4>
+              <div class="class body">
+                <div class="col-lg-6">
+                  <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('USB0');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;">USB0</button>
+					        <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('USB1');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem">USB1</button>
+					        <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('Zed');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white;border-radius: 1rem">Zed</button>
+              </div>	
+            </div>		
+          </div>
+
+          <div class= "card"  style="width: 25%; padding: 2%; margin-left: 1.2%; display: inline-block;" >
+            <h4 style="margin-bottom: 4%;">Simple Drive</h4>
+              <div class="class body">
+                <div class="col-lg-6">
+                <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="activate_simpledrive(true);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">ON
+                <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="activate_simpledrive(false);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white;border-radius: 1rem;">OFF
+              </div>	
+            </div>		
+          </div>
+
+
+          <div class="row">	
+            <!--Tarjeta grande càmara-->
+						<div class="col-lg-6" style="display: inline;">
+							<div class="card" style=" float: left; width: 100%; ">
+								<div class="card-header">
+									<h4 class="card-title">Camera 1</h4>
+									<p class="card-category">Zed</p>
+								</div>
+								<div class="card-body">
+									<div class="col-lg-6">
+										<img src ="" id="Zed_Camera" width="1080" height="720">
+									</div>
+								</div>	
+							</div>
+						</div>
+            
+						
+        
+        
+        
+			</div>
+    </div>
+</body>
+</section>
+
+
+
+
+
+<script src="{{url_for('static', filename='js/index.js')}}"></script>
+<script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
+
+  <script>
+    const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    })
+    searchBtn.addEventListener("click", () => {
+      sidebar.classList.remove("close");
+    })
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      if (body.classList.contains("dark")) {
+        modeText.innerText = "Light mode";
+      } else {
+        modeText.innerText = "Dark mode";
+      }
+    });
+  </script>
+
+</body>
+
+</html>
