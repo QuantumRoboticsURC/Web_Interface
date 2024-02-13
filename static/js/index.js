@@ -15,7 +15,7 @@ var simpledrive = new ROSLIB.Topic ({
 })
 function change_camera(camera){
     window.camara_topic = camera;
-
+    console.log(camara_topic);
 }
 function activate_simpledrive(activation){
   simpledrive.publish(new ROSLIB.Message({data:activation}));
