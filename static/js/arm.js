@@ -148,7 +148,7 @@ var emergency = new ROSLIB.Topic({
     ros : ros,
     name : 'arm_teleop/emergency',
     messageType : 'std_msgs/Bool',
-    queue_size: 10
+    queue_size: 1
 });
 
 //Initial values
@@ -164,7 +164,7 @@ var values_map = {
     joint9: 45
 };
 var l1 = 0;
-var l2 = 3.5;
+var l2 = 2.6;
 var l3 = 5.5;
 var l4 = 1.7;
 
@@ -567,7 +567,8 @@ function rotate(data){
 
 function Emergency(data){
     console.log(data)
-    emergency.publish(true);
+    var msn = new ROSLIB.Message({data:true})
+    emergency.publish(msn);
 }
 
 //Buttons related to inverse kinematics
