@@ -49,9 +49,10 @@ window.onload = function () {
           var angular = message.angular.z;
           var linear = message.linear.x;
           var lineary = message.linear.y;
-          document.getElementById("VeloAngular").innerHTML=(angular * 100).toFixed(2) + ' %';
-          document.getElementById("VeloLinear").innerHTML=(linear * 100).toFixed(2) + ' %';
-          document.getElementById("VeloLineary").innerHTML=(lineary * 100).toFixed(2) + ' %';
+          document.getElementById("VeloAngular").innerHTML=(angular);
+          document.getElementById("VeloLinearx").innerHTML=(linear);
+          document.getElementById("VeloLineary").innerHTML=(lineary);
+          document.getElementById("VeloLinear").innerHTML=(linear+lineary);
           //document.getElementById("leftTrac").innerHTML=((angular+linear)*303).toFixed(2) + ' RPM';
           //document.getElementById("rigthTrac").innerHTML=Math.abs((-angular+linear)*303).toFixed(2) + ' RPM';
     });
