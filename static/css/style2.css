@@ -331,3 +331,36 @@ body.dark .home .text {
 .urc-text{
     text-align: right;
 }
+
+#metrics-main-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 23%);
+  column-gap: 2.2%;
+}
+
+#armlab-main-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 48%);
+  column-gap: 2.2%;
+}
+
+@media screen and (max-width: 1200px) {
+  #metrics-main-grid {
+    grid-template-columns: repeat(3, 31%);
+  }
+}
+
+@media screen and (max-width: 990px) {
+  #metrics-main-grid {
+    grid-template-columns: repeat(2, 50%);
+  }
+  #bloque-metrics {
+    left: -2rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #metrics-main-grid {
+    grid-template-columns: repeat(1, 100%);
+  }
+}
