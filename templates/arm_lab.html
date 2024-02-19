@@ -304,7 +304,25 @@
 														</div>
 													</div>
 												</li>
-
+												<li class="list-group-item">
+													<div>
+														<div class="row">
+															<small class="text-muted">Servo Quinto: </small>
+															<div class="col-md-12">
+																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
+																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Right_Txt').value),6)">GO</button>
+																	<div class="input-group">
+																		<input id="Right_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
+																	</div>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="arm.moveServos(4,'-',parseInt(document.getElementById('Right_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="arm.moveServos(4,'+',parseInt(document.getElementById('Right_Txt').value))">&nbsp;+&nbsp;</button>
+																	
+																</div>
+															</div>
+														
+														</div>
+													</div>
+												</li>
 												<li class="list-group-item">
 													<div>
 														<div class="row">
