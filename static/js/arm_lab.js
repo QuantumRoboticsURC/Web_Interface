@@ -168,65 +168,67 @@ class ArmTeleop{
      my_map(in_min, in_max, out_min, out_max, x){ //map arduino
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
-        moveServos(servo_id,servo_dir,servo_step){
-           
-            switch(servo_id){
-                case 1:
-                    if(servo_dir=="+"){
-                        this.angles_map.q1+=servo_step;
-                    }
-                    else{
-                        this.angles_map.q1-=servo_step;
-                    }
-                    
-                    break;
-                case 2: 
-                    if(servo_dir=="+"){
-                        this.angles_map.q2+=servo_step;
-                    }
-                    else{
-                        this.angles_map.q2-=servo_step;
-                    }
-                    
-                    break;
-                case 3:
-                        if(servo_dir=="+"){
-                            this.angles_map.q3+=servo_step;
-                        }
-                        else{
-                            this.angles_map.q3-=servo_step;
-                        }
-                        
-                    break;
-                case 4:
-                    if(servo_dir=="+"){
-                        this.angles_map.q4+=servo_step;
-                        //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
-                    }
-                    else{
-                        this.angles_map.q4-=servo_step;
-                        //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
-                    }
-                    
-                    break;
-                case 5:
-                    if(servo_dir=="+"){
-                        this.angles_map.q5+=servo_step;
-                        //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
-                    }
-                    else{
-                        this.angles_map.q5-=servo_step;
-                        //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
-                    }
-            }
-            getTxt();
-        }
+
     }
 let arm = new ArmTeleop();
 
 var l2=3.5;
 var l3=2.5;
 
+
+function moveServos(servo_id,servo_dir,servo_step){
+           
+    switch(servo_id){
+        case 1:
+            if(servo_dir=='+'){
+                arm.angles_map.q1+=servo_step;
+            }
+            else{
+                arm.angles_map.q1-=servo_step;
+            }
+            
+            break;
+        case 2: 
+            if(servo_dir=='+'){
+                arm.angles_map.q2+=servo_step;
+            }
+            else{
+                arm.angles_map.q2-=servo_step;
+            }
+            
+            break;
+        case 3:
+                if(servo_dir=='+'){
+                    arm.angles_map.q3+=servo_step;
+                }
+                else{
+                    arm.angles_map.q3-=servo_step;
+                }
+                
+            break;
+        case 4:
+            if(servo_dir=='+'){
+                arm.angles_map.q4+=servo_step;
+                //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
+            }
+            else{
+                arm.angles_map.q4-=servo_step;
+                //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
+            }
+            
+            break;
+        case 5:
+            if(servo_dir=='+'){
+                arm.angles_map.q5+=servo_step;
+                //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
+            }
+            else{
+                arm.angles_map.q5-=servo_step;
+                //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
+            }
+    }
+    getTxt();
+}
 
 function predefinedPosition(position){
     switch(position){
