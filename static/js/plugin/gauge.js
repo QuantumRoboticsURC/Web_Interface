@@ -15,14 +15,14 @@ var opts = {
   generateGradient: true,
   highDpiSupport: true,     // High resolution support
   staticZones: [
-      {strokeStyle: "#FF0000", min: 11, max: 11.3}, // Red from 100 to 60
-      {strokeStyle: "#FFDD00", min: 11.31, max: 11.7}, // Green
-      {strokeStyle: "#00FFFF", min: 11.71, max: 12.1}, // Yellow
-      {strokeStyle: "#00FF00", min: 12.11, max: 12.6}  // Red
+      {strokeStyle: "#FF0000", min: 20.0, max: 22.0}, // Red from 100 to 60
+      {strokeStyle: "#FFDD00", min: 22.0, max: 23.0}, // Green
+      {strokeStyle: "#00FFFF", min: 23.0, max: 24.0}, // Yellow
+      {strokeStyle: "#00FF00", min: 24.0, max: 25.2}  // Red
    ],
    staticLabels: {
     font: "10px sans-serif",  // Specifies font
-    labels: [11, 11.31, 11.71, 12.11, 12.6],  // Print labels at these values
+    labels: [21.0, 22.0, 23.0, 24.0, 25.2],  // Print labels at these values
     color: "#000000",  // Optional: Label text color
     fractionDigits: 2  // Optional: Numerical precision. 0=round off.
   },
@@ -30,18 +30,18 @@ var opts = {
 
 var target = document.getElementById('bateria'); // your canvas element
 var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-gauge.maxValue = 12.6; // set max gauge value
-gauge.minValue = 11;
-gauge.setMinValue(11);  // Prefer setter over gauge.minValue = 0
+gauge.maxValue = 25.2; // set max gauge value
+gauge.minValue = 20.0;
+gauge.setMinValue(21.0);  // Prefer setter over gauge.minValue = 0
 gauge.animationSpeed = 50; // set animation speed (32 is default value)
-gauge.set(11); // set actual value
+gauge.set(24.0); // set actual value
 const source = new EventSource("/data_bateria");
 const velocidad = new EventSource("/velocidad");
 
 source.onmessage = function (event) {
   const data = JSON.parse(event.data);
-  document.getElementById("labelBattery").innerHTML=(data.value).toFixed(2)+'  V';
-  gauge.set(data.value);
+  document.getElementById("labelBattery").innerHTML= 20; /*(data.value).toFixed(2)+'  V';*/
+  gauge.set(21);/*data.value);*/
 }
 
 /*velocidad.onmessage = function (event) {
