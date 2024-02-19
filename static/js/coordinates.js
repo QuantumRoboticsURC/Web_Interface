@@ -15,7 +15,7 @@ ros = new ROSLIB.Ros({
 var coordinates = new ROSLIB.Topic({
   ros:ros,
   name:'ublox/gps_goal',
-  messageType: 'sensor_msgs/NavSatFix',
+  messageType: 'std_msgs/Float64MultiArray',
   queue_size:1
 })
 
@@ -26,8 +26,7 @@ function publish_coordinates(){
   coordenadas=latitud+","+longitudl;
   console.log(coordenadas);
   var message =new ROSLIB.Message({
-      latitude: parseFloat(latitud),
-      longitude: parseFloat(longitudl)
+      data: [parseFloat(latitud),parseFloat(longitudl)]
   })
   
   coordinates.publish(message);
@@ -42,6 +41,12 @@ function setStatus(status){
 	
 }
 
+var statusPublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/target_type',
+    messageType: 'std_msgs/Int8'
+});
+
 function botonClick() {
     console.log("Status jaja: " + goBottonStatus);
 
@@ -51,18 +56,6 @@ function botonClick() {
     statusPublisher.publish(statusMessage);
 }
 
-var statusPublisher = new ROSLIB.Topic({
-    ros: ros,
-    name: '/target_type',
-    messageType: 'std_msgs/Int32'
-});
 
 
-function getTxt(){
 
-	var status = 0;
-	
-	localStorage.setItem("Status", status);
-	document.getElementById("Status").innerHTML = goBottonStatus;
-
-}
