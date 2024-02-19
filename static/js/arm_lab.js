@@ -84,9 +84,7 @@ class ArmTeleop{
             q3:[285,462], //Cambio de límites
             q4: [0,150],
             q5: [0,173],
-            q6:[0,171],
-            q7:[-10,10],
-            q8:[0,180]
+            
         }
         this.angles_map={
             q1:0.0,
@@ -94,9 +92,6 @@ class ArmTeleop{
             q3:330,
             q4:150,
             q5:170,
-            q6:167,
-            q7:0,
-            q8:45
             
         }
         this.led = false;  
@@ -120,9 +115,7 @@ class ArmTeleop{
         this.angles_map.q3=qlimit(this.limits_map.q3,this.angles_map.q3)
         this.angles_map.q4=qlimit(this.limits_map.q4,this.angles_map.q4)
         this.angles_map.q5=qlimit(this.limits_map.q5,this.angles_map.q5)
-        this.angles_map.q6=qlimit(this.limits_map.q6,this.angles_map.q6)
-        this.angles_map.q7=qlimit(this.limits_map.q7,this.angles_map.q7)
-        this.angles_map.q8=qlimit(this.limits_map.q8,this.angles_map.q8)
+        
         var message = new ROSLIB.Message({
             joint3:my_map(-162,0,330,492,this.angles_map.q3),
             servo1:this.angles_map.q4,
@@ -180,57 +173,54 @@ class ArmTeleop{
             switch(servo_id){
                 case 1:
                     if(servo_dir=="+"){
-                        this.angles_map.q4+=servo_step;
+                        this.angles_map.q1+=servo_step;
                     }
                     else{
-                        this.angles_map.q4-=servo_step;
+                        this.angles_map.q1-=servo_step;
                     }
                     
                     break;
                 case 2: 
                     if(servo_dir=="+"){
-                        this.angles_map.q5+=servo_step;
+                        this.angles_map.q2+=servo_step;
                     }
                     else{
-                        this.angles_map.q5-=servo_step;
+                        this.angles_map.q2-=servo_step;
                     }
                     
                     break;
                 case 3:
                         if(servo_dir=="+"){
-                            this.angles_map.q6+=servo_step;
+                            this.angles_map.q3+=servo_step;
                         }
                         else{
-                            this.angles_map.q6-=servo_step;
+                            this.angles_map.q3-=servo_step;
                         }
                         
                     break;
                 case 4:
                     if(servo_dir=="+"){
-                        this.angles_map.q3+=servo_step;
+                        this.angles_map.q4+=servo_step;
                         //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
                     }
                     else{
-                        this.angles_map.q3-=servo_step;
+                        this.angles_map.q4-=servo_step;
                         //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
                     }
                     
                     break;
                 case 5:
                     if(servo_dir=="+"){
-                        this.angles_map.q8+=servo_step;
+                        this.angles_map.q5+=servo_step;
                         //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
                     }
                     else{
-                        this.angles_map.q8-=servo_step;
+                        this.angles_map.q5-=servo_step;
                         //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
                     }
             }
             getTxt();
         }
-
-        
-
     }
 let arm = new ArmTeleop();
 
@@ -346,197 +336,28 @@ function change_led(data){
 function getTxt(){
     arm.publishMessages();
     
-    var Rotation = String(arm.angles_map.q1);
-    var YellowJacketAxis2 = String(arm.angles_map.q2);
-    var ServoAxis3 = String(arm.angles_map.q3);
-    var Servo_Left = String(arm.angles_map.q4);
-    var Servo_Center = String(arm.angles_map.q5);
-    var Servo_Right = String(arm.angles_map.q6);
-    var Centrifuge = String(arm.angles_map.q7);
-    localStorage.setItem("Rotation",Rotation);
-    localStorage.setItem("YJ",YellowJacketAxis2);
-    localStorage.setItem("Axis3",ServoAxis3);
-    localStorage.setItem("LS",Servo_Left);
-    localStorage.setItem("CS",Servo_Center);
-    localStorage.setItem("RS",Servo_Right);
-    localStorage.setItem("Centrifuge",Centrifuge);
-  
+    var Brazo_1 = String(arm.angles_map.q1);
+    var Garra_1 = String(arm.angles_map.q2);
+    var Brazo_2 = String(arm.angles_map.q3);
+    var Garra_2 = String(arm.angles_map.q4);
+    var Camera = String(arm.angles_map.q5);
+    
+    localStorage.setItem("Brazo 1", Brazo_1);
+    localStorage.setItem("Garra 1",Garra_1);
+    localStorage.setItem("Brazo 2", Brazo_2);
+    localStorage.setItem("Garra 2", Garra_2);
+    localStorage.setItem("Camera", Camera);
+    
 
-    document.getElementById("Rotation").innerHTML = Rotation;
-    document.getElementById("YJ").innerHTML = YellowJacketAxis2;
-    document.getElementById("Axis3").innerHTML = ServoAxis3;
-    document.getElementById("LS").innerHTML = Servo_Left;
-    document.getElementById("CS").innerHTML = Servo_Center;
-    document.getElementById("RS").innerHTML = Servo_Right;
-    document.getElementById("Centrifuge").innerHTML = Centrifuge;
+    document.getElementById("Brazo 1").innerHTML = Brazo_1;
+    document.getElementById("Garra 1").innerHTML = Garra_1;
+    document.getElementById("Brazo 2").innerHTML = Brazo_2;
+    document.getElementById("Garra 2").innerHTML = Garra_2;
+    document.getElementById("Camera").innerHTML = Camera;
    
-    arm_interface(arm.angles_map.q2,arm.angles_map.q3);
 }
 function rad2deg(radians){return radians * (180/math.pi);}
 function deg2rad(degrees){return degrees * (math.pi/180);}
 function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
- function arm_interface(q2,q3){    
-	//Transformación a coordenadas rectangulares
-    let acum = deg2rad(q2);
-	let x2=l2*math.cos(acum);
-	let y2=l2*math.sin(acum);
-    var q3n=my_map(285,462,-177,0,q3);
- 
-    console.log(q3n)
-    acum+=deg2rad(q3n);
-	let x3=x2+l3*math.cos(acum);
-	let y3=y2+l3*math.sin(acum);    
-	//Gráfica
-	var armData={
-  		labels:[],//x label
-  		datasets:[{
-    		//Joint 2
-    			label:"joint 2",//legend
-    			data:[
-      				{x:0,y:0},
-      				{x:x2,y:y2}
-    			],
-    			lineTension: 0, //linea recta
-    			fill: false, //rellenar debajo de la linea
-    			borderColor:'blue',//color de línea
-    			backgroundColor:'transparent',//color de fondo
-    			pointBorderColor:'blue',//apariencia de los puntos
-    			pointBackgroundColor: 'blue',
-    			pointRadius:2,
-    			pointStyle:'rectRounded',
-    			showLine: true
-  		},
-  		{
-    		//Joint 3
-    			label:"joint 3",//legend
-    			data:[
-      				{x:x2,y:y2},
-      				{x:x3,y:y3}
-    			],
-    			lineTension: 0, //linea recta
-    			fill: false, //rellenar debajo de la linea
-    			borderColor:'red',//color de línea
-    			backgroundColor:'transparent',//color de fondo
-    			pointBorderColor:'red',//apariencia de los puntos
-    			pointBackgroundColor: 'red',
-    			pointRadius:2,
-    			pointStyle:'rectRounded',
-    			showLine: true
-  		}]
-	}
-	var chartOptions = {
-  		legend:{
-    			display:false //Ocultar labels
-  		},
-  		scales:{
-    			xAxes:[{
-      				ticks:{
-        				beginAtZero:true,
-        				min:-6,
-        				max:6
-      				}
-    			}],
-    			yAxes:[{
-      				ticks:{
-        				beginAtZero:true,
-        				min:-6,
-                        max:6                        
-      				}
-    			}]
-  		},    
-        animation: {
-            duration: 0
-        }
-	};
-	new Chart("Arm_Graphic",{
-  		type: "scatter",
-  		data: armData,
-  		options: chartOptions
-	});
-}
-
-coordenates = new ROSLIB.Topic({
-    ros:ros,
-    name:'ublox/gps_goal',
-    messageType: 'sensor_msgs/NavSatFix',
-    queue_size:1
-})
-
-function publish_coordanates(){
-    latitud=document.getElementById('Latitud_Txt').value;
-    longitudl=document.getElementById('Longitud_Txt').value;
-    console.log(latitud);
-    coordenadas=latitud+","+longitudl;
-    console.log(coordenadas);
-    var message =new ROSLIB.Message({
-        latitude: parseFloat(latitud),
-        longitude: parseFloat(longitudl)
-    })
-    coordenates.publish(message);
-}
-var antenna_on = new ROSLIB.Service({
-    ros : ros,
-    name : '/camera_antenna/start_capture',
-    serviceType : 'std_srvs/Empty'
-    });
-var antenna_off = new ROSLIB.Service({
-    ros : ros,
-    name : '/camera_antenna/stop_capture',
-    serviceType : 'std_srvs/Empty'
-    });
-var centrifuge_on = new ROSLIB.Service({
-    ros : ros,
-    name : '/zedm/zed_node/start_remote_stream',
-    serviceType : 'std_srvs/Empty'
-    });
-var centrifuge_off = new ROSLIB.Service({
-    ros : ros,
-    name : '/zedm/zed_node/stop_remote_stream',
-    serviceType : 'std_srvs/Empty'
-    });
-var arm_on = new ROSLIB.Service({
-    ros : ros,
-    name : '/camera_arm/start_capture',
-    serviceType : 'std_srvs/Empty'
-    });
-var arm_off = new ROSLIB.Service({
-    ros : ros,
-    name : '/camera_arm/stop_capture',
-    serviceType : 'std_srvs/Empty'
-    });
-function Camera_on_off(cam,status){
-    switch(cam){
-        case(1):
-            if (status){
-                var request = new ROSLIB.ServiceRequest({});
-                antenna_on.callService(request,function(){console.log("on")});
-                
-            } else{
-                var request2 = new ROSLIB.ServiceRequest({});
-                antenna_off.callService(request2,function(){console.log("off")});
-                
-            }
-            break;
-        case(2):
-            if (status){
-                var request3 = new ROSLIB.ServiceRequest({});
-                centrifuge_on.callService(request3,function(){console.log("on")});    
-            } else{
-                var request4 = new ROSLIB.ServiceRequest({});
-                centrifuge_off.callService(request4,function(){console.log("off")});
-            }
-            break;
-        case(3):
-            if (status){
-                var request5 = new ROSLIB.ServiceRequest({});
-                arm_on.callService(request5,function(){console.log("on")});    
-            } else{
-                var request6 = new ROSLIB.ServiceRequest({});
-                arm_off.callService(request6,function(){console.log("off")});
-            }
-            break;
-    }
 }

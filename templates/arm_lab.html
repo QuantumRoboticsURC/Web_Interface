@@ -62,76 +62,13 @@
 			<div class="content">
 				<div class="container-fluid">
 					<h4 class="page-title">Dashboard Metrics</h4>
-					<div class="row">
-						
+					<div class="row">						
 					</div>
 					<div class="row">	
 						<div class="col-lg-7">
 							<div class="">
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">Lab</h4>
+								<div class="card">	
 									</div>
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item">
-												<div>
-													<div class="row">
-														<small class="text-muted">Centrifuge</small>
-														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(0.09)">Slow</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(.7)">Fast</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(-0.09)">Slow Negativo</button> 													 																
-														</div>
-														
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item ">
-												<div>
-													<div class="row">
-														<small class="text-muted">Left Servo</small>
-														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="go(150,4);getTxt();" style="margin-bottom: 25px;">Close</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="go(0,4);getTxt();" style="margin-bottom: 25px;">Open</button>																
-														</div>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item ">
-												<div>
-													<div class="row">
-														<small class="text-muted">Center Servo</small>
-														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="go(170,5);getTxt();" style="margin-bottom: 25px;">Close</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="go(0,5);getTxt();" style="margin-bottom: 25px;">Open</button>
-													</div>
-												</div>
-											</li>
-											<li class="list-group-item ">
-												<div>
-													<div class="row">
-														<small class="text-muted">Right Servo</small>
-														<div class="col-md-12">
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="go(170,6);getTxt();" style="margin-bottom: 25px;">Close</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="go(0,6);getTxt();" style="margin-bottom: 25px;">Open</button>
-														</div>
-													</div>
-												</div>
-											</li>
-										</ul>
-										<div class="card LAB">
-											<div class="card-header">
-												<h4 class="card-title">Arm Graphic</h4>
-											</div>
-											<div class="card-body">
-												<div class="chart-circle mt-4 mb-3" style="width:300px;height:300px;text-align:center;">
-													<canvas id="Arm_Graphic" style="width:100%;height:100%;margin: 0 auto;"></canvas>											
-												</div>
-											</div>		
-																	
-										</div>
-									</div>
-							
 								</div>
 								<div class="card">
 									<div class="card-header">
@@ -143,8 +80,6 @@
 										</div>
 									</div>								
 								</div>
-
-						
 						</div>
 						<div class="col-lg-5">
 							<div class="card control">
@@ -166,7 +101,7 @@
 														</div>
 														<hr>
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('SECONDINT');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA;";">Second Intermediate</button>
+															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('SECONDINT');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA;">Second Intermediate</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('SERVOSTEP');getTxt();" style="margin-bottom: 25px;">Servo Step</button>
 															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('LEFT');getTxt();" style="margin-bottom: 25px;">Left Servo</button>
 															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('CENTER');getTxt();" style="margin-bottom: 25px;">Center Servo</button>      
@@ -178,13 +113,11 @@
 											<!--Labels of actual position-->
 											<div class="card">
 												<div class="card-body" >
-													<p>Rotation: <label  type="text" id="Rotation"></label></p>
-													<p>Yellow Jacket Axis 2: <label  type="text" id="YJ"></label></p>
-													<p>Servo Axis 3: <label  type="text" id="Axis3"></label></p>
-													<p>Left Servo: <label  type="text" id="LS"></label></p>
-													<p>Center Sevo: <label  type="text" id="CS"></label></p>
-													<p>Right Servo <label  type="text" id="RS"></label></p>
-													<p>Centrifuge <label  type="text" id="Centrifuge"></label></p>
+													<p>Brazo 1: <label  type="text" id="Brazo 1"></label></p>
+													<p>Garra 1: <label  type="text" id="Garra 1"></label></p>
+													<p>Brazo 2: <label  type="text" id="Brazo 2"></label></p>
+													<p>Garra 2: <label  type="text" id="Garra 2"></label></p>
+													<p>Camera: <label  type="text" id="Camera"></label></p>
 													<p>Led Signal:<label  type="text" id="LED"></label></p>
 												</div>
 											</div>
@@ -195,7 +128,7 @@
 												<li class="list-group-item">
 													<div >
 														<div class="row">
-															<small class="text-muted">Rotation</small>
+															<small class="text-muted">Brazo 1</small>
 															<div class="col-md-12">
 																
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
@@ -204,9 +137,8 @@
 																		<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('X_Txt').value),1)">GO</button>	
 																		<input id="X_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="move_rotation(parseFloat(document.getElementById('X_Txt').value), -1)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="move_rotation(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(1, -1, document.getElementById('X_Txt').value)">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(1, 1, document.getElementById('X_Txt'))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -216,15 +148,15 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Yellow Jacket Axis 2</small>
+															<small class="text-muted">Garra 1</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
 																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Y_Txt').value),2)">GO</button>																
 																	<div class="input-group">
 																		<input id="Y_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="move_yellow(parseFloat(document.getElementById('Y_Txt').value),-1)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="move_yellow(parseFloat(document.getElementById('Y_Txt').value),1)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(2, -1, document.getElementById('X_Txt'))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(2, 1, document.getElementById('X_Txt'))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -234,15 +166,15 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Servo Axis 3:</small>
+															<small class="text-muted">Brazo 2:</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
 																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Axis3_Txt').value),3)">GO</button>
 																	<div class="input-group">
 																		<input id="Axis3_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="arm.moveServos(4,'-',parseInt(document.getElementById('Axis3_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="arm.moveServos(4,'+',parseInt(document.getElementById('Axis3_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(3, -1, document.getElementById('X_Txt'))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(3, 1, document.getElementById('X_Txt'))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -252,77 +184,21 @@
 												<li class="list-group-item">
 													<div>
 														<div class="row">
-															<small class="text-muted">Servo Left:</small>
+															<small class="text-muted">Garra 2:</small>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
 																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Left_Txt').value),4)">GO</button>
 																	<div class="input-group">
 																		<input id="Left_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="arm.moveServos(1,'-',parseInt(document.getElementById('Left_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="arm.moveServos(1,'+',parseInt(document.getElementById('Left_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(4, -1, document.getElementById('X_Txt'))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(4, 1, document.getElementById('X_Txt'))">&nbsp;+&nbsp;</button>
 															</div>
 															</div>
 														</div>
 													</div>
 												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<small class="text-muted">Servo Center: </small>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Center_Txt').value),5)">GO</button>
-																	<div class="input-group">
-																		<input id="Center_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="arm.moveServos(2,'-',parseInt(document.getElementById('Center_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="arm.moveServos(2,'+',parseInt(document.getElementById('Center_Txt').value))">&nbsp;+&nbsp;</button>
-																	
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<small class="text-muted">Servo Right: </small>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Right_Txt').value),6)">GO</button>
-																	<div class="input-group">
-																		<input id="Right_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="arm.moveServos(3,'-',parseInt(document.getElementById('Right_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="arm.moveServos(3,'+',parseInt(document.getElementById('Right_Txt').value))">&nbsp;+&nbsp;</button>
-																	
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<small class="text-muted">Servo Quinto: </small>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Right_Txt').value),6)">GO</button>
-																	<div class="input-group">
-																		<input id="Right_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="arm.moveServos(4,'-',parseInt(document.getElementById('Right_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="arm.moveServos(4,'+',parseInt(document.getElementById('Right_Txt').value))">&nbsp;+&nbsp;</button>
-																	
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
+											
 												<li class="list-group-item">
 													<div>
 														<div class="row">
@@ -332,8 +208,8 @@
 																	<div class="input-group">
 																		<input id="Camera_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="arm.moveServos(5,'-',parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="arm.moveServos(5,'+',parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(5, -1, document.getElementById('X_Txt'))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(5, 1, document.getElementById('X_Txt'))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														</div>
@@ -347,57 +223,6 @@
 															<div class="col-md-12">
 																<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="change_led(true)">ON</button>
 																<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary "onclick="change_led(false)" onmousedown="movePrismatic(-1)">OFF</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Coordanates</medium>
-															<div class="col-md-12">				
-																<medium class="text-muted">Latitud</medium>
-																<div class="input-group">
-																	<input id="Latitud_Txt" type="text" class="form-control-go" value="38.39865" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																</div>
-																<medium class="text-muted">Longitud</medium>
-																<div class="input-group">
-																	<input id="Longitud_Txt" type="text" class="form-control-go" value="-110.79025 " aria-label="Input group example" aria-describedby="btnGroupAddon">
-																</div>
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="publish_coordanates()">&nbsp;Publish Goal&nbsp;</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Camera antenna</medium>
-															<div class="col-md-12">				
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(1,0)">&nbsp;Off&nbsp;</button>
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(1,1)">&nbsp;0n&nbsp;</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Camera centrifuge</medium>
-															<div class="col-md-12">				
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(2,0)">&nbsp;Off&nbsp;</button>
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(2,1)">&nbsp;0n&nbsp;</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Camera arm</medium>
-															<div class="col-md-12">				
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(3,0)">&nbsp;Off&nbsp;</button>
-																<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="Camera_on_off(3,1)">&nbsp;0n&nbsp;</button> 																
 															</div>
 														</div>
 													</div>
