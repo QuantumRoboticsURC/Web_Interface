@@ -9,59 +9,53 @@ ros = new ROSLIB.Ros({
 class ArmTeleop{
     constructor(){
         
-        this.arm = new ROSLIB.Topic({
-            ros: ros,
-            name: 'arm_lab',
-            messageType : 'servos/arm_lab',
-            queue_size:1
-        });
         this.servoright = new ROSLIB.Topic({
             ros:ros,
             name:'servo_right',
-            messageType: 'std_msgs/Int32',
+            messageType: 'std_msgs/Int8',
             queue_size:1
         });
         this.servocenter = new ROSLIB.Topic({
             ros:ros,
             name:'servo_center',
-            messageType: 'std_msgs/Int32',
+            messageType: 'std_msgs/Int8',
             queue_size:1
         });
         this.servoleft = new ROSLIB.Topic({
             ros:ros,
-            name:'servo_left',
-            messageType: 'std_msgs/Int32',
+            name:'/ciencias/garra2',
+            messageType: 'std_msgs/Int8',
             queue_size:1
         });
         this.joint3 = new ROSLIB.Topic({
             ros:ros,
-            name:'arm_lab/joint3',
-            messageType: 'std_msgs/Int32',
+            name:'ciencias/brazo2',
+            messageType: 'std_msgs/Int8',
             queue_size:1
         });
         this.joint1= new ROSLIB.Topic({
             ros: ros,
             
-            name: 'arm_teleop/joint1',
-            messageType: 'std_msgs/Float64',
+            name: 'ciencias/brazo1',
+            messageType: 'std_msgs/Int8',
             queue_size:1
         })
         this.joint2= new ROSLIB.Topic({
             ros: ros,
-            name: 'arm_teleop/joint2_lab',
-            messageType: 'std_msgs/Float64',
+            name: 'ciencias/garra1',
+            messageType: 'std_msgs/Int8',
             queue_size:1
         });
         this.camera = new ROSLIB.Topic({
             ros : ros,
             name : 'arm_teleop/cam',
-            messageType : 'std_msgs/Int32',
+            messageType : 'std_msgs/Int8',
             queue_size: 1   
         });
         this.centrifugadora= new ROSLIB.Topic({
             ros : ros,
             name : 'centrifuge',
-            messageType : 'std_msgs/Float64',
+            messageType : 'std_msgs/Int8',
             queue_size: 1  
         });
         //Leds
@@ -73,25 +67,25 @@ class ArmTeleop{
         });
         this.cameraA = new ROSLIB.Topic({
             ros : ros,
-            name : 'arm_teleop/camA',
-            messageType : 'std_msgs/Int32',
+            name : 'ciencias/cam',
+            messageType : 'std_msgs/Int8',
             queue_size: 1   
         });
 
         this.limits_map = {
             q1:[0,180],
-            q2:[0,150],
-            q3:[285,462], //Cambio de límites
-            q4: [0,150],
-            q5: [0,173],
+            q2:[0,180],
+            q3:[0,180], //Cambio de límites
+            q4: [0,180],
+            q5: [0,180],
             
         }
         this.angles_map={
             q1:0.0,
-            q2:90.0,
-            q3:330,
-            q4:150,
-            q5:170,
+            q2:0.0,
+            q3:0.0,
+            q4:0.0,
+            q5:0.0,
             
         }
         this.led = false;  

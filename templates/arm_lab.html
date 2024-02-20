@@ -137,8 +137,8 @@
 																		<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('X_Txt').value),1)">GO</button>	
 																		<input id="X_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(1, '-', 1)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(1, '+', 1)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(1, '-', parseFloat(document.getElementById('X_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(1, '+', parseFloat(document.getElementById('X_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -155,8 +155,8 @@
 																	<div class="input-group">
 																		<input id="Y_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(2, '-', 1)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(2, '+', 1)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(2, '-', parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(2, '+', parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -173,8 +173,8 @@
 																	<div class="input-group">
 																		<input id="Axis3_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(3, '-', 1)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(3, '+', 1)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(3, '-', parseFloat(document.getElementById('Axis3_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(3, '+', parseFloat(document.getElementById('Axis3_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														
@@ -191,8 +191,8 @@
 																	<div class="input-group">
 																		<input id="Left_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(4, '-', 1)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(4, '+', 1)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(4, '-', parseFloat(document.getElementById('Left_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(4, '+', parseFloat(document.getElementById('Left_Txt').value))">&nbsp;+&nbsp;</button>
 															</div>
 															</div>
 														</div>
@@ -208,8 +208,8 @@
 																	<div class="input-group">
 																		<input id="Camera_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(5, '-', 1)">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(5, '+', 1)">&nbsp;+&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(5, '-', parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(5, '+', parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
 																</div>
 															</div>
 														</div>
