@@ -37,13 +37,25 @@ def arm():
 def coordinates():
     return render_template('coordinates.html') 
 
-@application.route('/strat_profile')
-def strat_profile():
-    return render_template('strat_profile.html') 
- 
 @application.route('/')
 def index2():
     return render_template('index2.html')
+
+# cambios rosa laboratory, stratigraphic
+@application.route('/laboratory')
+def laboratory():
+    return render_template('laboratory.html')
+
+@application.route('/stratigraphic')
+def stratigraphic():
+    return render_template('strat_profile.html')
+
+@application.route('/rocks2')
+def rocks2():
+    return render_template('rocks2.html')
+
+
+
 
 
 

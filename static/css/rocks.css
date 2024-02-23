@@ -1,0 +1,68 @@
+.sidebar .close{
+    background: #fff;
+    
+
+}
+
+.main-panel{
+    position:absolute;
+    margin-left: 25px;
+    margin-top: 10px;
+    background: none;
+    width: 95%;
+}
+
+.content{
+    padding:0%;
+}
+
+.card{
+    padding: 30px;
+}
+  
+@media screen and (max-width: 1330px){
+    .navbar{
+        span{
+            font-size: 14px;
+            margin-right: 10%;
+        }
+    }
+    .main-panel{
+        margin-top: 70px;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .main-panel{
+        width: 93%;
+    }
+    
+    .main-panel{
+        margin-top: 50px;
+    }
+}
+
+@media screen and (max-width: 95px){
+    .main-panel{
+        width: 90%;
+    }
+    
+}
+
+@media screen and (max-width: 775px){
+    .main-panel{
+        width: 86%;
+    }
+    
+}
+
+@media screen and (max-width: 600px){
+    .main-panel{
+        width: 380px;
+        font-size: 20px;
+    }
+    .card{
+        padding: 10px;
+    }
+    
+}
