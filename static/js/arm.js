@@ -99,7 +99,7 @@ var pub_q3 = new ROSLIB.Topic({
 });
 var pub_q4 = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/joint4',
+    name : 'arm_teleop/joint5',
     messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
@@ -112,21 +112,21 @@ var pub_q_string = new ROSLIB.Topic({
 //gripper rotation
 var joint5 = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/joint5',
+    name : 'arm_teleop/servo_gripper',
     messageType : 'std_msgs/Int32',
     queue_size: 1   
 });
 //lineal 
 var gripper = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/gripper',
+    name : 'arm_teleop/prism',
     messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
 //lineal 
 var lineal = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/prism',
+    name : 'arm_teleop/gripper',
     messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
@@ -170,9 +170,9 @@ var l4 = 1.7;
 
 //Limits
 var limits_map = {
-    q1:[-90,90],
+    q1:[-45,45],
     q2:[0,160],
-    q3:[-165.4,0],
+    q3:[-140,0],
     q4:[-135,90],
     joint5:[-90,90], 
     camera:[0,180],
@@ -190,109 +190,109 @@ var limit_chassis = 1.1; //11cm del chasis
 
 // Predefined positions
 var State = ["HOME","HOME"]
-function predefinedPosition(position){
+// function predefinedPosition(position){
 
-    var x = values_map.joint1;
-    var y = values_map.joint2;
-    var z = values_map.joint3;
-    var phi = values_map.joint4;
+//     var x = values_map.joint1;
+//     var y = values_map.joint2;
+//     var z = values_map.joint3;
+//     var phi = values_map.joint4;
     
-    /*if(position === "INTERMEDIATE"){
-        x = 0;
-        y = -5;
-        z = 3.677;
-        phi = 0;
-    }else if (position === "FLOOR"){
-        x = 3.28
-        y = -5
-        z = -.1
-        phi = 0
-    }else if (position === "STORAGE"){
-        x = .134;
-        y =  -5;
-        z =  .75;
-        phi = 90
-    }else if (position === "BOX"){
-        x = 0;
-        y = -94;
-        z = 3.68
-        phi = 0;
-    }*/
-    before = State[0];
-    State[0] = State[1];
-    State[1]=position;
+//     /*if(position === "INTERMEDIATE"){
+//         x = 0;
+//         y = -5;
+//         z = 3.677;
+//         phi = 0;
+//     }else if (position === "FLOOR"){
+//         x = 3.28
+//         y = -5
+//         z = -.1
+//         phi = 0
+//     }else if (position === "STORAGE"){
+//         x = .134;
+//         y =  -5;
+//         z =  .75;
+//         phi = 90
+//     }else if (position === "BOX"){
+//         x = 0;
+//         y = -94;
+//         z = 3.68
+//         phi = 0;
+//     }*/
+//     before = State[0];
+//     State[0] = State[1];
+//     State[1]=position;
 
-    if (position === "HOME"){
-        x = 2.25;
-        y =  0;
-        z =  1.02;
-        phi = 0;
+//     if (position === "HOME"){
+//         x = 2.25;
+//         y =  0;
+//         z =  1.02;
+//         phi = 0;
         
-    } 
-    else if(position === "INTERMEDIATE"){
-        x = 2;
-        y = 0;
-        z = 4.28;
-        phi = 0;
+//     } 
+//     else if(position === "INTERMEDIATE"){
+//         x = 2;
+//         y = 0;
+//         z = 4.28;
+//         phi = 0;
         
-    }
-    else if(position === "PULL"){
-        x = 3.33;
-        y = 0;
-        z = 3.35;
-        phi = 0;
+//     }
+//     else if(position === "PULL"){
+//         x = 3.33;
+//         y = 0;
+//         z = 3.35;
+//         phi = 0;
         
-    }
-    else if (position === "WRITE"){
-        x = 3.33;
-        y = 0;
-        z = 1.35;
-        phi = 0;  
+//     }
+//     else if (position === "WRITE"){
+//         x = 3.33;
+//         y = 0;
+//         z = 1.35;
+//         phi = 0;  
            
-    }
-    else if (position === "FLOOR"){
-        x = 3.28;
-        y = 0;
-        z = -.1;
-        phi = -90;
+//     }
+//     else if (position === "FLOOR"){
+//         x = 3.28;
+//         y = 0;
+//         z = -.1;
+//         phi = -90;
         
-    }
-    else if (position === "STORAGE"){
-        x = 2.25;
-        y =  0;
-        z = 1.02;
-        phi = 90;
+//     }
+//     else if (position === "STORAGE"){
+//         x = 2.25;
+//         y =  0;
+//         z = 1.02;
+//         phi = 90;
         
-    }
-    else if (position === "VERTICAL"){
-        x = 0;
-        y = 0;
-        z =  5.2;
-        phi = 90;
+//     }
+//     else if (position === "VERTICAL"){
+//         x = 0;
+//         y = 0;
+//         z =  5.2;
+//         phi = 90;
         
-    }
-    else if (position === "BOX"){
-        x=0.35;
-        y=80;
-        z=2.24;
-        phi=-20;
-    }
-    else if (position === "FlOOR2"){
-        x=2.48;
-        y=0;
-        z=-1.2;
-        phi=6.17;
-    }
+//     }
+//     else if (position === "BOX"){
+//         x=0.35;
+//         y=80;
+//         z=2.24;
+//         phi=-20;
+//     }
+//     else if (position === "FlOOR2"){
+//         x=2.48;
+//         y=0;
+//         z=-1.2;
+//         phi=6.17;
+//     }
 
-    values_map.joint1 = x;
-    values_map.joint2 = y;
-    values_map.joint3 = z;
-    values_map.joint4 = phi;
-    //StateMachine(position);
-    //return position;
-    inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-    go_rotation(values_map.joint2);
-    }
+//     values_map.joint1 = x;
+//     values_map.joint2 = y;
+//     values_map.joint3 = z;
+//     values_map.joint4 = phi;
+//     //StateMachine(position);
+//     //return position;
+//     inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+//     go_rotation(values_map.joint2);
+//     }
 function StateMachine(position){
         
     const secondaryButton1 = document.getElementById('secondary button1');
@@ -434,8 +434,8 @@ function publish_angles(){
 
     var msn_q1 = new ROSLIB.Message({data : q1});
     var msn_q2 = new ROSLIB.Message({data : q2});
-    var msn_q3 = new ROSLIB.Message({data : q3});
-    var msn_q4 = new ROSLIB.Message({data : q4});
+    var msn_q3 = new ROSLIB.Message({data : -q3});
+    var msn_q4 = new ROSLIB.Message({data : -q4});
     var msn_txt = new ROSLIB.Message({data : txt});
 
     pub_q1.publish(msn_q1);
@@ -490,7 +490,7 @@ function go(data){
     var key = "joint5";
     values_map[key]=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,146,326,data))});
+    var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,80,260,data))});
     joint5.publish(msn);
     document.getElementById("Gripper_Txt").value = 5;
     getTxt();
@@ -502,7 +502,7 @@ function griperRotation(data){
     values_map[key]+=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
     var msn = new ROSLIB.Message({
-        data : parseInt(my_map(-90,90,146,326,values_map[key]))
+        data : parseInt(my_map(-90,90,80,260,values_map[key]))
     });
     joint5.publish(msn); 
     getTxt();
@@ -801,15 +801,15 @@ function arm_interface(q2,q3,q4){
     			xAxes:[{
       				ticks:{
         				beginAtZero:true,
-        				min:-6,
-        				max:6
+        				min:-10,
+        				max:10
       				}
     			}],
     			yAxes:[{
       				ticks:{
         				beginAtZero:true,
-        				min:-6,
-                        max:6                        
+        				min:-10,
+                        max:10                        
       				}
     			}]
   		},    
