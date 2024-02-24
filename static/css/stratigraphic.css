@@ -1,0 +1,80 @@
+
+/* Cambios al main-panel lab */
+.main-panel{
+    position:absolute;
+    margin-left: 25px;
+    margin-top: 90px;
+    background: none;
+    width: 95%;
+}
+
+.content{
+    padding:0%;
+}
+
+.card{
+    padding: 30px;
+}
+  
+/* .color-columns {
+    display: flex;
+  }
+  
+  .column {
+    flex: 1;
+    margin: 10px; 
+    margin: 20px;
+    text-align: center;
+  }
+  
+#result{
+    text-align: center;
+} */
+
+  
+@media screen and (max-width: 1330px){
+    .navbar{
+        span{
+            font-size: 14px;
+            margin-right: 10%;
+        }
+    }
+    .main-panel{
+        margin-top: 70px;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .main-panel{
+        width: 93%;
+    }
+    
+    .main-panel{
+        margin-top: 50px;
+    }
+}
+
+@media screen and (max-width: 95px){
+    .main-panel{
+        width: 90%;
+    }
+    
+}
+
+@media screen and (max-width: 775px){
+    .main-panel{
+        width: 86%;
+    }
+    
+}
+
+@media screen and (max-width: 600px){
+    .main-panel{
+        width: 380px;
+        font-size: 20px;
+    }
+    .card{
+        padding: 10px;
+    }
+    
+}

@@ -60,6 +60,21 @@ $.get("get_img", function(data, status){
   });
 }
 
+//Lab
+
+function rgbToHex(red, green, blue) {
+  const toHex = (c) => {
+    const hex = c.toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  };
+
+  const hexRed = toHex(red);
+  const hexGreen = toHex(green);
+  const hexBlue = toHex(blue);
+
+  return `#${hexRed}${hexGreen}${hexBlue}`;
+}
+
 function handleimage(imgs) {
   
     document.getElementById('imageInput').addEventListener('change', handleImage);
@@ -73,7 +88,7 @@ function handleimage(imgs) {
       const imageInput = event.target;
       const canvas = document.getElementById('canvas');
       const resultElement = document.getElementById('result');
-      const colorBar = document.getElementById('colorBar');
+      // const colorBar = document.getElementById('colorBar');
       const context = canvas.getContext('2d');
 
       const file = imageInput.files[0];
@@ -106,17 +121,33 @@ function handleimage(imgs) {
           const averageGreen = Math.round(totalGreen / totalPixels);
           const averageBlue = Math.round(totalBlue / totalPixels);
 
+          // Parte del nuevo color displayer
+          let colorIndicator = document.getElementById('color-indicator');
+          const colorPicker = new iro.ColorPicker("#color-picker", {
+              width: 180, color: "#fff", interactive: false
+          });
+
+          const averageHexColor = rgbToHex(averageRed, averageGreen, averageBlue);
+          colorPicker.color.set(averageHexColor);
+          colorIndicator.style.backgroundColor = averageHexColor;
+
          // Para mostrar el resultado
-         resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
+         resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})  HEX: ${averageHexColor}`; 
 
          // Actualizar el cuadro del color promedio
          colorSquare.style.background = `rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
 
          // Para actualizar la barra de colores
-         colorBar.style.background = `linear-gradient(to bottom, white, rgb(${averageRed}, ${averageGreen}, ${averageBlue}), black)`;
-
+        //  colorBar.style.background = `linear-gradient(to bottom, white, rgb(${averageRed}, ${averageGreen}, ${averageBlue}), black)`;
+        //  colorBar.style.display = 'none';
          // Mostrar la imagen seleccionada al lado
-         selectedImageContainer.innerHTML = `<img src="${e.target.result}" alt="Selected Image">`;
+        //  selectedImageContainer.innerHTML = `<img src="${e.target.result}" alt="Selected Image">`;
+         const imgElement = document.createElement('img');
+         imgElement.src = e.target.result;
+         imgElement.alt = 'Selected Image';
+         imgElement.style.width = '200px'; // Establecer el ancho deseado
+         selectedImageContainer.innerHTML = ''; // Limpiar contenido existente
+         selectedImageContainer.appendChild(imgElement);
         };
       };
 

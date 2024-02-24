@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html>
+<!-- Coding by CodingLab | www.codinglabweb.com -->
+<html lang="en">
 
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../static/css/style2.css">
+  <link rel="stylesheet" href="../static/css/rocks.css">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
 	<title>Quantum Robotics Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
 		name='viewport' />
-	<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+
 	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/laboratory.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/rocks.css')}}">
+	<link rel="shortcut icon" href="#">
 
-	<link rel="shortcut icon" href="/static/img/QLogo.png">
-
-	<script src="{{url_for('static', filename='js/config.js')}}"></script>
+  <script src="{{url_for('static', filename='js/config.js')}}"></script>
 	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="jquery.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="jquery.js"></script> 
 
 
     <!-- Datos de tabla -->
     <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/datatables.min.css">
     <script src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/datatables.min.js"></script>
 
-    
+        
 
     <!-- Hojas de estilo bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -30,58 +37,112 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    
 </head>
 
 <body>
-	<div class="wrapper">
-		<div class="main-header">
-			<div class="logo-header">
-				<a href="/" class="logo">
-					<img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
-					<small>Quantum Robotics</small>
-				</a>
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
-			</div>
+  <nav class="sidebar close">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img src="../static/img/QLogo.png" alt="">
+        </span>
 
-			<nav class="navbar navbar-header navbar-expand-lg">
-				<div class="container-fluid">
-					<div class="navbar-left navbar-form nav-search mr-md-3">
-						<img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
-						<img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
-						<img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
-						<img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
-					</div>
-					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-						<li class="nav-item dropdown hidden-caret">
-							<div class="nav-link dropdown-toggle">
-								University Rover Challenge, June 2022.
-								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
-							</div>
-						</li>
-					</ul>
-				</div>
-			</nav>
-		</div>
-		
-
-        <div clas="sidebar">
-            {% include "sb.html"%}
+        <div class="text logo-text">
+          <span class="name">Quantum</span>
+          <span class="profession">Robotics</span>
         </div>
+      </div>
 
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+        <div class="menu">
+
+          <ul class="menu-links">
+            <li class="nav-link">
+              <a href="metrics">
+                <i class='bx bx-bar-chart-alt-2 icon'></i>
+                <span class="text nav-text">Metrics</span>
+              </a>
+            </li>
+  
+            <li class="nav-link">
+              <a href="/">
+                <i class='bx bx-grid-alt icon'></i>
+                <span class="text nav-text">Control</span>
+              </a>
+            </li>
+  
+            <li class="nav-link">
+              <a href="arm">
+                <i class='bx bx-bot icon'></i>
+                <span class="text nav-text">Arm</span>
+              </a>
+            </li>
+  
+            <!-- cambie el lab -->
+            <li class="nav-link">
+              <a href="laboratory">
+                <i class='bx bx-atom icon'></i>
+                <span class="text nav-text">Laboratory</span>
+              </a>
+            </li>
+            <!-- cambie stratigraphic -->
+            <li class="nav-link">
+              <a href="stratigraphic">
+                <i class='bx bx-palette icon'></i>
+                <span class="text nav-text">Stratigraphic Profile</span>
+              </a>
+            </li>
+  
+            <li class="nav-link">
+              <a href="coordinates">
+                <i class='bx bx-map-alt icon'></i>
+                <span class="text nav-text">Autonomous Navigation</span>
+              </a>
+            </li>
+  
+            <!-- Cambio rosa para ver laboratory, stratigraphic-->
+            <li class="nav-link">
+              <a href="rocks2">
+                <i class='bx bx-bar-chart-alt-2 icon'></i>
+                <span class="text nav-text">Rocks2</span>
+              </a>
+            </li>
+  
+          </ul>
+        </div>
+  
+        </div>
+    </div>
+
+  </nav>
+
+  <section class="home">
+    <!-- Diseño barra -->
+    <div class="navbar">
+      <!-- Bandera -->
+      <img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26" style="margin-top: 1.3%; margin-left: 2%;" >
+      <!-- Texto -->
+      <span style="margin-left: 2%;margin-top: 1.3%; margin-right: 50%;"> University Rover Challenge, June 2024.</span>
+      <!-- Patrocinadores -->
+      <div class="navbar-left navbar-form nav-search mr-md-3" style="margin-top: 1.2%; margin-left: 1.2%;">
+            <img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
+            <img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
+            <img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
+            <img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
+        </div>
+    </div>
+
+    
 		<div class="main-panel">
 			<div class="content">
 				<div class="container-fluid">
 					<h4 class="page-title">Rocks classification</h4>
-					
-
 
                     <div class="container-fluid p-5">
-
 
                         <div class="table-responsive" id="mydatatable-container" style="background-color: white; border-radius: 1.5rem; padding: 3%;">
                             
@@ -473,17 +534,41 @@
                                 }
                             });
                         });
-                        </script>
-            
+                      </script>
 
-							
+
 				</div>	
 			</div>
 		</div>
-	</div>
-</body>
 
-<script src="{{url_for('static', filename='js/index.js')}}"></script>
+  </div>
+</body>
+    
+
+<script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/stratigraphic.js')}}"></script>
+  <script>
+    const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    })
+    searchBtn.addEventListener("click", () => {
+      sidebar.classList.remove("close");
+    })
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      if (body.classList.contains("dark")) {
+        modeText.innerText = "Light mode";
+      } else {
+        modeText.innerText = "Dark mode";
+      }
+    });
+  </script>
 
 </html>
