@@ -31,11 +31,18 @@ def metrics():
 
 @application.route('/arm')
 def arm():
-    return render_template('arm.html')    
+    return render_template('arm.html')
+
+@application.route('/arm2')
+def arm2():
+    return render_template('arm2.html')        
 
 @application.route('/coordinates')
 def coordinates():
     return render_template('coordinates.html') 
+@application.route('/coordinates2')
+def coordinates2():
+    return render_template('coordinates2.html') 
 
 @application.route('/')
 def index2():
