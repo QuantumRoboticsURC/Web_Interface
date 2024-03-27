@@ -125,11 +125,10 @@
 			<div class="container-fluid">
 				<h4 style="margin-top: 2%; margin-bottom: 2%;">Dashboard Metrics</h4>
 
-				<div id="armlab-main-grid" style="display: grid; grid-template-columns: 40% 57%; width: 100%;">
+				<div id="armlab-main-grid">
 
 					<!--Tarjetas pequeñas-->
 					<!--<div class= "card"  style="width: 25%; float:left; padding: 2%; margin-left: 0%;" >-->
-
 
 					<div class="card" style="height: 37rem;">
 						<div class="card-header">
@@ -207,19 +206,18 @@
 						</div>
 					</div>
 
-					<div class="col-lg-5" style="grid-column: 2;">
+					<div class="col-lg-5" id="sec-col-armlab">
 						<div class="card control">
 							<div class="card-header">
 								<h4 class="card-title">Control</h4>
 							</div>
-							<div
-								style="display: grid; grid-template-columns: 14rem 64%; column-gap: 2rem; width: 100%;">
+							<div id="control-grid">
 								<div class="col-md-6" style="margin-left: 1rem; margin-top: 1rem;">
 									<div class="card">
-										<div style="display: grid; grid-template-columns: 13rem;">
+										<div id="b-c-prev">
 											<!--Predefined positions-->
-											<div class="col-md-12">
-												<div class="btn-group-vertical modal-dialog-centered btn-sm">
+											<div class="col-md-12" id="b-c-1-2">
+												<div class="btn-group-vertical modal-dialog-centered btn-sm" id="b-c-1">
 													<button type="button" class="btn btn-secondary btn-look-one"
 														onclick="predefinedPosition('INTERMEDIATE');getTxt();"
 														style="font-size: 0.8rem; margin-top: 1rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Intermediate</button>
@@ -236,7 +234,7 @@
 														Intermediate</button>
 												</div>
 												<hr>
-												<div class="btn-group-vertical modal-dialog-centered btn-sm">
+												<div class="btn-group-vertical modal-dialog-centered btn-sm botones-control" id="b-c-2">
 													<button type="button" class="btn btn-secondary btn-look-two"
 														onclick="predefinedPosition('SECONDINT');getTxt();"
 														style="font-size: 0.8rem; width: 11rem; background-color:#094a79; border-color:#F4F4F4; color: white; border-radius: 1rem;">Second
@@ -277,7 +275,7 @@
 								</div>
 
 
-								<div class="col-md-6" style="margin-top: 1rem;">
+								<div class="col-md-6" id="arm-lab-gos" style="margin-top: 1rem;">
 									<div class="card">
 										<div>
 											<div class="row" style="margin-top: 1rem;">
@@ -291,7 +289,7 @@
 																class="btn btn-secondary btn-look-value"
 																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
 																onclick="go(parseFloat(document.getElementById('X_Txt').value),1)">GO</button>
-															<input id="X_Txt" type="text" class="form-control" value="5"
+															<input id="X_Txt" type="text" class="form-control input-change" value="5"
 																aria-label="Input group example"
 																aria-describedby="btnGroupAddon" style="width: 50%;">
 															<button type="button"
@@ -318,7 +316,7 @@
 																class="btn btn-secondary btn-look-value"
 																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
 																onclick="go(parseFloat(document.getElementById('Y_Txt').value),2)">GO</button>
-															<input id="Y_Txt" type="text" class="form-control-go"
+															<input id="Y_Txt" type="text" class="form-control-go input-change"
 																value="5" aria-label="Input group example"
 																aria-describedby="btnGroupAddon" style="width: 50%;">
 															<button type="button"
@@ -345,7 +343,7 @@
 																class="btn btn-secondary btn-look-value"
 																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
 																onclick="go(parseFloat(document.getElementById('Axis3_Txt').value),3)">GO</button>
-															<input id="Axis3_Txt" type="text" class="form-control"
+															<input id="Axis3_Txt" type="text" class="form-control input-change"
 																value="5" aria-label="Input group example"
 																aria-describedby="btnGroupAddon" style="width: 50%;">
 															<button type="button"
@@ -371,7 +369,7 @@
 																class="btn btn-secondary btn-look-value"
 																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
 																onclick="go(parseFloat(document.getElementById('Left_Txt').value),4)">GO</button>
-															<input id="Left_Txt" type="text" class="form-control-go"
+															<input id="Left_Txt" type="text" class="form-control-go input-change"
 																value="5" aria-label="Input group example"
 																aria-describedby="btnGroupAddon" style="width: 50%;">
 															<button type="button"
@@ -398,7 +396,7 @@
 																class="btn btn-secondary btn-look-value"
 																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
 																onclick="go(parseFloat(document.getElementById('Center_Txt').value),5)">GO</button>
-															<input id="Center_Txt" type="text" class="form-control-go"
+															<input id="Center_Txt" type="text" class="form-control-go input-change"
 																value="5" aria-label="Input group example"
 																aria-describedby="btnGroupAddon" style="width: 50%;">
 															<button type="button"
@@ -425,7 +423,7 @@
 																class="btn btn-secondary btn-look-value"
 																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
 																onclick="go(parseFloat(document.getElementById('Right_Txt').value),6)">GO</button>
-															<input id="Right_Txt" type="text" class="form-control-go"
+															<input id="Right_Txt" type="text" class="form-control-go input-change"
 																value="5" aria-label="Input group example"
 																aria-describedby="btnGroupAddon" style="width: 50%;">
 															<button type="button"
@@ -447,7 +445,7 @@
 														style="display: inline-block; width: 100%; text-align: center;"
 														aria-label="Basic example">
 														<div class="input-group">
-															<input id="Camera_Txt" type="text" class="form-control"
+															<input id="Camera_Txt" type="text" class="form-control input-change"
 																value="10" aria-label="Input group example"
 																style="width: 62%;" aria-describedby="btnGroupAddon">
 															<button type="button"
