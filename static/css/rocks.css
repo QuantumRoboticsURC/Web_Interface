@@ -1,7 +1,5 @@
-.sidebar .close{
-    background: #fff;
-    
-
+:root {
+    --body-color: #ffffff;
 }
 
 .main-panel{
@@ -11,6 +9,11 @@
     background: none;
     width: 95%;
 }
+
+.navbar{
+    margin-left: 45px;
+}
+
 
 .content{
     padding:0%;
@@ -66,3 +69,4 @@
     }
     
 }
+
