@@ -11,9 +11,7 @@ from flask import Flask, Response, render_template, jsonify
 application = Flask(__name__, static_url_path='/static')
 random.seed()
 
-@application.route('/')
-def index():
-    return render_template('index.html')
+
 
 @application.route('/lab')
 def ciencias():
@@ -33,15 +31,35 @@ def metrics():
 
 @application.route('/arm')
 def arm():
-    return render_template('arm.html')    
+    return render_template('arm.html')
+
+@application.route('/arm2')
+def arm2():
+    return render_template('arm2.html')        
 
 @application.route('/coordinates')
 def coordinates():
     return render_template('coordinates.html') 
+@application.route('/coordinates2')
+def coordinates2():
+    return render_template('coordinates2.html') 
 
-@application.route('/strat_profile')
-def strat_profile():
-    return render_template('strat_profile.html')  
+@application.route('/')
+def index2():
+    return render_template('index2.html')
+
+# cambios rosa laboratory, stratigraphic
+@application.route('/laboratory')
+def laboratory():
+    return render_template('laboratory.html')
+
+@application.route('/stratigraphic')
+def stratigraphic():
+    return render_template('strat_profile.html')
+
+
+
+
 
 
 

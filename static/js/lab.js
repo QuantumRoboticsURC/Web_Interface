@@ -60,45 +60,64 @@ $.get("get_img", function(data, status){
   });
 }
 
-function handleimage(imgs) {
-  
-    document.getElementById('imageInput').addEventListener('change', handleImage);
-    var expandImg = document.getElementById("expandedImg");
-    var imgText = document.getElementById("imgtext");
-    expandImg.src = imgs.src;
-    imgText.innerHTML = imgs.alt;
-    expandImg.parentElement.style.display = "block";
+//Lab
 
-    function handleImage(event) {
-      const imageInput = event.target;
-      const canvas = document.getElementById('canvas');
-      const resultElement = document.getElementById('result');
-      const colorBar = document.getElementById('colorBar');
-      const context = canvas.getContext('2d');
+function rgbToHex(red, green, blue) {
+  const toHex = (c) => {
+    const hex = c.toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  };
 
-      const file = imageInput.files[0];
-      const reader = new FileReader();
+  const hexRed = toHex(red);
+  const hexGreen = toHex(green);
+  const hexBlue = toHex(blue);
 
-      reader.onload = function (e) {
-        const img = new Image();
-        img.src = e.target.result;
+  return `#${hexRed}${hexGreen}${hexBlue}`;
+}
 
-        img.onload = function () {
+window.onload = function() {
+  // Asigna el evento a todos los input files con clase "image-input"
+  const imageInputs = document.querySelectorAll('.image-input');
+  imageInputs.forEach(input => {
+      input.addEventListener('change', handleImage);
+  });
+};
+
+function handleImage(event) {
+  const imageInput = event.target;
+  const cardHeader = imageInput.closest('.card-header');
+  const canvas = cardHeader.querySelector('.canvas');
+  const resultElement = cardHeader.querySelector('.result');
+  const selectedImageContainer = cardHeader.querySelector('.selected-image-container');
+  const colorSquare = cardHeader.querySelector('.color-square');
+  const colorIndicator = cardHeader.querySelector('.color-indicator');
+  const colorPickerContainer = cardHeader.querySelector('.color-picker');
+
+  // Elimina el color-picker existente
+  colorPickerContainer.innerHTML = '';
+
+  const file = imageInput.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+      const img = new Image();
+      img.src = e.target.result;
+
+      img.onload = function () {
+          const context = canvas.getContext('2d');
           context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-          // Obtener los datos de píxeles
           const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
           const pixels = imageData.data;
 
-          // Calcular el color promedio
           let totalRed = 0;
           let totalGreen = 0;
           let totalBlue = 0;
 
           for (let i = 0; i < pixels.length; i += 4) {
-            totalRed += pixels[i];
-            totalGreen += pixels[i + 1];
-            totalBlue += pixels[i + 2];
+              totalRed += pixels[i];
+              totalGreen += pixels[i + 1];
+              totalBlue += pixels[i + 2];
           }
 
           const totalPixels = pixels.length / 4;
@@ -106,18 +125,26 @@ function handleimage(imgs) {
           const averageGreen = Math.round(totalGreen / totalPixels);
           const averageBlue = Math.round(totalBlue / totalPixels);
 
-         // Para mostrar el resultado
-         resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
+          // Crea un nuevo color-picker
+          const colorPicker = new iro.ColorPicker(colorPickerContainer, {
+              width: 180, color: "#fff", interactive: false
+          });
 
-         // Actualizar el cuadro del color promedio
-         colorSquare.style.background = `rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
+          const averageHexColor = rgbToHex(averageRed, averageGreen, averageBlue);
+          colorPicker.color.set(averageHexColor);
+          colorIndicator.style.backgroundColor = averageHexColor;
 
-         // Para actualizar la barra de colores
-         colorBar.style.background = `linear-gradient(to bottom, white, rgb(${averageRed}, ${averageGreen}, ${averageBlue}), black)`;
+          resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})  HEX: ${averageHexColor}`;
+          colorSquare.style.background = `rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
 
-         // Mostrar la imagen seleccionada al lado
-         selectedImageContainer.innerHTML = `<img src="${e.target.result}" alt="Selected Image">`;
-        };
+          const imgElement = document.createElement('img');
+          imgElement.src = e.target.result;
+          imgElement.alt = 'Selected Image';
+          imgElement.style.width = '200px';
+          selectedImageContainer.innerHTML = '';
+          selectedImageContainer.appendChild(imgElement);
       };
+  };
 
-      reader.readAsDataURL(file); } }
+  reader.readAsDataURL(file);
+}

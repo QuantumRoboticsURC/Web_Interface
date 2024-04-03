@@ -1,249 +1,573 @@
 <!DOCTYPE html>
-<html>
+<!-- Coding by CodingLab | www.codinglabweb.com -->
+<html lang="en">
 
-	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<title>Quantum Robotics Dashboard</title>
-		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
-			name='viewport' />
-		<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
-			<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
-			<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
-			<link rel="stylesheet" href="{{url_for('static', filename='css/leds.css')}}">
-			<link rel="shortcut icon" href="#">
-			<script src="{{url_for('static', filename='js/config.js')}}"></script>
-			<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
-			<script src="{{url_for('static', filename='js/plugin/math.js')}}"></script>
-			<script src="{{url_for('static', filename='js/plugin/Chart.min.js')}}"></script>
-			<script src="/static/js/plugin/Chart.js"> </script>
-			<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>-->
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="../static/css/style2.css">
+	<link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+	<title>Quantum Robotics Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+		name='viewport' />
+
+	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
+	<link rel="shortcut icon" href="#">
+
+	<script src="{{url_for('static', filename='js/config.js')}}"></script>
+	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+
+	<!--<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">-->
+
+	<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
+	<link rel="stylesheet" href="{{url_for('static', filename='css/leds.css')}}">
+
+	<script src="{{url_for('static', filename='js/plugin/math.js')}}"></script>
+	<script src="{{url_for('static', filename='js/plugin/Chart.min.js')}}"></script>
+	<script src="/static/js/plugin/Chart.js"> </script>
+</head>
 
 <body>
-	<div class="wrapper">
-		<div class="main-header">
-			<div class="logo-header">
-				<a href="/" class="logo">
-					<img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
-					<small>Quantum Robotics</small>
-				</a>
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
-			</div>
-			<nav class="navbar navbar-header navbar-expand-lg">
-				<div class="container-fluid">
-					<div class="navbar-left navbar-form nav-search mr-md-3">
-						<img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
-						<img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
-						<img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
-						<img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
-					</div>
-					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-						<li class="nav-item dropdown hidden-caret">
-							<div class="nav-link dropdown-toggle">
-								University Rover Challenge, June 2022.
-								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
-							</div>
-						</li>
+	<nav class="sidebar close">
+		<header>
+			<div class="image-text">
+				<span class="image">
+					<img src="../static/img/QLogo.png" alt="">
+				</span>
 
-					</ul>
+				<div class="text logo-text">
+					<span class="name">Quantum</span>
+					<span class="profession">Robotics</span>
 				</div>
-			</nav>
-		</div>
-		
-		<div clas="sidebar">
-            {% include "sb.html"%}
-        </div>
+			</div>
 
-		<div class="main-panel">
-			<div class="content">
-				<div class="container-fluid">
-					<h4 class="page-title">Dashboard Metrics</h4>
-					<div class="row">						
-					</div>
-					<div class="row">	
-						<div class="col-lg-7">
-							<div class="">
-								<div class="card">	
-									</div>
-								</div>
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">Arm Camera</h4>
-									</div>
-									<div class="card-body">
-										<div class="chart-circle mt-4 mb-3">
-											<img src = "" id="Arm_Camera" wigth="400" height="400" style="transform:rotate(0deg);">
-										</div>
-									</div>								
-								</div>
+			<i class='bx bx-chevron-right toggle'></i>
+		</header>
+
+		<div class="menu-bar">
+			<div class="menu">
+
+
+
+				<ul class="menu-links">
+					<li class="nav-link">
+						<a href="metrics">
+							<i class='bx bx-bar-chart-alt-2 icon'></i>
+							<span class="text nav-text">Metrics</span>
+						</a>
+					</li>
+
+					<li class="nav-link">
+						<a href="/">
+							<i class='bx bx-grid-alt icon'></i>
+							<span class="text nav-text">Control</span>
+						</a>
+					</li>
+
+					<li class="nav-link">
+						<a href="arm">
+							<i class='bx bx-bot icon'></i>
+							<span class="text nav-text">Arm</span>
+						</a>
+					</li>
+					<li class="nav-link">
+						<a href="arm_lab">
+						  <i class='bx bx-atom icon'></i>
+						  <span class="text nav-text">Laboratory Operation</span>
+						</a>
+					  </li>
+					<li class="nav-link">
+						<a href="lab">
+							<i class='bx bx-atom icon'></i>
+							<span class="text nav-text">Laboratory</span>
+						</a>
+					</li>
+
+					<li class="nav-link">
+						<a href="strat_profile">
+							<i class='bx bx-palette icon'></i>
+							<span class="text nav-text">Stratigraphic Profile</span>
+						</a>
+					</li>
+
+					<li class="nav-link">
+						<a href="coordinates">
+							<i class='bx bx-map-alt icon'></i>
+							<span class="text nav-text">Autonomous Navigation</span>
+						</a>
+					</li>
+
+				</ul>
+			</div>
+
+		</div>
+		</div>
+
+	</nav>
+
+
+
+	<section class="home">
+		<div class="navbar">
+			<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26"
+				style="margin-top: 1.3%; margin-left: 2%;">
+			<span style="margin-left: 2%;margin-top: 1.3%; margin-right: 50%;"> University Rover Challenge, June
+				2024.</span>
+
+			<div class="navbar-left navbar-form nav-search mr-md-3" style="margin-top: 1.2%; margin-left: 1.2%;">
+				<img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
+				<img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
+				<img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
+				<img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
+			</div>
+
+		</div>
+
+		<div class="bloque" id="bloque-armlab">
+			<div class="container-fluid">
+				<h4 style="margin-top: 2%; margin-bottom: 2%;">Dashboard Metrics</h4>
+
+				<div id="armlab-main-grid">
+
+					<!--Tarjetas pequeñas-->
+					<!--<div class= "card"  style="width: 25%; float:left; padding: 2%; margin-left: 0%;" >-->
+
+					<div class="card" style="height: 37rem;">
+						<div class="card-header">
+							<h4 class="card-title">Lab</h4>
 						</div>
-						<div class="col-lg-5">
-							<div class="card control">
-								<div class="card-header">
-									<h4 class="card-title">Control</h4>
+
+						<div style="display: grid; grid-template-columns: 100%;">
+							<div class="col-md-12"
+								style="display: grid; width: 100%; grid-template-columns: 100%; justify-self: center;">
+								<medium class="text-muted" style="margin-left: 2rem; margin-top: 2rem;">Centrifuge
+								</medium>
+								<div class="col-md-12" style="display: inline-block; text-align: center;">
+									<button type="button" class="btn btn-secondary btn-look-one"
+										style="margin-top: 1rem; width: 9rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+										onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(0.09)">Slow</button>
+									<button type="button" class="btn btn-secondary btn-look-two"
+										style="width: 9rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+										onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(.7)">Fast</button>
+									<button type="button" class="btn btn-secondary btn-look-two"
+										style="margin-bottom: 25px; width: 9rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+										onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(-0.09)">Slow
+										Negativo</button>
 								</div>
-								<div class="card-body">
-									<div class="chart-circle mt-4 mb-3">
-										<div class="col-md-6">
-											<div class="card">
-												<div>
-													<!--Predefined positions-->
-													<div class="col-md-12">
-														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px;">Intermediate</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px;">Home</button>
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('GROUND');getTxt();" style="margin-bottom: 25px;">Ground Extraction</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('GROUNDINTERMEDIATE');getTxt();" style="margin-bottom: 25px;">Ground Intermediate</button>
-														</div>
-														<hr>
-														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('SECONDINT');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA;">Second Intermediate</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('SERVOSTEP');getTxt();" style="margin-bottom: 25px;">Servo Step</button>
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('LEFT');getTxt();" style="margin-bottom: 25px;">Left Servo</button>
-															<button type="button" class="btn btn-secondary btn-look-two" onclick="predefinedPosition('CENTER');getTxt();" style="margin-bottom: 25px;">Center Servo</button>      
-															<button type="button" class="btn btn-secondary btn-look-one" onclick="predefinedPosition('RIGHT');getTxt();" style="margin-bottom: 25px;">Right Servo</button>                                                    
-														</div>
-													</div>
-												</div>
-										</div>
-											<!--Labels of actual position-->
-											<div class="card">
-												<div class="card-body" >
-													<p>Brazo 1: <label  type="text" id="Brazo 1"></label></p>
-													<p>Garra 1: <label  type="text" id="Garra 1"></label></p>
-													<p>Brazo 2: <label  type="text" id="Brazo 2"></label></p>
-													<p>Garra 2: <label  type="text" id="Garra 2"></label></p>
-													<p>Camera: <label  type="text" id="Camera"></label></p>
-													<p>Led Signal:<label  type="text" id="LED"></label></p>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="card">
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item">
-													<div >
-														<div class="row">
-															<small class="text-muted">Brazo 1</small>
-															<div class="col-md-12">
-																
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																																	
-																	<div class="input-group">
-																		<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('X_Txt').value),1)">GO</button>	
-																		<input id="X_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(1, '-', parseFloat(document.getElementById('X_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(1, '+', parseFloat(document.getElementById('X_Txt').value))">&nbsp;+&nbsp;</button>
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<small class="text-muted">Garra 1</small>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Y_Txt').value),2)">GO</button>																
-																	<div class="input-group">
-																		<input id="Y_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(2, '-', parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(2, '+', parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<small class="text-muted">Brazo 2:</small>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Axis3_Txt').value),3)">GO</button>
-																	<div class="input-group">
-																		<input id="Axis3_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(3, '-', parseFloat(document.getElementById('Axis3_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(3, '+', parseFloat(document.getElementById('Axis3_Txt').value))">&nbsp;+&nbsp;</button>
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<small class="text-muted">Garra 2:</small>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button type="button" class="btn btn-secondary btn-look-value" onclick="go(parseFloat(document.getElementById('Left_Txt').value),4)">GO</button>
-																	<div class="input-group">
-																		<input id="Left_Txt" type="text" class="form-control-go" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(4, '-', parseFloat(document.getElementById('Left_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(4, '+', parseFloat(document.getElementById('Left_Txt').value))">&nbsp;+&nbsp;</button>
-															</div>
-															</div>
-														</div>
-													</div>
-												</li>
-											
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<small class="text-muted">Camera</small>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
-																	<div class="input-group">
-																		<input id="Camera_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button type="button" class="btn btn-secondary btn-look-value-minus" onclick="moveServos(5, '-', parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button type="button" class="btn btn-secondary btn-look-value-plus" onclick="moveServos(5, '+', parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
-																</div>
-															</div>
-														</div>
-													</div>
-												</li>
-	
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Led Signal</medium>
-															<div class="col-md-12">
-																<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="change_led(true)">ON</button>
-																<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary "onclick="change_led(false)" onmousedown="movePrismatic(-1)">OFF</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
-											</li>
-											</ul>
-											</div>
-										</div>
-								
-									</div>
-								</div>								
+								<medium class="text-muted" style="margin-left: 2rem;">Left Servo</medium>
+								<div class="col-md-12" style="display: inline-block; text-align: center;">
+									<button type="button" class="btn btn-secondary btn-look-one"
+										onclick="go(150,4);getTxt();"
+										style="margin-top: 1rem; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Close</button>
+									<button type="button" class="btn btn-secondary btn-look-two"
+										onclick="go(0,4);getTxt();"
+										style="margin-bottom: 25px; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Open</button>
+								</div>
+								<medium class="text-muted" style="margin-left: 2rem;">Center Servo</medium>
+								<div class="col-md-12" style="display: inline-block; text-align: center;">
+									<button type="button" class="btn btn-secondary btn-look-one"
+										onclick="go(170,5);getTxt();"
+										style="margin-top: 1rem; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Close</button>
+									<button type="button" class="btn btn-secondary btn-look-two"
+										onclick="go(0,5);getTxt();"
+										style="margin-bottom: 25px;width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Open</button>
+								</div>
+								<medium class="text-muted" style="margin-left: 2rem;">Right Servo</medium>
+								<div class="col-md-12" style="display: inline-block; text-align: center;">
+									<button type="button" class="btn btn-secondary btn-look-one"
+										onclick="go(170,6);getTxt();"
+										style="margin-top: 1rem; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Close</button>
+									<button type="button" class="btn btn-secondary btn-look-two"
+										onclick="go(0,6);getTxt();"
+										style="margin-bottom: 25px; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Open</button>
+								</div>
 							</div>
 						</div>
 
-					
+						<div class="card LAB" style="margin-top: 2.5rem;">
+							<div class="card-header">
+								<h4 class="card-title">Arm Graphic</h4>
+							</div>
+							<div class="card-body">
+								<div class="chart-circle mt-4 mb-3" style="width:300px;height:300px;text-align:center;">
+									<canvas id="Arm_Graphic" style="width:100%;height:100%;margin: 0 auto;"></canvas>
+								</div>
+							</div>
+						</div>
 
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">Arm Camera</h4>
+							</div>
+							<div class="card-body">
+								<div class="chart-circle mt-4 mb-3">
+									<img src="" id="Arm_Camera" wigth="400" height="400"
+										style="transform:rotate(0deg);">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-5" id="sec-col-armlab">
+						<div class="card control">
+							<div class="card-header">
+								<h4 class="card-title">Control</h4>
+							</div>
+							<div id="control-grid">
+								<div class="col-md-6" style="margin-left: 1rem; margin-top: 1rem;">
+									<div class="card">
+										<div id="b-c-prev">
+											<!--Predefined positions-->
+											<div class="col-md-12" id="b-c-1-2">
+												<div class="btn-group-vertical modal-dialog-centered btn-sm" id="b-c-1">
+													<button type="button" class="btn btn-secondary btn-look-one"
+														onclick="predefinedPosition('INTERMEDIATE');getTxt();"
+														style="font-size: 0.8rem; margin-top: 1rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Intermediate</button>
+													<button type="button" class="btn btn-secondary btn-look-two"
+														onclick="predefinedPosition('HOME');getTxt();"
+														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Home</button>
+													<button type="button" class="btn btn-secondary btn-look-one"
+														onclick="predefinedPosition('GROUND');getTxt();"
+														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Ground
+														Extraction</button>
+													<button type="button" class="btn btn-secondary btn-look-two"
+														onclick="predefinedPosition('GROUNDINTERMEDIATE');getTxt();"
+														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Ground
+														Intermediate</button>
+												</div>
+												<hr>
+												<div class="btn-group-vertical modal-dialog-centered btn-sm botones-control" id="b-c-2">
+													<button type="button" class="btn btn-secondary btn-look-two"
+														onclick="predefinedPosition('SECONDINT');getTxt();"
+														style="font-size: 0.8rem; width: 11rem; background-color:#094a79; border-color:#F4F4F4; color: white; border-radius: 1rem;">Second
+														Intermediate</button>
+													<button type="button" class="btn btn-secondary btn-look-two"
+														onclick="predefinedPosition('SERVOSTEP');getTxt();"
+														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Servo
+														Step</button>
+													<button type="button" class="btn btn-secondary btn-look-one"
+														onclick="predefinedPosition('LEFT');getTxt();"
+														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Left
+														Servo</button>
+													<button type="button" class="btn btn-secondary btn-look-two"
+														onclick="predefinedPosition('CENTER');getTxt();"
+														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Center
+														Servo</button>
+													<button type="button" class="btn btn-secondary btn-look-one"
+														onclick="predefinedPosition('RIGHT');getTxt();"
+														style="font-size: 0.8rem; margin-bottom: 1rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Right
+														Servo</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--Labels of actual position-->
+									<div class="card">
+										<div class="card-body">
+											<p>Rotation: <label type="text" id="Rotation"></label></p>
+											<p>Yellow Jacket Axis 2: <label type="text" id="YJ"></label></p>
+											<p>Servo Axis 3: <label type="text" id="Axis3"></label></p>
+											<p>Left Servo: <label type="text" id="LS"></label></p>
+											<p>Center Sevo: <label type="text" id="CS"></label></p>
+											<p>Right Servo: <label type="text" id="RS"></label></p>
+											<p>Centrifuge: <label type="text" id="Centrifuge"></label></p>
+											<p>Led Signal:<label type="text" id="LED"></label></p>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-md-6" id="arm-lab-gos" style="margin-top: 1rem;">
+									<div class="card">
+										<div>
+											<div class="row" style="margin-top: 1rem;">
+												<small class="text-muted" style="margin-left: 2rem;">Rotation:</small>
+												<div class="col-md-12">
+													<div class="btn-group btn-sm" role="group"
+														aria-label="Basic example"
+														style="display: inline-block; width: 100%; text-align: center;">
+														<div class="input-group">
+															<button type="button"
+																class="btn btn-secondary btn-look-value"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="go(parseFloat(document.getElementById('X_Txt').value),1)">GO</button>
+															<input id="X_Txt" type="text" class="form-control input-change" value="5"
+																aria-label="Input group example"
+																aria-describedby="btnGroupAddon" style="width: 50%;">
+															<button type="button"
+																class="btn btn-secondary btn-look-value-minus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="move_rotation(parseFloat(document.getElementById('X_Txt').value), -1)">&nbsp;-&nbsp;</button>
+															<button type="button"
+																class="btn btn-secondary btn-look-value-plus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="move_rotation(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row" style="margin-top: 1rem;">
+												<small class="text-muted" style="margin-left: 2rem;">Yellow Jacket Axis
+													2:</small>
+												<div class="col-md-12">
+													<div class="btn-group btn-sm" role="group"
+														aria-label="Basic example"
+														style="display: inline-block; width: 100%; text-align: center;">
+														<div class="input-group">
+															<button type="button"
+																class="btn btn-secondary btn-look-value"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="go(parseFloat(document.getElementById('Y_Txt').value),2)">GO</button>
+															<input id="Y_Txt" type="text" class="form-control-go input-change"
+																value="5" aria-label="Input group example"
+																aria-describedby="btnGroupAddon" style="width: 50%;">
+															<button type="button"
+																class="btn btn-secondary btn-look-value-minus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="move_yellow(parseFloat(document.getElementById('Y_Txt').value),-1)">&nbsp;-&nbsp;</button>
+															<button type="button"
+																class="btn btn-secondary btn-look-value-plus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="move_yellow(parseFloat(document.getElementById('Y_Txt').value),1)">&nbsp;+&nbsp;</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row" style="margin-top: 1rem;">
+												<small class="text-muted" style="margin-left: 2rem;">Servo Axis
+													3:</small>
+												<div class="col-md-12">
+													<div class="btn-group btn-sm" role="group"
+														aria-label="Basic example"
+														style="display: inline-block; width: 100%; text-align: center;">
+														<div class="input-group">
+															<button type="button"
+																class="btn btn-secondary btn-look-value"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="go(parseFloat(document.getElementById('Axis3_Txt').value),3)">GO</button>
+															<input id="Axis3_Txt" type="text" class="form-control input-change"
+																value="5" aria-label="Input group example"
+																aria-describedby="btnGroupAddon" style="width: 50%;">
+															<button type="button"
+																class="btn btn-secondary btn-look-value-minus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(4,'-',parseInt(document.getElementById('Axis3_Txt').value))">&nbsp;-&nbsp;</button>
+															<button type="button"
+																class="btn btn-secondary btn-look-value-plus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(4,'+',parseInt(document.getElementById('Axis3_Txt').value))">&nbsp;+&nbsp;</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row" style="margin-top: 1rem;">
+												<small class="text-muted" style="margin-left: 2rem;">Servo Left:</small>
+												<div class="col-md-12">
+													<div class="btn-group btn-sm" role="group"
+														aria-label="Basic example"
+														style="display: inline-block; width: 100%; text-align: center;">
+														<div class="input-group">
+															<button type="button"
+																class="btn btn-secondary btn-look-value"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="go(parseFloat(document.getElementById('Left_Txt').value),4)">GO</button>
+															<input id="Left_Txt" type="text" class="form-control-go input-change"
+																value="5" aria-label="Input group example"
+																aria-describedby="btnGroupAddon" style="width: 50%;">
+															<button type="button"
+																class="btn btn-secondary btn-look-value-minus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(1,'-',parseInt(document.getElementById('Left_Txt').value))">&nbsp;-&nbsp;</button>
+															<button type="button"
+																class="btn btn-secondary btn-look-value-plus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(1,'+',parseInt(document.getElementById('Left_Txt').value))">&nbsp;+&nbsp;</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row" style="margin-top: 1rem;">
+												<small class="text-muted" style="margin-left: 2rem;">Servo
+													Center:</small>
+												<div class="col-md-12">
+													<div class="btn-group btn-sm" role="group"
+														aria-label="Basic example"
+														style="display: inline-block; width: 100%; text-align: center;">
+														<div class="input-group">
+															<button type="button"
+																class="btn btn-secondary btn-look-value"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="go(parseFloat(document.getElementById('Center_Txt').value),5)">GO</button>
+															<input id="Center_Txt" type="text" class="form-control-go input-change"
+																value="5" aria-label="Input group example"
+																aria-describedby="btnGroupAddon" style="width: 50%;">
+															<button type="button"
+																class="btn btn-secondary btn-look-value-minus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(2,'-',parseInt(document.getElementById('Center_Txt').value))">&nbsp;-&nbsp;</button>
+															<button type="button"
+																class="btn btn-secondary btn-look-value-plus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(2,'+',parseInt(document.getElementById('Center_Txt').value))">&nbsp;+&nbsp;</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row" style="margin-top: 1rem;">
+												<small class="text-muted" style="margin-left: 2rem;">Servo
+													Right:</small>
+												<div class="col-md-12">
+													<div class="btn-group btn-sm" role="group"
+														aria-label="Basic example"
+														style="display: inline-block; width: 100%; text-align: center;">
+														<div class="input-group">
+															<button type="button"
+																class="btn btn-secondary btn-look-value"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="go(parseFloat(document.getElementById('Right_Txt').value),6)">GO</button>
+															<input id="Right_Txt" type="text" class="form-control-go input-change"
+																value="5" aria-label="Input group example"
+																aria-describedby="btnGroupAddon" style="width: 50%;">
+															<button type="button"
+																class="btn btn-secondary btn-look-value-minus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(3,'-',parseInt(document.getElementById('Right_Txt').value))">&nbsp;-&nbsp;</button>
+															<button type="button"
+																class="btn btn-secondary btn-look-value-plus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(3,'+',parseInt(document.getElementById('Right_Txt').value))">&nbsp;+&nbsp;</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row" style="margin-top: 1rem;">
+												<small class="text-muted" style="margin-left: 2rem;">Camera</small>
+												<div class="col-md-12">
+													<div class="btn-group btn-sm" role="group"
+														style="display: inline-block; width: 100%; text-align: center;"
+														aria-label="Basic example">
+														<div class="input-group">
+															<input id="Camera_Txt" type="text" class="form-control input-change"
+																value="10" aria-label="Input group example"
+																style="width: 62%;" aria-describedby="btnGroupAddon">
+															<button type="button"
+																class="btn btn-secondary btn-look-value-minus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(5,'-',parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;-&nbsp;</button>
+															<button type="button"
+																class="btn btn-secondary btn-look-value-plus"
+																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="arm.moveServos(5,'+',parseFloat(document.getElementById('Camera_Txt').value))">&nbsp;+&nbsp;</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row" style="text-align: center;">
+												<medium class="text-muted">Led Signal</medium>
+												<div class="col-md-12">
+													<button type="button" class="btn btn-secondary "
+														style="font-size: 0.8rem; width: 3.5rem; background-color:#419fe2; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="change_led(true)">ON</button>
+													<button type="button" class="btn btn-secondary "
+														style="font-size: 0.8rem; width: 3.5rem; background-color:#094a79; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="change_led(false)"
+														onmousedown="movePrismatic(-1)">OFF</button>
+												</div>
+											</div>
+											<div class="row" style="text-align: center; margin-top: 2rem;">
+												<medium class="text-muted">Coordanates</medium>
+												<div class="col-md-12" style="margin-top: 1rem;">
+													<medium class="text-muted">Latitud</medium>
+													<div class="input-group">
+														<input id="Latitud_Txt" type="text" class="form-control-go"
+															value="38.39865" aria-label="Input group example"
+															aria-describedby="btnGroupAddon">
+													</div>
+													<medium class="text-muted">Longitud</medium>
+													<div class="input-group">
+														<input id="Longitud_Txt" type="text" class="form-control-go"
+															value="-110.79025 " aria-label="Input group example"
+															aria-describedby="btnGroupAddon">
+													</div>
+													<button type="button" class="btn btn-secondary btn-look-value-plus"
+														style="margin-top: 1rem; font-size: 0.8rem; width: 8rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="publish_coordanates()">&nbsp;Publish
+														Goal&nbsp;</button>
+												</div>
+											</div>
+											<div class="row" style="text-align: center; margin-top: 2rem;">
+												<medium class="text-muted">Camera antenna</medium>
+												<div class="col-md-12">
+													<button type="button" class="btn btn-secondary btn-look-value-plus"
+														style="font-size: 0.8rem; width: 3.5rem; background-color:#094a79; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="Camera_on_off(1,0)">&nbsp;Off&nbsp;</button>
+													<button type="button" class="btn btn-secondary btn-look-value-plus"
+														style="font-size: 0.8rem; width: 3.5rem; background-color:#419fe2; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="Camera_on_off(1,1)">&nbsp;0n&nbsp;</button>
+												</div>
+											</div>
+											<div class="row" style="text-align: center; margin-top: 1rem;">
+												<medium class="text-muted">Camera centrifuge</medium>
+												<div class="col-md-12">
+													<button type="button" class="btn btn-secondary btn-look-value-plus"
+														style="font-size: 0.8rem; width: 3.5rem; background-color:#094a79; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="Camera_on_off(2,0)">&nbsp;Off&nbsp;</button>
+													<button type="button" class="btn btn-secondary btn-look-value-plus"
+														style="font-size: 0.8rem; width: 3.5rem; background-color:#419fe2; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="Camera_on_off(2,1)">&nbsp;0n&nbsp;</button>
+												</div>
+											</div>
+											<div class="row"
+												style="text-align: center; margin-top: 1rem; margin-bottom: 2rem;">
+												<medium class="text-muted">Camera arm</medium>
+												<div class="col-md-12">
+													<button type="button" class="btn btn-secondary btn-look-value-plus"
+														style="font-size: 0.8rem; width: 3.5rem; background-color:#094a79; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="Camera_on_off(3,0)">&nbsp;Off&nbsp;</button>
+													<button type="button" class="btn btn-secondary btn-look-value-plus"
+														style="font-size: 0.8rem; width: 3.5rem; background-color:#419fe2; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="Camera_on_off(3,1)">&nbsp;0n&nbsp;</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
+</body>
+</section>
+
+<!--<script src="{{url_for('static', filename='js/index.js')}}"></script>-->
+<!--<script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>-->
+
+<script>
+	const body = document.querySelector('body'),
+		sidebar = body.querySelector('nav'),
+		toggle = body.querySelector(".toggle"),
+		searchBtn = body.querySelector(".search-box"),
+		modeSwitch = body.querySelector(".toggle-switch"),
+		modeText = body.querySelector(".mode-text");
+	toggle.addEventListener("click", () => {
+		sidebar.classList.toggle("close");
+	})
+	searchBtn.addEventListener("click", () => {
+		sidebar.classList.remove("close");
+	})
+	modeSwitch.addEventListener("click", () => {
+		body.classList.toggle("dark");
+		if (body.classList.contains("dark")) {
+			modeText.innerText = "Light mode";
+		} else {
+			modeText.innerText = "Dark mode";
+		}
+	});
+</script>
+
 </body>
 
 <script src="{{url_for('static', filename='js/arm_lab.js')}}"></script>

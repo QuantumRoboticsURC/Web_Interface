@@ -16,7 +16,7 @@
 </head>
 
 <body>
-	<div class="wrapper">
+	<div class="wrapper" style="border-radius: 0.5rem;">
 		<div class="main-header">
 			<div class="logo-header">
 				<a href="/" class="logo">
@@ -40,7 +40,7 @@
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item dropdown hidden-caret">
 							<div class="nav-link dropdown-toggle">
-								University Rover Challenge, June 2022.
+								University Rover Challenge, June 2024.
 								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
 							</div>
 						</li>
@@ -58,9 +58,9 @@
 			<div class="content">
 				<div class="container-fluid">
 					<h4 class="page-title">Dashboard Nav</h4>
-					<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera(1);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">ANTENA</button>
-					<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera(2);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">BRAZO</button>
-					<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera(3);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Zed</button>
+					<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('USB0');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.7rem;">USB0</button>
+					<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('USB1');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.7rem">USB1</button>
+					<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('Zed');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white;border-radius: 0.7rem">Zed</button>
 					<div class="row">	
 						<div class="col-lg-6">
 							<div class="card">

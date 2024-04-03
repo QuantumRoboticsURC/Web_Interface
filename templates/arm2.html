@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html>
-	<!--<body onload="StartGraphic()">-->
-	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<title>Quantum Robotics Dashboard</title>
-		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
-			name='viewport' />
-		<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+<!-- Coding by CodingLab | www.codinglabweb.com -->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/css/style2.css">
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+	<title>Quantum Robotics Dashboard</title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    
 			<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
 			<link rel="stylesheet" href="{{url_for('static', filename='css/demo.css')}}">
 			<link rel="stylesheet" href="{{url_for('static', filename='css/leds.css')}}">
@@ -18,91 +22,117 @@
 			<script src="{{url_for('static', filename='js/plugin/Chart.min.js')}}"></script>
 			<script src="/static/js/plugin/Chart.js"> </script>
 			<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>-->
-	</head>
+</head>
 
 <body>
-	<div class="wrapper">
-		<div class="main-header">
-			<div class="logo-header">
-				<a href="/" class="logo">
-					<img src="{{url_for('static', filename='img/QLogo.png')}}" width="41" height="32">
-					<small>Quantum Robotics</small>
+    <nav class="sidebar close">
+        <header>
+          <div class="image-text">
+            <span class="image">
+              <img src="../static/img/QLogo.png" alt="">
+            </span>
+    
+            <div class="text logo-text">
+              <span class="name">Quantum</span>
+              <span class="profession">Robotics</span>
+            </div>
+          </div>
+    
+          <i class='bx bx-chevron-right toggle'></i>
+        </header>
+    
+        <div class="menu-bar">
+          <div class="menu">
+    
+            
+    
+            <ul class="menu-links">
+              <li class="nav-link">
+                <a href="metrics">
+                  <i class='bx bx-bar-chart-alt-2 icon'></i>
+                  <span class="text nav-text">Metrics</span>
+                </a>
+              </li>
+    
+              <li class="nav-link">
+                <a href="/">
+                  <i class='bx bx-grid-alt icon'></i>
+                  <span class="text nav-text">Control</span>
+                </a>
+              </li>
+    
+              <li class="nav-link">
+                <a href="arm2">
+                  <i class='bx bx-bot icon'></i>
+                  <span class="text nav-text">Arm</span>
+                </a>
+              </li>
+			  <li class="nav-link">
+				<a href="arm_lab">
+				  <i class='bx bx-atom icon'></i>
+				  <span class="text nav-text">Laboratory Operation</span>
 				</a>
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-					data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
-			</div>
-			<nav class="navbar navbar-header navbar-expand-lg">
-				<div class="container-fluid">
-					<div class="navbar-left navbar-form nav-search mr-md-3">
-						<img src="{{url_for('static', filename='img/upiita.png')}}" width="41" height="32">
-						<img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
-						<img src="{{url_for('static', filename='img/uanl.png')}}" width="64" height="32">
-						<img src="{{url_for('static', filename='img/UNAM.png')}}" width="28" height="32">
-					</div>
-					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-						<li class="nav-item dropdown hidden-caret">
-							<div class="nav-link dropdown-toggle">
-								University Rover Challenge, June 2022.
-								<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26">
-							</div>
-						</li>
+			  </li>
+              <!-- cambie el lab -->
+              <li class="nav-link">
+                <a href="laboratory">
+                  <i class='bx bx-atom icon'></i>
+                  <span class="text nav-text">Laboratory</span>
+                </a>
+              </li>
+              <!-- cambie stratigraphic -->
+              <li class="nav-link">
+                <a href="stratigraphic">
+                  <i class='bx bx-palette icon'></i>
+                  <span class="text nav-text">Stratigraphic Profile</span>
+                </a>
+              </li>
+    
+              <li class="nav-link">
+                <a href="coordinates2">
+                  <i class='bx bx-map-alt icon'></i>
+                  <span class="text nav-text">Autonomous Navigation</span>
+                </a>
+              </li>
+    
+              <!-- Cambio rosa para ver laboratory, stratigraphic-->
+              <li class="nav-link">
+                <a href="rocks">
+                  <i class='bx bx-bar-chart-alt-2 icon'></i>
+                  <span class="text nav-text">Rocks</span>
+                </a>
+              </li>
+    
+            </ul>
+          </div>
+    
+          </div>
+        </div>
+    
+      </nav>
 
-					</ul>
-				</div>
-			</nav>
-		</div>
-		<div class="sidebar">
-			<div class="scrollbar-inner sidebar-wrapper">
-	            <ul class="nav">
-					<li class="nav-item">
-						<a href="/">
-							<i class="la la-camera"></i>
-							<p>Nav</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="metrics">
-							<i class="la la-dashboard"></i>
-							<p>Metrics</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="arm">
-							<i class="la la-cogs"></i>
-							<p>Arm</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="lab">
-							<i class="la la-flask"></i>
-							<p>Lab</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="arm_lab">
-							<i class="la la-flask"></i>
-							<p>Arm Lab</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="rocks">
-							<i class="la la-th-list"></i>
-							<p>Rocks</p>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="coordinates">
-							<i class="la la-map"></i>
-							<p>Coor Converter</p>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="main-panel">
+
+
+
+      <section class="home">
+        <div class="navbar">
+          <img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26" style="margin-top: 1.3%; margin-left: 2%;" >
+          <span style="margin-left: 2%;margin-top: 1.3%; margin-right: 45%;"> University Rover Challenge, June 2024.</span>
+    
+          <div class="navbar-left navbar-form nav-search mr-md-3" style="margin-top: 1.2%; margin-left: 1.2%;">
+            <img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
+            <img src="{{url_for('static', filename='img/maxon.png')}}" width="64" height="25">
+            <img src="{{url_for('static', filename='img/altium.png')}}" width="64" height="32">
+            <img src="{{url_for('static', filename='img/P&G.png')}}" width="41" height="25">
+            <img src="{{url_for('static', filename='img/gillette.png')}}" width="41" height="25">
+            <img src="{{url_for('static', filename='img/protocase.png')}}" width="41" height="25">
+        </div>
+            
+        </div>
+
+
+    <div class="bloque">
+				
 			<div class="content">
 				<div class="container-fluid">
 					<h4 class="page-title">Dashboard Metrics</h4>
@@ -111,10 +141,10 @@
 					</div>
 					<div class="row">	
 						<div class="col-lg-7">
-							<div class="">
-								<div class="card">
+							<div style="width: 60%; float: left; margin: 0.4%;">
+								<div class="card" style="float: left; margin: 1%; width: 100%;">
 									<div class="card-header">
-										<h4 class="card-title">Arm Graphic</h4>
+										<h4 class="card-title" >Arm Graphic</h4>
 									</div>
 									<div class="card-body">
 										<div class="chart-circle mt-4 mb-3" style="width:600px;height:600px;text-align:center;">
@@ -122,7 +152,7 @@
 										</div>
 									</div>								
 								</div>
-								<div class="card">
+								<div class="card" style="  float: left; margin: 1%; width: 100%;"">
 									<div class="card-header">
 										<h4 class="card-title">Arm Camera</h4>
 									</div>
@@ -136,7 +166,7 @@
 							</div>
 						</div>
 						<div class="col-lg-5">
-							<div class="card">
+							<div class="card" style="width: 35%; float: left; margin: 1%;">
 								<div class="card-header">
 									<h4 class="card-title">Control</h4>
 								</div>
@@ -343,10 +373,42 @@
 				</div>
 			</div>
 		</div>
-	</div>
+        
+	
+    
 </body>
+</section>
 
-<script src="{{url_for('static', filename='js/arm.js')}}"></script>
+
+
+
+
+<script src="{{url_for('static', filename='js/index.js')}}"></script>
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
+
+  <script>
+    const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    })
+    searchBtn.addEventListener("click", () => {
+      sidebar.classList.remove("close");
+    })
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      if (body.classList.contains("dark")) {
+        modeText.innerText = "Light mode";
+      } else {
+        modeText.innerText = "Dark mode";
+      }
+    });
+  </script>
+
+</body>
 
 </html>
