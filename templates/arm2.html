@@ -3,8 +3,8 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="UTF-8"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../static/css/style2.css">
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
@@ -62,7 +62,7 @@
               </li>
     
               <li class="nav-link">
-                <a href="arm2">
+                <a href="arm">
                   <i class='bx bx-bot icon'></i>
                   <span class="text nav-text">Arm</span>
                 </a>
@@ -152,13 +152,13 @@
 										</div>
 									</div>								
 								</div>
-								<div class="card" style="  float: left; margin: 1%; width: 100%;"">
+								<div class="card" style="  float: left; margin: 1%; width: 100%;">
 									<div class="card-header">
 										<h4 class="card-title">Arm Camera</h4>
 									</div>
 									<div class="card-body">
 										<div class="chart-circle mt-4 mb-3">
-											<img src = "" id="Arm_Camera" wigth="400" height="400" style="transform:rotate(0deg);">
+											<img src = "" id="Zed_Camera" wigth="400" height="400" style="transform:rotate(0deg);">
 										</div>
 									</div>								
 								</div>
@@ -384,6 +384,7 @@
 
 
 <script src="{{url_for('static', filename='js/index.js')}}"></script>
+<script src="{{url_for('static', filename='js/arm.js')}}" defer></script>
 <script src="{{url_for('static', filename='js/core/jquery.3.2.1.min.js')}}"></script>
 
   <script>
@@ -396,7 +397,7 @@
     toggle.addEventListener("click", () => {
       sidebar.classList.toggle("close");
     })
-    searchBtn.addEventListener("click", () => {
+      searchBtn.addEventListener("click", () => {
       sidebar.classList.remove("close");
     })
     modeSwitch.addEventListener("click", () => {

@@ -153,6 +153,7 @@ var emergency = new ROSLIB.Topic({
 
 //Initial values
 var gripper_apertur = 60;   //0 y 60
+
 var values_map = {
     joint1: .134,   //.4
     joint2: 0,      //.9
@@ -190,109 +191,109 @@ var limit_chassis = 1.1; //11cm del chasis
 
 // Predefined positions
 var State = ["HOME","HOME"]
-// function predefinedPosition(position){
+function predefinedPosition(position){
 
-//     var x = values_map.joint1;
-//     var y = values_map.joint2;
-//     var z = values_map.joint3;
-//     var phi = values_map.joint4;
+    var x = values_map.joint1;
+    var y = values_map.joint2;
+    var z = values_map.joint3;
+    var phi = values_map.joint4;
     
-//     /*if(position === "INTERMEDIATE"){
-//         x = 0;
-//         y = -5;
-//         z = 3.677;
-//         phi = 0;
-//     }else if (position === "FLOOR"){
-//         x = 3.28
-//         y = -5
-//         z = -.1
-//         phi = 0
-//     }else if (position === "STORAGE"){
-//         x = .134;
-//         y =  -5;
-//         z =  .75;
-//         phi = 90
-//     }else if (position === "BOX"){
-//         x = 0;
-//         y = -94;
-//         z = 3.68
-//         phi = 0;
-//     }*/
-//     before = State[0];
-//     State[0] = State[1];
-//     State[1]=position;
+    /*if(position === "INTERMEDIATE"){
+        x = 0;
+        y = -5;
+        z = 3.677;
+        phi = 0;
+    }else if (position === "FLOOR"){
+        x = 3.28
+        y = -5
+        z = -.1
+        phi = 0
+    }else if (position === "STORAGE"){
+        x = .134;
+        y =  -5;
+        z =  .75;
+        phi = 90
+    }else if (position === "BOX"){
+        x = 0;
+        y = -94;
+        z = 3.68
+        phi = 0;
+    }*/
+    before = State[0];
+    State[0] = State[1];
+    State[1]=position;
 
-//     if (position === "HOME"){
-//         x = 2.25;
-//         y =  0;
-//         z =  1.02;
-//         phi = 0;
+    if (position === "HOME"){
+        x = 2.25;
+        y =  0;
+        z =  1.02;
+        phi = 0;
         
-//     } 
-//     else if(position === "INTERMEDIATE"){
-//         x = 2;
-//         y = 0;
-//         z = 4.28;
-//         phi = 0;
+    } 
+    else if(position === "INTERMEDIATE"){
+        x = 2;
+        y = 0;
+        z = 4.28;
+        phi = 0;
         
-//     }
-//     else if(position === "PULL"){
-//         x = 3.33;
-//         y = 0;
-//         z = 3.35;
-//         phi = 0;
+    }
+    else if(position === "PULL"){
+        x = 3.33;
+        y = 0;
+        z = 3.35;
+        phi = 0;
         
-//     }
-//     else if (position === "WRITE"){
-//         x = 3.33;
-//         y = 0;
-//         z = 1.35;
-//         phi = 0;  
+    }
+    else if (position === "WRITE"){
+        x = 3.33;
+        y = 0;
+        z = 1.35;
+        phi = 0;  
            
-//     }
-//     else if (position === "FLOOR"){
-//         x = 3.28;
-//         y = 0;
-//         z = -.1;
-//         phi = -90;
+    }
+    else if (position === "FLOOR"){
+        x = 3.28;
+        y = 0;
+        z = -.1;
+        phi = -90;
         
-//     }
-//     else if (position === "STORAGE"){
-//         x = 2.25;
-//         y =  0;
-//         z = 1.02;
-//         phi = 90;
+    }
+    else if (position === "STORAGE"){
+        x = 2.25;
+        y =  0;
+        z = 1.02;
+        phi = 90;
         
-//     }
-//     else if (position === "VERTICAL"){
-//         x = 0;
-//         y = 0;
-//         z =  5.2;
-//         phi = 90;
+    }
+    else if (position === "VERTICAL"){
+        x = 0;
+        y = 0;
+        z =  5.2;
+        phi = 90;
         
-//     }
-//     else if (position === "BOX"){
-//         x=0.35;
-//         y=80;
-//         z=2.24;
-//         phi=-20;
-//     }
-//     else if (position === "FlOOR2"){
-//         x=2.48;
-//         y=0;
-//         z=-1.2;
-//         phi=6.17;
-//     }
+    }
+    else if (position === "BOX"){
+        x=0.35;
+        y=80;
+        z=2.24;
+        phi=-20;
+    }
+    else if (position === "FlOOR2"){
+        x=2.48;
+        y=0;
+        z=-1.2;
+        phi=6.17;
+    }
 
-//     values_map.joint1 = x;
-//     values_map.joint2 = y;
-//     values_map.joint3 = z;
-//     values_map.joint4 = phi;
-//     //StateMachine(position);
-//     //return position;
-//     inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-//     go_rotation(values_map.joint2);
-//     }
+    values_map.joint1 = x;
+    values_map.joint2 = y;
+    values_map.joint3 = z;
+    values_map.joint4 = phi;
+    //StateMachine(position);
+    //return position;
+    inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+    go_rotation(values_map.joint2);
+    }
 function StateMachine(position){
         
     const secondaryButton1 = document.getElementById('secondary button1');
