@@ -143,6 +143,7 @@ function handleImage(event) {
           imgElement.style.width = '200px';
           selectedImageContainer.innerHTML = '';
           selectedImageContainer.appendChild(imgElement);
+          console.log(parseInt(averageHexColor.slice(1), 16));
       };
   };
 
