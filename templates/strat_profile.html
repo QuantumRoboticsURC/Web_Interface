@@ -200,7 +200,29 @@
 
     </section>
   
-  
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const imageInput = document.querySelector('.image-input');
+        const selectedImageContainer = document.querySelector('.selected-image-container');
+    
+        imageInput.addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          const reader = new FileReader();
+    
+          reader.onload = function(e) {
+            const imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.alt = 'Selected Image';
+            imgElement.style.width = '45Opx';
+            selectedImageContainer.innerHTML = '';
+            selectedImageContainer.appendChild(imgElement);
+          };
+    
+          reader.readAsDataURL(file);
+        });
+      });
+    </script>
+    
   
   <script src="{{url_for('static', filename='js/index.js')}}"></script>
   <script src="{{url_for('static', filename='js/stratographic.js')}}"></script>
