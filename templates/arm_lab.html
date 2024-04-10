@@ -148,6 +148,62 @@
 						<div style="display: grid; grid-template-columns: 100%;">
 							<div class="col-md-12"
 								style="display: grid; width: 100%; grid-template-columns: 100%; justify-self: center;">
+								
+
+								<div class="card new-buttons-armlab" style="margin-top: 2rem;">
+									<div class="col-md-12" style="display: inline-block; text-align: center;">
+										<button type="button" class="btn btn-secondary btn-look-one"
+											style="margin-top: 1rem; width: 5rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">Bajar</button>
+										<button type="button" class="btn btn-secondary btn-look-two"
+											style="margin-bottom: 1rem; width: 5rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">Subir</button>
+									</div>
+								</div>
+								<div class="card new-buttons-armlab">
+									<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Garra 1
+									</medium>
+									<div class="col-md-12" style="display: inline-block; text-align: center;">
+										<button type="button" class="btn btn-secondary btn-look-one"
+											style="margin-top: 1rem; width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">Abierta</button>
+										<button type="button" class="btn btn-secondary btn-look-two"
+											style="width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">Recolectar</button>
+										<button type="button" class="btn btn-secondary btn-look-two"
+											style="margin-bottom: 25px; width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">Meter lab</button>
+									</div>
+									<hr>
+									<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Garra 2
+									</medium>
+									<div class="col-md-12" style="display: inline-block; text-align: center;">
+										<button type="button" class="btn btn-secondary btn-look-one"
+											style="margin-top: 1rem; width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">Abierta</button>
+										<button type="button" class="btn btn-secondary btn-look-two"
+											style="width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">Recolectar</button>
+										<button type="button" class="btn btn-secondary btn-look-two"
+											style="margin-bottom: 25px; width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">Meter lab</button>
+									</div>
+								</div>
+								<div class="card new-buttons-armlab">
+									<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Taladro
+									</medium>
+									<div class="col-md-12" style="display: inline-block; text-align: center;">
+										<button type="button" class="btn btn-secondary btn-look-one"
+											style="margin-top: 1rem; width: 4rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">On</button>
+										<button type="button" class="btn btn-secondary btn-look-two"
+											style="margin-bottom: 1rem; width: 4rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											onmouseup="" onmousedown="">Off</button>
+									</div>
+								</div>
+
+
+								<!--
 								<medium class="text-muted" style="margin-left: 2rem; margin-top: 2rem;">Centrifuge
 								</medium>
 								<div class="col-md-12" style="display: inline-block; text-align: center;">
@@ -189,6 +245,7 @@
 										onclick="go(0,6);getTxt();"
 										style="margin-bottom: 25px; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Open</button>
 								</div>
+							-->
 							</div>
 						</div>
 
@@ -203,6 +260,7 @@
 							</div>
 						</div>
 
+						<!--
 						<div class="card">
 							<div class="card-header">
 								<h4 class="card-title">Arm Camera</h4>
@@ -214,6 +272,7 @@
 								</div>
 							</div>
 						</div>
+					-->
 					</div>
 
 					<div class="col-lg-5" id="sec-col-armlab">
@@ -483,6 +542,19 @@
 												</div>
 											</div>
 											<div class="row" style="text-align: center; margin-top: 2rem;">
+												<medium class="text-muted">Cambiar End Tool</medium>
+												<div class="col-md-12">
+													<button type="button" class="btn btn-secondary "
+														style="font-size: 0.8rem; width: 5rem; background-color:#419fe2; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="">Taladro</button>
+													<button type="button" class="btn btn-secondary "
+														style="font-size: 0.8rem; width: 5rem; background-color:#094a79; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick=""
+														onmousedown="">Sensor</button>
+												</div>
+											</div>
+											<!---
+											<div class="row" style="text-align: center; margin-top: 2rem;">
 												<medium class="text-muted">Coordanates</medium>
 												<div class="col-md-12" style="margin-top: 1rem;">
 													<medium class="text-muted">Latitud</medium>
@@ -537,6 +609,7 @@
 														onclick="Camera_on_off(3,1)">&nbsp;0n&nbsp;</button>
 												</div>
 											</div>
+										-->
 										</div>
 									</div>
 								</div>
