@@ -365,6 +365,13 @@ body.dark .home .text {
   grid-template-columns: 13rem;
 }
 
+.new-buttons-armlab {
+  text-align: center;
+  width: 80%;
+  justify-self: center;
+  margin-bottom: 0rem;
+}
+
 @media screen and (max-width: 1400px){
   #arm-lab-gos {
     width: 90%;
