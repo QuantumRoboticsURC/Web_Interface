@@ -14,9 +14,15 @@ var labmechanism = new ROSLIB.Topic ({
     queue_size: 1
   })
 
-  var drill = new ROSLIB.Topic ({
+  var Drill = new ROSLIB.Topic ({
     ros : ros,
     name : 'armteleop/drill',
+    messageType: 'std_msgs/Int8',
+    queue_size: 1
+  })
+  var Servo_left = new ROSLIB.Topic ({
+    ros : ros,
+    name : 'Servo_left',
     messageType: 'std_msgs/Int8',
     queue_size: 1
   })
@@ -87,7 +93,6 @@ class ArmTeleop{
             messageType : 'std_msgs/Int8',
             queue_size: 1   
         });
-
        
 
         this.limits_map = {
@@ -97,9 +102,8 @@ class ArmTeleop{
             q4: [0,180],
             q5: [0,180],
             q6: [0,240],
-            q7: [0,240],
-            q8: [0,240],
-            q9: [0,240]
+            q7: [0,240]
+            
             
         }
         this.angles_map={
@@ -109,9 +113,7 @@ class ArmTeleop{
             q4:0.0,
             q5:0.0,
             q6:0.0,
-            q7:0.0,
-            q8:0.0,
-            q9:0.0,
+            q7:0.0
             
         }
         this.led = false;  
@@ -137,8 +139,7 @@ class ArmTeleop{
         this.angles_map.q5=qlimit(this.limits_map.q5,this.angles_map.q5)
         this.angles_map.q6=qlimit(this.limits_map.q6,this.angles_map.q6)
         this.angles_map.q7=qlimit(this.limits_map.q7,this.angles_map.q7)
-        this.angles_map.q8=qlimit(this.limits_map.q8,this.angles_map.q8)
-        this.angles_map.q9=qlimit(this.limits_map.q9,this.angles_map.q9)
+
 
 
         var message = new ROSLIB.Message({
@@ -171,10 +172,6 @@ class ArmTeleop{
         var message8 = new ROSLIB.Message({
             data:this.angles_map.q7
         })
-        var message9 = new ROSLIB.Message({
-            data:this.angles_map.q8
-        })
-       
         
         this.joint3.publish(message4);
         //this.arm.publish(message);
@@ -186,6 +183,10 @@ class ArmTeleop{
         this.centrifugadora.publish(message8);
         this.cameraA.publish(message9);
         this.labmechanism.publish(mesage10)
+        this.drill.publish(mesage11)
+        this.Servo_right.publish(message12)
+        this.Servo_left.publish(message13)
+
         if(ledstate){
             console.log(ledstate)
             var msn = new ROSLIB.Message({data:false})
@@ -363,7 +364,6 @@ function change_led(data){
     //getTxt();
 }
 
-
 function Up_Down (valor){
 
     if (valor ==1){
@@ -373,6 +373,7 @@ function Up_Down (valor){
     else {
         console.log("Abajo")
     }
+    var message = new ROSLIB.Message({data: 1});
     labmechanism.publish(new ROSLIB.Message({data:valor}));
     console.log(valor);
 
@@ -385,9 +386,9 @@ function taladro(option){
     else{
         console.log("Off")
     }
-    drill.publish(new ROSLIB.Message({data:option}));
+    Drill.publish(new ROSLIB.Message({data:option}));
     console.log(option);
-
+    
 }
 
 function servo_posicion(num_garra,pos){
@@ -443,6 +444,7 @@ function servo_posicion(num_garra,pos){
         //}
 
     //}
+    console.log(num_garra)
     }
     
 function getTxt() {}
@@ -453,16 +455,18 @@ function getTxt() {}
     var Brazo_2 = String(arm.angles_map.q3);
     var Garra_2 = String(arm.angles_map.q4);
     var Camera = String(arm.angles_map.q5);
-    var Servo_left = String(arm.angles_map.q6);
-    var Servo_right = String(arm.angles_map.q7);
-    
+    var Drill = String(arm.angles_map.q6)
+    var Servo_left = String(arm.angles_map.q7)
+    var Servo_right = String(arm.angles_map.q8)
+
     localStorage.setItem("Brazo 1", Brazo_1);
     localStorage.setItem("Garra 1",Garra_1);
     localStorage.setItem("Brazo 2", Brazo_2);
     localStorage.setItem("Garra 2", Garra_2);
     localStorage.setItem("Camera", Camera);
-    localStorage.setItem("Servo_left",Servo_left);
-    localStorage.setItem("Servo_right",Servo_right);
+    localStorage.setIteam("Drill", Drill);
+    localStorage.setIteam("servo_right", Servo_right);
+    localStorage.setIteam("Servo_left", Servo_left);
     
 
     document.getElementById("Brazo 1").innerHTML = Brazo_1;
@@ -470,8 +474,12 @@ function getTxt() {}
     document.getElementById("Brazo 2").innerHTML = Brazo_2;
     document.getElementById("Garra 2").innerHTML = Garra_2;
     document.getElementById("Camera").innerHTML = Camera;
-    document.getElementById("Servo_left").innerHTML = Servo_left;
+    document.getElementById("Drill").innerHTML = Drill;
     document.getElementById("Servo_right").innerHTML = Servo_right;
+    document.getElementById("Servo_left").innerHTML = Servo_left;
+
+
+    
 
 function rad2deg(radians){return radians * (180/math.pi);}
 function deg2rad(degrees){return degrees * (math.pi/180);}
