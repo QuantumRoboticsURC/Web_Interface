@@ -5,7 +5,23 @@ var ledstate = false;
 robot_IP = _config.ROSBridge_IP;
 ros = new ROSLIB.Ros({
     url: "ws://" + robot_IP + ":9090"
-});
+}); 
+
+var labmechanism = new ROSLIB.Topic ({
+    ros : ros,
+    name : 'lab_mechanism',
+    messageType: 'std_msgs/Int8',
+    queue_size: 1
+  })
+
+  var drill = new ROSLIB.Topic ({
+    ros : ros,
+    name : 'armteleop/drill',
+    messageType: 'std_msgs/Int8',
+    queue_size: 1
+  })
+
+  
 class ArmTeleop{
     constructor(){
         
@@ -72,12 +88,18 @@ class ArmTeleop{
             queue_size: 1   
         });
 
+       
+
         this.limits_map = {
             q1:[0,180],
             q2:[0,180],
             q3:[0,180], //Cambio de límites
             q4: [0,180],
             q5: [0,180],
+            q6: [0,240],
+            q7: [0,240],
+            q8: [0,240],
+            q9: [0,240]
             
         }
         this.angles_map={
@@ -86,6 +108,10 @@ class ArmTeleop{
             q3:0.0,
             q4:0.0,
             q5:0.0,
+            q6:0.0,
+            q7:0.0,
+            q8:0.0,
+            q9:0.0,
             
         }
         this.led = false;  
@@ -109,7 +135,12 @@ class ArmTeleop{
         this.angles_map.q3=qlimit(this.limits_map.q3,this.angles_map.q3)
         this.angles_map.q4=qlimit(this.limits_map.q4,this.angles_map.q4)
         this.angles_map.q5=qlimit(this.limits_map.q5,this.angles_map.q5)
-        
+        this.angles_map.q6=qlimit(this.limits_map.q6,this.angles_map.q6)
+        this.angles_map.q7=qlimit(this.limits_map.q7,this.angles_map.q7)
+        this.angles_map.q8=qlimit(this.limits_map.q8,this.angles_map.q8)
+        this.angles_map.q9=qlimit(this.limits_map.q9,this.angles_map.q9)
+
+
         var message = new ROSLIB.Message({
             joint3:my_map(-162,0,330,492,this.angles_map.q3),
             servo1:this.angles_map.q4,
@@ -143,6 +174,8 @@ class ArmTeleop{
         var message9 = new ROSLIB.Message({
             data:this.angles_map.q8
         })
+       
+        
         this.joint3.publish(message4);
         //this.arm.publish(message);
         this.joint1.publish(message2);
@@ -152,6 +185,7 @@ class ArmTeleop{
         this.servoleft.publish(message7);
         this.centrifugadora.publish(message8);
         this.cameraA.publish(message9);
+        this.labmechanism.publish(mesage10)
         if(ledstate){
             console.log(ledstate)
             var msn = new ROSLIB.Message({data:false})
@@ -329,7 +363,89 @@ function change_led(data){
     //getTxt();
 }
 
-function getTxt(){
+
+function Up_Down (valor){
+
+    if (valor ==1){
+        console.log("Arriba")
+        
+    }
+    else {
+        console.log("Abajo")
+    }
+    labmechanism.publish(new ROSLIB.Message({data:valor}));
+    console.log(valor);
+
+}
+
+function taladro(option){
+    if (option == 1){
+        console.log("On")
+    }
+    else{
+        console.log("Off")
+    }
+    drill.publish(new ROSLIB.Message({data:option}));
+    console.log(option);
+
+}
+
+function servo_posicion(num_garra,pos){
+
+    if (num_garra ==1){
+            
+        switch (pos) {
+            case 1: 
+                arm.angles_map.q6=1;
+                arm.angles_map.q7=2;
+                arm.angles_map.q6=1;
+                arm.angles_map.q7=2;
+                break;
+            
+            case 2:
+                arm.angles_map.q6=1;
+                arm.angles_map.q7=2;
+                arm.angles_map.q6=1;
+                arm.angles_map.q7=2;
+                break;
+            
+            case 3:
+                arm.angles_map.q6=1;
+                arm.angles_map.q7=2;
+                arm.angles_map.q6=1;
+                arm.angles_map.q7=2;
+                break;
+
+        }}
+    
+    //else {
+       // switch (pos) {
+            //case 1: 
+                //arm.angles_map.q8=1;
+                //arm.angles_map.q9=2;
+                //arm.angles_map.q8=1;
+                //arm.angles_map.q9=2;
+                //break;
+            
+            //case 2:
+                //arm.angles_map.q8=1;
+                //arm.angles_map.q9=2;
+                //arm.angles_map.q8=1;
+                //arm.angles_map.q9=2;
+                //break;
+            
+            //case 3:
+                //arm.angles_map.q8=1;
+                //arm.angles_map.q9=2;
+                //arm.angles_map.q8=1;
+                //arm.angles_map.q9=2;
+                //break;
+        //}
+
+    //}
+    }
+    
+function getTxt() {}
     arm.publishMessages();
     
     var Brazo_1 = String(arm.angles_map.q1);
@@ -337,12 +453,16 @@ function getTxt(){
     var Brazo_2 = String(arm.angles_map.q3);
     var Garra_2 = String(arm.angles_map.q4);
     var Camera = String(arm.angles_map.q5);
+    var Servo_left = String(arm.angles_map.q6);
+    var Servo_right = String(arm.angles_map.q7);
     
     localStorage.setItem("Brazo 1", Brazo_1);
     localStorage.setItem("Garra 1",Garra_1);
     localStorage.setItem("Brazo 2", Brazo_2);
     localStorage.setItem("Garra 2", Garra_2);
     localStorage.setItem("Camera", Camera);
+    localStorage.setItem("Servo_left",Servo_left);
+    localStorage.setItem("Servo_right",Servo_right);
     
 
     document.getElementById("Brazo 1").innerHTML = Brazo_1;
@@ -350,8 +470,9 @@ function getTxt(){
     document.getElementById("Brazo 2").innerHTML = Brazo_2;
     document.getElementById("Garra 2").innerHTML = Garra_2;
     document.getElementById("Camera").innerHTML = Camera;
-   
-}
+    document.getElementById("Servo_left").innerHTML = Servo_left;
+    document.getElementById("Servo_right").innerHTML = Servo_right;
+
 function rad2deg(radians){return radians * (180/math.pi);}
 function deg2rad(degrees){return degrees * (math.pi/180);}
 function my_map(in_min, in_max, out_min, out_max, x){ //map arduino

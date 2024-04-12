@@ -154,51 +154,58 @@
 									<div class="col-md-12" style="display: inline-block; text-align: center;">
 										<button type="button" class="btn btn-secondary btn-look-one"
 											style="margin-top: 1rem; width: 5rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">Bajar</button>
+											onclick="Up_Down(-1);">Bajar</button>
 										<button type="button" class="btn btn-secondary btn-look-two"
 											style="margin-bottom: 1rem; width: 5rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">Subir</button>
+											onclick="Up_Down(1);">Subir</button>
 									</div>
 								</div>
 								<div class="card new-buttons-armlab">
 									<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Garra 1
 									</medium>
+
+									<!--Garra 1-->
 									<div class="col-md-12" style="display: inline-block; text-align: center;">
 										<button type="button" class="btn btn-secondary btn-look-one"
 											style="margin-top: 1rem; width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">Abierta</button>
+											onclick="servo_posicion(1,1);">Abierta</button>
 										<button type="button" class="btn btn-secondary btn-look-two"
 											style="width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">Recolectar</button>
+											onclick="servo_posicion(1,2);">Recolectar</button>
 										<button type="button" class="btn btn-secondary btn-look-two"
 											style="margin-bottom: 25px; width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">Meter lab</button>
+											onclick="servo_posicion(1,3);">Meter Lab</button>
 									</div>
 									<hr>
 									<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Garra 2
 									</medium>
+
+									<!--Garra 2-->
 									<div class="col-md-12" style="display: inline-block; text-align: center;">
 										<button type="button" class="btn btn-secondary btn-look-one"
 											style="margin-top: 1rem; width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">Abierta</button>
+											onclick="servo_posicion(2,1);">Abierta</button>
 										<button type="button" class="btn btn-secondary btn-look-two"
 											style="width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">Recolectar</button>
+											onclick="servo_posicion(2,2);">Recolectar</button>
 										<button type="button" class="btn btn-secondary btn-look-two"
 											style="margin-bottom: 25px; width: 7rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">Meter lab</button>
+											onclick="servo_posicion(2,3);">Meter Lab</button>
 									</div>
 								</div>
 								<div class="card new-buttons-armlab">
 									<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Taladro
 									</medium>
+
+									<!-- Taladro-->
 									<div class="col-md-12" style="display: inline-block; text-align: center;">
 										<button type="button" class="btn btn-secondary btn-look-one"
 											style="margin-top: 1rem; width: 4rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">On</button>
+											onclick="taladro(1);">On</button>
 										<button type="button" class="btn btn-secondary btn-look-two"
 											style="margin-bottom: 1rem; width: 4rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onmouseup="" onmousedown="">Off</button>
+											onclick="taladro(0);">Off</button>
+											
 									</div>
 								</div>
 
