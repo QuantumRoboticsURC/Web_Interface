@@ -8,6 +8,73 @@
     width: 95%;
 }
 
+/* Estilo de los cuadritos de colores */
+.cuadro{
+    width: 50px; 
+    height: 50px; 
+    background-color: green;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-block;
+  }
+
+/* Estilo de los tags de los cuadritos */
+.tag{
+    display: inline;
+    margin-left: 25px;
+    margin-right: 25px;
+    font-weight: 700;
+}
+
+#picker{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    /* margin-right: 150px; */
+    margin-top: 20px;
+}
+
+/* Colores de los cuadros */
+#color1{
+    background-color:rgb(219, 17, 17);
+}
+
+#color2{
+    background-color: blueviolet;
+}
+
+#color3{
+    background-color: green;
+}
+
+#color4{
+    background-color: hotpink;
+}
+
+#color5{
+    background-color: gray;
+}
+
+#color6{
+    background-color: maroon;
+}
+
+#color7{
+    background-color: magenta;
+}
+
+#color8{
+    background-color: goldenrod;
+}
+
+#color9{
+    background-color: yellow;
+}
+
+#color10{
+    background-color: burlywood;
+}
+
 .content{
     padding:0%;
 }

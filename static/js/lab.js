@@ -7,9 +7,6 @@ ros = new ROSLIB.Ros({
     url: "ws://" + robot_IP + ":9090"
 });
 
-
-
-
 /*
 var listener = new ROSLIB.Topic({
   ros:ros,
@@ -45,8 +42,43 @@ function takePicture(parameter){
 };
 
 window.onload = function() {
-    update();
-  };
+  update();
+  // Checar el color picker que se desplegará al cargar la página
+  initColorPicker();
+
+  // Asigna el evento a todos los input files con clase "image-input"
+  const imageInputs = document.querySelectorAll('.image-input');
+  imageInputs.forEach(input => {
+      input.addEventListener('change', handleImage);
+  });
+};
+
+function initColorPicker() {
+  // Obtener todos los elementos con la clase 'cuadro'
+  const cuadros = document.querySelectorAll('.cuadro');
+
+  // Crear un array para almacenar los colores
+  const colores = [];
+
+  // Iterar sobre cada cuadro y obtener su color
+  cuadros.forEach(cuadro => {
+      // Obtener el color del cuadro
+      const color = window.getComputedStyle(cuadro).backgroundColor;
+
+      // Agregar el color al array
+      colores.push(color);
+  });
+
+  // Configurar opciones del color picker
+  const colorPickerOptions = {
+      colors: colores,
+      width: 500, // Ancho del color picker
+   };
+
+  // Crear el color picker con las opciones configuradas
+  var colorPicker = new iro.ColorPicker('#picker', colorPickerOptions);
+}
+
 
 function update() {
 $.get("get_img", function(data, status){
@@ -74,14 +106,6 @@ function rgbToHex(red, green, blue) {
 
   return `#${hexRed}${hexGreen}${hexBlue}`;
 }
-
-window.onload = function() {
-  // Asigna el evento a todos los input files con clase "image-input"
-  const imageInputs = document.querySelectorAll('.image-input');
-  imageInputs.forEach(input => {
-      input.addEventListener('change', handleImage);
-  });
-};
 
 function handleImage(event) {
   const imageInput = event.target;
@@ -127,11 +151,12 @@ function handleImage(event) {
 
           // Crea un nuevo color-picker
           const colorPicker = new iro.ColorPicker(colorPickerContainer, {
-              width: 180, color: "#fff", interactive: false
+              color: "#fff", interactive: false, width: 400
           });
 
           const averageHexColor = rgbToHex(averageRed, averageGreen, averageBlue);
           colorPicker.color.set(averageHexColor);
+          //Checar el colocar mas picker(circulos) para ver mas colores
           colorIndicator.style.backgroundColor = averageHexColor;
 
           resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})  HEX: ${averageHexColor}`;
@@ -146,6 +171,7 @@ function handleImage(event) {
           console.log(parseInt(averageHexColor.slice(1), 16));
       };
   };
+
 
   reader.readAsDataURL(file);
 }

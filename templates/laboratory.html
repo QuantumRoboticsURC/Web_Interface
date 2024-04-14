@@ -18,9 +18,12 @@
 	<link rel="stylesheet" href="{{url_for('static', filename='css/ready.css')}}">
   <link rel="stylesheet" href="{{url_for('static', filename='css/laboratory.css')}}">
 	<link rel="shortcut icon" href="#">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@jaames/iro@5/build/iro.min.css" />
 
 	<script src="{{url_for('static', filename='js/config.js')}}"></script>
 	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
 </head>
 
 <body>
@@ -136,11 +139,56 @@
         <div class="content">
             <div class="container-fluid">
 
+
               <div class="row">    
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header" id="card-header">
-                            <h4 class="card-title">Expanded Images</h4><br>
+                            <h4 class="card-title">Prueba</h4><br>
+                            <body>
+                                <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
+                                <div class="color-columns">
+                                    <div class="column">
+                                        <div class="color-square" style="width: 50px; height: 50px; margin-top: 10px;"></div>
+                                        <div class="cuadro" id="color1"></div>
+                                        <div class="cuadro" id="color2"></div>
+                                        <div class="cuadro" id="color3"></div>
+                                        <div class="cuadro" id="color4"></div>
+                                        <div class="cuadro" id="color5"></div>
+                                        <div class="cuadro" id="color6"></div>
+                                        <div class="cuadro" id="color7"></div>
+                                        <div class="cuadro" id="color8"></div>
+                                        <div class="cuadro" id="color9"></div>
+                                        <div class="cuadro" id="color10"></div>
+                                        <br>
+                                        <p class="tag">1 m/lt</p>
+                                        <p class="tag">2 m/lt</p>
+                                        <p class="tag">3 m/lt</p>
+                                        <p class="tag">4 m/lt</p>
+                                        <p class="tag">5 m/lt</p>
+                                        <p class="tag">6 m/lt</p>
+                                        <p class="tag">7 m/lt</p>
+                                        <p class="tag">8 m/lt</p>
+                                        <p class="tag">9 m/lt</p>
+                                        <p class="tag">10 m/lt</p>
+                                    </div>
+
+                                </div>
+
+                                <div id="picker"></div>
+
+                                <div class="result"></div>
+                            </body>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">    
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header" id="card-header">
+                            <h4 class="card-title">Biuret</h4><br>
                             <body>
                                 <input type="file" class="image-input" accept="image/*">
                                 <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
@@ -167,7 +215,7 @@
                   <div class="col-lg-12">
                       <div class="card">
                           <div class="card-header" id="card-header1">
-                              <h4 class="card-title">Expanded Images</h4><br>
+                              <h4 class="card-title">Elemento 2</h4><br>
                               <body>
                                   <input type="file" class="image-input" accept="image/*">
                                   <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
@@ -194,7 +242,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header" id="card-header2">
-                            <h4 class="card-title">Expanded Images</h4><br>
+                            <h4 class="card-title">Elemento 3</h4><br>
                             <body>
                                 <input type="file" class="image-input" accept="image/*">
                                 <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
@@ -221,7 +269,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header" id="card-header3">
-                                <h4 class="card-title">Expanded Images</h4><br>
+                                <h4 class="card-title">Agua</h4><br>
                                 <body>
                                     <input type="file" class="image-input" accept="image/*">
                                     <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
@@ -244,113 +292,6 @@
                     </div>
               </div>
 
-              <div class="row">    
-                  <div class="col-lg-12">
-                      <div class="card">
-                          <div class="card-header" id="card-header4">
-                              <h4 class="card-title">Expanded Images</h4><br>
-                              <body>
-                                  <input type="file" class="image-input" accept="image/*">
-                                  <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
-                                  <div class="color-columns">
-                                      <div class="column">
-                                          <div class="selected-image-container"></div>
-                                      </div>
-                                      <div class="column">
-                                        <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;"></div>
-                                    </div>
-                                    <div class="column">
-                                      <div class="color-picker"></div>
-                                        <div class="color-indicator"></div>
-                                    </div>
-                                  </div>
-                                  <div class="result"></div>
-                              </body>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="row">    
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header" id="card-header5">
-                            <h4 class="card-title">Expanded Images</h4><br>
-                            <body>
-                                <input type="file" class="image-input" accept="image/*">
-                                <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
-                                <div class="color-columns">
-                                    <div class="column">
-                                        <div class="selected-image-container"></div>
-                                    </div>
-                                    <div class="column">
-                                      <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;"></div>
-                                  </div>
-                                  <div class="column">
-                                    <div class="color-picker"></div>
-                                      <div class="color-indicator"></div>
-                                  </div>
-                                </div>
-                                <div class="result"></div>
-                            </body>
-                        </div>
-                    </div>
-                </div>
-              </div>
-                
-              <div class="row">    
-              <div class="col-lg-12">
-                  <div class="card">
-                      <div class="card-header" id="card-header6">
-                          <h4 class="card-title">Expanded Images</h4><br>
-                          <body>
-                              <input type="file" class="image-input" accept="image/*">
-                              <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
-                              <div class="color-columns">
-                                  <div class="column">
-                                      <div class="selected-image-container"></div>
-                                  </div>
-                                  <div class="column">
-                                    <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;"></div>
-                                </div>
-                                <div class="column">
-                                  <div class="color-picker"></div>
-                                    <div class="color-indicator"></div>
-                                </div>
-                              </div>
-                              <div class="result"></div>
-                          </body>
-                      </div>
-                  </div>
-              </div>
-              </div>
-
-              <div class="row">    
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header" id="card-header7">
-                            <h4 class="card-title">Expanded Images</h4><br>
-                            <body>
-                                <input type="file" class="image-input" accept="image/*">
-                                <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
-                                <div class="color-columns">
-                                    <div class="column">
-                                        <div class="selected-image-container"></div>
-                                    </div>
-                                    <div class="column">
-                                      <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;"></div>
-                                  </div>
-                                  <div class="column">
-                                    <div class="color-picker"></div>
-                                      <div class="color-indicator"></div>
-                                  </div>
-                                </div>
-                                <div class="result"></div>
-                            </body>
-                        </div>
-                    </div>
-                </div>
-              </div>
 
             </div>	
         </div>
