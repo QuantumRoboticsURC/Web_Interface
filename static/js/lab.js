@@ -43,8 +43,11 @@ function takePicture(parameter){
 
 window.onload = function() {
   update();
-  // Checar el color picker que se desplegará al cargar la página
-  initColorPicker();
+  
+  // Llamar a initColorPicker tres veces con diferentes ids
+  initColorPicker('picker1');
+  initColorPicker('picker2');
+  initColorPicker('picker3');
 
   // Asigna el evento a todos los input files con clase "image-input"
   const imageInputs = document.querySelectorAll('.image-input');
@@ -53,31 +56,30 @@ window.onload = function() {
   });
 };
 
-function initColorPicker() {
+function initColorPicker(pickerId) {
   // Obtener todos los elementos con la clase 'cuadro'
   const cuadros = document.querySelectorAll('.cuadro');
-
-  // Crear un array para almacenar los colores
   const colores = [];
 
   // Iterar sobre cada cuadro y obtener su color
   cuadros.forEach(cuadro => {
       // Obtener el color del cuadro
       const color = window.getComputedStyle(cuadro).backgroundColor;
-
-      // Agregar el color al array
       colores.push(color);
   });
 
   // Configurar opciones del color picker
   const colorPickerOptions = {
       colors: colores,
-      width: 500, // Ancho del color picker
-   };
+      width: 500,
+      slider: false,
+      sliderSize: 0,
+  };
 
   // Crear el color picker con las opciones configuradas
-  var colorPicker = new iro.ColorPicker('#picker', colorPickerOptions);
+  var colorPicker = new iro.ColorPicker('#' + pickerId, colorPickerOptions);
 }
+
 
 
 function update() {
@@ -156,6 +158,7 @@ function handleImage(event) {
 
           const averageHexColor = rgbToHex(averageRed, averageGreen, averageBlue);
           colorPicker.color.set(averageHexColor);
+
           //Checar el colocar mas picker(circulos) para ver mas colores
           colorIndicator.style.backgroundColor = averageHexColor;
 
