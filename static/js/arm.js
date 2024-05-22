@@ -7,22 +7,22 @@ ros = new ROSLIB.Ros({
     url: "ws://" + robot_IP + ":9090"
 });
 //Camera
-if (_config.is_WebVideo){
-    var topic = _config.topic_Arm_Camera;
-    var src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + topic + "&type=ros_compressed";
-    document.getElementById("Arm_Camera").src = src; 
-} else {
-    var listener = new ROSLIB.Topic({
-        ros : ros,
-        name : _config.topic_Arm_Camera + '/compressed',
-        messageType : 'sensor_msgs/CompressedImage'
-    });
+//if (_config.is_WebVideo){
+  //  var topic = _config.topic_Arm_Camera;
+  //  var src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + topic + "&type=ros_compressed";
+  //  document.getElementById("Arm_Camera").src = src; 
+//} else {
+ //   var listener = new ROSLIB.Topic({
+ //       ros : ros,
+ //       name : _config.topic_Arm_Camera + '/compressed',
+ //       messageType : 'sensor_msgs/CompressedImage'
+ //   });
 
-    listener.subscribe(function(message) {
-        var imagedata = "data:image/png;base64," + message.data;
-        document.getElementById("Arm_Camera").src = imagedata;
-    });
-}  
+ //   listener.subscribe(function(message) {
+ //       var imagedata = "data:image/png;base64," + message.data;
+ //       document.getElementById("Arm_Camera").src = imagedata;
+ //   });
+//}  
 
 //Joystick
 var listener_Joystick = new ROSLIB.Topic({

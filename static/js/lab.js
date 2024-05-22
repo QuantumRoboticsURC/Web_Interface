@@ -178,3 +178,32 @@ function handleImage(event) {
 
   reader.readAsDataURL(file);
 }
+
+function showImage() {
+  const input = document.getElementById('inputImage');
+  const container = document.getElementById('imageContainer');
+
+  // Verificar si se ha seleccionado un archivo
+  if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      // Definir la función de callback cuando la imagen se carga
+      reader.onload = function (e) {
+          // Crear un elemento de imagen
+          const imgElement = document.createElement('img');
+          imgElement.src = e.target.result;
+          
+          // Limpiar el contenedor de la imagen antes de mostrar la nueva imagen
+          container.innerHTML = '';
+
+          // Agregar la imagen al contenedor
+          container.appendChild(imgElement);
+      }
+
+      // Leer el contenido del archivo como una URL de datos
+      reader.readAsDataURL(input.files[0]);
+  } else {
+      // Si no se seleccionó ninguna imagen, mostrar un mensaje de error
+      container.innerHTML = 'Por favor, selecciona una imagen.';
+  }
+}

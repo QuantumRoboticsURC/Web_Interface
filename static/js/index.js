@@ -13,6 +13,14 @@ var simpledrive = new ROSLIB.Topic ({
   messageType: 'std_msgs/Bool',
   queue_size: 10
 })
+
+var camera_quality = new ROSLIB.Topic ({
+  ros : ros,
+  name : '/image_quality',
+  messageType: 'std_msgs/Int8',
+  queue_size: 1
+})
+
 function change_camera(camera){
     if(camera==1){
       var zed_topic = _config.topic_USB_Camera;
@@ -28,6 +36,11 @@ function change_camera(camera){
 function activate_simpledrive(activation){
   simpledrive.publish(new ROSLIB.Message({data:activation}));
   console.log(activation);
+}
+
+function change_quality(resol){
+  camera_quality.publish(new ROSLIB.Message({data:parseInt(resol)}));
+  console.log(resol);
 }
 
 

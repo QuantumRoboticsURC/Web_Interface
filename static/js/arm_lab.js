@@ -7,25 +7,7 @@ ros = new ROSLIB.Ros({
     url: "ws://" + robot_IP + ":9090"
 }); 
 
-var labmechanism = new ROSLIB.Topic ({
-    ros : ros,
-    name : 'lab_mechanism',
-    messageType: 'std_msgs/Int8',
-    queue_size: 1
-  })
 
-  var Drill = new ROSLIB.Topic ({
-    ros : ros,
-    name : 'armteleop/drill',
-    messageType: 'std_msgs/Int8',
-    queue_size: 1
-  })
-  var Servo_left = new ROSLIB.Topic ({
-    ros : ros,
-    name : 'Servo_left',
-    messageType: 'std_msgs/Int8',
-    queue_size: 1
-  })
 
   
 class ArmTeleop{
@@ -33,7 +15,7 @@ class ArmTeleop{
         
         this.servoright = new ROSLIB.Topic({
             ros:ros,
-            name:'servo_right',
+            name:'science/servos2',
             messageType: 'std_msgs/Int8',
             queue_size:1
         });
@@ -43,12 +25,7 @@ class ArmTeleop{
             messageType: 'std_msgs/Int8',
             queue_size:1
         });
-        this.servoleft = new ROSLIB.Topic({
-            ros:ros,
-            name:'/ciencias/garra2',
-            messageType: 'std_msgs/Int8',
-            queue_size:1
-        });
+    
         this.joint3 = new ROSLIB.Topic({
             ros:ros,
             name:'ciencias/brazo2',
@@ -72,11 +49,11 @@ class ArmTeleop{
             ros : ros,
             name : 'arm_teleop/cam',
             messageType : 'std_msgs/Int8',
-            queue_size: 1   
+            queue_size: 1 //  
         });
-        this.centrifugadora= new ROSLIB.Topic({
+        this.servoleft= new ROSLIB.Topic({
             ros : ros,
-            name : 'centrifuge',
+            name : 'science/servos1',
             messageType : 'std_msgs/Int8',
             queue_size: 1  
         });
@@ -101,8 +78,8 @@ class ArmTeleop{
             q3:[0,180], //Cambio de límites
             q4: [0,180],
             q5: [0,180],
-            q6: [0,240],
-            q7: [0,240]
+            q6: [-1,1],
+            q7: [-1,1]
             
             
         }
@@ -179,13 +156,13 @@ class ArmTeleop{
         this.joint2.publish(message3);
         this.servoright.publish(message5);
         this.servocenter.publish(message6);
-        this.servoleft.publish(message7);
-        this.centrifugadora.publish(message8);
-        this.cameraA.publish(message9);
-        this.labmechanism.publish(mesage10)
-        this.drill.publish(mesage11)
-        this.Servo_right.publish(message12)
-        this.Servo_left.publish(message13)
+        //this.servoleft.publish(message7);
+        this.servoleft.publish(message8);
+        //this.cameraA.publish(message9);
+        //this.labmechanism.publish(mesage10)
+        //this.drill.publish(mesage11)
+        //this.Servo_right.publish(message12)
+        //this.Servo_left.publish(message13)
 
         if(ledstate){
             console.log(ledstate)
@@ -197,7 +174,26 @@ class ArmTeleop{
      my_map(in_min, in_max, out_min, out_max, x){ //map arduino
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
+    servo_posicion(num_garra,pos){
+        console.log(pos);
+        if (num_garra ==1){
+                
+            this.angles_map.q6=pos;
+                
+            }
+        else{
+            this.angles_map.q7=pos;
+    
+        }
+        this.publishMessages();
+    }
+    Up_Down (valor){
 
+        var message = new ROSLIB.Message({data: valor});
+        labmechanism.publish(message);
+        console.log(valor);
+    
+    }
     }
 let arm = new ArmTeleop();
 
@@ -364,20 +360,6 @@ function change_led(data){
     //getTxt();
 }
 
-function Up_Down (valor){
-
-    if (valor ==1){
-        console.log("Arriba")
-        
-    }
-    else {
-        console.log("Abajo")
-    }
-    var message = new ROSLIB.Message({data: 1});
-    labmechanism.publish(new ROSLIB.Message({data:valor}));
-    console.log(valor);
-
-}
 
 function taladro(option){
     if (option == 1){
@@ -391,33 +373,7 @@ function taladro(option){
     
 }
 
-function servo_posicion(num_garra,pos){
 
-    if (num_garra ==1){
-            
-        switch (pos) {
-            case 1: 
-                arm.angles_map.q6=1;
-                arm.angles_map.q7=2;
-                arm.angles_map.q6=1;
-                arm.angles_map.q7=2;
-                break;
-            
-            case 2:
-                arm.angles_map.q6=1;
-                arm.angles_map.q7=2;
-                arm.angles_map.q6=1;
-                arm.angles_map.q7=2;
-                break;
-            
-            case 3:
-                arm.angles_map.q6=1;
-                arm.angles_map.q7=2;
-                arm.angles_map.q6=1;
-                arm.angles_map.q7=2;
-                break;
-
-        }}
     
     //else {
        // switch (pos) {
@@ -444,8 +400,7 @@ function servo_posicion(num_garra,pos){
         //}
 
     //}
-    console.log(num_garra)
-    }
+    //console.log(num_garra);
     
 function getTxt() {}
     arm.publishMessages();
@@ -464,19 +419,19 @@ function getTxt() {}
     localStorage.setItem("Brazo 2", Brazo_2);
     localStorage.setItem("Garra 2", Garra_2);
     localStorage.setItem("Camera", Camera);
-    localStorage.setIteam("Drill", Drill);
-    localStorage.setIteam("servo_right", Servo_right);
-    localStorage.setIteam("Servo_left", Servo_left);
+    localStorage.setItem("Drill", Drill);
+    localStorage.setItem("servo_right", Servo_right);
+    localStorage.setItem("Servo_left", Servo_left);
     
 
-    document.getElementById("Brazo 1").innerHTML = Brazo_1;
-    document.getElementById("Garra 1").innerHTML = Garra_1;
-    document.getElementById("Brazo 2").innerHTML = Brazo_2;
-    document.getElementById("Garra 2").innerHTML = Garra_2;
-    document.getElementById("Camera").innerHTML = Camera;
-    document.getElementById("Drill").innerHTML = Drill;
-    document.getElementById("Servo_right").innerHTML = Servo_right;
-    document.getElementById("Servo_left").innerHTML = Servo_left;
+    //document.getElementById("Brazo 1").innerHTML = Brazo_1;
+    //document.getElementById("Garra 1").innerHTML = Garra_1;
+    //document.getElementById("Brazo 2").innerHTML = Brazo_2;
+    //document.getElementById("Garra 2").innerHTML = Garra_2;
+    //document.getElementById("Camera").innerHTML = Camera;
+    //document.getElementById("Drill").innerHTML = Drill;
+    //document.getElementById("Servo_right").innerHTML = Servo_right;
+    //document.getElementById("Servo_left").innerHTML = Servo_left;
 
 
     

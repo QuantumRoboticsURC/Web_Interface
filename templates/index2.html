@@ -137,9 +137,9 @@
             <h4 style="margin-bottom: 4%;">Cameras</h4>
               <div class="class body">
                 <div class="col-lg-6">
-                  <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('USB0');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;">USB0</button>
-					        <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('USB1');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem">USB1</button>
-					        <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('Zed');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white;border-radius: 1rem">Zed</button>
+                  <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('1');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;">USB0</button>
+					        <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('2');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem">USB1</button>
+					        <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('3');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white;border-radius: 1rem">Zed</button>
               </div>	
             </div>		
           </div>
@@ -153,6 +153,17 @@
               </div>	
             </div>		
           </div>
+
+          <div class= "card"  style="width: 25%; padding: 2%; margin-left: 1.2%; display: inline-block;" >
+            <h4 style="margin-bottom: 4%;">Camera Quality</h4>
+              <div class="class body">
+                <div class="col-lg-6">
+                  <input id="Z_Txt" type="text" class="form-control" value="7" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_quality(document.getElementById('Z_Txt').value)" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white;border-radius: 1rem;">ADJUST
+              </div>	
+            </div>		
+          </div>
+
 
 
           <div class="row">	
