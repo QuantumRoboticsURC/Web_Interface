@@ -12,7 +12,6 @@
 .cuadro{
     width: 50px; 
     height: 50px; 
-    background-color: green;
     margin-left: 20px;
     margin-right: 20px;
     display: inline-block;
@@ -36,43 +35,43 @@
 
 /* Colores de los cuadros */
 #color1{
-    background-color:rgb(219, 17, 17);
+    background-color: rgb(70, 86, 127);
 }
 
 #color2{
-    background-color: blueviolet;
+    background-color: rgb(85, 103, 130);
 }
 
 #color3{
-    background-color: green;
+    background-color: rgb(35, 118, 196);
 }
 
 #color4{
-    background-color: hotpink;
+    background-color: rgb(25, 104, 168) ;
 }
 
 #color5{
-    background-color: gray;
+    background-color: rgb(36, 166, 226);
 }
 
 #color6{
-    background-color: maroon;
+    background-color: rgb(146, 98, 137);
 }
 
 #color7{
-    background-color: magenta;
+    background-color: rgb(199, 131, 149);
 }
 
 #color8{
-    background-color: goldenrod;
+    background-color: rgb(219, 195, 253);
 }
 
 #color9{
-    background-color: yellow;
+    background-color: rgb(38, 36, 77);
 }
 
 #color10{
-    background-color: burlywood;
+    background-color: rgb(217, 80, 88);
 }
 
 .content{

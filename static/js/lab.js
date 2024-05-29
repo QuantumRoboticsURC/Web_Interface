@@ -45,9 +45,15 @@ window.onload = function() {
   update();
   
   // Llamar a initColorPicker tres veces con diferentes ids
-  initColorPicker('picker1');
-  initColorPicker('picker2');
-  initColorPicker('picker3');
+  //Biuret
+  const biuret = ["rgb(146, 98, 137)", "rgb(199, 131, 149)", "rgb(219, 195, 253)"]
+  initColorPicker('picker1', biuret);
+  //Lugol
+  const lugol = ["rgb(38, 36, 77)", "rgb(217, 80, 88)"]
+  initColorPicker('picker2', lugol);
+  //Benedict
+  const benedict = ["rgb(70, 86, 127)", "rgb(85, 103, 130)", "rgb(35, 118, 196)", "rgb(25, 104, 168)", "rgb(36, 166, 226)"]
+  initColorPicker('picker3', benedict);
 
   // Asigna el evento a todos los input files con clase "image-input"
   const imageInputs = document.querySelectorAll('.image-input');
@@ -56,17 +62,17 @@ window.onload = function() {
   });
 };
 
-function initColorPicker(pickerId) {
+function initColorPicker(pickerId, colores) {
   // Obtener todos los elementos con la clase 'cuadro'
-  const cuadros = document.querySelectorAll('.cuadro');
-  const colores = [];
+  // const cuadros = document.querySelectorAll('.cuadro');
 
   // Iterar sobre cada cuadro y obtener su color
-  cuadros.forEach(cuadro => {
-      // Obtener el color del cuadro
-      const color = window.getComputedStyle(cuadro).backgroundColor;
-      colores.push(color);
-  });
+  // cuadros.forEach(cuadro => {
+  //     // Obtener el color del cuadro
+  //     const color = window.getComputedStyle(cuadro).backgroundColor;
+  //     colores.push(color);
+  //     console.log(colores)
+  // });
 
   // Configurar opciones del color picker
   const colorPickerOptions = {
@@ -79,8 +85,6 @@ function initColorPicker(pickerId) {
   // Crear el color picker con las opciones configuradas
   var colorPicker = new iro.ColorPicker('#' + pickerId, colorPickerOptions);
 }
-
-
 
 function update() {
 $.get("get_img", function(data, status){

@@ -5,13 +5,10 @@ import time
 from datetime import datetime
 from os import listdir
 from os.path import isfile, join
-
 from flask import Flask, Response, render_template, jsonify
 
 application = Flask(__name__, static_url_path='/static')
-random.seed()
-
-
+random.seed
 
 @application.route('/lab')
 def ciencias():
