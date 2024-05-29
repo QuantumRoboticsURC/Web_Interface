@@ -213,9 +213,13 @@ let arm = new ArmTeleop();
 var l2=3.5;
 var l3=2.5;
 
-
+var state = ["HOME" , "HOME"];
 
 function predefinedPosition(position){
+    before = state[0];
+    state[0] = state[1];
+    state[1]=position;
+
     switch(position){
         case "HOME":
             arm.angles_map.q1=0;
@@ -262,8 +266,45 @@ function predefinedPosition(position){
             arm.angles_map.q2=108;
             arm.angles_map.q3=330;
     }
-    getTxt();
-    
+    StateMachine(position);
+    return position;
+}
+
+function StateMachine(position){
+
+    const boton1 = document.getElementById("button1");
+    const boton2 = document.getElementById("button2");
+    const boton3 = document.getElementById("button3");
+    const boton4 = document.getElementById("button4");
+
+    if (state[1] === "HOME"){
+        getTxt();
+        boton2.disabled = false;
+        boton3.disabled = true;
+        boton4.disabled = true;
+    }
+
+    if (state[1] === "INTERMEDIATE"){
+        getTxt();
+        boton1.disabled = false;
+        boton3.disabled = false;
+        boton4.disabled = true;
+    }
+
+    if (state[1] === "GROUNDINTERMEDIATE"){
+        getTxt();
+        boton1.disabled = true;
+        boton2.disabled = false;
+        boton4.disabled = false;
+    }
+
+    if(state[1] === "GROUND"){
+        getTxt();
+        boton1.disabled = true;
+        boton2.disabled = true;
+        boton3.disabled = false;
+    }
+
 }
 function qlimit(l, val){   //limites
     if (val < l[0]){ //inferior
