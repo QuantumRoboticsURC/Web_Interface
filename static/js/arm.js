@@ -87,7 +87,7 @@ var pub_q1 = new ROSLIB.Topic({
 });
 var pub_q2 = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/joint2',
+    name : 'arm_teleop/joint2_unprocessed',
     messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
@@ -171,8 +171,8 @@ var l4 = 1.7;
 
 //Limits
 var limits_map = {
-    q1:[-45,45],
-    q2:[0,160],
+    q1:[-90,90],
+    q2:[0,190],
     q3:[-140,0],
     q4:[-135,90],
     joint5:[-90,90], 
@@ -435,7 +435,7 @@ function publish_angles(){
 
     var msn_q1 = new ROSLIB.Message({data : q1});
     var msn_q2 = new ROSLIB.Message({data : q2});
-    var msn_q3 = new ROSLIB.Message({data : -q3});
+    var msn_q3 = new ROSLIB.Message({data : q3});
     var msn_q4 = new ROSLIB.Message({data : -q4});
     var msn_txt = new ROSLIB.Message({data : txt});
 

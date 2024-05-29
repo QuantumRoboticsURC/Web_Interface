@@ -12,7 +12,13 @@ ros = new ROSLIB.Ros({
   
 class ArmTeleop{
     constructor(){
-        
+        this.labmechanism = new ROSLIB.Topic({
+            ros:ros,
+            name:'/science/elevator',
+            messageType: 'std_msgs/Int8',
+            queue_size:10
+
+        })
         this.servoright = new ROSLIB.Topic({
             ros:ros,
             name:'science/servos2',
@@ -159,7 +165,7 @@ class ArmTeleop{
         //this.servoleft.publish(message7);
         this.servoleft.publish(message8);
         //this.cameraA.publish(message9);
-        //this.labmechanism.publish(mesage10)
+        this.labmechanism.publish(mesage10)
         //this.drill.publish(mesage11)
         //this.Servo_right.publish(message12)
         //this.Servo_left.publish(message13)
@@ -190,7 +196,7 @@ class ArmTeleop{
     Up_Down (valor){
 
         var message = new ROSLIB.Message({data: valor});
-        labmechanism.publish(message);
+        this.labmechanism.publish(message);
         console.log(valor);
     
     }
