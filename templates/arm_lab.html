@@ -195,21 +195,7 @@
 											onclick="arm.servo_posicion(2,1);">Meter Lab</button>
 									</div>
 								</div>
-								<div class="card new-buttons-armlab">
-									<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Taladro
-									</medium>
-
-									<!-- Taladro-->
-									<div class="col-md-12" style="display: inline-block; text-align: center;">
-										<button type="button" class="btn btn-secondary btn-look-one"
-											style="margin-top: 1rem; width: 4rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onclick="taladro(1);">On</button>
-										<button type="button" class="btn btn-secondary btn-look-two"
-											style="margin-bottom: 1rem; width: 4rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onclick="taladro(0);">Off</button>
-											
-									</div>
-								</div>
+								
 
 
 								<!--
@@ -296,41 +282,37 @@
 											<!--Predefined positions-->
 											<div class="col-md-12" id="b-c-1-2">
 												<div class="btn-group-vertical modal-dialog-centered btn-sm" id="b-c-1">
-													<button type="button" class="btn btn-secondary btn-look-one"
-														onclick="predefinedPosition('INTERMEDIATE');getTxt();"
-														style="font-size: 0.8rem; margin-top: 1rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Intermediate</button>
 													<button type="button" class="btn btn-secondary btn-look-two"
 														onclick="predefinedPosition('HOME');getTxt();"
-														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Home</button>
+														style="font-size: 0.8rem; margin-top: 1rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Home</button>
 													<button type="button" class="btn btn-secondary btn-look-one"
-														onclick="predefinedPosition('GROUND');getTxt();"
-														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Ground
-														Extraction</button>
+														onclick="predefinedPosition('INTERMEDIATE');getTxt();"
+														style="font-size: 0.8rem;  width: 11rem; background-color:#0C76C4; border-color:white; color:white; border-radius: 1rem;">Intermediate</button>
 													<button type="button" class="btn btn-secondary btn-look-two"
 														onclick="predefinedPosition('GROUNDINTERMEDIATE');getTxt();"
 														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Ground
 														Intermediate</button>
+													<button type="button" class="btn btn-secondary btn-look-one"
+														onclick="predefinedPosition('GROUND');getTxt();"
+														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Ground
+														Extraction</button>
+													
 												</div>
 												<hr>
 												<div class="btn-group-vertical modal-dialog-centered btn-sm botones-control" id="b-c-2">
 													<button type="button" class="btn btn-secondary btn-look-two"
-														onclick="predefinedPosition('SECONDINT');getTxt();"
 														style="font-size: 0.8rem; width: 11rem; background-color:#094a79; border-color:#F4F4F4; color: white; border-radius: 1rem;">Second
 														Intermediate</button>
 													<button type="button" class="btn btn-secondary btn-look-two"
-														onclick="predefinedPosition('SERVOSTEP');getTxt();"
 														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Servo
 														Step</button>
 													<button type="button" class="btn btn-secondary btn-look-one"
-														onclick="predefinedPosition('LEFT');getTxt();"
 														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Left
 														Servo</button>
 													<button type="button" class="btn btn-secondary btn-look-two"
-														onclick="predefinedPosition('CENTER');getTxt();"
 														style="font-size: 0.8rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Center
 														Servo</button>
 													<button type="button" class="btn btn-secondary btn-look-one"
-														onclick="predefinedPosition('RIGHT');getTxt();"
 														style="font-size: 0.8rem; margin-bottom: 1rem; width: 11rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Right
 														Servo</button>
 												</div>
@@ -341,13 +323,13 @@
 									<div class="card">
 										<div class="card-body">
 											<p>Rotation: <label type="text" id="Rotation"></label></p>
-											<p>Yellow Jacket Axis 2: <label type="text" id="YJ"></label></p>
-											<p>Servo Axis 3: <label type="text" id="Axis3"></label></p>
-											<p>Left Servo: <label type="text" id="LS"></label></p>
-											<p>Center Sevo: <label type="text" id="CS"></label></p>
-											<p>Right Servo: <label type="text" id="RS"></label></p>
-											<p>Centrifuge: <label type="text" id="Centrifuge"></label></p>
-											<p>Led Signal:<label type="text" id="LED"></label></p>
+											<p>Joint 2: <label type="text" id="YJ"></label></p>
+											<p>Joint 3: <label type="text" id="Axis3"></label></p>
+											<p>Servo Joint 4: <label type="text" id="LS"></label></p>
+											<p>Camara: <label type="text" id="CS"></label></p>
+											<p>Taladro: <label type="text" id="RS"></label></p>
+											<p>Garra Derecha: <label type="text" id="Centrifuge"></label></p>
+											<p>Garra Izquierda:<label type="text" id="LED"></label></p>
 										</div>
 									</div>
 								</div>
@@ -383,8 +365,7 @@
 												</div>
 											</div>
 											<div class="row" style="margin-top: 1rem;">
-												<small class="text-muted" style="margin-left: 2rem;">Yellow Jacket Axis
-													2:</small>
+												<small class="text-muted" style="margin-left: 2rem;">Joint 2:</small>
 												<div class="col-md-12">
 													<div class="btn-group btn-sm" role="group"
 														aria-label="Basic example"
@@ -410,8 +391,7 @@
 												</div>
 											</div>
 											<div class="row" style="margin-top: 1rem;">
-												<small class="text-muted" style="margin-left: 2rem;">Servo Axis
-													3:</small>
+												<small class="text-muted" style="margin-left: 2rem;">Joint 3:</small>
 												<div class="col-md-12">
 													<div class="btn-group btn-sm" role="group"
 														aria-label="Basic example"
@@ -427,95 +407,35 @@
 															<button type="button"
 																class="btn btn-secondary btn-look-value-minus"
 																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="arm.moveServos(4,'-',parseInt(document.getElementById('Axis3_Txt').value))">&nbsp;-&nbsp;</button>
+																onclick="move_joint3(parseInt(document.getElementById('Axis3_Txt').value),-1)">&nbsp;-&nbsp;</button>
 															<button type="button"
 																class="btn btn-secondary btn-look-value-plus"
 																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="arm.moveServos(4,'+',parseInt(document.getElementById('Axis3_Txt').value))">&nbsp;+&nbsp;</button>
+																onclick="move_joint3(parseInt(document.getElementById('Axis3_Txt').value),1)">&nbsp;+&nbsp;</button>
 														</div>
 													</div>
 												</div>
 											</div>
 											<div class="row" style="margin-top: 1rem;">
-												<small class="text-muted" style="margin-left: 2rem;">Servo Left:</small>
+												<small class="text-muted" style="margin-left: 2rem;">Servo Joint 3:</small>
 												<div class="col-md-12">
 													<div class="btn-group btn-sm" role="group"
 														aria-label="Basic example"
 														style="display: inline-block; width: 100%; text-align: center;">
 														<div class="input-group">
 															<button type="button"
-																class="btn btn-secondary btn-look-value"
-																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="go(parseFloat(document.getElementById('Left_Txt').value),4)">GO</button>
-															<input id="Left_Txt" type="text" class="form-control-go input-change"
-																value="5" aria-label="Input group example"
-																aria-describedby="btnGroupAddon" style="width: 50%;">
-															<button type="button"
 																class="btn btn-secondary btn-look-value-minus"
-																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="arm.moveServos(1,'-',parseInt(document.getElementById('Left_Txt').value))">&nbsp;-&nbsp;</button>
+																style="font-size: 0.8rem; width: 8rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="move_joint4(0)">&nbsp;Taladro&nbsp;</button>
 															<button type="button"
 																class="btn btn-secondary btn-look-value-plus"
-																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="arm.moveServos(1,'+',parseInt(document.getElementById('Left_Txt').value))">&nbsp;+&nbsp;</button>
+																style="font-size: 0.8rem; width: 8rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+																onclick="move_joint4(90)">&nbsp;Sensor de temperatura&nbsp;</button>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div class="row" style="margin-top: 1rem;">
-												<small class="text-muted" style="margin-left: 2rem;">Servo
-													Center:</small>
-												<div class="col-md-12">
-													<div class="btn-group btn-sm" role="group"
-														aria-label="Basic example"
-														style="display: inline-block; width: 100%; text-align: center;">
-														<div class="input-group">
-															<button type="button"
-																class="btn btn-secondary btn-look-value"
-																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="go(parseFloat(document.getElementById('Center_Txt').value),5)">GO</button>
-															<input id="Center_Txt" type="text" class="form-control-go input-change"
-																value="5" aria-label="Input group example"
-																aria-describedby="btnGroupAddon" style="width: 50%;">
-															<button type="button"
-																class="btn btn-secondary btn-look-value-minus"
-																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="arm.moveServos(2,'-',parseInt(document.getElementById('Center_Txt').value))">&nbsp;-&nbsp;</button>
-															<button type="button"
-																class="btn btn-secondary btn-look-value-plus"
-																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="arm.moveServos(2,'+',parseInt(document.getElementById('Center_Txt').value))">&nbsp;+&nbsp;</button>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="row" style="margin-top: 1rem;">
-												<small class="text-muted" style="margin-left: 2rem;">Servo
-													Right:</small>
-												<div class="col-md-12">
-													<div class="btn-group btn-sm" role="group"
-														aria-label="Basic example"
-														style="display: inline-block; width: 100%; text-align: center;">
-														<div class="input-group">
-															<button type="button"
-																class="btn btn-secondary btn-look-value"
-																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="go(parseFloat(document.getElementById('Right_Txt').value),6)">GO</button>
-															<input id="Right_Txt" type="text" class="form-control-go input-change"
-																value="5" aria-label="Input group example"
-																aria-describedby="btnGroupAddon" style="width: 50%;">
-															<button type="button"
-																class="btn btn-secondary btn-look-value-minus"
-																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="arm.moveServos(3,'-',parseInt(document.getElementById('Right_Txt').value))">&nbsp;-&nbsp;</button>
-															<button type="button"
-																class="btn btn-secondary btn-look-value-plus"
-																style="font-size: 0.8rem; width: 3.2rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-																onclick="arm.moveServos(3,'+',parseInt(document.getElementById('Right_Txt').value))">&nbsp;+&nbsp;</button>
-														</div>
-													</div>
-												</div>
-											</div>
+
 											<div class="row" style="margin-top: 1rem;">
 												<small class="text-muted" style="margin-left: 2rem;">Camera</small>
 												<div class="col-md-12">
@@ -538,30 +458,22 @@
 													</div>
 												</div>
 											</div>
-											<div class="row" style="text-align: center;">
-												<medium class="text-muted">Led Signal</medium>
-												<div class="col-md-12">
-													<button type="button" class="btn btn-secondary "
-														style="font-size: 0.8rem; width: 3.5rem; background-color:#419fe2; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-														onclick="change_led(true)">ON</button>
-													<button type="button" class="btn btn-secondary "
-														style="font-size: 0.8rem; width: 3.5rem; background-color:#094a79; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-														onclick="change_led(false)"
-														onmousedown="movePrismatic(-1)">OFF</button>
+											<div class="card new-buttons-armlab">
+												<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Taladro
+												</medium>
+			
+												<!-- Taladro-->
+												<div class="col-md-12" style="display: inline-block; text-align: center;">
+													<button type="button" class="btn btn-secondary btn-look-one"
+														style="margin-top: 1rem; width: 4rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="taladro(1);">On</button>
+													<button type="button" class="btn btn-secondary btn-look-two"
+														style="margin-bottom: 1rem; width: 4rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+														onclick="taladro(0);">Off</button>
+														
 												</div>
 											</div>
-											<div class="row" style="text-align: center; margin-top: 2rem;">
-												<medium class="text-muted">Cambiar End Tool</medium>
-												<div class="col-md-12">
-													<button type="button" class="btn btn-secondary "
-														style="font-size: 0.8rem; width: 5rem; background-color:#419fe2; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-														onclick="">Taladro</button>
-													<button type="button" class="btn btn-secondary "
-														style="font-size: 0.8rem; width: 5rem; background-color:#094a79; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-														onclick=""
-														onmousedown="">Sensor</button>
-												</div>
-											</div>
+											
 											<!---
 											<div class="row" style="text-align: center; margin-top: 2rem;">
 												<medium class="text-muted">Coordanates</medium>
@@ -642,17 +554,20 @@
 	toggle.addEventListener("click", () => {
 		sidebar.classList.toggle("close");
 	})
+	/*
 	searchBtn.addEventListener("click", () => {
 		sidebar.classList.remove("close");
 	})
+	
 	modeSwitch.addEventListener("click", () => {
 		body.classList.toggle("dark");
 		if (body.classList.contains("dark")) {
-			modeText.innerText = "Light mode";
+			modeText.innerText = "Light mode";/arm_lab
 		} else {
 			modeText.innerText = "Dark mode";
 		}
 	});
+	*/
 </script>
 
 </body>

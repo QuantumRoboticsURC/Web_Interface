@@ -34,21 +34,21 @@ class ArmTeleop{
     
         this.joint3 = new ROSLIB.Topic({
             ros:ros,
-            name:'ciencias/brazo2',
-            messageType: 'std_msgs/Int8',
+            name:'arm_teleop/joint3',
+            messageType: 'std_msgs/Float64',
             queue_size:1
         });
         this.joint1= new ROSLIB.Topic({
             ros: ros,
             
-            name: 'ciencias/brazo1',
-            messageType: 'std_msgs/Int8',
+            name: 'arm_teleop/joint1',
+            messageType: 'std_msgs/Float64',
             queue_size:1
         })
         this.joint2= new ROSLIB.Topic({
             ros: ros,
-            name: 'ciencias/garra1',
-            messageType: 'std_msgs/Int8',
+            name: 'arm_teleop/joint2',
+            messageType: 'std_msgs/Float64',
             queue_size:1
         });
         this.camera = new ROSLIB.Topic({
@@ -76,27 +76,35 @@ class ArmTeleop{
             messageType : 'std_msgs/Int8',
             queue_size: 1   
         });
+        this.Drill = new ROSLIB.Topic({
+            ros : ros,
+            name : 'science/drill',
+            messageType : 'std_msgs/Int8',
+            queue_size: 1
+        })
        
 
         this.limits_map = {
-            q1:[0,180],
-            q2:[0,180],
-            q3:[0,180], //Cambio de límites
+            q1:[-90,90],
+            q2:[0,190],
+            q3:[-140,0], //Cambio de límites
             q4: [0,180],
             q5: [0,180],
             q6: [-1,1],
-            q7: [-1,1]
+            q7: [-1,1],
+            q8: [0,1]
             
             
         }
         this.angles_map={
             q1:0.0,
-            q2:0.0,
-            q3:0.0,
+            q2:190.0,
+            q3:-140.0,
             q4:0.0,
             q5:0.0,
             q6:0.0,
-            q7:0.0
+            q7:0.0,
+            q8:0.0
             
         }
         this.led = false;  
@@ -161,11 +169,10 @@ class ArmTeleop{
         this.joint1.publish(message2);
         this.joint2.publish(message3);
         this.servoright.publish(message5);
-        this.servocenter.publish(message6);
-        //this.servoleft.publish(message7);
+        this.servocenter.publish(message7);
         this.servoleft.publish(message8);
         //this.cameraA.publish(message9);
-        this.labmechanism.publish(mesage10)
+        //this.labmechanism.publish(mesage10)
         //this.drill.publish(mesage11)
         //this.Servo_right.publish(message12)
         //this.Servo_left.publish(message13)
@@ -191,7 +198,7 @@ class ArmTeleop{
             this.angles_map.q7=pos;
     
         }
-        this.publishMessages();
+        getTxt();
     }
     Up_Down (valor){
 
@@ -207,81 +214,28 @@ var l2=3.5;
 var l3=2.5;
 
 
-function moveServos(servo_id,servo_dir,servo_step){
-           
-    switch(servo_id){
-        case 1:
-            if(servo_dir=='+'){
-                arm.angles_map.q1+=servo_step;
-            }
-            else{
-                arm.angles_map.q1-=servo_step;
-            }
-            
-            break;
-        case 2: 
-            if(servo_dir=='+'){
-                arm.angles_map.q2+=servo_step;
-            }
-            else{
-                arm.angles_map.q2-=servo_step;
-            }
-            
-            break;
-        case 3:
-                if(servo_dir=='+'){
-                    arm.angles_map.q3+=servo_step;
-                }
-                else{
-                    arm.angles_map.q3-=servo_step;
-                }
-                
-            break;
-        case 4:
-            if(servo_dir=='+'){
-                arm.angles_map.q4+=servo_step;
-                //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
-            }
-            else{
-                arm.angles_map.q4-=servo_step;
-                //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
-            }
-            
-            break;
-        case 5:
-            if(servo_dir=='+'){
-                arm.angles_map.q5+=servo_step;
-                //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
-            }
-            else{
-                arm.angles_map.q5-=servo_step;
-                //this.angles_map.q3 = my_map(0,245,58,303,this.angles_map.q3);
-            }
-    }
-    getTxt();
-}
 
 function predefinedPosition(position){
     switch(position){
         case "HOME":
             arm.angles_map.q1=0;
-            arm.angles_map.q2=130;
-            arm.angles_map.q3=300;
+            arm.angles_map.q2=190;
+            arm.angles_map.q3=-140;
             break;
         case "INTERMEDIATE":
             arm.angles_map.q1=0;
-            arm.angles_map.q2=65;
-            arm.angles_map.q3=358;
+            arm.angles_map.q2=140;
+            arm.angles_map.q3=-140;
             break
         case "GROUND":
             arm.angles_map.q1=0;
-            arm.angles_map.q2=-24;
-            arm.angles_map.q3=415;
+            arm.angles_map.q2=15;
+            arm.angles_map.q3=-90;
             break
         case "GROUNDINTERMEDIATE":
             arm.angles_map.q1=0;
             arm.angles_map.q2=45;
-            arm.angles_map.q3=430;
+            arm.angles_map.q3=-35;
             break
         case "SECONDINT":
                 arm.angles_map.q1=90;
@@ -324,12 +278,12 @@ function go(data,q){
     switch(q){
         case 1:
             arm.angles_map.q1=(arm.limits_map.q1,data);
-            document.getElementById("Left_Txt").value = 5;
+            document.getElementById("X_Txt").value = 5;
             
             break;
         case 2:
             arm.angles_map.q2=(arm.limits_map.q2,data);
-            document.getElementById("Left_Txt").value = 5;
+            document.getElementById("Y_Txt").value = 5;
             break;
         case 3:
             arm.angles_map.q3=(arm.limits_map.q3,data);
@@ -357,6 +311,14 @@ function move_yellow(data, sign=1){
     arm.angles_map.q2+=data*sign;
     getTxt();
 }
+function move_joint3(data, sign=1){
+    arm.angles_map.q3+=data*sign;
+    getTxt();
+}
+function move_joint4(data){
+    arm.angles_map.q4=data;
+    getTxt();
+}
 function moveCentrifuge(data){
     arm.angles_map.q7=data;
     getTxt();
@@ -374,8 +336,10 @@ function taladro(option){
     else{
         console.log("Off")
     }
-    Drill.publish(new ROSLIB.Message({data:option}));
+    arm.Drill.publish(new ROSLIB.Message({data:option}));
     console.log(option);
+    arm.angles_map.q8=option;
+    getTxt();
     
 }
 
@@ -408,7 +372,7 @@ function taladro(option){
     //}
     //console.log(num_garra);
     
-function getTxt() {}
+function getTxt() {
     arm.publishMessages();
     
     var Brazo_1 = String(arm.angles_map.q1);
@@ -416,9 +380,9 @@ function getTxt() {}
     var Brazo_2 = String(arm.angles_map.q3);
     var Garra_2 = String(arm.angles_map.q4);
     var Camera = String(arm.angles_map.q5);
-    var Drill = String(arm.angles_map.q6)
-    var Servo_left = String(arm.angles_map.q7)
-    var Servo_right = String(arm.angles_map.q8)
+    var Drill = String(arm.angles_map.q8)
+    var Servo_left = String(arm.angles_map.q6)
+    var Servo_right = String(arm.angles_map.q7)
 
     localStorage.setItem("Brazo 1", Brazo_1);
     localStorage.setItem("Garra 1",Garra_1);
@@ -430,15 +394,94 @@ function getTxt() {}
     localStorage.setItem("Servo_left", Servo_left);
     
 
-    //document.getElementById("Brazo 1").innerHTML = Brazo_1;
-    //document.getElementById("Garra 1").innerHTML = Garra_1;
-    //document.getElementById("Brazo 2").innerHTML = Brazo_2;
-    //document.getElementById("Garra 2").innerHTML = Garra_2;
-    //document.getElementById("Camera").innerHTML = Camera;
-    //document.getElementById("Drill").innerHTML = Drill;
-    //document.getElementById("Servo_right").innerHTML = Servo_right;
-    //document.getElementById("Servo_left").innerHTML = Servo_left;
+    document.getElementById("Rotation").innerHTML = Brazo_1;
+    document.getElementById("YJ").innerHTML = Garra_1;
+    document.getElementById("Axis3").innerHTML = Brazo_2;
+    document.getElementById("LS").innerHTML = Garra_2;
+    document.getElementById("CS").innerHTML = Camera;
+    document.getElementById("RS").innerHTML = Drill;
+    document.getElementById("Centrifuge").innerHTML = Servo_left;
+    document.getElementById("LED").innerHTML = Servo_right;
+    arm_interface(arm.angles_map.q2,arm.angles_map.q3)
 
+}
+function arm_interface(q2,q3){    
+	//Transformación a coordenadas rectangulares
+    let acum = deg2rad(q2);
+	let x2=l2*math.cos(acum);
+	let y2=l2*math.sin(acum);
+    var q3n=q3;
+    acum+=deg2rad(q3n);
+	let x3=x2+l3*math.cos(acum);
+	let y3=y2+l3*math.sin(acum);    
+	//Gráfica
+	var armData={
+  		labels:[],//x label
+  		datasets:[{
+    		//Joint 2
+    			label:"joint 2",//legend
+    			data:[
+      				{x:0,y:0},
+      				{x:x2,y:y2}
+    			],
+    			lineTension: 0, //linea recta
+    			fill: false, //rellenar debajo de la linea
+    			borderColor:'blue',//color de línea
+    			backgroundColor:'transparent',//color de fondo
+    			pointBorderColor:'blue',//apariencia de los puntos
+    			pointBackgroundColor: 'blue',
+    			pointRadius:2,
+    			pointStyle:'rectRounded',
+    			showLine: true
+  		},
+  		{
+    		//Joint 3
+    			label:"joint 3",//legend
+    			data:[
+      				{x:x2,y:y2},
+      				{x:x3,y:y3}
+    			],
+    			lineTension: 0, //linea recta
+    			fill: false, //rellenar debajo de la linea
+    			borderColor:'red',//color de línea
+    			backgroundColor:'transparent',//color de fondo
+    			pointBorderColor:'red',//apariencia de los puntos
+    			pointBackgroundColor: 'red',
+    			pointRadius:2,
+    			pointStyle:'rectRounded',
+    			showLine: true
+  		}]
+	}
+	var chartOptions = {
+  		legend:{
+    			display:false //Ocultar labels
+  		},
+  		scales:{
+    			xAxes:[{
+      				ticks:{
+        				beginAtZero:true,
+        				min:-6,
+        				max:6
+      				}
+    			}],
+    			yAxes:[{
+      				ticks:{
+        				beginAtZero:true,
+        				min:-6,
+                        max:6                        
+      				}
+    			}]
+  		},    
+        animation: {
+            duration: 0
+        }
+	};
+	new Chart("Arm_Graphic",{
+  		type: "scatter",
+  		data: armData,
+  		options: chartOptions
+	});
+}
 
     
 
