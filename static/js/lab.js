@@ -1,6 +1,7 @@
 var ros;
 var robot_IP;
 
+
 //IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
 robot_IP = _config.ROSBridge_IP;
 ros = new ROSLIB.Ros({

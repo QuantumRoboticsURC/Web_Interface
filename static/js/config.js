@@ -1,6 +1,6 @@
 _config = {
-    ROSBridge_IP : "localhost", //ROSBridge server IP
-    WEB_Video_Server : "localhost", //WEB Video Server IP
+    ROSBridge_IP : "192.168.1.6", //ROSBridge server IP
+    WEB_Video_Server : "192.168.1.8", //WEB Video Server IP
     is_WebVideo : true, //true if web video server will be used, false if ROSBridge will be used
 
     topic_Arm_Camera : "/arm_cam", //topic of the cam seen in arm dashboard
