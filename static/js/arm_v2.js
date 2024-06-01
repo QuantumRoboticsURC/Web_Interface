@@ -55,7 +55,6 @@ listener_Joystick.subscribe(function(message) {
     camera.publish(msn2);
   }
   go_rotation(values_map.joint2);
-  inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);
   getTxt();
 } 
 if(bot){
@@ -155,10 +154,10 @@ var emergency = new ROSLIB.Topic({
 var gripper_apertur = 60;   //0 y 60
 
 var values_map = {
-    joint1: .134,   //.4
-    joint2: 0,      //.9
-    joint3: .75,
-    joint4: 0,      //phi
+    joint1: 0,   //.4
+    joint2: 190,      //.9
+    joint3: -140,
+    joint4: -50,      //phi
     joint5: 0,   //rotacion
     joint8: 80, //camera
     led:0,
@@ -182,9 +181,9 @@ var limits_map = {
 
 var angles_map={
     q1:0,
-    q2:0,
-    q3:-165.4,
-    q4:0
+    q2:190,
+    q3:-140,
+    q4:-50
 };
 var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
@@ -193,10 +192,10 @@ var limit_chassis = 1.1; //11cm del chasis
 var State = ["HOME","HOME"]
 function predefinedPosition(position){
 
-    var x = values_map.joint1;
-    var y = values_map.joint2;
-    var z = values_map.joint3;
-    var phi = values_map.joint4;
+    var x = angles_map.q1;
+    var y = angles_map.q2;
+    var z = angles_map.q3;
+    var phi = angles_map.q4;
     
     /*if(position === "INTERMEDIATE"){
         x = 0;
@@ -224,59 +223,32 @@ function predefinedPosition(position){
     State[1]=position;
 
     if (position === "HOME"){
-        x = 2.25;
-        y =  0;
-        z =  1.02;
-        phi = 0;
+        x = 0;
+        y =  190;
+        z =  -140;
+        phi = -50;
         
     } 
     else if(position === "INTERMEDIATE"){
-        x = 2;
-        y = 0;
-        z = 4.28;
-        phi = 0;
+        x = 0;
+        y = 155;
+        z = -125;
+        phi = -30;
         
-    }
-    else if(position === "PULL"){
-        x = 3.33;
-        y = 0;
-        z = 3.35;
-        phi = 0;
-        
-    }
-    else if (position === "WRITE"){
-        x = 3.33;
-        y = 0;
-        z = 1.35;
-        phi = 0;  
-           
     }
     else if (position === "FLOOR"){
-        x = 3.28;
-        y = 0;
-        z = -.1;
-        phi = -90;
+        x=0;
+        y=100;
+        z=-130;
+        phi=-60;
         
     }
     else if (position === "STORAGE"){
-        x = 2.25;
-        y =  0;
-        z = 1.02;
-        phi = 90;
+        x = 90;
+        y = 180;
+        z = -115;
+        phi = -65;
         
-    }
-    else if (position === "VERTICAL"){
-        x = 0;
-        y = 0;
-        z =  5.2;
-        phi = 90;
-        
-    }
-    else if (position === "BOX"){
-        x=0.35;
-        y=80;
-        z=2.24;
-        phi=-20;
     }
     else if (position === "FlOOR2"){
         x=2.48;
@@ -289,10 +261,15 @@ function predefinedPosition(position){
     values_map.joint2 = y;
     values_map.joint3 = z;
     values_map.joint4 = phi;
+    angles_map.q1 = x;
+    angles_map.q2 = y;
+    angles_map.q3 = z;
+    angles_map.q4 = phi;
     //StateMachine(position);
     //return position;
-    inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+            
     go_rotation(values_map.joint2);
+    getTxt();
     }
 function StateMachine(position){
         
@@ -463,26 +440,17 @@ function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
 
 // go to phi
 function go_phi(data){
-    var key = "joint4";
-    var prev = values_map[key];        
-    values_map[key]=data;
-    var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
-    if(!poss){
-        values_map[key] = prev;
-    }   
-    document.getElementById("Phi_Txt").value = 5;
+    angles_map.q4 =data;
+    angles_map.q4 = qlimit(limits_map.q4,angles_map.q4);
+    values_map.joint4 = self.angles_map.q4;
     getTxt();
 }
 
 // 
 function phi(data){
-    var key = "joint4";
-    var prev = values_map[key];        
-    values_map[key]+=data;
-    var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);            
-    if(!poss){
-        values_map[key] = prev;
-    }
+    angles_map.q4+=data;
+    angles_map.q4 = qlimit(limits_map.q4,angles_map.q4);
+    values_map.joint4 = self.angles_map.q4;
     getTxt();
 }
 
@@ -491,7 +459,7 @@ function go(data){
     var key = "joint5";
     values_map[key]=data;
     values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,80,260,data))});
+    var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,135,315,data))});
     joint5.publish(msn);
     document.getElementById("Gripper_Txt").value = 5;
     getTxt();
@@ -549,9 +517,9 @@ function moveCamera(data,cam){
 
 //Rotate
 function go_rotation(data){
-    angles_map.q1=data;
-    angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
-    values_map.joint2 = self.angles_map.q1;
+    angles_map.q2=data;
+    angles_map.q2 = qlimit(limits_map.q2,angles_map.q2);
+    values_map.joint2 = self.angles_map.q2;
     document.getElementById("Y_Txt").value = 5;
 
     getTxt();
@@ -560,9 +528,9 @@ function go_rotation(data){
 
 //Rotate
 function rotate(data){
-    angles_map.q1+=data;
-    angles_map.q1 = qlimit(limits_map.q1,angles_map.q1);
-    values_map.joint2 = self.angles_map.q1;
+    angles_map.q2+=data;
+    angles_map.q2 = qlimit(limits_map.q2,angles_map.q2);
+    values_map.joint2 = self.angles_map.q2;
     getTxt();
 }
 
@@ -575,15 +543,16 @@ function Emergency(data){
 //Buttons related to inverse kinematics
 function pressed(data, joint, sign = 1){
     var key = "joint" + String(joint);
+    var key2="q"+String(joint);
+    console.log(key);
+    console.log(key2);
+    console.log(limits_map[key2])
 
-    values_map[key] += (data*sign);
+    
+    angles_map[key2] +=  data;
+    angles_map[key2]= qlimit(limits_map[key2], angles_map[key2]);
+    values_map[key] = (self.angles_map.q1);
 
-    if(joint < 4 && joint != 2){
-        var poss = inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, self.values_map.joint4);          
-        if(!poss){
-            values_map[key]+=(data*(sign));
-        }
-    }    
     getTxt();
 }
 
@@ -624,7 +593,7 @@ function getTxt(){
     document.getElementById("Rotacion").innerHTML = Rotacion;
     document.getElementById("Camera").innerHTML = Camera;
     document.getElementById("CameraA").innerHTML = CameraA;
-   
+    arm_interface(q2,q3,q4)
 
 }
 
@@ -724,7 +693,7 @@ function inverseKinematics(xm, ym, zm, phi_int){
     
   }
 function StartGraphic(){
-    inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
+    //inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
     go_rotation(values_map.joint2);
 }
   //Función de gráfica

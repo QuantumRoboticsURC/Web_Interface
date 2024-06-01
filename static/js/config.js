@@ -1,5 +1,5 @@
 _config = {
-    ROSBridge_IP : "192.168.1.6", //ROSBridge server IP
+    ROSBridge_IP : "localhost", //ROSBridge server IP
     WEB_Video_Server : "192.168.1.8", //WEB Video Server IP
     is_WebVideo : true, //true if web video server will be used, false if ROSBridge will be used
 

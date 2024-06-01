@@ -47,7 +47,7 @@ class ArmTeleop{
         })
         this.joint2= new ROSLIB.Topic({
             ros: ros,
-            name: 'arm_teleop/joint2',
+            name: 'arm_teleop/joint2_unprocessed',
             messageType: 'std_msgs/Float64',
             queue_size:1
         });
@@ -87,7 +87,7 @@ class ArmTeleop{
         this.limits_map = {
             q1:[-90,90],
             q2:[0,190],
-            q3:[-140,0], //Cambio de límites
+            q3:[-125,0], //Cambio de límites
             q4: [0,180],
             q5: [0,180],
             q6: [-1,1],
@@ -99,7 +99,7 @@ class ArmTeleop{
         this.angles_map={
             q1:0.0,
             q2:190.0,
-            q3:-140.0,
+            q3:-125.0,
             q4:0.0,
             q5:0.0,
             q6:0.0,
@@ -224,12 +224,12 @@ function predefinedPosition(position){
         case "HOME":
             arm.angles_map.q1=0;
             arm.angles_map.q2=190;
-            arm.angles_map.q3=-140;
+            arm.angles_map.q3=-125;
             break;
         case "INTERMEDIATE":
             arm.angles_map.q1=0;
             arm.angles_map.q2=140;
-            arm.angles_map.q3=-140;
+            arm.angles_map.q3=-125;
             break
         case "GROUND":
             arm.angles_map.q1=0;
