@@ -1,60 +1,61 @@
-// var ros;
-// var robot_IP;
+var ros;
+var robot_IP;
 
 
-// //IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
-// robot_IP = _config.ROSBridge_IP;
-// ros = new ROSLIB.Ros({
-//     url: "ws://" + robot_IP + ":9090"
-// });
+//IP of computer running ROS_BRIDGE, (planned to be 192.168.1.6)
+robot_IP = _config.ROSBridge_IP;
+ros = new ROSLIB.Ros({
+    url: "ws://" + robot_IP + ":9090"
+});
 
-// /*
-// var listener = new ROSLIB.Topic({
-//   ros:ros,
-//   name : "/usb_cam/image_raw/compressed",
-//   messgaeType: "sensor_msgs/CompressedImage"
-// });
+/*
+var listener = new ROSLIB.Topic({
+  ros:ros,
+  name : "/usb_cam/image_raw/compressed",
+  messgaeType: "sensor_msgs/CompressedImage"
+});
 
 
-// listener.subscribe(function(message){
-//   var imagedata = "data:image/png;base64,"+message.data;
-//   document.getElementById("biuret1").src=imagedata;
-//   console.log("Prueba")
-// });
-// */
+listener.subscribe(function(message){
+  var imagedata = "data:image/png;base64,"+message.data;
+  document.getElementById("biuret1").src=imagedata;
+  console.log("Prueba")
+});
+*/
 
-// var service = new ROSLIB.Service({
-//   ros:ros,
-//   name : "/camera_info",
-//   servicType:"/camera_manager/camera_photo"
+var service = new ROSLIB.Service({
+  ros:ros,
+  name : "/camera_info",
+  servicType:"/camera_manager/camera_photo"
 
-// });
-// request = new ROSLIB.ServiceRequest({
-//   choice:0
+});
+request = new ROSLIB.ServiceRequest({
+  choice:0
 
-// });
+});
 
-// function takePicture(parameter){
-//   console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-//   service.callService(request,function(result){
-//     var imagedata = "data:image/png;base64,"+result.cam.data;
-//     document.getElementById(parameter).src=imagedata;
-//   });
-// };
+function takePicture(parameter){
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  service.callService(request,function(result){
+    var imagedata = "data:image/png;base64,"+result.cam.data;
+    document.getElementById(parameter).src=imagedata;
+  });
+};
 
-// window.onload = function() {
-//   update();
+window.onload = function() {
+  update();
   
-//   // Llamar a initColorPicker tres veces con diferentes ids
-//   //Biuret
-//   const biuret = ["rgb(146, 98, 137)", "rgb(199, 131, 149)", "rgb(219, 195, 253)"]
-//   initColorPicker('picker1', biuret);
-//   //Lugol
-//   const lugol = ["rgb(38, 36, 77)", "rgb(217, 80, 88)"]
-//   initColorPicker('picker2', lugol);
-//   //Benedict
-//   const benedict = ["rgb(70, 86, 127)", "rgb(85, 103, 130)", "rgb(35, 118, 196)", "rgb(25, 104, 168)", "rgb(36, 166, 226)"]
-//   initColorPicker('picker3', benedict);
+  // Llamar a initColorPicker tres veces con diferentes ids
+  //Biuret
+  const biuret = ["rgb(146, 98, 137)", "rgb(199, 131, 149)", "rgb(219, 195, 253)"]
+  initColorPicker('picker1', biuret);
+  //Lugol
+  const lugol = ["rgb(38, 36, 77)", "rgb(217, 80, 88)"]
+  initColorPicker('picker2', lugol);
+  //Benedict
+  const benedict = ["rgb(70, 86, 127)", "rgb(85, 103, 130)", "rgb(35, 118, 196)", "rgb(25, 104, 168)", "rgb(36, 166, 226)"]
+  initColorPicker('picker3', benedict);
+}
 
 //   // Asigna el evento a todos los input files con clase "image-input"
 //   const imageInputs = document.querySelectorAll('.image-input');
@@ -63,56 +64,56 @@
 //   });
 // };
 
-// function initColorPicker(pickerId, colores) {
-//   // Obtener todos los elementos con la clase 'cuadro'
-//   // const cuadros = document.querySelectorAll('.cuadro');
+function initColorPicker(pickerId, colores) {
+  // Obtener todos los elementos con la clase 'cuadro'
+  // const cuadros = document.querySelectorAll('.cuadro');
 
-//   // Iterar sobre cada cuadro y obtener su color
-//   // cuadros.forEach(cuadro => {
-//   //     // Obtener el color del cuadro
-//   //     const color = window.getComputedStyle(cuadro).backgroundColor;
-//   //     colores.push(color);
-//   //     console.log(colores)
-//   // });
+  // Iterar sobre cada cuadro y obtener su color
+  // cuadros.forEach(cuadro => {
+  //     // Obtener el color del cuadro
+  //     const color = window.getComputedStyle(cuadro).backgroundColor;
+  //     colores.push(color);
+  //     console.log(colores)
+  // });
 
-//   // Configurar opciones del color picker
-//   const colorPickerOptions = {
-//       colors: colores,
-//       width: 500,
-//       slider: false,
-//       sliderSize: 0,
-//   };
+  // Configurar opciones del color picker
+  const colorPickerOptions = {
+      colors: colores,
+      width: 500,
+      slider: false,
+      sliderSize: 0,
+  };
 
-//   // Crear el color picker con las opciones configuradas
-//   var colorPicker = new iro.ColorPicker('#' + pickerId, colorPickerOptions);
-// }
+  // Crear el color picker con las opciones configuradas
+  var colorPicker = new iro.ColorPicker('#' + pickerId, colorPickerOptions);
+}
 
-// function update() {
-// $.get("get_img", function(data, status){
-//     var container = document.getElementById("imgsContainerBucket");
-//     for (const element of data.lab_imgs) {
-//         var hh = '<div class="column">'+
-//                     '<img src="static/img/lab/'+element+'" alt="'+element.split(".")[0]+'" onclick="expand(this);">'+
-//                 '</div>'
-//         container.innerHTML += hh;
-//       }       
-//   });
-// }
+function update() {
+$.get("get_img", function(data, status){
+    var container = document.getElementById("imgsContainerBucket");
+    for (const element of data.lab_imgs) {
+        var hh = '<div class="column">'+
+                    '<img src="static/img/lab/'+element+'" alt="'+element.split(".")[0]+'" onclick="expand(this);">'+
+                '</div>'
+        container.innerHTML += hh;
+      }       
+  });
+}
 
-// //Lab
+//Lab
 
-// function rgbToHex(red, green, blue) {
-//   const toHex = (c) => {
-//     const hex = c.toString(16);
-//     return hex.length === 1 ? '0' + hex : hex;
-//   };
+function rgbToHex(red, green, blue) {
+  const toHex = (c) => {
+    const hex = c.toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  };
 
-//   const hexRed = toHex(red);
-//   const hexGreen = toHex(green);
-//   const hexBlue = toHex(blue);
+  const hexRed = toHex(red);
+  const hexGreen = toHex(green);
+  const hexBlue = toHex(blue);
 
-//   return `#${hexRed}${hexGreen}${hexBlue}`;
-// }
+  return `#${hexRed}${hexGreen}${hexBlue}`;
+}
 
 // function handleImage(event) {
 //   const imageInput = event.target;
