@@ -242,20 +242,29 @@ document.addEventListener("DOMContentLoaded", function() {
   function recortarImagen(data) {
     const Ancho = data.naturalWidth;
     const Altura = data.naturalHeight;
-    const inicioY = 0;
     const nuevoAncho = Ancho/4;
     const nuevaAltura = Altura;
     for (let i = 0; i < 4; i++){
-      let id_canvas = "e1_" + (i+1);
+      let id_canvas = "e1_" + (i + 1);
       let canvas = document.getElementById(id_canvas);
-      let ctx = canvas.getContext('2d');
-      var inicioX = i*(Ancho/4);
 
-      canvas.width = nuevoAncho;
-      canvas.height = nuevaAltura;
+      if (canvas && canvas.getContext) {
+        let ctx = canvas.getContext('2d');
+        var inicioX = i * nuevoAncho;
 
-      ctx.drawImage(data, inicioX, 0, nuevoAncho, nuevaAltura, 0, 0, nuevoAncho, nuevaAltura);
-      
+        // Ajustar el tamaño del canvas
+        canvas.width = nuevoAncho;
+        canvas.height = nuevaAltura;
+
+        // Mostrar el canvas
+        canvas.style.display = 'block';
+
+        // Dibujar la imagen recortada en el canvas
+        ctx.drawImage(data, inicioX, 0, nuevoAncho, nuevaAltura, 0, 0, nuevoAncho, nuevaAltura);
+        console.log(`Dibujando en canvas ${id_canvas} desde x=${inicioX}`);
+      } else {
+        console.error(`El elemento con id ${id_canvas} no es un canvas o no existe.`);
+      }
     }
     
 }
