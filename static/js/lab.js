@@ -229,9 +229,34 @@ document.addEventListener("DOMContentLoaded", function() {
         imgElement.style.width = '450px'; // Corregir el valor de estilo width (Opx a 450px)
         selectedImageContainers[index].innerHTML = ''; // Usar index para seleccionar el contenedor adecuado
         selectedImageContainers[index].appendChild(imgElement); // Usar index para seleccionar el contenedor adecuado
+        
+        imgElement.onload = function() {
+          recortarImagen(imgElement);
+        };
       };
 
       reader.readAsDataURL(file);
     });
   });
+
+  function recortarImagen(data) {
+    const Ancho = data.naturalWidth;
+    const Altura = data.naturalHeight;
+    const inicioY = 0;
+    const nuevoAncho = Ancho/4;
+    const nuevaAltura = Altura;
+    for (let i = 0; i < 4; i++){
+      let id_canvas = "e1_" + (i+1);
+      let canvas = document.getElementById(id_canvas);
+      let ctx = canvas.getContext('2d');
+      var inicioX = i*(Ancho/4);
+
+      canvas.width = nuevoAncho;
+      canvas.height = nuevaAltura;
+
+      ctx.drawImage(data, inicioX, 0, nuevoAncho, nuevaAltura, 0, 0, nuevoAncho, nuevaAltura);
+      
+    }
+    
+}
 });
