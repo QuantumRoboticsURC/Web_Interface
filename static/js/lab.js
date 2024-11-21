@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
         selectedImageContainers[index].appendChild(imgElement); // Usar index para seleccionar el contenedor adecuado
         
         imgElement.onload = function() {
-          recortarImagen(imgElement);
+          recortarImagen(imgElement, index);
         };
       };
 
@@ -239,13 +239,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-  function recortarImagen(data) {
+  function recortarImagen(data, index) {
+    console.log(index)
     const Ancho = data.naturalWidth;
     const Altura = data.naturalHeight;
     const nuevoAncho = Ancho/4;
     const nuevaAltura = Altura;
     for (let i = 0; i < 4; i++){
-      let id_canvas = "e1_" + (i + 1);
+      let id_canvas = "e"+ (index+1) +"_" + (i + 1);
       let canvas = document.getElementById(id_canvas);
 
       if (canvas && canvas.getContext) {
@@ -262,6 +263,45 @@ document.addEventListener("DOMContentLoaded", function() {
         // Dibujar la imagen recortada en el canvas
         ctx.drawImage(data, inicioX, 0, nuevoAncho, nuevaAltura, 0, 0, nuevoAncho, nuevaAltura);
         console.log(`Dibujando en canvas ${id_canvas} desde x=${inicioX}`);
+
+        const imageData = ctx.getImageData(0, 0, nuevoAncho, nuevaAltura);
+        const pixels = imageData.data;
+
+        let totalRed = 0;
+        let totalGreen = 0;
+        let totalBlue = 0;
+
+        for (let i = 0; i < pixels.length; i += 4) {
+            totalRed += pixels[i];
+            totalGreen += pixels[i + 1];
+            totalBlue += pixels[i + 2];
+        }
+
+        const totalPixels = pixels.length / 4;
+        const averageRed = Math.round(totalRed / totalPixels);
+        const averageGreen = Math.round(totalGreen / totalPixels);
+        const averageBlue = Math.round(totalBlue / totalPixels);
+
+        // Crea un nuevo color-picker
+        /*const colorPicker = new iro.ColorPicker(colorPickerContainer, {
+            color: "#fff", interactive: false, width: 400
+        });*/
+
+        const averageHexColor = rgbToHex(averageRed, averageGreen, averageBlue);
+        //colorPicker.color.set(averageHexColor);
+
+        //Checar el colocar mas picker(circulos) para ver mas colores
+        //colorIndicator.style.backgroundColor = averageHexColor;
+        let id_texto = "te" + (index + 1) + "_" + (i +1);
+        resultElement = document.getElementById(id_texto)
+        resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})  HEX: ${averageHexColor}`;
+        let id_cuadro = "ce" + (index + 1) + "_" + (i +1);
+        colorSquare = document.getElementById(id_cuadro);
+        colorSquare.style.background = `rgb(${averageRed}, ${averageGreen}, ${averageBlue})`;
+
+
+
+        console.log(imageData);
       } else {
         console.error(`El elemento con id ${id_canvas} no es un canvas o no existe.`);
       }
