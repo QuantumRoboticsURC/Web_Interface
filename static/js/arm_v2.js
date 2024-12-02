@@ -599,8 +599,200 @@ function getTxt(){
 
 function rad2deg(radians){return radians * (180/math.pi);}
 function deg2rad(degrees){return degrees * (math.pi/180);}
+// Función para convertir radianes a grados
+function radToDeg(rad) {
+    return rad * (180 / Math.PI);
+}
 
-function inverseKinematics(xm, ym, zm, phi_int){
+// Función para convertir grados a radianes
+function degToRad(deg) {
+    return deg * (Math.PI / 180);
+}
+
+// Función de cinemática inversa
+function inverseKinematics(x, y, z, roll, pitch) {
+    const l1 = 0.10;
+    const l2 = 0.43;
+    const l3 = 0.43;
+    const l4 = 0.213;
+
+    const q1 = Math.atan2(y, x);
+    const q5 = roll;
+
+    const a = Math.sqrt(x ** 2 + y ** 2) - l4 * Math.cos(pitch);
+    const b = z - (l4 * Math.sin(pitch)) - l1;
+
+    let d = (a ** 2 + b ** 2 - l2 ** 2 - l3 ** 2) / (2 * l2 * l3);
+    d = Math.max(-1, Math.min(1, d)); // Clamping para evitar errores numéricos
+
+    const q3 = Math.atan2(Math.sqrt(1 - d ** 2), d);
+    const q2 = Math.atan2(b, a) - Math.atan2(l3 * Math.sin(q3), l2 + l3 * Math.cos(q3));
+    const q4 = pitch - q2 - q3;
+
+    return {
+        q1: radToDeg(q1),
+        q2: radToDeg(q2),
+        q3: radToDeg(q3),
+        q4: radToDeg(q4),
+        q5: radToDeg(q5),
+    };
+}
+
+// Función para mover el brazo a una posición especificada
+function moveToPosition(x, y, z, roll, pitch) {
+    const angles = inverseKinematics(x, y, z, roll, pitch);
+
+    if (!angles) {
+        console.error("No se puede alcanzar la posición especificada.");
+        return;
+    }
+
+    // Actualizar los valores globales
+    angles_map.q1 = angles.q1;
+    angles_map.q2 = angles.q2;
+    angles_map.q3 = angles.q3;
+    angles_map.q4 = angles.q4;
+    values_map.joint1 = angles.q1;
+    values_map.joint2 = angles.q2;
+    values_map.joint3 = angles.q3;
+    values_map.joint4 = angles.q4;
+    values_map.joint5 = angles.q5;
+
+    // Publicar los ángulos en ROS
+    publish_angles();
+
+    // Actualizar la gráfica
+    arm_interface(angles.q2, angles.q3, angles.q4);
+}
+
+// Manejador para capturar los valores de entrada y mover el brazo
+function handleMove() {
+    const x = parseFloat(document.getElementById("x").value);
+    const y = parseFloat(document.getElementById("y").value);
+    const z = parseFloat(document.getElementById("z").value);
+    const roll = degToRad(parseFloat(document.getElementById("roll").value));
+    const pitch = degToRad(parseFloat(document.getElementById("pitch").value));
+
+    moveToPosition(x, y, z, roll, pitch);
+}
+
+// Función para publicar los ángulos en ROS
+function publish_angles() {
+    const msn_q1 = new ROSLIB.Message({ data: angles_map.q1 });
+    const msn_q2 = new ROSLIB.Message({ data: angles_map.q2 });
+    const msn_q3 = new ROSLIB.Message({ data: angles_map.q3 });
+    const msn_q4 = new ROSLIB.Message({ data: angles_map.q4 });
+    const msn_txt = new ROSLIB.Message({
+        data: `${angles_map.q1} ${angles_map.q2} ${angles_map.q3} ${angles_map.q4}`,
+    });
+
+    pub_q1.publish(msn_q1);
+    pub_q2.publish(msn_q2);
+    pub_q3.publish(msn_q3);
+    pub_q4.publish(msn_q4);
+    pub_q_string.publish(msn_txt);
+}
+
+// Actualización de la gráfica
+function arm_interface(q2, q3, q4) {
+    let acum = degToRad(q2);
+    let x2 = l2 * Math.cos(acum);
+    let y2 = l2 * Math.sin(acum);
+    acum += degToRad(q3);
+    let x3 = x2 + l3 * Math.cos(acum);
+    let y3 = y2 + l3 * Math.sin(acum);
+    acum += degToRad(q4);
+    let x4 = x3 + l4 * Math.cos(acum);
+    let y4 = y3 + l4 * Math.sin(acum);
+
+    let maxReach = Math.max(Math.abs(x4), Math.abs(y4)) + 2;
+
+    if (window.armChart) {
+        armChart.data.datasets[0].data = [
+            { x: 0, y: 0 },
+            { x: x2, y: y2 },
+        ];
+        armChart.data.datasets[1].data = [
+            { x: x2, y: y2 },
+            { x: x3, y: y3 },
+        ];
+        armChart.data.datasets[2].data = [
+            { x: x3, y: y3 },
+            { x: x4, y: y4 },
+        ];
+        armChart.options.scales.xAxes[0].ticks.min = -maxReach;
+        armChart.options.scales.xAxes[0].ticks.max = maxReach;
+        armChart.options.scales.yAxes[0].ticks.min = -maxReach;
+        armChart.options.scales.yAxes[0].ticks.max = maxReach;
+        armChart.update();
+    } else {
+        var armData = {
+            labels: [],
+            datasets: [
+                {
+                    label: "Joint 2",
+                    data: [
+                        { x: 0, y: 0 },
+                        { x: x2, y: y2 },
+                    ],
+                    borderColor: "blue",
+                    borderWidth: 3,
+                    pointBorderColor: "blue",
+                    pointBackgroundColor: "blue",
+                    pointRadius: 6,
+                },
+                {
+                    label: "Joint 3",
+                    data: [
+                        { x: x2, y: y2 },
+                        { x: x3, y: y3 },
+                    ],
+                    borderColor: "red",
+                    borderWidth: 3,
+                    pointBorderColor: "red",
+                    pointBackgroundColor: "red",
+                    pointRadius: 6,
+                },
+                {
+                    label: "Joint 4",
+                    data: [
+                        { x: x3, y: y3 },
+                        { x: x4, y: y4 },
+                    ],
+                    borderColor: "green",
+                    borderWidth: 3,
+                    pointBorderColor: "green",
+                    pointBackgroundColor: "green",
+                    pointRadius: 6,
+                },
+            ],
+        };
+
+        var chartOptions = {
+            legend: { display: true },
+            scales: {
+                xAxes: [
+                    {
+                        ticks: { min: -maxReach, max: maxReach },
+                    },
+                ],
+                yAxes: [
+                    {
+                        ticks: { min: -maxReach, max: maxReach },
+                    },
+                ],
+            },
+        };
+
+        window.armChart = new Chart("Arm_Graphic", {
+            type: "scatter",
+            data: armData,
+            options: chartOptions,
+        });
+    }
+}
+
+/*function inverseKinematics(xm, ym, zm, phi_int){
     let Q1 = 0;
     /*if (xm != 0 || ym != 0 || zm != 0){
       if(xm == 0){
@@ -628,7 +820,7 @@ function inverseKinematics(xm, ym, zm, phi_int){
         //Ni idea #real
         Q1 = math.re(math.atan2(ym,xm));
       }  
-    }    */
+    }    
     Q1 = math.re(math.atan2(ym,xm));
     //console.log("Q1",Q1)
     //Para q1
@@ -689,107 +881,156 @@ function inverseKinematics(xm, ym, zm, phi_int){
     }else{
         arm_interface(angles_map.q2,angles_map.q3,angles_map.q4);
         return false;
-    }
+    } 
     
-  }
-function StartGraphic(){
-    //inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-    go_rotation(values_map.joint2);
-}
-  //Función de gráfica
-function arm_interface(q2,q3,q4){    
-	//Transformación a coordenadas rectangulares
+  } */
+ 
+
+
+
+  function arm_interface(q2, q3, q4) {
+    // Transformación a coordenadas rectangulares
     let acum = deg2rad(q2);
-	let x2=l2*math.cos(acum);
-	let y2=l2*math.sin(acum);
-    acum+=deg2rad(q3);
-	let x3=x2+l3*math.cos(acum);
-	let y3=y2+l3*math.sin(acum);
-    acum+=deg2rad(q4);
-	let x4=x3+l4*math.cos(acum);
-	let y4=y3+l4*math.sin(acum);    
-	//Gráfica
-	var armData={
-  		labels:[],//x label
-  		datasets:[{
-    		//Joint 2
-    			label:"joint 2",//legend
-    			data:[
-      				{x:0,y:0},
-      				{x:x2,y:y2}
-    			],
-    			lineTension: 0, //linea recta
-    			fill: false, //rellenar debajo de la linea
-    			borderColor:'blue',//color de línea
-    			backgroundColor:'transparent',//color de fondo
-    			pointBorderColor:'blue',//apariencia de los puntos
-    			pointBackgroundColor: 'blue',
-    			pointRadius:2,
-    			pointStyle:'rectRounded',
-    			showLine: true
-  		},
-  		{
-    		//Joint 3
-    			label:"joint 3",//legend
-    			data:[
-      				{x:x2,y:y2},
-      				{x:x3,y:y3}
-    			],
-    			lineTension: 0, //linea recta
-    			fill: false, //rellenar debajo de la linea
-    			borderColor:'red',//color de línea
-    			backgroundColor:'transparent',//color de fondo
-    			pointBorderColor:'red',//apariencia de los puntos
-    			pointBackgroundColor: 'red',
-    			pointRadius:2,
-    			pointStyle:'rectRounded',
-    			showLine: true
-  		},
-  		{
-    		//Joint 4  
-    			label:"joint 4",//legend
-    			data:[
-      				{x:x3,y:y3},
-      				{x:x4,y:y4}
-    			],
-    			lineTension: 0, //linea recta
-    			fill: false, //rellenar debajo de la linea
-    			borderColor:'green',//color de línea
-    			backgroundColor:'transparent',//color de fondo
-    			pointBorderColor:'green',//apariencia de los puntos
-    			pointBackgroundColor: 'green',
-    			pointRadius:2,
-    			pointStyle:'rectRounded',
-    			showLine: true
-  		}]
-	}
-	var chartOptions = {
-  		legend:{
-    			display:false //Ocultar labels
-  		},
-  		scales:{
-    			xAxes:[{
-      				ticks:{
-        				beginAtZero:true,
-        				min:-10,
-        				max:10
-      				}
-    			}],
-    			yAxes:[{
-      				ticks:{
-        				beginAtZero:true,
-        				min:-10,
-                        max:10                        
-      				}
-    			}]
-  		},    
-        animation: {
-            duration: 0
-        }
-	};
-	new Chart("Arm_Graphic",{
-  		type: "scatter",
-  		data: armData,
-  		options: chartOptions
-	});
+    let x2 = l2 * Math.cos(acum);
+    let y2 = l2 * Math.sin(acum);
+    acum += deg2rad(q3);
+    let x3 = x2 + l3 * Math.cos(acum);
+    let y3 = y2 + l3 * Math.sin(acum);
+    acum += deg2rad(q4);
+    let x4 = x3 + l4 * Math.cos(acum);
+    let y4 = y3 + l4 * Math.sin(acum);
+
+    // Rango dinámico para ejes
+    let maxReach = Math.max(Math.abs(x4), Math.abs(y4)) + 2;
+
+    // Crear o actualizar la gráfica
+    if (window.armChart) {
+        // Actualizar datos si ya existe la gráfica
+        armChart.data.datasets[0].data = [
+            { x: 0, y: 0 },
+            { x: x2, y: y2 }
+        ];
+        armChart.data.datasets[1].data = [
+            { x: x2, y: y2 },
+            { x: x3, y: y3 }
+        ];
+        armChart.data.datasets[2].data = [
+            { x: x3, y: y3 },
+            { x: x4, y: y4 }
+        ];
+        armChart.options.scales.xAxes[0].ticks.min = -maxReach;
+        armChart.options.scales.xAxes[0].ticks.max = maxReach;
+        armChart.options.scales.yAxes[0].ticks.min = -maxReach;
+        armChart.options.scales.yAxes[0].ticks.max = maxReach;
+        armChart.update();
+    } else {
+        // Crear nueva gráfica si no existe
+        var armData = {
+            labels: [],
+            datasets: [
+                {
+                    label: "Joint 2",
+                    data: [
+                        { x: 0, y: 0 },
+                        { x: x2, y: y2 }
+                    ],
+                    lineTension: 0, // Línea recta
+                    fill: false,
+                    borderColor: 'blue',
+                    borderWidth: 3,
+                    pointBorderColor: 'blue',
+                    pointBackgroundColor: 'blue',
+                    pointRadius: 6,
+                    pointStyle: 'circle',
+                    showLine: true
+                },
+                {
+                    label: "Joint 3",
+                    data: [
+                        { x: x2, y: y2 },
+                        { x: x3, y: y3 }
+                    ],
+                    lineTension: 0,
+                    fill: false,
+                    borderColor: 'red',
+                    borderWidth: 3,
+                    pointBorderColor: 'red',
+                    pointBackgroundColor: 'red',
+                    pointRadius: 6,
+                    pointStyle: 'circle',
+                    showLine: true
+                },
+                {
+                    label: "Joint 4",
+                    data: [
+                        { x: x3, y: y3 },
+                        { x: x4, y: y4 }
+                    ],
+                    lineTension: 0,
+                    fill: false,
+                    borderColor: 'green',
+                    borderWidth: 3,
+                    pointBorderColor: 'green',
+                    pointBackgroundColor: 'green',
+                    pointRadius: 6,
+                    pointStyle: 'circle',
+                    showLine: true
+                }
+            ]
+        };
+
+        var chartOptions = {
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    fontColor: 'black',
+                    fontSize: 14
+                }
+            },
+            
+            scales: {
+                xAxes: [
+                    {
+                        ticks: {
+                            min: -maxReach,
+                            max: maxReach,
+                            stepSize: 1,
+                            fontSize: 12
+                        },
+                        gridLines: {
+                            color: 'rgba(200, 200, 200, 0.5)'
+                        }
+                    }
+                ],
+                yAxes: [
+                    {
+                        ticks: {
+                            min: -maxReach,
+                            max: maxReach,
+                            stepSize: 1,
+                            fontSize: 12
+                        },
+                        gridLines: {
+                            color: 'rgba(200, 200, 200, 0.5)'
+                        }
+                    }
+                ]
+            },
+            animation: {
+                duration: 0 // Sin animación
+            }
+        };
+
+        window.armChart = new Chart("Arm_Graphic", {
+            type: "scatter",
+            data: armData,
+            options: chartOptions
+        });
+    }
+}
+
+// Función para convertir grados a radianes
+function deg2rad(degrees) {
+    return degrees * (Math.PI / 180);
 }
