@@ -281,17 +281,21 @@ document.addEventListener("DOMContentLoaded", function() {
         const averageRed = Math.round(totalRed / totalPixels);
         const averageGreen = Math.round(totalGreen / totalPixels);
         const averageBlue = Math.round(totalBlue / totalPixels);
-
+        let id_color_picker= "cpe" + (index + 1) + "_" + (i +1);
+        let colorPickerContainer = document.getElementById(id_color_picker);
+        // Elimina el color-picker existente
+        colorPickerContainer.innerHTML = '';
         // Crea un nuevo color-picker
-        /*const colorPicker = new iro.ColorPicker(colorPickerContainer, {
+        const colorPicker = new iro.ColorPicker(colorPickerContainer, {
             color: "#fff", interactive: false, width: 400
-        });*/
+        });
 
         const averageHexColor = rgbToHex(averageRed, averageGreen, averageBlue);
-        //colorPicker.color.set(averageHexColor);
-
+        colorPicker.color.set(averageHexColor);
+        let id_color_indicator = "cie" + (index + 1) + "_" + (i +1);
+        let colorIndicator = document.getElementById(id_color_indicator);
         //Checar el colocar mas picker(circulos) para ver mas colores
-        //colorIndicator.style.backgroundColor = averageHexColor;
+        colorIndicator.style.backgroundColor = averageHexColor;
         let id_texto = "te" + (index + 1) + "_" + (i +1);
         resultElement = document.getElementById(id_texto)
         resultElement.innerHTML = `Color Promedio: rgb(${averageRed}, ${averageGreen}, ${averageBlue})  HEX: ${averageHexColor}`;

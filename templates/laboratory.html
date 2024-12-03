@@ -24,6 +24,12 @@
 	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
   <!--script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script-->
   <script src="/static/js/iro.min.js"></script>
+  <style>
+    .color-columns{
+      display: flex;
+      justify-content: center;
+    }
+  </style>
 
 </head>
 
@@ -131,7 +137,7 @@
     <!-- Bloque que contiene el titulo -->
     <div class="bloque">
         <div class="container-fluid">
-            <h4 style="margin-top: 2%; margin-bottom: 2%;">Dashboard Navv</h4>
+            <h4 style="margin-top: 2%; margin-bottom: 2%;">Dashboard Nav</h4>
         </div>
     </div>
 
@@ -236,7 +242,7 @@
                         <div class="card-header" id="card-header">
                             <!-- <h4 class="card-title">Biuret</h4><br> -->
                             <body>
-                              
+                              <div class="color-columns">
                                 <canvas class="canvas" width="640" height="480" style="display:none" id = "e1_1"></canvas>
                                 <div class="color-columns">
                                     <div class="column">
@@ -246,13 +252,14 @@
                                         <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;" id ="ce1_1"></div>
                                     </div>
                                     <div class="column">
-                                      <div class="color-picker"></div>
-                                        <div class="color-indicator"></div>
+                                      <div class="color-picker" id = "cpe1_1"></div>
+                                        <div class="color-indicator" id = "cie1_1"></div>
                                     </div>
                                 </div>
-                                <div class="result">
-                                  <t id = "te1_1"></t>
-                                </div>
+                              </div>
+                              <div class="result">
+                                <t id = "te1_1"></t>
+                              </div>
                             </body>
                         </div>
                     </div>
@@ -264,7 +271,7 @@
                         <div class="card-header" id="card-header">
                             <!-- <h4 class="card-title">Biuret</h4><br> -->
                             <body>
-                                
+                              <div class="color-columns">  
                                 <canvas class="canvas" width="640" height="480" style="display:none" id = "e2_1"></canvas>
                                 <div class="color-columns">
                                     <div class="column">
@@ -274,10 +281,11 @@
                                         <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;" id ="ce2_1"></div>
                                     </div>
                                     <div class="column">
-                                      <div class="color-picker"></div>
-                                        <div class="color-indicator"></div>
+                                      <div class="color-picker" id = "cpe2_1"></div>
+                                        <div class="color-indicator" id = "cie2_1"></div>
                                     </div>
                                 </div>
+                              </div>
                                 <div class="result">
                                   <t id = "te2_1"></t>
                                 </div>
@@ -329,7 +337,7 @@
                           <div class="card-header" id="card-header1">
                               <!-- <h4 class="card-title">Elemento 2</h4><br> -->
                               <body>
-                                 
+                                <div class="color-columns"> 
                                   <canvas class="canvas" width="640" height="480" style="display:none" id = "e1_2"></canvas>
                                   <div class="color-columns">
                                       <div class="column">
@@ -339,10 +347,11 @@
                                         <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;" id ="ce1_2"></div>
                                     </div>
                                     <div class="column">
-                                      <div class="color-picker"></div>
-                                        <div class="color-indicator"></div>
+                                      <div class="color-picker" id = "cpe1_2"></div>
+                                        <div class="color-indicator" id = "cie1_2"></div>
                                     </div>
                                   </div>
+                                </div>
                                   <div class="result">
                                     <t id = "te1_2"></t>
                                   </div>
@@ -357,7 +366,7 @@
                         <div class="card-header" id="card-header1">
                             <!-- <h4 class="card-title">Elemento 2</h4><br> -->
                             <body>
-                                
+                              <div class="color-columns">  
                                 <canvas class="canvas" width="640" height="480" style="display:none" id = "e2_2"></canvas>
                                 <div class="color-columns">
                                     <div class="column">
@@ -367,10 +376,11 @@
                                       <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;" id ="ce2_2"></div>
                                   </div>
                                   <div class="column">
-                                    <div class="color-picker"></div>
-                                      <div class="color-indicator"></div>
+                                    <div class="color-picker" id = "cpe2_2"></div>
+                                      <div class="color-indicator" id = "cie2_2"></div>
                                   </div>
                                 </div>
+                              </div>
                                 <div class="result">
                                   <t id = "te2_2"></t>
                                 </div>
@@ -425,7 +435,7 @@
                         <div class="card-header" id="card-header1">
                             <!-- <h4 class="card-title">Elemento 2</h4><br> -->
                             <body>
-                               
+                              <div class="color-columns"> 
                                 <canvas class="canvas" width="640" height="480" style="display:none" id = "e1_3"></canvas>
                                 <div class="color-columns">
                                     <div class="column">
@@ -435,10 +445,11 @@
                                       <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;" id ="ce1_3"></div>
                                   </div>
                                   <div class="column">
-                                    <div class="color-picker"></div>
-                                      <div class="color-indicator"></div>
+                                    <div class="color-picker" id = "cpe1_3"></div>
+                                      <div class="color-indicator" id = "cie1_3"></div>
                                   </div>
                                 </div>
+                              </div>
                                 <div class="result">
                                   <t id = "te1_3"></t>
                                 </div>
@@ -453,7 +464,7 @@
                       <div class="card-header" id="card-header1">
                           <!-- <h4 class="card-title">Elemento 2</h4><br> -->
                           <body>
-                              
+                            <div class="color-columns">  
                               <canvas class="canvas" width="640" height="480" style="display:none" id = "e2_3"></canvas>
                               <div class="color-columns">
                                   <div class="column">
@@ -463,13 +474,15 @@
                                     <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;" id ="ce2_3"></div>
                                 </div>
                                 <div class="column">
-                                  <div class="color-picker"></div>
-                                    <div class="color-indicator"></div>
+                                  <div class="color-picker" id = "cpe2_3"></div>
+                                    <div class="color-indicator" id = "cie2_3"></div>
                                 </div>
                               </div>
+                            </div>
                               <div class="result">
                                 <t id = "te2_3"></t>
                               </div>
+                            </div>
                           </body>
                       </div>
                   </div>
@@ -483,7 +496,7 @@
                             <div class="card-header" id="card-header3">
                                 <h4 class="card-title">Agua</h4><br>
                                 <body>
-                                   
+                                  <div class="color-columns"> 
                                     <canvas class="canvas" width="640" height="480" style="display:none" id = "e1_4"></canvas>
                                     <div class="color-columns">
                                         <div class="column">
@@ -493,13 +506,15 @@
                                           <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;" id ="ce1_4"></div>
                                       </div>
                                       <div class="column">
-                                        <div class="color-picker"></div>
-                                          <div class="color-indicator"></div>
+                                        <div class="color-picker" id = "cpe1_4"></div>
+                                          <div class="color-indicator" id = "cie1_4"></div>
                                       </div>
                                     </div>
+                                  </div>
                                     <div class="result">
                                       <t id = "te1_4"></t>
                                     </div>
+                                  </div>
                                 </body>
                             </div>
                         </div>
@@ -512,7 +527,7 @@
                         <div class="card-header" id="card-header3">
                             <!-- <h4 class="card-title">Agua</h4><br> -->
                             <body>
-                                
+                              <div class="color-columns">  
                                 <canvas class="canvas" width="640" height="480" style="display:none" id = "e2_4"></canvas>
                                 <div class="color-columns">
                                     <div class="column">
@@ -522,10 +537,11 @@
                                       <div class="color-square" style="width: 200px; height: 200px; margin-top: 10px;" id ="ce2_4"></div>
                                   </div>
                                   <div class="column">
-                                    <div class="color-picker"></div>
-                                      <div class="color-indicator"></div>
+                                    <div class="color-picker" id = "cpe2_4"></div>
+                                      <div class="color-indicator" id = "cie2_4"></div>
                                   </div>
                                 </div>
+                              </div>
                                 <div class="result">
                                   <t id = "te2_4"></t>
                                 </div>
