@@ -12,12 +12,13 @@ document.addEventListener("DOMContentLoaded", function() {
           imgElement.src = e.target.result;
           imgElement.alt = 'Selected Image';
           imgElement.style.width = '450px'; // Corregir el valor de estilo width (Opx a 450px)
-          selectedImageContainers[index].innerHTML = ''; // Usar index para seleccionar el contenedor adecuado
-          selectedImageContainers[index].appendChild(imgElement); // Usar index para seleccionar el contenedor adecuado
+          // selectedImageContainers[index].innerHTML = ''; // Usar index para seleccionar el contenedor adecuado
+          // selectedImageContainers[index].appendChild(imgElement); // Usar index para seleccionar el contenedor adecuado
 
           imgElement.onload = function() {
             if(index%3 ==0){
-                BrujulayEscala(imgElement, index);
+                // BrujulayEscala(imgElement, index);
+                superponerImagenes(index, imgElement)
             }
           };
         };
@@ -27,13 +28,44 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-function BrujulayEscala(image, index){
-    console.log("Estoy colocando la brujula en " + index)
+  function BrujulayEscala(image, index) {
+    console.log("Estoy colocando la brujula en " + index);
     var brujula = new Image();
     brujula.src = "static/img/Brujula.jpeg";
-    const Ancho = brujula.naturalWidth;
-    const Altura = brujula.naturalHeight;
-    console.log(Ancho + ", " + Altura);
-    //const imageData = ctx.getImageData(0, 0, nuevoAncho, nuevaAltura);
-    //const pixels = imageData.data;
+    
+    brujula.onload = function() {
+        const Ancho = brujula.naturalWidth;
+        const Altura = brujula.naturalHeight;
+        console.log(Ancho + ", " + Altura);
+        //const imageData = ctx.getImageData(0, 0, nuevoAncho, nuevaAltura);
+        //const pixels = imageData.data;
+    };
+
+    let resultado = image;
+    const ancho = image.naturalWidth;
+    const largo = image.naturalHeight;
+
+    if (ancho > Ancho && largo > Altura){
+      
+    }
 }
+
+function superponerImagenes(index, image) { 
+  let idcanvas = 'i' + (index+1);
+  let canvas = document.getElementById('i1');
+  console.log('El id del canvas es: '+ idcanvas);
+  console.log(canvas);
+  var ctx = canvas.getContext('2d'); 
+ // var imagenFondo = new Image(); 
+  var imagenSuperpuesta = new Image(); 
+  //imagenFondo.src = 'ruta/a/tu/imagen1.jpg'; 
+  imagenSuperpuesta.src = "static/img/Brujula.jpeg"; 
+  image.onload = function() { 
+    ctx.drawImage(imagenFondo, 0, 0, canvas.width, canvas.height); 
+    imagenSuperpuesta.onload = function() { 
+      ctx.drawImage(imagenSuperpuesta, 0, 0, canvas.width, canvas.height); 
+    }; 
+  };
+}
+
+
