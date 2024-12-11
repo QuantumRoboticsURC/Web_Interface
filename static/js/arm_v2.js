@@ -446,6 +446,7 @@ function go_phi(data){
     getTxt();
 }
 
+
 // 
 function phi(data){
     angles_map.q4+=data;
@@ -453,6 +454,22 @@ function phi(data){
     values_map.joint4 = self.angles_map.q4;
     getTxt();
 }
+
+// Z momento
+function go_z(data) {
+    angles_map.q3 = data; // Asignar el valor absoluto
+    angles_map.q3 = qlimit(limits_map.q3, angles_map.q3); // Aplicar límites
+    values_map.joint3 = self.angles_map.q3; // Actualizar en el mapa de valores
+    getTxt(); // Actualizar la interfaz y publicar
+}
+
+function z(data) {
+    angles_map.q3 += data; // Incrementar o decrementar el valor
+    angles_map.q3 = qlimit(limits_map.q3, angles_map.q3); // Aplicar límites
+    values_map.joint3 = angles_map.q3; // Actualizar en el mapa de valores
+    getTxt(); // Actualizar la interfaz y publicar
+}
+
 
 // Gripper go to particular location
 function go(data){

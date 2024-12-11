@@ -76,6 +76,10 @@ def laboratory():
 def stratigraphic():
     return render_template('strat_profile.html')
 
+@application.route('/stratigraphic2')
+def stratigraphic2():
+    return render_template('strat_profile2.html')
+
 
 
 

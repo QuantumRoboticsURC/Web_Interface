@@ -91,7 +91,7 @@
               <li class="nav-link">
                 <a href="coordinates2">
                   <i class='bx bx-map-alt icon'></i>
-                  <span class="text nav-text">Autonomous Navigation</span>
+                  <span class="text nav-text">Autonomos Navigation</span>
                 </a>
               </li>
     
@@ -166,20 +166,16 @@
 													<!--Predefined positions-->
 													<div class="col-md-12">
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button id = "principal button" type="button" class="btn btn-secondary" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border-color:#F4F4F4; color:white">Intermediate</button>
-															<button id = "secondary button1" type="button" class="btn btn-secondary" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Home</button>
-															<button id = "secondary button2" type="button" class="btn btn-secondary" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border-color:#F4F4F4; color:white">Storage</button>
+															<button id = "principal button" type="button" class="btn btn-secondary" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Intermediate</button>
+															<button id = "secondary button1" type="button" class="btn btn-secondary" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Home</button>
+															<button id = "secondary button2" type="button" class="btn btn-secondary" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Storage</button>
+															<button id = "secondary button5" type="button" class="btn btn-secondary" onclick="predefinedPosition('FLOOR');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Floor</button>
+
 														</div>
-														<hr>
-														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button id = "secondary button3" type="button" class="btn btn-secondary" onclick="predefinedPosition('PULL');getTxt();" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Pull</button>
-															<button id = "secondary button4" type="button" class="btn btn-secondary" onclick="predefinedPosition('WRITE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border-color:#F4F4F4; color:white">Write</button>
-															<button id = "secondary button5" type="button" class="btn btn-secondary" onclick="predefinedPosition('FLOOR');getTxt();" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Floor</button>
-															<button id = "secondary button6" type="button" class="btn btn-secondary" onclick="predefinedPosition('VERTICAL');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border-color:#F4F4F4; color:white">Vertical</button>
-															<button id = "secondary button7" type="button" class="btn btn-secondary" onclick="predefinedPosition('BOX');getTxt();" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white">Box</button>
-															<button id = "secondary button7" type="button" class="btn btn-secondary" onclick="predefinedPosition('FlOOR2');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border-color:#F4F4F4; color:white">Floor Caja</button>
-                                              
-														</div>
+														
+														
+										
+
 													</div>
 												</div>
 										</div>
@@ -210,12 +206,15 @@
 															<medium class="text-muted">Position X</medium>
 															<div class="col-md-12">
 																
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
+																<div class="btn-group btn-sm" role="group" aria-label="Basic example">		
+																   <!--<button style="background-color:#F4F4F4; border-color:#18B4DA;border-radius: 10px; color:black" type="button" class="btn btn-secondary 	" onclick="go_x(parseFloat(document.getElementById('X_Txt').value))">GO</button>-->																
+															
 																	<div class="input-group">
 																		<input id="X_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
+																
+																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="pressed(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="pressed(-parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;-&nbsp;</button>
 																</div>
 															</div>
 														
@@ -228,12 +227,12 @@
 															<medium class="text-muted">Rotation</medium>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button style="background-color:#F4F4F4; border-color:#18B4DA; color:black" type="button" class="btn btn-secondary " onclick="go_rotation(parseFloat(document.getElementById('Y_Txt').value))">GO</button>																
+																	<button style="background-color:#F4F4F4; border-color:#18B4DA;border-radius: 10px; color:black" type="button" class="btn btn-secondary 	" onclick="go_rotation(parseFloat(document.getElementById('Y_Txt').value))">GO</button>																
 																	<div class="input-group">
 																		<input id="Y_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="rotate(parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="rotate(-parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="rotate(parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="rotate(-parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
 																</div>
 															</div>
 														
@@ -245,12 +244,15 @@
 														<div class="row">
 															<medium class="text-muted">Position Z</medium>
 															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
+																<div class="btn-group btn-sm" role="group" aria-label="Basic example">		
+																	<button style="background-color:#F4F4F4; border-color:#18B4DA;border-radius: 10px; color:black" type="button" class="btn btn-secondary  "onclick="console.log(parseFloat(document.getElementById('Z_Txt').value)); go_z(parseFloat(document.getElementById('Z_Txt').value))">GO</button>
+															
 																	<div class="input-group">
 																		<input id="Z_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="pressed(parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;+&nbsp;</button>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="pressed(-parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;-&nbsp;</button>
+
+																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="pressed(parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;+&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="pressed(-parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;-&nbsp;</button>
 																</div>
 															</div>
 														
@@ -263,12 +265,12 @@
 															<medium class="text-muted">Phi</medium>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button style="background-color:#F4F4F4; border-color:#18B4DA; color:black" type="button" class="btn btn-secondary " onclick="go_phi(parseFloat(document.getElementById('Phi_Txt').value))">GO</button>
+																	<button style="background-color:#F4F4F4;border-radius: 10px;border-radius: 10px; border-color:#18B4DA; color:black" type="button" class="btn btn-secondary " onclick="go_phi(parseFloat(document.getElementById('Phi_Txt').value))">GO</button>
 																	<div class="input-group">
 																		<input id="Phi_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="phi(parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;+&nbsp;</button>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="phi(-parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;-&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="phi(parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="phi(-parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;-&nbsp;</button>
 															</div>
 															</div>
 														</div>
@@ -280,13 +282,13 @@
 															<medium class="text-muted">Gripper Rotation</medium>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button style="background-color:#F4F4F4; border-color:#18B4DA; color:black" type="button" class="btn btn-secondary " onclick="go(parseFloat(document.getElementById('Gripper_Txt').value))">GO</button>
+																	<button style="background-color:#F4F4F4; border-color:#18B4DA;border-radius: 10px; color:black" type="button" class="btn btn-secondary " onclick="go(parseFloat(document.getElementById('Gripper_Txt').value))">GO</button>
 																	<div class="input-group">
 																		<input id="Gripper_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="griperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="griperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
-																	
+								
+																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="griperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="griperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
 																</div>
 															</div>
 														
@@ -298,8 +300,8 @@
 														<div class="row">
 															<medium class="text-muted">End Tool</medium>
 															<div class="col-md-12">
-																<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Close</button>
-																<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Open</button> 																
+																<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Close</button>
+																<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Open</button> 																
 															</div>
 														</div>
 													</div>
@@ -313,8 +315,8 @@
 																	<div class="input-group">
 																		<input id="Camera_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value),1)">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value),1)">&nbsp;+&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value),1)">&nbsp;+&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value),1)">&nbsp;-&nbsp;</button>
 																</div>
 															</div>
 														</div>
@@ -329,8 +331,8 @@
 																	<div class="input-group">
 																		<input id="CameraA_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
-																	<button style="background-color:#18B4DA; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="moveCamera(-parseFloat(document.getElementById('CameraA_Txt').value),2)">&nbsp;-&nbsp;</button>
-																	<button style="background-color:#0C76C4; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary" onclick="moveCamera(parseFloat(document.getElementById('CameraA_Txt').value),2)">&nbsp;+&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('CameraA_Txt').value),2)">&nbsp;+&nbsp;</button>
+																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(-parseFloat(document.getElementById('CameraA_Txt').value),2)">&nbsp;-&nbsp;</button>
 																</div>
 															</div>
 														</div>
