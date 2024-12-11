@@ -2,13 +2,38 @@
 import json
 import random
 import time
+import sqlite3
 from datetime import datetime
 from os import listdir
 from os.path import isfile, join
-from flask import Flask, Response, render_template, jsonify
+from flask import Flask, Response, render_template, jsonify, g, request, redirect, url_for
+from db_actions.rock_db import *
+import sys
 
 application = Flask(__name__, static_url_path='/static')
 random.seed
+
+
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
+
+@application.route('/rocks', methods = ['GET', 'POST'])
+def rocks():
+    if request.method == 'POST':
+        return create_rock()
+    elif request.args.get("del_rock") :
+        return delete_rock()
+    rocks, categories = gather_rocks()
+    return render_template('rocks.html', rocks=rocks, rock_types=categories['types'], textures=categories['textures'], colors=categories['colors'], minerals=categories['minerals'])
+    
+
+
+
+########################################################################################################
+########################################################################################################
+########################################################################################################
 
 @application.route('/lab')
 def ciencias():
@@ -18,9 +43,6 @@ def ciencias():
 def arm_lab():
     return render_template('arm_lab.html')
 
-@application.route('/rocks')
-def rocks():
-    return render_template('rocks.html')
 
 @application.route('/metrics')
 def metrics():
@@ -53,6 +75,8 @@ def laboratory():
 @application.route('/stratigraphic')
 def stratigraphic():
     return render_template('strat_profile.html')
+
+
 
 
 

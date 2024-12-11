@@ -111,9 +111,10 @@
   
             <!-- Cambio rosa para ver laboratory, stratigraphic-->
             <li class="nav-link">
-              <a href="rocks.html">
-                <i class='bx bx-bar-chart-alt-2 icon'></i>
+              <a href="rocks">
+                <i class='bx bx-diamond icon'></i>
                 <span class="text nav-text">Rocks</span>
+                
               </a>
             </li>
   
@@ -141,407 +142,472 @@
 			</div>
 		</div>
 
+
+
+
+
+
+
+
+    <!-- Modal Styling -->
+    <style>
+      .modal-overlay {
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background: rgba(0, 0, 0, 0.5);
+       display: none;  /* Hidden by default */
+       z-index: 1000;
+   }
+
+   /* Modal content */
+   .modal-content {
+       position: fixed;
+       top: 50%; /* Initially hidden above the viewport */
+       left: 0;
+       width: 25%;
+       max-height: 120%;
+       background-color: white;
+       border-radius: 8px;
+       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+       padding: 20px;
+       overflow-y: auto;
+       left: 50%;
+       transform: translateX(-50%);
+       transition: top 0.5s ease-out;  /* Smooth slide-in effect */
+}
+  
+
+/* Make modal content scrollable if content exceeds available space */
+.modal-body {
+max-height: 60vh;  /* Set a maximum height (viewport height) */
+overflow-y: auto;  /* Enable vertical scrolling if content overflows */
+}
+
+/* Modal content when active (on-screen) */
+.modal-overlay.active .modal-content {
+top: 10%;  /* Modal slides down into view */
+}
+   /* Modal content when active (on-screen) */
+   .modal-overlay.active .modal-content {
+       top: 10%;  /* Modal slides down into view */
+   }
+
+   /* Modal header */
+   .modal-header {
+       font-size: 24px;
+       margin-bottom: 15px;
+   }
+
+   .modal-footer {
+       margin-top: 20px;
+       text-align: right;
+   }
+
+   .btn {
+       padding: 10px 20px;
+       margin: 0 5px;
+       border: none;
+       border-radius: 5px;
+       cursor: pointer;
+   }
+
+   .btn-secondary {
+       background-color: #18B4DA;
+       color: white;
+   }
+
+   .rock_img{
+    width: 230px;
+    height: auto;
+   }
+
+   .hover-button {
+    background-color: #7fb0f0; /* Initial background color */
+    border-color: #ffffff; /* Initial border color */
+    color: rgb(255, 255, 255); /* Initial text color */
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 1rem;
+    border: 2px solid #d2d2d2;
+    font-family: 'Comic Sans', sans-serif;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transition for color change */
+}
+   .hover-button:hover {
+    background-color: #4d8bca; 
+    border-color: #a2a2a2;
+    color: #000000; 
+}
+
+
+   </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <script>
+       // Function to show the modal
+
+       function openModal() {
+           var modal = document.getElementById("myModal");
+           modal.style.display = "block";  // Show the modal
+
+           // Add a slight delay to allow for smooth animation
+           setTimeout(function() {
+               modal.classList.add("active");  // Slide the modal into view
+           }, 10);  // Small timeout to ensure style display is applied before adding 'active'
+       }
+
+       function openDelModal(rock_name, rock_id) {
+           var modal = document.getElementById("myDelModal");
+           modal.style.display = "block";  // Show the modal
+
+           const modalBody = modal.querySelector(".modal-body p");
+           modalBody.innerHTML = `Are you sure you want to delete the rock: <b>${rock_name}</b>?`;
+
+           modal.setAttribute("data-rock-id", rock_id);
+
+           // Add a slight delay to allow for smooth animation
+           setTimeout(function() {
+               modal.classList.add("active");  // Slide the modal into view
+           }, 10);  // Small timeout to ensure style display is applied before adding 'active'
+       }
+
+       function delete_rock(){
+        const modal = document.getElementById("myDelModal");
+        const rock_id = modal.getAttribute("data-rock-id");
+        const params = new URLSearchParams();
+        params.append("del_rock", rock_id);
+        window.location.href = `/rocks?${params.toString()}`;
+}
+
+       // Function to close the modal
+       function closeModal() {
+           var modal = document.getElementById("myModal");
+           // Remove 'active' to slide the modal out
+           modal.classList.remove("active");
+
+           // After animation completes, set display to none
+           setTimeout(function() {
+               modal.style.display = "none";  // Hide the modal
+           }, 500);  // Match the timeout to the duration of the slide animation
+       }
+
+       // Function to close the modal
+       function closeDelModal() {
+           var modal = document.getElementById("myDelModal");
+           // Remove 'active' to slide the modal out
+           modal.classList.remove("active");
+
+           // After animation completes, set display to none
+           setTimeout(function() {
+               modal.style.display = "none";  // Hide the modal
+           }, 500);  // Match the timeout to the duration of the slide animation
+       }
+
+
+
+       // Close the modal if the user clicks outside of the modal content
+       window.onclick = function(event) {
+           var modal = document.getElementById("myModal");
+           if (event.target == modal) {
+               modal.style.display = "none";
+       }
+   }
+      
+
+       function redirectToPath() {
+           // Replace '/new_path' with the actual path you want to redirect to
+           window.location.href = "{{ url_for('rocks') }}";
+       }
+
     
+        $(document).ready(function () {
+        $("#filterButton").click(function (name) {
+        const type = $("#typeInput").val();
+        const texture = $("#textureInput").val();
+        const color = $("#colorInput").val();
+        const mineral = $("#mineralInput").val();
+
+        // Construct query parameters
+        const params = new URLSearchParams();
+        if (type !== "all") params.append("type", type);
+        if (texture !== "all") params.append("texture", texture);
+        if (color !== "all") params.append("color", color);
+        if (mineral !== "all") params.append("mineral", mineral);
+
+        
+        window.location.href = `/rocks?${params.toString()}`;
+        });
+        });
+
+        
+
+       
+
+        document.getElementById('imageInput1').addEventListener('change', function(event) {
+        const container = document.getElementById('selectedImageContainer1');
+        container.innerHTML = ''; 
+
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+          const img = document.createElement('img');
+          img.src = URL.createObjectURL(file);
+          img.style.maxWidth = '100%';
+          img.style.maxHeight = '150px';
+          img.alt = 'Selected Image';
+          container.appendChild(img);
+        } else {
+          container.innerHTML = '<p>Please select a valid image file.</p>';
+        }
+      });                
+   </script>
+
+
+
+
+
+
+
+
+<!-- Popup Crear -->
+<div id="myModal" class="modal-overlay">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h4>Das New Rock</h4>
+      </div>
+      <div class="modal-body">
+          <p>Insert the charachteristics of a new Rock in here</p>
+          
+          <!-- Form starts here -->
+           <center>
+          <form id="modalForm" action="/rocks" enctype="multipart/form-data" method="POST">
+
+              <!-- Rock Name-->
+              <div class="form-group">
+                  <label for="name">Rock Name:</label><br>
+                  <input type="text" id="name" name="name" class="form-control" placeholder="ex. Granite" required><br><br>
+              </div>
+
+              <!-- Rock Type -->
+              <div class="form-group">
+                  <label for="type">Rock Type:</label><br>
+                  <input type="text" id="type" name="type" class="form-control" placeholder="ex. Sedimentary" required><br><br>
+              </div>
+
+              <!-- Rock Texture -->
+              <div class="form-group">
+                  <label for="texture"> Texture:</label><br>
+                  <input type="text" id="texture" name="texture" class="form-control" placeholder="ex. Detrital" required><br><br>
+              </div>
+
+              <!-- Rock Colors -->
+              <div class="form-group">
+                  <label for="colors">Rock Colors:</label><br>
+                  <input type="text" id="colors" name="colors" class="form-control" placeholder="ex. Green, Blue, Grey" required><br><br>
+              </div>
+
+              <!-- Rock Minerals -->
+              <div class="form-group">
+                <label for="minerals">Rock Minerals:</label><br>
+                <input type="text" id="minerals" name="minerals" class="form-control" placeholder="ex. quartz, geothithe, hematite" required><br><br>
+            </div>
+
+            <!-- Image -->
+              <!-- Form Group for the Image Upload -->
+              <div class="form-group">
+                <label for="image">Upload Image:</label>
+                <input type="file" id="image" name="image" class="form-control" accept="image/*"  required>
+            </div>
+            
+              
+
+          
+
+              <!-- Footer/Buttons -->
+              <div class="modal-footer" style="display: flex; justify-content: center; width: 100%; gap: 10px;">
+               <!-- Close -->
+                  <button type="button" class="btn btn-secondary btn-look-value-plus" style="background-color:#18B4DA; color:white; border-radius: 1rem;" onclick="closeModal()">
+                      &nbsp;Close&nbsp;
+                  </button>
+                  <!-- Create -->
+                    <button type="submit" class="btn btn-secondary btn-look-value-plus" style="background-color:#0C76C4; color:white; border-radius: 1rem;">
+                        &nbsp;Create&nbsp;
+                    </button>
+                 
+              </div>
+          </form>
+          </center>
+          <!-- Form ends here -->
+        </div>
+      </div>
+    </div>
+  
+<!-- Fin PopUp Crear -->
+
+
+
+<!-- Popup Delete -->
+<div id="myDelModal" class="modal-overlay">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h4>Deletion</h4>
+      </div>
+      <div class="modal-body">
+          <p>¿Sure you want to delete this field?</p>
+          
+          <!-- Form starts here -->
+           <center>
+              <!-- Footer/Buttons -->
+              <div class="modal-footer" style="display: flex; justify-content: center; width: 100%; gap: 10px;">
+               <!-- Close -->
+                  <button type="button" class="btn btn-secondary btn-look-value-plus" style="background-color:#18B4DA; color:white; border-radius: 1rem;" onclick="closeDelModal()">
+                      &nbsp;Close&nbsp;
+                  </button>
+                  <!-- Create -->
+                    <button type="submit" class="btn btn-secondary btn-look-value-plus" 
+                    style="background-color:#fb4d73; color:white; border-radius: 1rem;"
+                    onclick = "delete_rock();closeDelModal()">
+                        &nbsp;Delete&nbsp;
+                    </button>
+              </div>
+          </center>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+
+
+
+    
+
+
+
+
+<!-- Mostrado -->
 		<div class="main-panel">
 			<div class="content">
 				<div class="container-fluid">
-					<h4 class="page-title">Rocks classification</h4>
-
+          
+          
+					<h1 class="page-title">Rocks Database</h1>
+                    <!-- Filters --> 
                     <div class="container-fluid p-5">
+                      <div class="table-responsive" id="mydatatable-container" style="background-color: white; border-radius: 1.5rem; padding: 3%;">
+                        <label for="typeInput">Type:</label>
+                        <select id="typeInput">
+                          <option value="all">All</option>
+                          {% for rock_type in rock_types %}
+                            <option value="{{ rock_type }}">{{ rock_type }}</option>
+                          {% endfor %}
+                        </select>
+                        
+                        <label for="textureInput">Texture:</label>
+                        <select id="textureInput">
+                            <option value="all">All</option>
+                            {% for texture in textures %}
+                            <option value="{{ texture }}">{{ texture }}</option>
+                            {% endfor %}
+                        </select>
+                      
+                        <label for="colorInput">Color:</label>
+                        <select id="colorInput">
+                            <option value="all">All</option>
+                            {% for color in colors %}
+                            <option value="{{ color }}">{{ color }}</option>
+                            {% endfor %}
+                        </select>
+                      
+                        <label for="mineralInput">Mineral:</label>
+                        <select id="mineralInput">
+                            <option value="all">All</option>
+                            {% for mineral in minerals %}
+                            <option value="{{ mineral }}">{{ mineral }}</option>
+                            {% endfor %}
+                        </select>
 
-                        <div class="table-responsive" id="mydatatable-container" style="background-color: white; border-radius: 1.5rem; padding: 3%;">
-                            
-                            <select id="searchInput">
-                                <option value="all">All</option>
-                                <option value="Igneous">Igneous</option>
-                                <option value="Sedimentary">Sedimentary</option>
-                                <option value="Metamorphic">Metamorphic</option>
-                            </select>
-                
-                            <table class="records_list table table-striped table-bordered table-hover" id="mydatatable">
-                                
-                                <thead>
-                                    <tr>
-                                        <th style="width: 25%;">Rock</th>
-                                        <th>Description</th>
-                                     
-                                    </tr>
-                                </thead>
-                                
-                                <tbody id="fbody">
-                                   <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/igneas/granito.jpg" class="rocas" >
-                                            Granite<br>ID: 01</td>
-                                            <td>   <p>Type:	Igneous<br>
-                                                    Texture: Intermediate-thick<br>
-                                                    Color: gray, yellow, light red <br>
-                                                    </p>
-                                                    <p class="minerales">
-                                                    Essential minerals: quartz, potassium feldspar and  plagioclase<br>
-                                                    </p>
-                                                    <p>
-                                                     ID: 01
-                                                    </p>
-                                            </td>
-                                 
-                                    </tr>
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/igneas/granodiorita.jpg" class="rocas" >
-                                            Granodiorite<br>ID: 02</td>
-                                            <td><p>Type:	Igneous<br>
-                                            Texture: fine-thick<br>
-                                            Color: gray, white, pink<br></p>
-                                            <p class="minerales">Essential minerals: quartz, feldespars</p><br>
-                                            <p> ID: 02</p>
-                                            </td>
-                                  
-                                    </tr>
-                                  
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/igneas/Sienita.jpg" class="rocas" >
-                                            Syenite<br>ID: 03</td>
-                                        <td><p>Type:	Igneous<br>
-                                            Texture: 	intermediate, thick<br>
-                                            Color: white with bright brown, pinkish gray</p> 
-                                            <p class="minerales">Essential minerals: Orthoclase, plagioclase, augite y magnetite</p><br>
-                                            <p>ID: 03</p>
-                                            </td>
-                                  
-                                    </tr>
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/igneas/Monzonita.jpg" class="rocas" >
-                                            Monzonite<br>ID: 04</td>
-                                        <td><p>Type:	Igneous<br>
-                                            Texture: 	Phaneritic<br>
-                                            Color: pink with white and black shades</p>
+                        <button type="button" 
+                        class="btn btn-secondary btn-look-value-plus"  
+                        style="background-color:#18B4DA; color:white; border-radius: 1rem;"
+                        id="filterButton"> &nbsp;Filter&nbsp; </button>
 
-                                            <p class="minerales">Essential minerals: quartz, felderpar, plagioclase</p>
-                                            <p>ID: 04</p>
-                                            
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/igneas/Diorita.jpg" class="rocas" >
-                                            Diorite<br>ID: 05</td>
-                                        <td><p>Type:	Igneous<br>
-                                            Texture: intermediate, thick<br>
-                                            Color: white-black or lightly gray-green</p><br>
-                                            <p class="minerales">Essential minerals: sodium plagioclase, Biotite, amphibole, pyroxene, quartz</p>
-                                            <p>ID: 05</p>
-                                            
-                                            
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/igneas/gabro.jpg" class="rocas" >
-                                            Gabbro<br>ID: 06 </td>
-                                        <td><p>Type:	Igneous<br>
-                                            Texture: 		intermediate, thick<br>
-                                            Color: dark green to black</p>
-                                            <p class="minerales">Essential minerals: calcium plagioclase, pyroxene, olivine, hornblende, hipersthena<br>
-                                            <p>ID: 06</p>
-                                            <br>
-                                            </td>
-                                  
-                                    </tr>
-                
-                                    
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/igneas/Dunita.jpg" class="rocas" >
-                                            Dunite<br>ID: 07</td>
-                                        <td><p>Type:	Igneous<br>
-                                            Texture: 		intermediate, thick<br>
-                                            Color: dark green to black</p>
-                                            <p class="minerales">Essential minerals: olivine, pyroxenes y amphibolees</p>
-                                            <p>ID: 07</p>
-                                            
-                                            </td>
-                                  
-                                    </tr>
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/sedimentareas/Conglomerado.webp" class="rocas" >
-                                            Conglomerate<br>ID: 08</td>
-                                        <td><p>Type:	Sedimentary<br>
-                                            Texture: 		thick<br>
-                                            Color: black, gray, brown</p>
-                                            <p class="minerales">Essential minerals: granite, quartzite and andesite</p>
-                                            <p>ID: 08</p>
-                                            
-                                            
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/sedimentareas/brecha.webp" class="rocas" >
-                                            Breccia<br>ID: 09</td>
-                                        <td><p>Type:	Sedimentary<br>
-                                            Texture: 		Irregular<br>
-                                            Color: Variable</p>
-                                            <p class="minerales">Essential minerals: clasts, pebble breccia or granule</p>
-                                            <p>ID: 09</p>
-                                            
-                                            
-                                            
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/sedimentareas/arenisca.jpg" class="rocas" >
-                                            Sandstone<br>ID: 10</td>
-                                        <td><p>Type:	Sedimentary<br>
-                                            Texture: 		intermediate-thick<br>
-                                            Color: Variable, commonly gray, brown or red</p>
-                                            <p class="minerales">Essential minerals: Sandstone, quartz o felderpar</p>
-                                            <p>ID: 10</p>
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/sedimentareas/Arcosa.webp" class="rocas" >
-                                            Arcosa<br>ID: 11</td>
-                                        <td><p>Type:	Sedimentary<br>
-                                            Texture: Detrital<br>
-                                            Color: pink, red, yellow</p>
-                                            <p class="minerales">Essential minerals: quartz and felderpar minerals</p>
-                                            <p>ID: 11</p>
-                                            
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/sedimentareas/Grauvaca.jpg" class="rocas" >
-                                            Greywacke<br>ID: 12</td>
-                                        <td><p>Type:	Sedimentary<br>
-                                            Texture: detrital<br>
-                                            Color: blacks, grays</p>
-                                            <p class="minerales">Essential minerals: quartz , felderpar,  rock or lithic</p>
-                                            <p>ID: 12</p>
-                                            
-                                            </td>
-                                  
-                                    </tr>
+                        <!-- Fin Filters -->
+
+
+
+
+
+                        <!-- Crear --> 
+                        <button type="button" 
+                         class="btn btn-secondary btn-look-value-plus"  
+                         style="background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;" 
+                         onclick="openModal()"> &nbsp;Create&nbsp; </button>
+
+                        <div class="table-responsive" id="mydatatable-container" style="background-color: white; border-radius: 1.5rem; padding: 1%;">
                        
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/sedimentareas/limolita.jpg" class="rocas" >
-                                            Siltstone<br>ID: 13</td>
-                                        <td><p>Type:	Sedimentary<br>
-                                            Texture: Fine<br>
-                                            Color: gray, red, green</p>
-                                            <p class="minerales">Essential minerals: Hematite, goethite and ferrihydrite</p>
-                                            <p>ID: 13</p>
+             
+
+
+
+
+                            <!-- Tabla --> 
+                            <table class="records_list table table-striped table-bordered table-hover" id="mydatatable">
+                              <thead>
+                                  <tr>
+                                      <th style="width: 25%;">Rock</th>
+                                      <th>Description</th>
+                                  </tr>
+                              </thead>
+                  
+                              <tbody id="fbody">
+                                  {% for rock in rocks %}
+                                      <tr>
+                                          <td class="titulo_piedra">
+                                              <img src="{{ rock[4] }}" class = 'rock_img' >
+                                              {{ rock[1] }}<br>ID: {{ rock[0] }}
+                                          </td>
+                                          <td>
+                                              <p class="minerales">
+                                              Name: {{ rock[1] }}<br><br>
+                                              </p>
+                                              <p>
+                                              Type: {{ rock[2] }}<br>
+                                              Texture: {{ rock[3] }}<br>
+                                              Color: {{ rock[5] }}<br>
+                                              </p>
                                             </td>
-                                  
-                                    </tr>
-                
-                                    
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/metamorficas/Anfibolita.jpg" class="rocas" >
-                                            Amphibolite<br>ID: 14</td>
-                                        <td><p>Type:	Metamorphic<br>
-                                            Texture: intermediate-thick<br>
-                                            Color: greens, marrones o negros</p>
-                                            <p class="minerales">Essential minerals: amphibole, quartz, clinopyroxene, granate.<br></p>
-                                            <p>ID: 14</p>
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/metamorficas/Corneana.jpg" class="rocas" >
-                                            Corneal<br>ID: 15</td>
-                                        <td><p>Type:	Metamorphic<br>
-                                            Texture: Granoblastica-masiva<br>
-                                            Color: dark gray with brown and green shades</p>
-                                            <p class="minerales">Essential minerals:  quartz, garnets, epidote, biotite, sericite, chlorite, graphite.<br></p>
-                                            <p>ID: 15</p>
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/metamorficas/Cuarcita.jpg" class="rocas" >
-                                            Quartzite<br>ID: 16</td>
-                                        <td><p>Type:	Metamorphic<br>
-                                            Texture: intermediate-thick<br>
-                                            Color: 	white, gray, pink or redish<br></p>
-                                            <p class="minerales">Essential minerals:  quartz<br></p>
-                                            <p>ID: 16</p>
-                                            
-                                            </td>
-                                  
-                                    </tr>
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/metamorficas/Eclogita.jpg" class="rocas" >
-                                            Eclogite<br>ID: 17</td>
-                                        <td><p>Type:	Metamorphic<br>
-                                            Texture: intermediate-thick<br>
-                                            Color: 	white, green, gray, pink or redish</p>
-                                            <p class="minerales">Essential minerals:  Granate, pyroxene<br></p>
-                                            <p>ID: 17</p>
-                                            
-                                            
-                                            </td>
-                                  
-                                    </tr>
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/metamorficas/Espilita.jpg" class="rocas" >
-                                            Spilite<br>ID: 18</td>
-                                        <td><p>Type:	Metamorphic<br>
-                                            Texture: soft-thick<br>
-                                            Color: 	gray, green</p>
-                                            <p class="minerales">Essential minerals: Albite, Chlorite, Calcite</p>
-                                            <p>ID: 18</p>
-                                            
-                                            
-                                            
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                                    <tr>
-                                        <td class="titulo_piedra">
-                                            <img src="static/img/rocas/metamorficas/Esquisito.jpg" class="rocas" >
-                                            Schistous<br>ID: 19</td>
-                                        <td><p>Type:	Metamorphic<br>
-                                            Texture: 	schistous<br>
-                                            Color: 	green, brown, redish<br></p>
-                                            <p class="minerales">Essential minerals:  mica, chlorite, talc, hornblende</p>
-                                            <p>ID: 19</p>
-                                            </td>
-                                  
-                                    </tr>
-                
-                
-                                </tbody>
+                                          <td>
+                                            <p class = 'minerales'>
+                                                  Essential minerals: {{ rock[6] }}<br>
+                                              </p>
+                                              <p>ID: {{ rock[0] }}</p>
+                                              <p>
+                                            <button class="hover-button" type="button" onclick = "openDelModal( '{{ rock[1] }}' , '{{ rock[0] }}')">Delete</button>
+                                          </td>
+                                          
+                                      </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
                             </table>
                         </div>
                     </div>
                 
                    <!-- Termina tabla -->  
-                    
-                   
-                   <script type="text/javascript">
-
-                    $("#searchInput").change(function () {
-                        if(this.value != "") 
-                        {
-                        //Dividir los valores a buscar
-                        var data = this.value.split(" ");
-                        //Busca en las filas
-                        var jo = $("#fbody").find("tr");
-                    
-                        if (this.value == "" || this.value=="all") {
-                            
-                            jo.show();
-                            return;
-                        }
-            
-                        //Oculta las filas
-                        jo.hide();
-            
-                        //Filtra los resultados
-                        jo.filter(function (i, v) {
-                            var $t = $(this);
-                            for (var d = 0; d < data.length; ++d) {
-                                if ($t.is(":contains('" + data[d] + "')")) {
-                                    return true;
-                                }
-                            }
-                            return false;
-                        })
-                        //Muestra los resultados que coincidan
-                        .show();
-                        }
-                        }).focus(function () {
-                        this.value = "";
-                        $(this).css({
-                            "color": "black"
-                        });
-                        $(this).unbind('focus');
-                        }).css({
-                        "color": "#C0C0C0"
-                        });
-            
-            
-            
-            
-                        //Crea la funcion de filtrar
-                        $(document).ready(function() {
-                            $('#mydatatable tfoot th').each( function () {
-                                var title = $(this).text();
-                                $(this).html( '<input type="text" placeholder="Filtrar.." />' );
-                            } );
-                        //Se usa plug in jason para los datos universales de la tabla en español
-                            var table = $('#mydatatable').DataTable({
-                                "dom": 'B<"float-left"i><"float-right"f>t<"float-left"l><"float-right"p><"clearfix">',
-                                "responsive": false,
-                                "language": {
-                                    "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-                                },
-                                //Orden ascendente o descendente
-                                "order": [[ 0, "desc" ]],
-                                "initComplete": function () {
-                                    this.api().columns().every( function () {
-                                        var that = this;
-                        
-                                        $( 'input', this.footer() ).on( 'keyup change', function () {
-                                            if ( that.search() !== this.value ) {
-                                                that
-                                                    .search( this.value )
-                                                    .draw();
-                                                }
-                                        });
-                                    })
-                                }
-                            });
-                        });
-                      </script>
-
-
 				</div>	
 			</div>
 		</div>
