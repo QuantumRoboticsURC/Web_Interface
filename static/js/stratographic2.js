@@ -32,12 +32,50 @@ function superponerImagenes(index, image) {
   var imagenSuperpuesta = new Image();
   imagenSuperpuesta.src = "static/img/Brujula.jpeg";
   imagenSuperpuesta.onload = function() {
+
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
       ctx.globalAlpha = 0.5; // Ajusta la opacidad de la segunda imagen
-      // Dibuja la brújula en la esquina superior izquierda
+
+      // Guardar el estado del contexto
+      ctx.save();
+
+      // Mover el contexto al centro de la imagen de la brújula
       const compassWidth = 100; // Ajusta el ancho de la brújula
       const compassHeight = 100; // Ajusta la altura de la brújula
-      ctx.drawImage(imagenSuperpuesta, 0, 0, compassWidth, compassHeight);
+      ctx.translate(compassWidth / 2, compassHeight / 2);
+
+      let id_angulo = 'angulo' + (index + 1);
+      let angulo = document.getElementById(id_angulo).value;
+
+      if (!isNaN(angulo)){
+        // Rotar el contexto 45 grados (en radianes)
+        ctx.rotate((angulo-90) * Math.PI / 180);
+      }
+      
+      // Dibujar la brújula en el contexto rotado
+      ctx.drawImage(imagenSuperpuesta, -compassWidth / 2, -compassHeight / 2, compassWidth, compassHeight);
+      var imagen_escala = new Image();
+  imagen_escala.src = "static/img/escala.jpeg";
+  imagen_escala.onload = function() {
+    const escalaWidth = 100; // Ajusta el ancho de la escala
+    const escalaHeight = 20; // Ajusta la altura de la escala
+
+    // Calcula las coordenadas de la esquina inferior derecha
+    const x = canvas.width - escalaWidth;
+    const y = canvas.height - escalaHeight;
+
+    // Dibuja la imagen escalada en la esquina inferior derecha
+    ctx.drawImage(imagen_escala, x, y, escalaWidth, escalaHeight);
+};
+
+      // Restaurar el estado del contexto
+      ctx.restore();
+
       ctx.globalAlpha = 1.0; // Restablece la opacidad para futuras operaciones
   };
+
+  
+
+  // Mostrar el canvas
+  canvas.style.display = 'block';
 }
