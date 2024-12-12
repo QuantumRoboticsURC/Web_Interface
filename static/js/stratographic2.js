@@ -30,11 +30,11 @@ function superponerImagenes(index, image) {
   }
   var ctx = canvas.getContext('2d');
   var imagenSuperpuesta = new Image();
-  imagenSuperpuesta.src = "static/img/Brujula.jpeg";
+  imagenSuperpuesta.src = "static/img/brujula2.png";
   imagenSuperpuesta.onload = function() {
 
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-      ctx.globalAlpha = 0.5; // Ajusta la opacidad de la segunda imagen
+      // ctx.globalAlpha = 0.5; // Ajusta la opacidad de la segunda imagen
 
       // Guardar el estado del contexto
       ctx.save();
