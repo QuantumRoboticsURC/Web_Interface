@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (index % 3 == 0) {
                   superponerImagenes(index, imgElement);
                 }
+                else if (index % 3 == 1){
+                  superponerEscala(index, imgElement);
+                }
               };
           };
           reader.readAsDataURL(file);
@@ -79,3 +82,36 @@ function superponerImagenes(index, image) {
   // Mostrar el canvas
   canvas.style.display = 'block';
 }
+
+function superponerEscala(index, image){
+  let idcanvas = 'i' + (index + 1);
+  let canvas = document.getElementById(idcanvas);
+
+  if (!canvas) {
+    console.error('Canvas no encontrado: ' + idcanvas);
+    return;
+  }
+  var ctx = canvas.getContext('2d');
+  var imagen_escala = new Image();
+
+  imagen_escala.src = "static/img/escala.jpeg";
+  imagen_escala.onload = function() {
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    const escalaWidth = 100; // Ajusta el ancho de la escala
+    const escalaHeight = 20; // Ajusta la altura de la escala
+
+    // Calcula las coordenadas de la esquina inferior derecha
+    const x = canvas.width - escalaWidth;
+    const y = canvas.height - escalaHeight;
+
+    // Dibuja la imagen escalada en la esquina inferior derecha
+    ctx.drawImage(imagen_escala, x, y, escalaWidth, escalaHeight);
+};
+
+      // Restaurar el estado del contexto
+      ctx.restore();
+
+      ctx.globalAlpha = 1.0; // Restablece la opacidad para futuras operaciones
+      canvas.style.display = 'block';
+
+  };
