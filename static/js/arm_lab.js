@@ -101,7 +101,7 @@ class ArmTeleop{
             q2:190.0,
             q3:-125.0,
             q4:0.0,
-            q5:0.0,
+            q5:90.0,
             q6:0.0,
             q7:0.0,
             q8:0.0
@@ -319,16 +319,16 @@ function go(data,q){
     switch(q){
         case 1:
             arm.angles_map.q1=(arm.limits_map.q1,data);
-            document.getElementById("X_Txt").value = 5;
+            //document.getElementById("X_Txt").value = 5;
             
             break;
         case 2:
             arm.angles_map.q2=(arm.limits_map.q2,data);
-            document.getElementById("Y_Txt").value = 5;
+            //document.getElementById("Y_Txt").value = 5;
             break;
         case 3:
             arm.angles_map.q3=(arm.limits_map.q3,data);
-            document.getElementById("Axis3_Txt").value = 5;
+            //document.getElementById("Axis3_Txt").value = 5;
             break;
         case 4:
             arm.angles_map.q4=(arm.limits_map.q4,data);
@@ -367,6 +367,17 @@ function moveCentrifuge(data){
 function change_led(data){
     arm.led_signal(data);
     //getTxt();
+}
+function moveServos(id, sim, data){
+    if (id == 5){
+        if (sim == "+"){
+            console.log(data);
+            arm.angles_map.q5 += data;
+        } else{
+            arm.angles_map.q5 -= data;
+        }
+        getTxt();
+    }
 }
 
 
@@ -435,14 +446,44 @@ function getTxt() {
     localStorage.setItem("Servo_left", Servo_left);
     
 
-    document.getElementById("Rotation").innerHTML = Brazo_1;
-    document.getElementById("YJ").innerHTML = Garra_1;
-    document.getElementById("Axis3").innerHTML = Brazo_2;
+    //document.getElementById("Rotation").innerHTML = Brazo_1;
+    //document.getElementById("YJ").innerHTML = Garra_1;
+    //document.getElementById("Axis3").innerHTML = Brazo_2;
     document.getElementById("LS").innerHTML = Garra_2;
     document.getElementById("CS").innerHTML = Camera;
-    document.getElementById("RS").innerHTML = Drill;
-    document.getElementById("Centrifuge").innerHTML = Servo_left;
-    document.getElementById("LED").innerHTML = Servo_right;
+    switch(Drill){
+        case "0":
+            document.getElementById("RS").innerHTML = "Off";
+            break;
+        case "1":
+            document.getElementById("RS").innerHTML = "On";
+            break;
+    }
+    //document.getElementById("RS").innerHTML = Drill;
+    switch(Servo_left){
+        case "-1":
+            document.getElementById("Centrifuge").innerHTML = "Open";
+            break;
+        case "0":
+            document.getElementById("Centrifuge").innerHTML = "Gather";
+            break;
+        case "1":
+            document.getElementById("Centrifuge").innerHTML = "Introduce Sample";
+            break;
+    }
+    switch(Servo_right){
+        case "-1":
+            document.getElementById("LED").innerHTML = "Open";
+            break;
+        case "0":
+            document.getElementById("LED").innerHTML = "Gather";
+            break;
+        case "1":
+            document.getElementById("LED").innerHTML = "Introduce Sample";
+            break;
+    }
+    /*document.getElementById("Centrifuge").innerHTML = Servo_left;
+    document.getElementById("LED").innerHTML = Servo_right;*/
     arm_interface(arm.angles_map.q2,arm.angles_map.q3)
 
 }
@@ -492,36 +533,7 @@ function arm_interface(q2,q3){
     			pointStyle:'rectRounded',
     			showLine: true
   		}]
-	}
-	var chartOptions = {
-  		legend:{
-    			display:false //Ocultar labels
-  		},
-  		scales:{
-    			xAxes:[{
-      				ticks:{
-        				beginAtZero:true,
-        				min:-6,
-        				max:6
-      				}
-    			}],
-    			yAxes:[{
-      				ticks:{
-        				beginAtZero:true,
-        				min:-6,
-                        max:6                        
-      				}
-    			}]
-  		},    
-        animation: {
-            duration: 0
-        }
-	};
-	new Chart("Arm_Graphic",{
-  		type: "scatter",
-  		data: armData,
-  		options: chartOptions
-	});
+    };
 }
 
     
