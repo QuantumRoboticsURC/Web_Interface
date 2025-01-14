@@ -144,27 +144,21 @@
 											<big class="text-center">Objective</big>
 											
 											<div class="card-body text-center">
-											
-																									
-											
-														<button type="button" class="btn btn-secondary btn-look-value-plus"  style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;"onclick="setStatus(0)">&nbsp;GNSS only&nbsp;</button>
-														<button type="button" class="btn btn-secondary btn-look-value-plus" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;"onclick="setStatus(1)">&nbsp;ARUCO&nbsp;</button> 
-														<button type="button" class="btn btn-secondary btn-look-value-plus" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;"onclick="setStatus(2)">&nbsp;Hammer&nbsp;</button> 		
-														<button type="button" class="btn btn-secondary btn-look-value-plus" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;"onclick="setStatus(3)">&nbsp;Bottle&nbsp;</button> 
-												<div class="row">
-													<div class="col-md-12">
-													
-													
-													
-																	
+                        <select name="Objective_type" id="Objective_type" class="btn btn-secondary btn-look-value-plus">     
+                          <option value="0">GNSS ONLY</option>
+                          <option value="1">ARUCO</option>
+                          <option value="2">MALLET</option>
+                          <option value="3">BOTTLE</option>
+                        </select>
+                      </div>
+													<!--<div class="col-md-12">	-->			
 														<big class="text-center">Latitud</big>
-														
-														<div class="input-group">
+														<div class="card-body text-center">
 															<input id="Latitud_Txt" type="text" class="form-control-go" value="38.39865" aria-label="Input group example" aria-describedby="btnGroupAddon">
 														</div>
 														<big class="text-center">Longitud</big>
 														
-														<div class="input-group">
+														<div class="card-body text-center">
 														
 															<input id="Longitud_Txt" type="text" class="form-control-go" value="-110.79025 " aria-label="Input group example" aria-describedby="btnGroupAddon">
 														</div>

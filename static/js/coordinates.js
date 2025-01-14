@@ -25,11 +25,11 @@ function publish_coordinates(){
   console.log(latitud);
   coordenadas=latitud+","+longitudl;
   console.log(coordenadas);
-  var message =new ROSLIB.Message({
+  /*var message =new ROSLIB.Message({
       data: [parseFloat(latitud),parseFloat(longitudl)]
   })
   
-  coordinates.publish(message);
+  coordinates.publish(message);*/
   console.log("hola")
 }
 
@@ -48,8 +48,10 @@ var statusPublisher = new ROSLIB.Topic({
 });
 
 function botonClick() {
+   
+    menu = document.getElementById("Objective_type");
+    goBottonStatus = menu.options[menu.selectedIndex].value;
     console.log("Status jaja: " + goBottonStatus);
-
     var statusMessage = new ROSLIB.Message({
         data: goBottonStatus
     });
