@@ -6,12 +6,18 @@ import sqlite3
 from datetime import datetime
 from os import listdir
 from os.path import isfile, join
-from flask import Flask, Response, render_template, jsonify, g, request, redirect, url_for
+from flask import Flask, Response, render_template, jsonify, g, request, redirect, url_for, send_file
 from db_actions.rock_db import *
 import sys
+from Stratigraphic_Profile import stratigraphic_profile
 
 application = Flask(__name__, static_url_path='/static')
 random.seed
+UPLOAD_FOLDER = 'uploads'
+RESULT_FOLDER = 'results'
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(RESULT_FOLDER, exist_ok=True)
 
 
 
@@ -35,6 +41,39 @@ def rocks():
 ########################################################################################################
 ########################################################################################################
 
+@application.route('/upload', methods=['POST'])
+def upload_image():
+    if 'image' not in request.files:
+        return jsonify({"error": "No image file found in request"}), 400
+
+    file = request.files['image']
+
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    # Guardar la imagen temporalmente
+    file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(file_path)
+
+    try:
+        # Procesar la imagen
+        stratigraphic_profile(file_path)
+
+        # (Opcional) Si el procesamiento genera una imagen de salida, envíala al cliente
+        result_path = os.path.join(RESULT_FOLDER, "output.png")  # Ajusta según el resultado de tu procesamiento
+        if os.path.exists(result_path):
+            return send_file(result_path, mimetype='image/png')
+
+        return jsonify({"success": "Image processed successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        # Limpia archivos temporales
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            
 @application.route('/lab')
 def ciencias():
     return render_template('laboratory.html')

@@ -180,35 +180,42 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h1 class="card-title">Site 1 aaaaaaaaaa</h1>
+                                <h1 class="card-title">Site 1</h1>
                             </div>
-                              <h5>Panoramic</h5>
-                              <input type="file" class="image-input" id ="imageInput1" accept="image/*">
-                              <div class="color-columns">
-                                <div class="column">
-                                  <div class="selected-image-container" id="selectedImageContainer1"></div>
+                            <h5>Panoramic</h5>
+                            <input type="file" class="image-input" id ="imageInput1" accept="image/*">
+                            <input type="text" class="form-control" value="0" aria-label="Input group example" aria-describedby="btnGroupAddon" id = "angulo1">
+                            <div class="color-columns">
+                              <div class="column">
+                                <div class="selected-image-container" id="selectedImageContainer1">
+                                  <canvas class="canvas" width="640" height="480" style="display:none" id = "i1"></canvas>
                                 </div>
                               </div>
-                              <div class="result" id="result1"></div>
-                              
-                              <h5>Close-up</h5>  
-                              <input type="file" class="image-input" id= "imageInput2" accept="image/*">
-                              <div class="color-columns">
-                                <div class="column">
-                                  <div class="selected-image-container" id="selectedImageContainer2"></div>
-                                </div>
-                              </div>
-                              <div class="result" id="result2"></div>
-                              <br>
-                              <h5>Statographic Profile </h5>
-                              <input type="file" class="image-input" id="imageInput3"accept="image/*">
-                              <div class="color-columns">
-                                <div class="column">
-                                  <div class="selected-image-container" id="selectedImageContainer3"></div>
-                                </div>
-                              </div>
-                              <div class="result" id="result3"></div>
                             </div>
+                            <div class="result" id="result1"></div>
+                            
+                            <h5>Close-up</h5>  
+                            <input type="file" class="image-input" id= "imageInput2" accept="image/*">
+                            <div class="color-columns">
+                              <div class="column">
+                                <div class="selected-image-container" id="selectedImageContainer2">
+                                  <canvas class="canvas" width="640" height="480" style="display:none" id = "i2"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="result" id="result2"></div>
+                            <br>
+                            <h5>Statographic Profile </h5>
+                            <input type="file" class="image-input" id="imageInput3"accept="image/*">
+                            <div class="color-columns">
+                              <div class="column">
+                                <div class="selected-image-container" id="selectedImageContainer3">
+                                  <canvas class="canvas" width="640" height="480" style="display:none" id = "i3"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="result" id="result3"></div>
+                          </div>
                             <div class="row">    
                               <div class="col-lg-12">
                                   <div class="card">
@@ -219,10 +226,14 @@
                                               <div class="color-columns">
                                                 <h5>Panoramic</h5>
                                                   <input type="file" class="image-input" accept="image/*">
+                                                  <input type="text" class="form-control" value="0" aria-label="Input group example" aria-describedby="btnGroupAddon" id = "angulo4">
+
                                                   <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
                                                   <div class="color-columns">
                                                       <div class="column">
-                                                          <div class="selected-image-container"></div>
+                                                        <div class="selected-image-container" id="selectedImageContainer4">
+                                                          <canvas class="canvas" width="640" height="480" style="display:none" id = "i4"></canvas>
+                                                        </div>
                                                       </div>
                                                       
                                                   <div class="result"></div>
@@ -231,28 +242,28 @@
                                                 <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
                                                 <div class="color-columns">
                                                     <div class="column">
-                                                        <div class="selected-image-container"></div>
+                                                      <div class="selected-image-container" id="selectedImageContainer5">
+                                                        <canvas class="canvas" width="640" height="480" style="display:none" id = "i5"></canvas>
+                                                      </div>
                                                     </div>
                                                 </div>
                                                 <div class="result"></div>
                                             
-                                              <h5>Statographic</h5>
+                                              <h5>Statographic Profile</h5>
                                               <input type="file" class="image-input" accept="image/*">
                                               <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
                                               <div class="color-columns">
                                                   <div class="column">
-                                                      <div class="selected-image-container"></div>
-                                                  </div>
-                                                  
-                                          
-
-                                                  
+                                                    <div class="selected-image-container" id="selectedImageContainer6">
+                                                      <canvas class="canvas" width="640" height="480" style="display:none" id = "i6"></canvas>
+                                                      <p id="responseMessage" style="text-align: center; color: green;"></p>
+                                                    </div>
+                                                  </div>                                                  
                                               </div>
                 
                                               <div class="picker" id="picker3"></div>
                 
-                                              <div class="result"></div>
-                                          
+                                              <div class="result"></div>                 
                                       </div>
                                   </div>
                               </div>
@@ -264,7 +275,7 @@
     </section>
   
     <script>
-      document.addEventListener("DOMContentLoaded", function() {
+      /*document.addEventListener("DOMContentLoaded", function() {
         const imageInput = document.querySelector('.image-input');
         const selectedImageContainer = document.querySelector('.selected-image-container');
     
@@ -283,7 +294,7 @@
     
           reader.readAsDataURL(file);
         });
-      });
+      });*/
     </script>
     
   
