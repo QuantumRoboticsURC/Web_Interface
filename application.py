@@ -9,7 +9,7 @@ from os.path import isfile, join
 from flask import Flask, Response, render_template, jsonify, g, request, redirect, url_for, send_file
 from db_actions.rock_db import *
 import sys
-from Stratigraphic_Profile import stratigraphic_profile
+from static.python.Stratigraphic_Profile import stratigraphic_profile
 
 application = Flask(__name__, static_url_path='/static')
 random.seed
