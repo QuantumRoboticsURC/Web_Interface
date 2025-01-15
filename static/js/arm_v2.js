@@ -653,6 +653,32 @@ function inverseKinematics(x, y, z, roll, pitch) {
         q4: radToDeg(q4),
         q5: radToDeg(q5),
     };
+}function inverseKinematics(x, y, z, roll, pitch) {
+    const l1 = 0.10;
+    const l2 = 0.43;
+    const l3 = 0.43;
+    const l4 = 0.213;
+
+    const q1 = Math.atan2(y, x);
+    const q5 = roll;
+
+    const a = Math.sqrt(x ** 2 + y ** 2) - l4 * Math.cos(pitch);
+    const b = z - (l4 * Math.sin(pitch)) - l1;
+
+    let d = (a ** 2 + b ** 2 - l2 ** 2 - l3 ** 2) / (2 * l2 * l3);
+    d = Math.max(-1, Math.min(1, d)); // Clamping para evitar errores numéricos
+
+    const q3 = Math.atan2(Math.sqrt(1 - d ** 2), d);
+    const q2 = Math.atan2(b, a) - Math.atan2(l3 * Math.sin(q3), l2 + l3 * Math.cos(q3));
+    const q4 = pitch - q2 - q3;
+
+    return {
+        q1: radToDeg(q1),
+        q2: radToDeg(q2),
+        q3: radToDeg(q3),
+        q4: radToDeg(q4),
+        q5: radToDeg(q5),
+    };
 }
 
 // Función para mover el brazo a una posición especificada
