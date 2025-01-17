@@ -557,22 +557,6 @@ function Emergency(data){
     emergency.publish(msn);
 }
 
-//Buttons related to inverse kinematics
-function pressed(data, joint, sign = 1){
-    var key = "joint" + String(joint);
-    var key2="q"+String(joint);
-    console.log(key);
-    console.log(key2);
-    console.log(limits_map[key2])
-
-    
-    angles_map[key2] +=  data;
-    angles_map[key2]= qlimit(limits_map[key2], angles_map[key2]);
-    values_map[key] = (self.angles_map.q1);
-
-    getTxt();
-}
-
 function getTxt(){
     publish_angles();
     var X = String(math.round(values_map.joint1,2));
@@ -682,7 +666,7 @@ function updateAngles() {
     document.getElementById('angle-q3').textContent = `${angles.q3.toFixed(2)}°`;
     document.getElementById('angle-q4').textContent = `${angles.q4.toFixed(2)}°`;
 }
-
+//Para actualozar los valores en la barra del input
 function adjustValue(id, delta) {
     const input = document.getElementById(id);
     const currentValue = parseFloat(input.value) || 0;
@@ -709,105 +693,7 @@ function publish_angles() {
     pub_q_string.publish(msn_txt);
 }
 
-// Actualización de la gráfica
-function arm_interface(q2, q3, q4) {
-    let acum = degToRad(q2);
-    let x2 = l2 * Math.cos(acum);
-    let y2 = l2 * Math.sin(acum);
-    acum += degToRad(q3);
-    let x3 = x2 + l3 * Math.cos(acum);
-    let y3 = y2 + l3 * Math.sin(acum);
-    acum += degToRad(q4);
-    let x4 = x3 + l4 * Math.cos(acum);
-    let y4 = y3 + l4 * Math.sin(acum);
-
-    let maxReach = Math.max(Math.abs(x4), Math.abs(y4)) + 2;
-
-    if (window.armChart) {
-        armChart.data.datasets[0].data = [
-            { x: 0, y: 0 },
-            { x: x2, y: y2 },
-        ];
-        armChart.data.datasets[1].data = [
-            { x: x2, y: y2 },
-            { x: x3, y: y3 },
-        ];
-        armChart.data.datasets[2].data = [
-            { x: x3, y: y3 },
-            { x: x4, y: y4 },
-        ];
-        armChart.options.scales.xAxes[0].ticks.min = -maxReach;
-        armChart.options.scales.xAxes[0].ticks.max = maxReach;
-        armChart.options.scales.yAxes[0].ticks.min = -maxReach;
-        armChart.options.scales.yAxes[0].ticks.max = maxReach;
-        armChart.update();
-    } else {
-        var armData = {
-            labels: [],
-            datasets: [
-                {
-                    label: "Joint 2",
-                    data: [
-                        { x: 0, y: 0 },
-                        { x: x2, y: y2 },
-                    ],
-                    borderColor: "blue",
-                    borderWidth: 3,
-                    pointBorderColor: "blue",
-                    pointBackgroundColor: "blue",
-                    pointRadius: 6,
-                },
-                {
-                    label: "Joint 3",
-                    data: [
-                        { x: x2, y: y2 },
-                        { x: x3, y: y3 },
-                    ],
-                    borderColor: "red",
-                    borderWidth: 3,
-                    pointBorderColor: "red",
-                    pointBackgroundColor: "red",
-                    pointRadius: 6,
-                },
-                {
-                    label: "Joint 4",
-                    data: [
-                        { x: x3, y: y3 },
-                        { x: x4, y: y4 },
-                    ],
-                    borderColor: "green",
-                    borderWidth: 3,
-                    pointBorderColor: "green",
-                    pointBackgroundColor: "green",
-                    pointRadius: 6,
-                },
-            ],
-        };
-
-        var chartOptions = {
-            legend: { display: true },
-            scales: {
-                xAxes: [
-                    {
-                        ticks: { min: -maxReach, max: maxReach },
-                    },
-                ],
-                yAxes: [
-                    {
-                        ticks: { min: -maxReach, max: maxReach },
-                    },
-                ],
-            },
-        };
-
-        window.armChart = new Chart("Arm_Graphic", {
-            type: "scatter",
-            data: armData,
-            options: chartOptions,
-        });
-    }
-}
-
+// Función de cinemática inversa vieja 
 /*function inverseKinematics(xm, ym, zm, phi_int){
     let Q1 = 0;
     /*if (xm != 0 || ym != 0 || zm != 0){
@@ -901,9 +787,7 @@ function arm_interface(q2, q3, q4) {
     
   } */
  
-
-
-
+// Función para la interfaz gráfica del brazo
   function arm_interface(q2, q3, q4) {
     // Transformación a coordenadas rectangulares
     let acum = deg2rad(q2);
