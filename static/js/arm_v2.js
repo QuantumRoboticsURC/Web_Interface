@@ -665,7 +665,11 @@ function updateAngles() {
     document.getElementById('angle-q2').textContent = `${angles.q2.toFixed(2)}°`;
     document.getElementById('angle-q3').textContent = `${angles.q3.toFixed(2)}°`;
     document.getElementById('angle-q4').textContent = `${angles.q4.toFixed(2)}°`;
+
+    // Actualizar la gráfica del brazo
+    arm_interface(angles.q2, angles.q3, angles.q4);
 }
+
 //Para actualozar los valores en la barra del input
 function adjustValue(id, delta) {
     const input = document.getElementById(id);
