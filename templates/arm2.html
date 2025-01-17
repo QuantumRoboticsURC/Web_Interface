@@ -197,7 +197,8 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-md-6">
+
+										<!--<div class="col-md-6">
 											<div class="card">
 											<ul class="list-group list-group-flush">
 												<li class="list-group-item">
@@ -209,7 +210,7 @@
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">		
 																   <!--<button style="background-color:#F4F4F4; border-color:#18B4DA;border-radius: 10px; color:black" type="button" class="btn btn-secondary 	" onclick="go_x(parseFloat(document.getElementById('X_Txt').value))">GO</button>-->																
 															
-																	<div class="input-group">
+																	<!--<div class="input-group">
 																		<input id="X_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
 																	</div>
 																
@@ -344,16 +345,16 @@
 															<medium class="text-muted">EMERGENCY</medium>
 															<div class="col-md-12">
 																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button style="background-color:#FF0000; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="Emergency(true)">&nbsp;EMERGENCY&nbsp;</button>
+																	<button style="background-color:#FF0000; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="Emergency(true)">&nbsp;EMERGENCY&nbsp;</button>  -->
 																	
 
 																	<div class="card-body">
 																		<div class="chart-circle mt-4 mb-3">
 																			<div class="col-md-6">
 																				<div class="card">
-																				<div class="card-header">
-																					<h4 class="card-title">Cinemática Inversa</h4>
-																				</div>
+																					<div class="card-header">
+																						<h4 class="card-title">Cinemática Inversa</h4>
+																					</div>
 																					<div class="card-body">
 																						<ul class="list-group list-group-flush">
 																							<li class="list-group-item">
@@ -361,10 +362,12 @@
 																									<medium class="text-muted">Position X:</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-x" type="number" class="form-control" value="0" step="0.1">
+																											<input id="cinematic-x" type="number" class="form-control" value="0" step="5" oninput="updateAngles()">
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-x', 0.1)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-x', -0.1)">-</button>
+																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-x', 5)">+</button>
+																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-x', -5)">-</button>
+
+
 																									</div>
 																								</div>
 																							</li>
@@ -373,10 +376,10 @@
 																									<medium class="text-muted">Position Y:</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-y" type="number" class="form-control" value="0" step="0.1">
+																											<input id="cinematic-y" type="number" class="form-control" value="0" step="0.1" oninput="updateAngles()">
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-y', 0.1)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-y', -0.1)">-</button>
+																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-y', 5)">+</button>
+																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-y', -5)">-</button>
 
 																									</div>
 																								</div>
@@ -386,10 +389,10 @@
 																									<medium class="text-muted">Position Z:</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-z" type="number" class="form-control" value="0" step="0.1">
+																											<input id="cinematic-z" type="number" class="form-control" value="0" step="0.1" oninput="updateAngles()">
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-z', 0.1)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-z', -0.1)">-</button>
+																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-z', 5)">+</button>
+																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-z', -5)">-</button>
 
 																									</div>
 																								</div>
@@ -399,35 +402,43 @@
 																									<medium class="text-muted">Roll (°):</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-roll" type="number" class="form-control" value="0" step="0.1">
+																											<input id="cinematic-roll" type="number" class="form-control" value="0" step="1" oninput="updateAngles()">
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-roll', 0.1)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-roll', -0.1)">-</button>
+																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-roll', 5)">+</button>
+																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-roll', -5)">-</button>
 
 																									</div>
 																								</div>
+																								
 																							</li>
-																							<li class="list-group-item">
+																							<li class="list-group-item">																										
 																								<div class="row">
 																									<medium class="text-muted">Pitch (°):</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-pitch" type="number" class="form-control" value="0" step="0.1">
+																											<input id="cinematic-pitch" type="number" class="form-control" value="0" step="1" oninput="updateAngles()">
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-pitch', 0.1)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="incrementInput('cinematic-pitch', -0.1)">-</button>
+																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-pitch', 5)">+</button>
+																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-pitch', -5)">-</button>
 
 																									</div>
 																								</div>
 																							</li>
 																						</ul>
-																						<div style="text-align: center; margin-top: 20px;">
-																							<button class="btn btn-primary" style="background-color: #007bff; border: none;" onclick="handleMove()">Move Arm</button>
+																						<!-- Para que se vean los ángulos -->
+																						<div style="margin-top: 20px;">
+																							<h6 style="font-size: 14px;">Ángulos Calculados:</h6>
+																							<p>Ángulo 1 (Q1): <span id="angle-q1">0°</span></p>
+																							<p>Ángulo 2 (Q2): <span id="angle-q2">0°</span></p>
+																							<p>Ángulo 3 (Q3): <span id="angle-q3">0°</span></p>
+																							<p>Ángulo 4 (Q4): <span id="angle-q4">0°</span></p>
 																						</div>
 																					</div>
 																				</div>
 																			</div>
 																		</div>
+																	</div>		
+																	
 																	</div>
 																</div>
 															</div>

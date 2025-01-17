@@ -653,70 +653,43 @@ function inverseKinematics(x, y, z, roll, pitch) {
         q4: radToDeg(q4),
         q5: radToDeg(q5),
     };
-}function inverseKinematics(x, y, z, roll, pitch) {
-    const l1 = 0.10;
-    const l2 = 0.43;
-    const l3 = 0.43;
-    const l4 = 0.213;
-
-    const q1 = Math.atan2(y, x);
-    const q5 = roll;
-
-    const a = Math.sqrt(x ** 2 + y ** 2) - l4 * Math.cos(pitch);
-    const b = z - (l4 * Math.sin(pitch)) - l1;
-
-    let d = (a ** 2 + b ** 2 - l2 ** 2 - l3 ** 2) / (2 * l2 * l3);
-    d = Math.max(-1, Math.min(1, d)); // Clamping para evitar errores numéricos
-
-    const q3 = Math.atan2(Math.sqrt(1 - d ** 2), d);
-    const q2 = Math.atan2(b, a) - Math.atan2(l3 * Math.sin(q3), l2 + l3 * Math.cos(q3));
-    const q4 = pitch - q2 - q3;
-
-    return {
-        q1: radToDeg(q1),
-        q2: radToDeg(q2),
-        q3: radToDeg(q3),
-        q4: radToDeg(q4),
-        q5: radToDeg(q5),
-    };
 }
 
-// Función para mover el brazo a una posición especificada
-function moveToPosition(x, y, z, roll, pitch) {
-    const angles = inverseKinematics(x, y, z, roll, pitch);
-
-    if (!angles) {
-        console.error("No se puede alcanzar la posición especificada.");
-        return;
-    }
-
-    // Actualizar los valores globales
-    angles_map.q1 = angles.q1;
-    angles_map.q2 = angles.q2;
-    angles_map.q3 = angles.q3;
-    angles_map.q4 = angles.q4;
-    values_map.joint1 = angles.q1;
-    values_map.joint2 = angles.q2;
-    values_map.joint3 = angles.q3;
-    values_map.joint4 = angles.q4;
-    values_map.joint5 = angles.q5;
-
-    // Publicar los ángulos en ROS
-    publish_angles();
-
-    // Actualizar la gráfica
-    arm_interface(angles.q2, angles.q3, angles.q4);
+function radToDeg(radians) {
+    return radians * (180 / Math.PI);
 }
 
-// Manejador para capturar los valores de entrada y mover el brazo
-function handleMove() {
-    const x = parseFloat(document.getElementById("x").value);
-    const y = parseFloat(document.getElementById("y").value);
-    const z = parseFloat(document.getElementById("z").value);
-    const roll = degToRad(parseFloat(document.getElementById("roll").value));
-    const pitch = degToRad(parseFloat(document.getElementById("pitch").value));
+// Función para actualizar los ángulos que se van calculando
+function updateAngles() {
+    const x = parseFloat(document.getElementById('cinematic-x').value) || 0;
+    const y = parseFloat(document.getElementById('cinematic-y').value) || 0;
+    const z = parseFloat(document.getElementById('cinematic-z').value) || 0;
+    const roll = parseFloat(document.getElementById('cinematic-roll').value) || 0;
+    const pitch = parseFloat(document.getElementById('cinematic-pitch').value) || 0;
 
-    moveToPosition(x, y, z, roll, pitch);
+    console.log(`Updating angles with: x=${x}, y=${y}, z=${z}, roll=${roll}, pitch=${pitch}`);
+
+    // Convertir roll y pitch a radianes
+    const rollRad = (roll * Math.PI) / 180;
+    const pitchRad = (pitch * Math.PI) / 180;
+
+    // Llamar a la función de cinemática inversa
+    const angles = inverseKinematics(x, y, z, rollRad, pitchRad);
+
+    // Actualizar los valores de los ángulos en el HTML
+    document.getElementById('angle-q1').textContent = `${angles.q1.toFixed(2)}°`;
+    document.getElementById('angle-q2').textContent = `${angles.q2.toFixed(2)}°`;
+    document.getElementById('angle-q3').textContent = `${angles.q3.toFixed(2)}°`;
+    document.getElementById('angle-q4').textContent = `${angles.q4.toFixed(2)}°`;
+}
+
+function adjustValue(id, delta) {
+    const input = document.getElementById(id);
+    const currentValue = parseFloat(input.value) || 0;
+    const newValue = currentValue + delta;
+    input.value = newValue.toFixed(0); // Asegura que el valor tenga 2 decimales
+    console.log(`Adjusting value of ${id}: ${currentValue} -> ${newValue}`);
+    input.dispatchEvent(new Event('input')); // Forzar la actualización
 }
 
 // Función para publicar los ángulos en ROS
