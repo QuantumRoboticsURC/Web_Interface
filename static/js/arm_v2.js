@@ -32,7 +32,6 @@ var listener_Joystick = new ROSLIB.Topic({
 });
 
 
-
 listener_Joystick.subscribe(function(message) {
   values = message.data.split(" ");
   if (values[0]!=0 || values[1]!=0 || values[2]!=0 || values[3]!=0.0 || values[4]!=-0.0 || values[5]!=0.0|| values[6]!=0.0){
@@ -55,7 +54,6 @@ listener_Joystick.subscribe(function(message) {
     camera.publish(msn2);
   }
   go_rotation(values_map.joint2);
-  getTxt();
 } 
 if(bot){
     var msn = new ROSLIB.Message({data : parseFloat(values[6])});
@@ -86,7 +84,7 @@ var pub_q1 = new ROSLIB.Topic({
 });
 var pub_q2 = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/joint2_unprocessed',
+    name : 'arm_teleop/joint2',
     messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
@@ -98,7 +96,7 @@ var pub_q3 = new ROSLIB.Topic({
 });
 var pub_q4 = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/joint5',
+    name : 'arm_teleop/joint4',
     messageType : 'std_msgs/Float64',
     queue_size: 1   
 });
@@ -111,7 +109,7 @@ var pub_q_string = new ROSLIB.Topic({
 //gripper rotation
 var joint5 = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/servo_gripper',
+    name : 'arm_teleop/servo_gripper', //Joint 5
     messageType : 'std_msgs/Int32',
     queue_size: 1   
 });
@@ -171,9 +169,9 @@ var l4 = 0.213;
 //Limits
 var limits_map = {
     q1:[-90,90],
-    q2:[0,190],
-    q3:[-140,0],
-    q4:[-135,90],
+    q2:[-10,185],
+    q3:[-170,160],
+    q4:[-160,160],
     joint5:[-90,90], 
     camera:[0,180],
     cameraA:[0,180]
@@ -185,7 +183,7 @@ var angles_map={
     q3:-140,
     q4:-50,
     q5: 0
-};
+};[ ]
 var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
 
@@ -248,30 +246,36 @@ function publish_angles(){
     var q2 = angles_map.q2;
     var q3 = angles_map.q3;
     var q4 = angles_map.q4;
+    var q5 = angles_map.q5;
 
-    var txt = String(q1)+" "+String(q2)+" "+String(q3)+" "+String(q4)
+
+    var txt = String(q1)+" "+String(q2)+" "+String(q3)+" "+String(q4)+ " "+String(q5)
 
     var msn_q1 = new ROSLIB.Message({data : q1});
     var msn_q2 = new ROSLIB.Message({data : q2});
     var msn_q3 = new ROSLIB.Message({data : q3});
-    var msn_q4 = new ROSLIB.Message({data : -q4});
+    var msn_q4 = new ROSLIB.Message({data : q4});
+    var msn_q5 = new ROSLIB.Message({data : q5});
     var msn_txt = new ROSLIB.Message({data : txt});
 
     pub_q1.publish(msn_q1);
     pub_q2.publish(msn_q2);
     pub_q3.publish(msn_q3);
     pub_q4.publish(msn_q4);
+    joint5.publish(msn_q5);
+
+
     pub_q_string.publish(msn_txt);
 }
 
 function qlimit(l, val){   //limites
     if (val < l[0]){ //inferior
-        return l[0];
+        return true;
     }
     if (val > l[1]){ //superior 
-        return l[1];
+        return true;
     }
-    return val;
+    return false;
 }
 
 function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
@@ -291,6 +295,16 @@ function movePrismatic(data){
 
 }
 
+function qlimit2(l, val){   //limites
+    if (val < l[0]){ //inferior
+        return l[0];
+    }
+    if (val > l[1]){ //superior 
+        return l[1];
+    }
+    return val;
+}
+
 // Move general camera
 function moveCamera(data,cam){
 
@@ -298,18 +312,18 @@ function moveCamera(data,cam){
         console.log(data);
         key = "joint8";
         values_map[key] += (data);    
-        values_map[key] = qlimit(limits_map.camera, values_map[key]);
+        values_map[key] = qlimit2(limits_map.camera, values_map[key]);
         var msn = new ROSLIB.Message({data : parseInt(values_map[key])});
         camera.publish(msn);
     }else{
         key="joint9";
         values_map[key] += (data);    
-        values_map[key] = qlimit(limits_map.cameraA, values_map[key]);
+        values_map[key] = qlimit2(limits_map.cameraA, values_map[key]);
         var msn = new ROSLIB.Message({data : parseInt(values_map[key])});
         cameraA.publish(msn);
     }
 
-    getTxt();
+    updateAngles();
 }
 
 
@@ -337,12 +351,25 @@ function inverseKinematics(x, y, z, roll, pitch) {
     const q2 = Math.atan2(b, a) - Math.atan2(l3 * Math.sin(q3), l2 + l3 * Math.cos(q3));
     const q4 = pitch - q2 - q3;
 
+   
+    if (qlimit(limits_map.q1,radToDeg(q1))||qlimit(limits_map.q2,radToDeg(q2))||qlimit(limits_map.q3,radToDeg(q3))||qlimit(limits_map.q4,radToDeg(q4))){
+        return {
+            q1: angles_map.q1,
+            q2: angles_map.q2,
+            q3: angles_map.q3,
+            q4: angles_map.q4,
+            q5: angles_map.q5,
+            limit: true
+        }
+    }
+
     return {
         q1: radToDeg(q1),
         q2: radToDeg(q2),
         q3: radToDeg(q3),
         q4: radToDeg(q4),
         q5: radToDeg(q5),
+        limit: false
     };
 }
 
@@ -356,7 +383,7 @@ function updateAngles() {
     const roll = values_map.rotacion || 0;
     const pitch = values_map.phi|| 0;
 
-    console.log(`Updating angles with: x=${x}, y=${y}, z=${z}, roll=${roll}, pitch=${pitch}`);
+    //console.log(`Updating angles with: x=${x}, y=${y}, z=${z}, roll=${roll}, pitch=${pitch}`);
 
     // Convertir roll y pitch a radianes
     const rollRad = (roll * Math.PI) / 180;
@@ -364,7 +391,7 @@ function updateAngles() {
 
     // Llamar a la función de cinemática inversa
     const angles = inverseKinematics(x, y, z, rollRad, pitchRad);
-
+    angles_map = angles;
 
 
     // Actualizar los valores de los ángulos en el HTML
@@ -379,27 +406,54 @@ function updateAngles() {
     document.getElementById("Z").innerHTML = z.toFixed(2);
     document.getElementById("Roll").innerHTML = roll.toFixed(2);
     document.getElementById("Pitch").innerHTML = pitch.toFixed(2);
-    //document.getElementById("Camera").innerHTML = Camera;
-    //document.getElementById("CameraA").innerHTML = CameraA;
+    document.getElementById("Camera").innerHTML = values_map.joint8;
+    document.getElementById("CameraA").innerHTML = values_map.joint9;
 
     // Actualizar la gráfica del brazo
     arm_interface(angles.q2, angles.q3, angles.q4);
-}
+    publish_angles();
 
+    if (angles.limit){
+        return true
+    }
+    else{
+        return false
+    }
+}
+function aproximatelyEqual(a,b,tolerance){
+    return Math.abs(a-b) <= tolerance;
+}
 //Para actualozar los valores en la barra del input
 function adjustValue(id, delta) {
     
     const currentValue = values_map[id];
     const newValue = currentValue + delta;
     values_map[id] = newValue; // Asegura que el valor tenga 2 decimales
-    console.log(`Adjusting value of ${id}: ${currentValue} -> ${newValue}`);
     //Checa si el neuvo valor se va a salir del rango del brazo
     if (Math.sqrt(values_map.x**2+values_map.y**2+values_map.z**2)>l1+l2+l3+l4){
-        values_map[id] = currentValue
+        values_map[id] = currentValue;
     }
+    //Checa que no intente hacer un movimiento que golpee el rover
+    if (values_map.x.toFixed(2)<=0 && (values_map.z.toFixed(2)<0.4 || values_map.phi.toFixed(2)>0)){
+       
+        values_map[id] = currentValue;
+    }
+    //Checa si el valor de Values_map.x es menor a 0
+    if(values_map.x.toFixed(2)<0){
+        values_map[id] = currentValue;
+    }
+    
+    if (values_map.x.toFixed(2)<=.3 && values_map.z.toFixed(2)<=0 && (values_map.y.toFixed(2)>= 0.06 || (values_map.y.toFixed(2)<= -0.06))){
+        values_map[id] = currentValue;
+}
 
-    //input.dispatchEvent(new Event('input')); // Forzar la actualización
-    updateAngles();
+   //input.dispatchEvent(new Event('input')); // Forzar la actualización
+    var limit = updateAngles();
+    if (limit){
+        values_map[id] = currentValue;
+    }
+    
+    
 
 }
 

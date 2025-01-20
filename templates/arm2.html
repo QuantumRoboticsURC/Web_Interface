@@ -168,11 +168,11 @@
 													<!--Predefined positions-->
 													<div class="col-md-12">
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button id = "secondary button2" type="button" class="btn btn-secondary" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Storage</button>								
-															<button id = "secondary button1" type="button" class="btn btn-secondary" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Home</button>
-															<button id = "principal button" type="button" class="btn btn-secondary" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Intermediate</button>
-															<button id = "secondary button5" type="button" class="btn btn-secondary" onclick="predefinedPosition('PREFLOOR');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">PreFloor</button>
-															<button id = "secondary button5" type="button" class="btn btn-secondary" onclick="predefinedPosition('FLOOR');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Floor</button>
+															<button id = "secondary button2" type="button" class="btn btn-secondary" onclick="predefinedPosition('STORAGE');" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Storage</button>								
+															<button id = "secondary button1" type="button" class="btn btn-secondary" onclick="predefinedPosition('HOME');" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Home</button>
+															<button id = "principal button" type="button" class="btn btn-secondary" onclick="predefinedPosition('INTERMEDIATE');" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Intermediate</button>
+															<button id = "secondary button5" type="button" class="btn btn-secondary" onclick="predefinedPosition('PREFLOOR');" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">PreFloor</button>
+															<button id = "secondary button5" type="button" class="btn btn-secondary" onclick="predefinedPosition('FLOOR');" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Floor</button>
 
 														</div>
 														
@@ -289,6 +289,48 @@
 																									</div>
 																								</div>
 																							</li>
+																							<li class="list-group-item">																										
+																								<div class="row">
+																									<medium class="text-muted">End Tool</medium>
+																									<div class="col-md-12">
+																										<div class="input-group">
+																											<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Close</button>
+																											<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Open</button>
+	
+																										</div>
+
+																									</div>
+																								</div>
+																							</li>
+																							<li class="list-group-item">																										
+																								<div class="row">
+																									<medium class="text-muted">Camera</medium>
+																									<div class="col-md-12">
+																										<div class="input-group">
+																											<input id="Camera_Txt" type="text" class="form-control" value="10">
+																											<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value),1)">+</button>
+																											<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value),1)">-</button>
+	
+																										</div>
+
+																									</div>
+																								</div>
+																							</li>
+																							<li class="list-group-item">																										
+																								<div class="row">
+																									<medium class="text-muted">Camera Antenna</medium>
+																									<div class="col-md-12">
+																										<div class="input-group">
+																											<input id="CameraA_Txt" type="text" class="form-control" value="10">
+																											<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('CameraA_Txt').value),2)">+</button>
+																											<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(-parseFloat(document.getElementById('CameraA_Txt').value),2)">-</button>
+	
+																										</div>
+
+																									</div>
+																								</div>
+																							</li>
+
 																						</ul>
 																						<!-- Para que se vean los ángulos -->
 																						
