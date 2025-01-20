@@ -154,19 +154,19 @@ var emergency = new ROSLIB.Topic({
 var gripper_apertur = 60;   //0 y 60
 
 var values_map = {
-    joint1: 0,   //.4
-    joint2: 190,      //.9
-    joint3: -140,
-    joint4: -50,      //phi
-    joint5: 0,   //rotacion
+    x: 0.2,   //.4
+    y: 0,      //.9
+    z: 0.2,
+    phi: 0,      //phi
+    rotacion: 0,   //rotacion
     joint8: 80, //camera
     led:0,
     joint9: 45
 };
-var l1 = 0;
-var l2 = 2.6;
-var l3 = 5.5;
-var l4 = 1.7;
+var l1 = 0.1;
+var l2 = 0.43;
+var l3 = 0.43;
+var l4 = 0.213;
 
 //Limits
 var limits_map = {
@@ -183,7 +183,8 @@ var angles_map={
     q1:0,
     q2:190,
     q3:-140,
-    q4:-50
+    q4:-50,
+    q5: 0
 };
 var limit_z = -4.2;
 var limit_chassis = 1.1; //11cm del chasis
@@ -191,65 +192,47 @@ var limit_chassis = 1.1; //11cm del chasis
 // Predefined positions
 var State = ["HOME","HOME"]
 function predefinedPosition(position){
-
-    var x = angles_map.q1;
-    var y = angles_map.q2;
-    var z = angles_map.q3;
-    var phi = angles_map.q4;
     
-    /*if(position === "INTERMEDIATE"){
-        x = 0;
-        y = -5;
-        z = 3.677;
-        phi = 0;
-    }else if (position === "FLOOR"){
-        x = 3.28
-        y = -5
-        z = -.1
-        phi = 0
-    }else if (position === "STORAGE"){
-        x = .134;
-        y =  -5;
-        z =  .75;
-        phi = 90
-    }else if (position === "BOX"){
-        x = 0;
-        y = -94;
-        z = 3.68
-        phi = 0;
-    }*/
-    before = State[0];
-    State[0] = State[1];
-    State[1]=position;
-
+    //Se actualizan los valores del ValuesMap para la posicion predefinida seleccionada
     if (position === "HOME"){
-        x = 0;
-        y =  190;
-        z =  -140;
-        phi = -50;
+        values_map.x = 0.2;
+        values_map.y =  0;
+        values_map.z =  0.2;
+        values_map.rotacion = 0;
+        values_map.phi = 0;
         
     } 
     else if(position === "INTERMEDIATE"){
-        x = 0;
-        y = 155;
-        z = -125;
-        phi = -30;
-        
+        values_map.x = 0.2;
+        values_map.y =  0;
+        values_map.z =  0.4;
+        values_map.rotacion = 0;
+        values_map.phi = 0;        
     }
+    else if (position === "PREFLOOR"){
+        values_map.x = 0.3;
+        values_map.y =  0;
+        values_map.z =  -0.1;
+        values_map.rotacion = 0;
+        values_map.phi = -90; 
+    }
+
     else if (position === "FLOOR"){
-        x=0;
-        y=100;
-        z=-130;
-        phi=-60;
-        
+        values_map.x = 0.4;
+        values_map.y =  0;
+        values_map.z =  -0.2;
+        values_map.rotacion = 0;
+        values_map.phi = -90; 
     }
     else if (position === "STORAGE"){
-        x = 90;
-        y = 180;
-        z = -115;
-        phi = -65;
-        
+        values_map.x = 0;
+        values_map.y =  0;
+        values_map.z =  0.42;
+        values_map.rotacion = 0;
+        values_map.phi = 90; 
+
     }
+
     else if (position === "FlOOR2"){
         x=2.48;
         y=0;
@@ -257,151 +240,9 @@ function predefinedPosition(position){
         phi=6.17;
     }
 
-    values_map.joint1 = x;
-    values_map.joint2 = y;
-    values_map.joint3 = z;
-    values_map.joint4 = phi;
-    angles_map.q1 = x;
-    angles_map.q2 = y;
-    angles_map.q3 = z;
-    angles_map.q4 = phi;
-    //StateMachine(position);
-    //return position;
-            
-    go_rotation(values_map.joint2);
-    getTxt();
+    updateAngles();
     }
-function StateMachine(position){
-        
-    const secondaryButton1 = document.getElementById('secondary button1');
-    const secondaryButton2 = document.getElementById('secondary button2');
-    const secondaryButton3 = document.getElementById('secondary button3');
-    const secondaryButton4 = document.getElementById('secondary button4');
-    const secondaryButton5 = document.getElementById('secondary button5');
-    const secondaryButton6 = document.getElementById('secondary button6');
 
-    const buttonToKeepEnabled = document.getElementById('principal button');
-
-    if ((State[0] === "INTERMEDIATE" && State[1]==="HOME" || State[1] === "INTERMEDIATE" && State[0]==="HOME")){
-        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-        go_rotation(values_map.joint2);
-        
-        secondaryButton3.disabled = false;
-        secondaryButton4.disabled = false;
-        secondaryButton5.disabled = false;
-        secondaryButton6.disabled = false;
-    }
-    if (State[1]=== "HOME"){
-        
-        secondaryButton3.disabled = true;
-        secondaryButton4.disabled = true;
-        secondaryButton5.disabled = true;
-        secondaryButton6.disabled = true;
-
-    }
-    if (State[0] === "INTERMEDIATE" && State[1]==="INTERMEDIATE" || State[1] === "INTERMEDIATE" && State[0]==="INTERMEDIATE"){
-        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-        go_rotation(values_map.joint2);
-        
-    }
-    
-    if (State[0] === "INTERMEDIATE" && State[1]==="PULL" || State[1] === "INTERMEDIATE" && State[0]==="PULL"){
-        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-        go_rotation(values_map.joint2);
-        secondaryButton1.disabled = false;
-        secondaryButton2.disabled = false;
-        secondaryButton4.disabled = false;
-        secondaryButton5.disabled = false;
-        secondaryButton6.disabled = false;
-        
-    }
-    if (State[1]=== "PULL"){
-        secondaryButton1.disabled = true;
-        secondaryButton2.disabled = true;
-        secondaryButton4.disabled = true;
-        secondaryButton5.disabled = true;
-        secondaryButton6.disabled = true;
-
-    }
-    if (State[0] === "INTERMEDIATE" && State[1]==="WRITE" || State[1] === "INTERMEDIATE" && State[0]==="WRITE"){
-        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-        go_rotation(values_map.joint2);
-        secondaryButton1.disabled = false;
-        secondaryButton2.disabled = false;
-        secondaryButton3.disabled = false;
-        secondaryButton5.disabled = false;
-        secondaryButton6.disabled = false;
-        
-    }
-    if (State[1]=== "WRITE"){
-        secondaryButton1.disabled = true;
-        secondaryButton2.disabled = true;
-        secondaryButton3.disabled = true;
-        secondaryButton5.disabled = true;
-        secondaryButton6.disabled = true;
-
-    }
-    if (State[0] === "INTERMEDIATE" && State[1]==="FLOOR" || State[1] === "INTERMEDIATE" && State[0]==="FLOOR"){
-        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-        go_rotation(values_map.joint2);
-        secondaryButton1.disabled = false;
-        secondaryButton2.disabled = false;
-        secondaryButton3.disabled = false;
-        secondaryButton4.disabled = false;
-        secondaryButton6.disabled = false;
-    }
-    if (State[1]=== "FLOOR"){
-        secondaryButton1.disabled = true;
-        secondaryButton2.disabled = true;
-        secondaryButton3.disabled = true;
-        secondaryButton4.disabled = true;
-        secondaryButton6.disabled = true;
-
-    }
-    if (State[0] === "INTERMEDIATE" && State[1]==="STORAGE" || State[1] === "INTERMEDIATE" && State[0]==="STORAGE"){
-        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-        go_rotation(values_map.joint2);
-        
-        secondaryButton3.disabled = false;
-        secondaryButton4.disabled = false;
-        secondaryButton5.disabled = false;
-        secondaryButton6.disabled = false;
-    }
-    
-    if (State[1]=== "STORAGE"){
-        
-        secondaryButton3.disabled = true;
-        secondaryButton4.disabled = true;
-        secondaryButton5.disabled = true;
-        secondaryButton6.disabled = true;
-
-    }
-    if (State[0] === "INTERMEDIATE" && State[1]==="VERTICAL" || State[1] === "INTERMEDIATE" && State[0]==="VERTICAL"){
-        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-        go_rotation(values_map.joint2);
-        secondaryButton1.disabled = false;
-        secondaryButton2.disabled = false;
-        secondaryButton3.disabled = false;
-        secondaryButton4.disabled = false;
-        secondaryButton5.disabled = false;
-    }
-    if (State[1]=== "VERTICAL"){
-        secondaryButton1.disabled = true;
-        secondaryButton2.disabled = true;
-        secondaryButton3.disabled = true;
-        secondaryButton4.disabled = true;
-        secondaryButton5.disabled = true;
-
-    }
-    if (State[0]==="HOME" && State[1]==="STORAGE" || State [1]=== "HOME" && State[0]==="STORAGE"){
-        inverseKinematics(values_map.joint1, values_map.joint2, values_map.joint3, values_map.joint4);        
-        go_rotation(values_map.joint2);
-    
-    }
-    console.log(State[0]);
-    console.log(State[1]);
-
-}
 function publish_angles(){
     var q1 = angles_map.q1;
     var q2 = angles_map.q2;
@@ -437,67 +278,6 @@ function my_map(in_min, in_max, out_min, out_max, x){ //map arduino
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-
-// go to phi
-function go_phi(data){
-    angles_map.q4 =data;
-    angles_map.q4 = qlimit(limits_map.q4,angles_map.q4);
-    values_map.joint4 = self.angles_map.q4;
-    getTxt();
-}
-
-
-// 
-function phi(data){
-    angles_map.q4+=data;
-    angles_map.q4 = qlimit(limits_map.q4,angles_map.q4);
-    values_map.joint4 = self.angles_map.q4;
-    getTxt();
-}
-
-// Z momento
-function go_z(data) {
-    angles_map.q3 = data; // Asignar el valor absoluto
-    angles_map.q3 = qlimit(limits_map.q3, angles_map.q3); // Aplicar límites
-    values_map.joint3 = self.angles_map.q3; // Actualizar en el mapa de valores
-    getTxt(); // Actualizar la interfaz y publicar
-}
-
-function z(data) {
-    angles_map.q3 += data; // Incrementar o decrementar el valor
-    angles_map.q3 = qlimit(limits_map.q3, angles_map.q3); // Aplicar límites
-    values_map.joint3 = angles_map.q3; // Actualizar en el mapa de valores
-    getTxt(); // Actualizar la interfaz y publicar
-}
-
-
-// Gripper go to particular location
-function go(data){
-    var key = "joint5";
-    values_map[key]=data;
-    values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({data : parseInt(my_map(-90,90,135,315,data))});
-    joint5.publish(msn);
-    document.getElementById("Gripper_Txt").value = 5;
-    getTxt();
-}
-
-// Rotate gripper N grades
-function griperRotation(data){
-    var key = "joint5";
-    values_map[key]+=data;
-    values_map[key] = qlimit(limits_map[key], values_map[key]);
-    var msn = new ROSLIB.Message({
-        data : parseInt(my_map(-90,90,135,315,values_map[key]))
-    });
-    joint5.publish(msn); 
-    getTxt();
-}
-// Open gripper
-function moveGripper(data){    
-    var msn = new ROSLIB.Message({data : data});
-    gripper.publish(msn);           
-}
 // Open linear
 function movePrismatic(data){   
     if(data==1 || data==-1){
@@ -532,83 +312,11 @@ function moveCamera(data,cam){
     getTxt();
 }
 
-//Rotate
-function go_rotation(data){
-    angles_map.q2=data;
-    angles_map.q2 = qlimit(limits_map.q2,angles_map.q2);
-    values_map.joint2 = self.angles_map.q2;
-    document.getElementById("Y_Txt").value = 5;
 
-    getTxt();
-}
-
-
-//Rotate
-function rotate(data){
-    angles_map.q2+=data;
-    angles_map.q2 = qlimit(limits_map.q2,angles_map.q2);
-    values_map.joint2 = self.angles_map.q2;
-    getTxt();
-}
-
-function Emergency(data){
-    console.log(data)
-    var msn = new ROSLIB.Message({data:true})
-    emergency.publish(msn);
-}
-
-function getTxt(){
-    publish_angles();
-    var X = String(math.round(values_map.joint1,2));
-    var Y = String(math.round(values_map.joint2,2));
-    var Z = String(math.round(values_map.joint3,2));
-    var Phi = String(values_map.joint4);
-    var Rotacion = String(values_map.joint5);
-    var q1 = String(math.round(angles_map.q1,2));
-    var q2 = String(math.round(angles_map.q2,2));
-    var q3 = String(math.round(angles_map.q3,2));
-    var q4 = String(math.round(angles_map.q4,2));
-    var Camera = String(values_map.joint8);
-    var CameraA=String(values_map.joint9);
-
-
-    localStorage.setItem("Q1",q1);
-    localStorage.setItem("Q2",q2);
-    localStorage.setItem("Q3",q3);
-    localStorage.setItem("Q4",q4);
-    localStorage.setItem("X",X);
-    localStorage.setItem("Y",Y);
-    localStorage.setItem("Z",Z);
-    localStorage.setItem("Phi",Phi);
-    localStorage.setItem("Rotacion",Rotacion);
-    localStorage.setItem("Camera",Camera);
-    localStorage.setItem("CameraA",CameraA)
-    document.getElementById("Q1").innerHTML = q1;
-    document.getElementById("Q2").innerHTML = q2;
-    document.getElementById("Q3").innerHTML = q3;
-    document.getElementById("Q4").innerHTML = q4;
-    document.getElementById("X").innerHTML = X;
-    document.getElementById("Y").innerHTML = Y;
-    document.getElementById("Z").innerHTML = Z;
-    document.getElementById("Phi").innerHTML = Phi;
-    document.getElementById("Rotacion").innerHTML = Rotacion;
-    document.getElementById("Camera").innerHTML = Camera;
-    document.getElementById("CameraA").innerHTML = CameraA;
-    arm_interface(q2,q3,q4)
-
-}
-
-function rad2deg(radians){return radians * (180/math.pi);}
-function deg2rad(degrees){return degrees * (math.pi/180);}
-// Función para convertir radianes a grados
 function radToDeg(rad) {
     return rad * (180 / Math.PI);
 }
 
-// Función para convertir grados a radianes
-function degToRad(deg) {
-    return deg * (Math.PI / 180);
-}
 
 // Función de cinemática inversa
 function inverseKinematics(x, y, z, roll, pitch) {
@@ -616,7 +324,6 @@ function inverseKinematics(x, y, z, roll, pitch) {
     const l2 = 0.43;
     const l3 = 0.43;
     const l4 = 0.213;
-
     const q1 = Math.atan2(y, x);
     const q5 = roll;
 
@@ -626,7 +333,7 @@ function inverseKinematics(x, y, z, roll, pitch) {
     let d = (a ** 2 + b ** 2 - l2 ** 2 - l3 ** 2) / (2 * l2 * l3);
     d = Math.max(-1, Math.min(1, d)); // Clamping para evitar errores numéricos
 
-    const q3 = Math.atan2(Math.sqrt(1 - d ** 2), d);
+    const q3 = -Math.atan2(Math.sqrt(1 - d ** 2), d);
     const q2 = Math.atan2(b, a) - Math.atan2(l3 * Math.sin(q3), l2 + l3 * Math.cos(q3));
     const q4 = pitch - q2 - q3;
 
@@ -639,17 +346,15 @@ function inverseKinematics(x, y, z, roll, pitch) {
     };
 }
 
-function radToDeg(radians) {
-    return radians * (180 / Math.PI);
-}
-
 // Función para actualizar los ángulos que se van calculando
 function updateAngles() {
-    const x = parseFloat(document.getElementById('cinematic-x').value) || 0;
-    const y = parseFloat(document.getElementById('cinematic-y').value) || 0;
-    const z = parseFloat(document.getElementById('cinematic-z').value) || 0;
-    const roll = parseFloat(document.getElementById('cinematic-roll').value) || 0;
-    const pitch = parseFloat(document.getElementById('cinematic-pitch').value) || 0;
+    var limit = false
+    //Se toman los valores del ValuesMap para hacer el movimiento 
+    const x = values_map.x|| 0; 
+    const y = values_map.y|| 0;
+    const z = values_map.z|| 0;
+    const roll = values_map.rotacion || 0;
+    const pitch = values_map.phi|| 0;
 
     console.log(`Updating angles with: x=${x}, y=${y}, z=${z}, roll=${roll}, pitch=${pitch}`);
 
@@ -660,11 +365,22 @@ function updateAngles() {
     // Llamar a la función de cinemática inversa
     const angles = inverseKinematics(x, y, z, rollRad, pitchRad);
 
+
+
     // Actualizar los valores de los ángulos en el HTML
     document.getElementById('angle-q1').textContent = `${angles.q1.toFixed(2)}°`;
     document.getElementById('angle-q2').textContent = `${angles.q2.toFixed(2)}°`;
     document.getElementById('angle-q3').textContent = `${angles.q3.toFixed(2)}°`;
     document.getElementById('angle-q4').textContent = `${angles.q4.toFixed(2)}°`;
+    document.getElementById('angle-q5').textContent = `${angles.q5.toFixed(2)}°`;
+
+    document.getElementById("X").innerHTML = x.toFixed(2);
+    document.getElementById("Y").innerHTML = y.toFixed(2);
+    document.getElementById("Z").innerHTML = z.toFixed(2);
+    document.getElementById("Roll").innerHTML = roll.toFixed(2);
+    document.getElementById("Pitch").innerHTML = pitch.toFixed(2);
+    //document.getElementById("Camera").innerHTML = Camera;
+    //document.getElementById("CameraA").innerHTML = CameraA;
 
     // Actualizar la gráfica del brazo
     arm_interface(angles.q2, angles.q3, angles.q4);
@@ -672,131 +388,28 @@ function updateAngles() {
 
 //Para actualozar los valores en la barra del input
 function adjustValue(id, delta) {
-    const input = document.getElementById(id);
-    const currentValue = parseFloat(input.value) || 0;
+    
+    const currentValue = values_map[id];
     const newValue = currentValue + delta;
-    input.value = newValue.toFixed(0); // Asegura que el valor tenga 2 decimales
+    values_map[id] = newValue; // Asegura que el valor tenga 2 decimales
     console.log(`Adjusting value of ${id}: ${currentValue} -> ${newValue}`);
-    input.dispatchEvent(new Event('input')); // Forzar la actualización
+    //Checa si el neuvo valor se va a salir del rango del brazo
+    if (Math.sqrt(values_map.x**2+values_map.y**2+values_map.z**2)>l1+l2+l3+l4){
+        values_map[id] = currentValue
+    }
+
+    //input.dispatchEvent(new Event('input')); // Forzar la actualización
+    updateAngles();
+
 }
 
-// Función para publicar los ángulos en ROS
-function publish_angles() {
-    const msn_q1 = new ROSLIB.Message({ data: angles_map.q1 });
-    const msn_q2 = new ROSLIB.Message({ data: angles_map.q2 });
-    const msn_q3 = new ROSLIB.Message({ data: angles_map.q3 });
-    const msn_q4 = new ROSLIB.Message({ data: angles_map.q4 });
-    const msn_txt = new ROSLIB.Message({
-        data: `${angles_map.q1} ${angles_map.q2} ${angles_map.q3} ${angles_map.q4}`,
-    });
 
-    pub_q1.publish(msn_q1);
-    pub_q2.publish(msn_q2);
-    pub_q3.publish(msn_q3);
-    pub_q4.publish(msn_q4);
-    pub_q_string.publish(msn_txt);
-}
-
-// Función de cinemática inversa vieja 
-/*function inverseKinematics(xm, ym, zm, phi_int){
-    let Q1 = 0;
-    /*if (xm != 0 || ym != 0 || zm != 0){
-      if(xm == 0){
-        if(ym>0){
-          xm = ym;
-          Q1 = math.pi/2;
-        }else if (ym<0){
-          xm = ym;
-          Q1 = math.pi/2;
-        }else if(ym == 0){
-          Q1 = 0; 
-        }
-      }else if (xm < 0){
-        if (ym == 0){
-          Q1 = 0;
-        }else if(ym < 0){
-          //No lo he cambiado #real
-          Q1 = math.re(math.atan2(xm, ym));
-        }else{
-          //Tampoco lo he cambiado #real
-          Q1 = math.re(math.atan2(-xm,-ym));
-        }
-                      
-      }else{
-        //Ni idea #real
-        Q1 = math.re(math.atan2(ym,xm));
-      }  
-    }    
-    Q1 = math.re(math.atan2(ym,xm));
-    //console.log("Q1",Q1)
-    //Para q1
-    let q1=angles_map.q1
-    //console.log("q1",q1) //marca -5 en lugar de 0 
-
-    q1=qlimit(limits_map.q1,q1);
-    //Para q2
-    let hip=math.sqrt(math.pow(xm,2)+math.pow((zm-l1),2));
-    //console.log("zm",zm)
-    //console.log("l1",l1)
-    //console.log("xm",xm)
-    //console.log("hip", hip)
-    let phi = math.complex(math.atan2(zm-l1, xm))
-    //console.log("phi",phi)
-
-    //beta=acos((-l3^2+l2^2+hip^2)/(2*l2*hip))
-    let beta=math.acos((math.pow(l2,2)+math.pow(hip,2)-math.pow(l3,2))/(2*l2*hip)); //da negativo cuando no funciona 
-    let Q2=math.add(phi,beta).re;//math.re(phi+beta);
-    let q2=rad2deg(Q2) 
-    //console.log("beta",beta)
-    //console.log("Q2",Q2)
-    //console.log("q2",q2)
-    q2=qlimit(limits_map.q2,q2);
-    //Para q3  
-    let gamma=math.re(math.acos((math.pow(l2,2)+math.pow(l3,2)-math.pow(hip,2))/(2*l2*l3)));   
-    let Q3=math.re(gamma-math.pi);
-    let q3=rad2deg(Q3);
-    q3=qlimit(limits_map.q3,q3);
-    //console.log("gamma",gamma)
-  //  console.log("Q3",Q3)
-    //console.log("q3",q3)
-
-    let q4 = phi_int - q2 -q3;
-    q4=qlimit(limits_map.q4,q4);
-    values_map.joint4 = q4+q2+q3;
-
-    
-    let acum = deg2rad(q2);
-    let x2 = l2*math.cos(acum);
-    let y2 = l2*math.sin(acum);
-    acum+=deg2rad(q3);
-    let x3 = x2+l3*math.cos(acum);
-    let y3 = y2+l3*math.sin(acum);
-    acum+=deg2rad(q4);
-    let x4 = x3+l4*math.cos(acum);
-    let y4 = y3+l4*math.sin(acum);
-    //console.log(y4); //NAN
-    if(y4>limit_z && (x4>limit_chassis || y4>=0)){
-        values_map.joint1 = x3;
-        values_map.joint3 = y3;
-
-        angles_map.q2=q2;
-        angles_map.q3=q3;
-        angles_map.q4=q4;
-        arm_interface(angles_map.q2,angles_map.q3,angles_map.q4);        
-        return true
-    }else{
-        arm_interface(angles_map.q2,angles_map.q3,angles_map.q4);
-        return false;
-    } 
-    
-  } */
- 
 // Función para la interfaz gráfica del brazo
   function arm_interface(q2, q3, q4) {
     // Transformación a coordenadas rectangulares
     let acum = deg2rad(q2);
     let x2 = l2 * Math.cos(acum);
-    let y2 = l2 * Math.sin(acum);
+    let y2 = l2 * Math.sin(acum)+0.1;
     acum += deg2rad(q3);
     let x3 = x2 + l3 * Math.cos(acum);
     let y3 = y2 + l3 * Math.sin(acum);
@@ -805,13 +418,13 @@ function publish_angles() {
     let y4 = y3 + l4 * Math.sin(acum);
 
     // Rango dinámico para ejes
-    let maxReach = Math.max(Math.abs(x4), Math.abs(y4)) + 2;
+    let maxReach = 1.2;
 
     // Crear o actualizar la gráfica
     if (window.armChart) {
         // Actualizar datos si ya existe la gráfica
         armChart.data.datasets[0].data = [
-            { x: 0, y: 0 },
+            { x: 0, y: 0.1 },
             { x: x2, y: y2 }
         ];
         armChart.data.datasets[1].data = [
@@ -824,7 +437,7 @@ function publish_angles() {
         ];
         armChart.options.scales.xAxes[0].ticks.min = -maxReach;
         armChart.options.scales.xAxes[0].ticks.max = maxReach;
-        armChart.options.scales.yAxes[0].ticks.min = -maxReach;
+        armChart.options.scales.yAxes[0].ticks.min = -maxReach/2;
         armChart.options.scales.yAxes[0].ticks.max = maxReach;
         armChart.update();
     } else {
@@ -835,7 +448,7 @@ function publish_angles() {
                 {
                     label: "Joint 2",
                     data: [
-                        { x: 0, y: 0 },
+                        { x: 0, y: 0.1 },
                         { x: x2, y: y2 }
                     ],
                     lineTension: 0, // Línea recta
@@ -899,7 +512,7 @@ function publish_angles() {
                         ticks: {
                             min: -maxReach,
                             max: maxReach,
-                            stepSize: 1,
+                            stepSize: 0.1,
                             fontSize: 12
                         },
                         gridLines: {
@@ -912,7 +525,7 @@ function publish_angles() {
                         ticks: {
                             min: -maxReach,
                             max: maxReach,
-                            stepSize: 1,
+                            stepSize: 0.1,
                             fontSize: 12
                         },
                         gridLines: {

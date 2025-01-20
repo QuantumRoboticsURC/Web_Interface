@@ -140,7 +140,7 @@
 					</div>
 					<div class="row">	
 						<div class="col-lg-7">
-							<div style="width: 60%; float: left; margin: 0.4%;">
+							<div style="width: 45%; float: left; margin: 0.4%;">
 								<div class="card" style="float: left; margin: 1%; width: 100%;">
 									<div class="card-header">
 										<h4 class="card-title" >Arm Graphic</h4>
@@ -153,22 +153,25 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="col-lg-5">
-							<div class="card" style="width: 35%; float: left; margin: 1%;">
+							<div class="card" style="width: 50%; float: left; margin: 1%;">
 								<div class="card-header">
 									<h4 class="card-title">Control</h4>
 								</div>
 								<div class="card-body">
 									<div class="chart-circle mt-4 mb-3">
-										<div class="col-md-6">
+										<div class="col-md-6"style="width: 45%; float: left; margin: 0.4%;">
+											
 											<div class="card">
 												<div>
 													<!--Predefined positions-->
 													<div class="col-md-12">
 														<div class="btn-group-vertical modal-dialog-centered btn-sm">
-															<button id = "principal button" type="button" class="btn btn-secondary" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Intermediate</button>
+															<button id = "secondary button2" type="button" class="btn btn-secondary" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Storage</button>								
 															<button id = "secondary button1" type="button" class="btn btn-secondary" onclick="predefinedPosition('HOME');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Home</button>
-															<button id = "secondary button2" type="button" class="btn btn-secondary" onclick="predefinedPosition('STORAGE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Storage</button>
+															<button id = "principal button" type="button" class="btn btn-secondary" onclick="predefinedPosition('INTERMEDIATE');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Intermediate</button>
+															<button id = "secondary button5" type="button" class="btn btn-secondary" onclick="predefinedPosition('PREFLOOR');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">PreFloor</button>
 															<button id = "secondary button5" type="button" class="btn btn-secondary" onclick="predefinedPosition('FLOOR');getTxt();" style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">Floor</button>
 
 														</div>
@@ -183,175 +186,31 @@
 											<div class="card">
 												<div class="card-body" >
 													<p>Position X: <label  type="text" id="X"></label></p>
-													<p>Rotation: <label  type="text" id="Y"></label></p>
+													<p>Position Y: <label  type="text" id="Y"></label></p>
 													<p>Position Z: <label  type="text" id="Z"></label></p>
-													<p>Position Phi: <label  type="text" id="Phi"></label></p>
-													<p>Gripper Rotation: <label  type="text" id="Rotacion"></label></p>
+													<p>Pitch: <label  type="text" id="Pitch"></label></p>
+													<p>Gripper Rotation: <label  type="text" id="Roll"></label></p>
 													<p>Camera: <label  type="text" id="Camera"></label></p>
 													<p>Camera Antenna: <label  type="text" id="CameraA"></label></p>
-													<p>Q1: <label  type="text" id="Q1"></label></p>
-													<p>Q2:<label  type="text" id="Q2"></label></p>
-													<p>Q3:<label  type="text" id="Q3"></label></p>
-													<p>Q4:<label  type="text" id="Q4"></label></p>
+													
+													<p>Ángulo 1 (Q1): <span id="angle-q1">0°</span></p>
+													<p>Ángulo 2 (Q2): <span id="angle-q2">0°</span></p>
+													<p>Ángulo 3 (Q3): <span id="angle-q3">0°</span></p>
+													<p>Ángulo 4 (Q4): <span id="angle-q4">0°</span></p>
+													<p>Ángulo 5 (Q5): <span id="angle-q5">0°</span></p>
+
+													
+													
 													
 												</div>
 											</div>
 										</div>
 
 
-										<!--Sección anterior, fue reemplazada por la de cinemática inversa-->																
-										<!--<div class="col-md-6">
-											<div class="card">
-											<ul class="list-group list-group-flush">
-												<li class="list-group-item">
-													<div >
-														<div class="row">
-															<medium class="text-muted">Position X</medium>
-															<div class="col-md-12">
-																
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">		
-															
-																	<div class="input-group">
-																		<input id="X_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																
-																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="pressed(parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;+&nbsp;</button>
-																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="pressed(-parseFloat(document.getElementById('X_Txt').value), 1)">&nbsp;-&nbsp;</button>
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Rotation</medium>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button style="background-color:#F4F4F4; border-color:#18B4DA;border-radius: 10px; color:black" type="button" class="btn btn-secondary 	" onclick="go_rotation(parseFloat(document.getElementById('Y_Txt').value))">GO</button>																
-																	<div class="input-group">
-																		<input id="Y_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="rotate(parseFloat(document.getElementById('Y_Txt').value))">&nbsp;+&nbsp;</button>
-																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="rotate(-parseFloat(document.getElementById('Y_Txt').value))">&nbsp;-&nbsp;</button>
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Position Z</medium>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">		
-																	<button style="background-color:#F4F4F4; border-color:#18B4DA;border-radius: 10px; color:black" type="button" class="btn btn-secondary  "onclick="console.log(parseFloat(document.getElementById('Z_Txt').value)); go_z(parseFloat(document.getElementById('Z_Txt').value))">GO</button>
-															
-																	<div class="input-group">
-																		<input id="Z_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
 
-																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="pressed(parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;+&nbsp;</button>
-																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="pressed(-parseFloat(document.getElementById('Z_Txt').value), 3)">&nbsp;-&nbsp;</button>
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Phi</medium>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">	
-																	<button style="background-color:#F4F4F4;border-radius: 10px;border-radius: 10px; border-color:#18B4DA; color:black" type="button" class="btn btn-secondary " onclick="go_phi(parseFloat(document.getElementById('Phi_Txt').value))">GO</button>
-																	<div class="input-group">
-																		<input id="Phi_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="phi(parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;+&nbsp;</button>
-																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="phi(-parseFloat(document.getElementById('Phi_Txt').value))">&nbsp;-&nbsp;</button>
-															</div>
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Gripper Rotation</medium>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button style="background-color:#F4F4F4; border-color:#18B4DA;border-radius: 10px; color:black" type="button" class="btn btn-secondary " onclick="go(parseFloat(document.getElementById('Gripper_Txt').value))">GO</button>
-																	<div class="input-group">
-																		<input id="Gripper_Txt" type="text" class="form-control" value="5" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-								
-																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="griperRotation(parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;+&nbsp;</button>
-																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="griperRotation(-parseFloat(document.getElementById('Gripper_Txt').value))">&nbsp;-&nbsp;</button>
-																</div>
-															</div>
-														
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item ">
-													<div>
-														<div class="row">
-															<medium class="text-muted">End Tool</medium>
-															<div class="col-md-12">
-																<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Close</button>
-																<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Open</button> 																
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Camera</medium>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
-																	<div class="input-group">
-																		<input id="Camera_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt').value),1)">&nbsp;+&nbsp;</button>
-																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(-parseFloat(document.getElementById('Camera_Txt').value),1)">&nbsp;-&nbsp;</button>
-																</div>
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<medium class="text-muted">Camera Antenna</medium>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">																	
-																	<div class="input-group">
-																		<input id="CameraA_Txt" type="text" class="form-control" value="10" aria-label="Input group example" aria-describedby="btnGroupAddon">
-																	</div>
-																	<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('CameraA_Txt').value),2)">&nbsp;+&nbsp;</button>
-																	<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(-parseFloat(document.getElementById('CameraA_Txt').value),2)">&nbsp;-&nbsp;</button>
-																</div>
-															</div>
-														</div>
-													</div>
-												</li>
-												<li class="list-group-item">
-													<div>
-														<div class="row">
-															<medium class="text-muted">EMERGENCY</medium>
-															<div class="col-md-12">
-																<div class="btn-group btn-sm" role="group" aria-label="Basic example">
-																	<button style="background-color:#FF0000; border-color:#F4F4F4; color:white" type="button" class="btn btn-secondary " onclick="Emergency(true)">&nbsp;EMERGENCY&nbsp;</button> -->	 
 																	
+																			<div class="col-md-6" style="width: 70%; float: left; margin: 0.4%;">
 
-																	<div class="card-body">
-																		<div class="chart-circle mt-4 mb-3">
-																			<div class="col-md-6">
 																				<div class="card">
 																					<div class="card-header">
 																						<h4 class="card-title">Cinemática Inversa</h4>
@@ -363,10 +222,11 @@
 																									<medium class="text-muted">Position X:</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-x" type="number" class="form-control" value="0" step="5" oninput="updateAngles()">
+																											<input id="cinematic-x" type="number" class="form-control" value="0.05" step="0.05">
+																											<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('x', parseFloat(document.getElementById('cinematic-x').value))">+</button>
+																											<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('x', -parseFloat(document.getElementById('cinematic-x').value))">-</button>
+	
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-x', 5)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-x', -5)">-</button>
 
 
 																									</div>
@@ -377,10 +237,11 @@
 																									<medium class="text-muted">Position Y:</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-y" type="number" class="form-control" value="0" step="0.1" oninput="updateAngles()">
+																											<input id="cinematic-y" type="number" class="form-control" value="0.05" step="0.05">
+																											<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('y', parseFloat(document.getElementById('cinematic-y').value))">+</button>
+																											<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('y', -parseFloat(document.getElementById('cinematic-y').value))">-</button>
+	
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-y', 5)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-y', -5)">-</button>
 
 																									</div>
 																								</div>
@@ -390,10 +251,11 @@
 																									<medium class="text-muted">Position Z:</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-z" type="number" class="form-control" value="0" step="0.1" oninput="updateAngles()">
+																											<input id="cinematic-z" type="number" class="form-control" value="0.05" step="0.05" >
+																											<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('z', parseFloat(document.getElementById('cinematic-z').value))">+</button>
+																											<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('z', -parseFloat(document.getElementById('cinematic-z').value))">-</button>
+	
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-z', 5)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-z', -5)">-</button>
 
 																									</div>
 																								</div>
@@ -403,10 +265,11 @@
 																									<medium class="text-muted">Roll (°):</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-roll" type="number" class="form-control" value="0" step="1" oninput="updateAngles()">
+																											<input id="cinematic-roll" type="number" class="form-control" value="5" step="5">
+																											<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('rotacion', parseFloat(document.getElementById('cinematic-roll').value))">+</button>
+																											<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('rotacion', -parseFloat(document.getElementById('cinematic-roll').value))">-</button>
+	
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-roll', 5)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-roll', -5)">-</button>
 
 																									</div>
 																								</div>
@@ -417,23 +280,18 @@
 																									<medium class="text-muted">Pitch (°):</medium>
 																									<div class="col-md-12">
 																										<div class="input-group">
-																											<input id="cinematic-pitch" type="number" class="form-control" value="0" step="1" oninput="updateAngles()">
+																											<input id="cinematic-pitch" type="number" class="form-control" value="5" step="5" >
+																											<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('phi', parseFloat(document.getElementById('cinematic-pitch').value))">+</button>
+																											<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('phi', -parseFloat(document.getElementById('cinematic-pitch').value))">-</button>
+	
 																										</div>
-																										<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="adjustValue('cinematic-pitch', 5)">+</button>
-																										<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);"onclick="adjustValue('cinematic-pitch', -5)">-</button>
 
 																									</div>
 																								</div>
 																							</li>
 																						</ul>
 																						<!-- Para que se vean los ángulos -->
-																						<div style="margin-top: 20px;">
-																							<h6 style="font-size: 14px;">Ángulos Calculados:</h6>
-																							<p>Ángulo 1 (Q1): <span id="angle-q1">0°</span></p>
-																							<p>Ángulo 2 (Q2): <span id="angle-q2">0°</span></p>
-																							<p>Ángulo 3 (Q3): <span id="angle-q3">0°</span></p>
-																							<p>Ángulo 4 (Q4): <span id="angle-q4">0°</span></p>
-																						</div>
+																						
 																					</div>
 																				</div>
 																			</div>
