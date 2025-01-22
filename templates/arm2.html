@@ -117,7 +117,7 @@
       <section class="home">
 		<div class="navbar" style="margin-left: 2%; margin-right: 3%;" >
 			<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26" style="margin-top: 1.3%; margin-left: 2%;" >
-			<span style="margin-left: 2%;margin-top: 1.3%; margin-right: 40%;"> University Rover Challenge, June 2024.</span>
+			<span style="margin-left: 2%;margin-top: 1.3%; margin-right: 40%;"> University Rover Challenge, June 2025.</span>
 	  
 			<div class="navbar-left navbar-form nav-search mr-md-3" style="margin-top: 1.2%; margin-left: 1.2%;">
 			  <img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
@@ -158,6 +158,7 @@
 							<div class="card" style="width: 50%; float: left; margin: 1%;">
 								<div class="card-header">
 									<h4 class="card-title">Control</h4>
+								
 								</div>
 								<div class="card-body">
 									<div class="chart-circle mt-4 mb-3">
@@ -213,11 +214,10 @@
 
 																				<div class="card">
 																					<div class="card-header">
-																						<h4 class="card-title">Cinemática Inversa</h4>
+																						<h4 class="card-title" style="text-align: center;">Cinemática Inversa</h4>
 																					</div>
 																					<div class="card-body">
-																						<ul class="list-group list-group-flush">
-																							<li class="list-group-item">
+																						
 																								<div class="row">
 																									<medium class="text-muted">Position X:</medium>
 																									<div class="col-md-12">
@@ -231,8 +231,8 @@
 
 																									</div>
 																								</div>
-																							</li>
-																							<li class="list-group-item">
+																							
+																							
 																								<div class="row">
 																									<medium class="text-muted">Position Y:</medium>
 																									<div class="col-md-12">
@@ -245,8 +245,8 @@
 
 																									</div>
 																								</div>
-																							</li>
-																							<li class="list-group-item">
+																							
+																							
 																								<div class="row">
 																									<medium class="text-muted">Position Z:</medium>
 																									<div class="col-md-12">
@@ -259,8 +259,8 @@
 
 																									</div>
 																								</div>
-																							</li>
-																							<li class="list-group-item">
+																							
+																							
 																								<div class="row">
 																									<medium class="text-muted">Roll (°):</medium>
 																									<div class="col-md-12">
@@ -274,8 +274,8 @@
 																									</div>
 																								</div>
 																								
-																							</li>
-																							<li class="list-group-item">																										
+																							
+																																																
 																								<div class="row">
 																									<medium class="text-muted">Pitch (°):</medium>
 																									<div class="col-md-12">
@@ -288,21 +288,19 @@
 
 																									</div>
 																								</div>
-																							</li>
-																							<li class="list-group-item">																										
-																								<div class="row">
+																							
+																							
+																								<div class="row" style="display: flex; flex-direction: column; align-items: center;">
 																									<medium class="text-muted">End Tool</medium>
 																									<div class="col-md-12">
-																										<div class="input-group">
+																										<div class="input-group" style="display: flex; justify-content: center; gap: 10px;">
 																											<button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(1)">Close</button>
 																											<button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onmouseup="movePrismatic(0)" onmousedown="movePrismatic(-1)">Open</button>
-	
 																										</div>
-
 																									</div>
 																								</div>
-																							</li>
-																							<li class="list-group-item">																										
+																								
+																																																	
 																								<div class="row">
 																									<medium class="text-muted">Camera</medium>
 																									<div class="col-md-12">
@@ -315,8 +313,8 @@
 
 																									</div>
 																								</div>
-																							</li>
-																							<li class="list-group-item">																										
+																							
+																																																	
 																								<div class="row">
 																									<medium class="text-muted">Camera Antenna</medium>
 																									<div class="col-md-12">
@@ -329,9 +327,9 @@
 
 																									</div>
 																								</div>
-																							</li>
+																							
 
-																						</ul>
+																						
 																						<!-- Para que se vean los ángulos -->
 																						
 																					</div>
