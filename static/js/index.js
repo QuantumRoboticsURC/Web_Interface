@@ -29,34 +29,44 @@ var cam_selection = new ROSLIB.Topic ({
 })
 var calidad=7;
 
-function change_camera(camera){
-    if(camera==1){
-      var zed_topic = _config.topic_Arm_Camera;
-      
-    } else if(camera==2){
-      var zed_topic = _config.topic_Ant_Camera;
-    } else if (camera==3){
-      var zed_topic = _config.topic_sci_cam1;
-    } else if (camera==4){
-      var zed_topic = _config.topic_sci_cam2;
-    } else if (camera==5){
-      var zed_topic = _config.topic_Zed_Camera;
-      filter = !filter;
-    }
-    
-    var zed_src = "http://" + _config.WEB_Video_Server + ":8080/stream?topic=" + zed_topic + "&type=mjpeg";
-    document.getElementById("Zed_Camera").src = zed_src;
-    console.log(camara_topic);
-    if(filter){
-      var zed_topic =_config.topic_Zed_Camera;
-      change_quality(calidad);
-    }
-    if(camera != 5){
-      cam_selection.publish(new ROSLIB.Message({ data: parseInt(camera) }));
-      console.log("Camera selected: " + camera);
-    }
-    
+let socket;
+function connectCamera() {
+  const portNumber = document.getElementById('Camera_Port').value;
+  const ipCamera = document.getElementById('Camera_IP').value;
+  console.log("Connecting to camera on port:", portNumber);
+
+  if (socket && socket.readyState !== WebSocket.CLOSED) {
+    socket.close();
+  }
+
+  socket = new WebSocket(`ws://${ipCamera}:${portNumber}`);
+
+  socket.onopen = function(event) {
+    console.log("WebSocket is open now.");
+  };
+
+  socket.onmessage = function(event) {
+    const imgElement = document.getElementById('Zed_Camera');
+    imgElement.src = 'data:image/jpeg;base64,' + event.data;
+  };
+
+  socket.onclose = function(event) {
+    console.log("WebSocket is closed now.");
+    console.log(`Code: ${event.code}, Reason: ${event.reason}`);
+  };
+
+  socket.onerror = function(error) {
+    console.error("WebSocket error:", error);
+  };
 }
+
+function stop_video() {
+  if (socket && socket.readyState !== WebSocket.CLOSED) {
+    socket.close();
+  }
+  console.log("Video stopped and WebSocket connection closed");
+}
+
 
 function activate_simpledrive(activation){
   simpledrive.publish(new ROSLIB.Message({data:activation}));

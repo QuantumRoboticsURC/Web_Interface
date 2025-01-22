@@ -113,7 +113,7 @@
   <section class="home">
     <div class="navbar" style="margin-left: 2%; margin-right: 3%;" >
 			<img src="{{url_for('static', filename='img/mexico.png')}}" width="41" height="26" style="margin-top: 1.3%; margin-left: 2%;" >
-			<span style="margin-left: 2%;margin-top: 1.3%; margin-right: 40%;"> University Rover Challenge, June 2024.</span>
+			<span style="margin-left: 2%;margin-top: 1.3%; margin-right: 40%;"> University Rover Challenge, June 2025.</span>
 	  
 			<div class="navbar-left navbar-form nav-search mr-md-3" style="margin-top: 1.2%; margin-left: 1.2%;">
 			  <img src="{{url_for('static', filename='img/tec.png')}}" width="41" height="32">
@@ -130,59 +130,61 @@
 				<div class="container-fluid">
 					<h4 style="margin-top: 2%; margin-bottom: 2%;">Dashboard Nav</h4>
 					
-
-          <!--Tarjetas pequeñas-->
-          <div class= "card"  style="width: 25%; float:left; padding: 2%; margin-left: 0%;" > 
-            <h4 style="margin-bottom: 4%;">Cameras</h4>
-              <div class="class body">
-                <div class="col-lg-6">
-                  <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('1');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;">Arm_Camera</button>
-					        <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('2');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem">Ant_Camera</button>
-					        <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('3');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white;border-radius: 1rem">sci_cam1</button>
-                  <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('4');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white;border-radius: 1rem">sci_cam2</button>
-                  <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_camera('5');" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white;border-radius: 1rem">camera_image</button>
-              </div>	
-            </div>		
-          </div>
-
-          <div class= "card"  style="width: 25%; padding: 2%; margin-left: 1.2%; display: inline-block;" >
-            <h4 style="margin-bottom: 4%;">Simple Drive</h4>
-              <div class="class body">
-                <div class="col-lg-6">
-                <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="activate_simpledrive(true);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">ON
-                <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="activate_simpledrive(false);" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white;border-radius: 1rem;">OFF
-              </div>	
-            </div>		
-          </div>
-
-          <div class= "card"  style="width: 25%; padding: 2%; margin-left: 1.2%; display: inline-block;" >
-            <h4 style="margin-bottom: 4%;">Camera Quality</h4>
-              <div class="class body">
-                <div class="col-lg-6">
-                  <input id="Z_Txt" type="text" class="form-control" value="7" aria-label="Input group example" aria-describedby="btnGroupAddon">
-                <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="change_quality(document.getElementById('Z_Txt').value)" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#F4F4F4; color:white;border-radius: 1rem;">ADJUST
-            
-              </div>	
-            </div>		
-          </div>
-
-
-
           <div class="row">	
+
             <!--Tarjeta grande càmara-->
 						<div class="col-lg-6" style="display: inline;">
-							<div class="card" style=" float: left; width: 100%; ">
+							<div class="card" style=" float: left; width: 75%; ">
 								<div class="card-header">
-									<h4 class="card-title">Camera 1</h4>
-									<p class="card-category">Zed</p>
+									<h4 class="card-title">Camera</h4>
 								</div>
 								<div class="card-body">
 									<div class="col-lg-6">
-										<img src ="" id="Zed_Camera" width="1080" height="720">
+										<img src ="" id="Zed_Camera" width="100%" height="600">
 									</div>
 								</div>	
 							</div>
 						</div>
+
+            <div class= "card"  style="width: 24%; float:right; padding: 2%; margin-left: 0%;" > 
+              <h4 style="margin-bottom: 4%;">Cameras</h4>
+              <div class="card-body text-center">
+                <div class="row">
+                  <h8 style="margin-bottom: 4%;">Camera server IP</h8>
+                  <input id="Camera_IP" type="text" class="form-control" value="192.168.0.16" aria-label="Input group example" aria-describedby="btnGroupAddon">	
+                  <h8 style="margin-bottom: 4%;">Camera server port</h8>
+                  <input id="Camera_Port" type="text" class="form-control" value="9999" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                  <h5 style="margin-bottom: 4%; color: #ff0000;">Stop the camera after use or to change port to avoid problems!!!!</h5>
+                  <div class="row">
+                    <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="connectCamera();" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem; width: 40%">Connect</button>
+                    <button id = "secondary button3" type="button" class="btn btn-secondary" onclick="stop_video();" style="margin-bottom: 25px; background-color:#c40c0f; border-color:#ffffff; color:white; border-radius: 1rem; width: 40%">Stop</button>
+                  </div>
+                </div>
+              </div>		
+            </div>
+            
+            <!--Estas están muertas ahorita xd-->
+            <div class= "card"  style="width: 24%; float:right; padding: 2%; margin-left: 0%;" > 
+              <h4 style="margin-bottom: 4%;">Move Camera</h4>
+              <h7 style="margin-bottom: 4%;">Move by:</h7>
+              <div class="card-body text-center">
+                <div class="row">	
+                  <div class="input-group">
+                    <div class="row">
+                      <button style="margin-bottom: 25px; background-color:#18B4DA; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="">1</button> <!-- Set x and z values accordingly -->
+                      <button style="margin-bottom: 25px; background-color:#279bda; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="">10</button>
+                      <button style="margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="">30</button>
+                    </div>
+                    <button style="margin-left: 30px; margin-bottom: 10px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt_X').value),1)">↑</button>
+                    <div class="row">
+                      <button style="margin-bottom: 10px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt_Z').value),1)">←</button>
+                      <button style="margin-bottom: 10px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt_Z').value),1)">→</button>
+                    </div>
+                    <button style="margin-left: 30px; margin-bottom: 25px; background-color:#0C76C4; border: none; color:white; border-radius: 10px; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);" onclick="moveCamera(parseFloat(document.getElementById('Camera_Txt_X').value),1)">↓</button>
+                  </div>
+                </div>
+              </div>		
+            </div>
       
         
 			</div>
