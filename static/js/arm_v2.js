@@ -169,7 +169,7 @@ var l4 = 0.213;
 //Limits
 var limits_map = {
     q1:[-90,90],
-    q2:[-10,185],
+    q2:[-10,190],
     q3:[-170,160],
     q4:[-160,160],
     joint5:[-90,90], 
@@ -210,17 +210,17 @@ function predefinedPosition(position){
     else if (position === "PREFLOOR"){
         values_map.x = 0.3;
         values_map.y =  0;
-        values_map.z =  -0.1;
+        values_map.z =  0.1;
         values_map.rotacion = 0;
-        values_map.phi = -90; 
+        values_map.phi = -45; 
     }
 
     else if (position === "FLOOR"){
-        values_map.x = 0.4;
+        values_map.x = 0.3;
         values_map.y =  0;
-        values_map.z =  -0.2;
+        values_map.z =  -0.1;
         values_map.rotacion = 0;
-        values_map.phi = -90; 
+        values_map.phi = -90;
     }
     else if (position === "STORAGE"){
         values_map.x = 0;
@@ -434,10 +434,10 @@ function adjustValue(id, delta) {
         values_map[id] = currentValue;
     }
     //Checa que no intente hacer un movimiento que golpee el rover
-    if (values_map.x.toFixed(2)<=0 && (values_map.z.toFixed(2)<0.4 || values_map.phi.toFixed(2)>0)){
+    /*if (values_map.x.toFixed(2)<=0 && (values_map.z.toFixed(2)<0.4 || values_map.phi.toFixed(2)>0)){
        
         values_map[id] = currentValue;
-    }
+    }*/
     //Checa si el valor de Values_map.x es menor a 0
     if(values_map.x.toFixed(2)<0){
         values_map[id] = currentValue;
@@ -477,15 +477,15 @@ function adjustValue(id, delta) {
     // Crear o actualizar la gráfica
     if (window.armChart) {
         // Actualizar datos si ya existe la gráfica
-        armChart.data.datasets[0].data = [
+        armChart.data.datasets[1].data = [
             { x: 0, y: 0.1 },
             { x: x2, y: y2 }
         ];
-        armChart.data.datasets[1].data = [
+        armChart.data.datasets[2].data = [
             { x: x2, y: y2 },
             { x: x3, y: y3 }
         ];
-        armChart.data.datasets[2].data = [
+        armChart.data.datasets[3].data = [
             { x: x3, y: y3 },
             { x: x4, y: y4 }
         ];
@@ -499,6 +499,22 @@ function adjustValue(id, delta) {
         var armData = {
             labels: [],
             datasets: [
+                {
+                    label: "Joint 1",
+                    data: [
+                        { x: 0, y: 0 },
+                        { x: 0, y: 0.1 }
+                    ],
+                    lineTension: 0, // Línea recta
+                    fill: false,
+                    borderColor: 'black',
+                    borderWidth: 3,
+                    pointBorderColor: 'black',
+                    pointBackgroundColor: 'black',
+                    pointRadius: 6,
+                    pointStyle: 'circle',
+                    showLine: true
+                },
                 {
                     label: "Joint 2",
                     data: [
@@ -577,7 +593,7 @@ function adjustValue(id, delta) {
                 yAxes: [
                     {
                         ticks: {
-                            min: -maxReach,
+                            min: -maxReach/2,
                             max: maxReach,
                             stepSize: 0.1,
                             fontSize: 12
