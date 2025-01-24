@@ -1,8 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from skimage import feature, color, measure
-from skimage.io import imread
 
 def level3_texture_clustering_overlay_2(image, n_clusters, radius, n_points, min_segment_size=500):
     # Convertir la imagen a escala de grises

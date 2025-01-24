@@ -1,11 +1,9 @@
-import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 
 # Función para aplicar K-Means y devolver la imagen segmentada
 def apply_kmeans(pixels, n_clusters):
-    kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=5, max_iter=100)
+    kmeans = KMeans(n_clusters = n_clusters, random_state=42, n_init=5, max_iter=100)
     labels = kmeans.fit_predict(pixels)
     centers = kmeans.cluster_centers_
     return labels, centers

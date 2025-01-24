@@ -1,8 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from skimage import feature, color
-from skimage.io import imread
 from skimage.util import img_as_ubyte
 
 def level3_texture_clustering_overlay_3(image, n_clusters, radius, n_points):

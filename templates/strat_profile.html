@@ -21,6 +21,28 @@
 
 	<script src="{{url_for('static', filename='js/config.js')}}"></script>
 	<script src="{{url_for('static', filename='js/plugin/roslib.min.js')}}"></script>
+  <style>
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        text-align: center;
+    }
+    .image-grid img {
+        width: 100%;
+        height: auto;
+        margin: 5px;
+    }
+    h1, h2 {
+        text-align: center;
+    }
+    .image-container {
+        margin-bottom: 15px;
+    }
+    .image-container h3 {
+        margin: 5px 0;
+        font-size: 14px;
+    }
 
 	<!-- <style>
 		.column {
@@ -206,15 +228,61 @@
                             <div class="result" id="result2"></div>
                             <br>
                             <h5>Statographic Profile </h5>
-                            <input type="file" class="image-input" id="imageInput3"accept="image/*">
-                            <div class="color-columns">
-                              <div class="column">
-                                <div class="selected-image-container" id="selectedImageContainer3">
-                                  <canvas class="canvas" width="640" height="480" style="display:none" id = "i3"></canvas>
-                                </div>
+                            <form action="/analyze_site_1" method="post" enctype="multipart/form-data">
+                              <label for="image_site_1">Seleccione una imagen para el Sitio 1:</label>
+                              <input type="file" id="image_site_1" name="image_site_1" accept="image/*" required>
+                              <button type="submit">Subir Imagen al Sitio 1</button>
+                          </form>
+                          
+                          <div class="image-grid">
+                              <div class="image-container">
+                                  <img class="image" id="image1" src="static/processed/site_1/original_imageSite1.jpg">
+                                  <h3>Original</h3> <!-- Escribe aquí el título de la imagen -->
                               </div>
-                            </div>
-                            <div class="result" id="result3"></div>
+                              <div class="image-container">
+                                  <img class="image" id="image2" src="static/processed/site_1/gray_imageSite1.jpg">
+                                  <h3>Grayscale</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image3" src="static/processed/site_1/binary_imageSite1.jpg">
+                                  <h3>Binary</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image4" src="static/processed/site_1/segmented_rgb_imageSite1.jpg">
+                                  <h3>Segmented RGB</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image5" src="static/processed/site_1/segmented_hsv_imageSite1.jpg">
+                                  <h3>Segmented HSV</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image6" src="static/processed/site_1/segmented_lab_imageSite1.jpg">
+                                  <h3>Segmented Lab</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image7" src="static/processed/site_1/overlay_level3_1_imageSite1.jpg">
+                                  <h3>Overlay Level 3.1</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image8" src="static/processed/site_1/overlay_level3_2_imageSite1.jpg">
+                                  <h3>Overlay Level 3.2</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image9" src="static/processed/site_1/overlay_level3_3_imageSite1.jpg">
+                                  <h3>Overlay Level 3.3</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image10" src="static/processed/site_1/overlay_rgb_imageSite1.jpg">
+                                  <h3>Overlay RGB</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image11" src="static/processed/site_1/overlay_hsv_imageSite1.jpg">
+                                  <h3>Overlay HSV</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
+                              <div class="image-container">
+                                  <img class="image" id="image12" src="static/processed/site_1/overlay_lab_imageSite1.jpg">
+                                  <h3>Overlay Lab</h3> <!-- Escribe aquí el título de la imagen -->
+                              </div>
                           </div>
                             <div class="row">    
                               <div class="col-lg-12">
@@ -226,13 +294,13 @@
                                               <div class="color-columns">
                                                 <h5>Panoramic</h5>
                                                   <input type="file" class="image-input" accept="image/*">
-                                                  <input type="text" class="form-control" value="0" aria-label="Input group example" aria-describedby="btnGroupAddon" id = "angulo4">
+                                                  <input type="text" class="form-control" value="0" aria-label="Input group example" aria-describedby="btnGroupAddon" id = "angulo3">
 
                                                   <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
                                                   <div class="color-columns">
                                                       <div class="column">
-                                                        <div class="selected-image-container" id="selectedImageContainer4">
-                                                          <canvas class="canvas" width="640" height="480" style="display:none" id = "i4"></canvas>
+                                                        <div class="selected-image-container" id="selectedImageContainer3">
+                                                          <canvas class="canvas" width="640" height="480" style="display:none" id = "i3"></canvas>
                                                         </div>
                                                       </div>
                                                       
@@ -242,28 +310,70 @@
                                                 <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
                                                 <div class="color-columns">
                                                     <div class="column">
-                                                      <div class="selected-image-container" id="selectedImageContainer5">
-                                                        <canvas class="canvas" width="640" height="480" style="display:none" id = "i5"></canvas>
+                                                      <div class="selected-image-container" id="selectedImageContainer4">
+                                                        <canvas class="canvas" width="640" height="480" style="display:none" id = "i4"></canvas>
                                                       </div>
                                                     </div>
                                                 </div>
                                                 <div class="result"></div>
                                             
                                               <h5>Statographic Profile</h5>
-                                              <input type="file" class="image-input" accept="image/*">
-                                              <canvas class="canvas" width="640" height="480" style="display:none"></canvas>
-                                              <div class="color-columns">
-                                                  <div class="column">
-                                                    <div class="selected-image-container" id="selectedImageContainer6">
-                                                      <canvas class="canvas" width="640" height="480" style="display:none" id = "i6"></canvas>
-                                                      <p id="responseMessage" style="text-align: center; color: green;"></p>
-                                                    </div>
-                                                  </div>                                                  
-                                              </div>
-                
-                                              <div class="picker" id="picker3"></div>
-                
-                                              <div class="result"></div>                 
+                                              <form action="/analyze_site_2" method="post" enctype="multipart/form-data">
+                                                <label for="image_site_2">Seleccione una imagen para el Sitio 2:</label>
+                                                <input type="file" id="image_site_2" name="image_site_2" accept="image/*" required>
+                                                <button type="submit">Subir Imagen al Sitio 2</button>
+                                            </form>
+                                        
+                                            <div class="image-grid">
+                                                <div class="image-container">
+                                                    <img class="image" id="image1" src="static/processed/site_2/original_imageSite2.jpg">
+                                                    <h3>Original</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image2" src="static/processed/site_2/gray_imageSite2.jpg">
+                                                    <h3>Grayscale</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image3" src="static/processed/site_2/binary_imageSite2.jpg">
+                                                    <h3>Binary</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image4" src="static/processed/site_2/segmented_rgb_imageSite2.jpg">
+                                                    <h3>Segmented RGB</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image5" src="static/processed/site_2/segmented_hsv_imageSite2.jpg">
+                                                    <h3>Segmented HSV</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image6" src="static/processed/site_2/segmented_lab_imageSite2.jpg">
+                                                    <h3>Segmented Lab</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image7" src="static/processed/site_2/overlay_level3_1_imageSite2.jpg">
+                                                    <h3>Overlay Level 3.1</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image8" src="static/processed/site_2/overlay_level3_2_imageSite2.jpg">
+                                                    <h3>Overlay Level 3.1</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image9" src="static/processed/site_2/overlay_level3_3_imageSite2.jpg">
+                                                    <h3>Overlay Level 3.1</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image10" src="static/processed/site_2/overlay_rgb_imageSite2.jpg">
+                                                    <h3>Overlay RGB</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image11" src="static/processed/site_2/overlay_hsv_imageSite2.jpg">
+                                                    <h3>Overlay HSV</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                                <div class="image-container">
+                                                    <img class="image" id="image12" src="static/processed/site_2/overlay_lab_imageSite2.jpg">
+                                                    <h3>Overlay Lab</h3> <!-- Escribe aquí el título de la imagen -->
+                                                </div>
+                                            </div>                 
                                       </div>
                                   </div>
                               </div>

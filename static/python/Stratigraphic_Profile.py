@@ -1,8 +1,8 @@
 import cv2
 import matplotlib.pyplot as plt
-import time 
+import time
 
-from static.python.test import show_image  
+from static.python.test import otsu_threshold
 from static.python.testN2 import apply_kmeans
 from static.python.testN2 import reconstruct_image
 from static.python.testN31 import level3_texture_clustering_overlay_1
@@ -12,163 +12,58 @@ from static.python.testN33 import remove_third_cluster
 from static.python.testN4 import level4_combined_clustering_overlay 
 
 
-def stratigraphic_profile(image):
+def stratigraphic_profile(image_path):
+
     inicio = time.time()
-    image_path = image  # Reemplaza con tu ruta de imagen
+
+    print(f"Intentando cargar la imagen desde la ruta: {image_path}")
     image = cv2.imread(image_path)
-
-    #################################################################################################
-    ###Nivel 1: Umbralización básica utilizando el método de Otsu para segmentar áreas relevantes.###
-    #################################################################################################
+    if image is None:
+        raise ValueError(f"Failed to load image from path: {image_path}")
+    
     print("Nivel 1: Umbralización básica utilizando el método de Otsu para segmentar áreas relevantes.")
-    #Hace le umbralización y muestra el resiltado
-    show_image(image)
+    original_image, gray_image, binary_image = otsu_threshold(image)
 
-
-
-    #############################################################################################
-    ###Nivel 2: Clustering basado en color usando K-Means y espacios de color (RGB, HSV, Lab).###
-    #############################################################################################
     print("Nivel 2: Clustering basado en color usando K-Means y espacios de color (RGB, HSV, Lab).")
-    # Convertir la imagen a RGB
+    # Convertir imagen a RGB para su correcta visualización con Matplotlib
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
-
-    # Convertir la imagen a una lista de píxeles (RGB)
-    pixels = image_rgb.reshape((-1, 3))
-
-    # Convertir a otros espacios de color
-    image_hsv = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2HSV)
+    pixels_rgb = image_rgb.reshape((-1, 3))
+    
+    # Convertir la imagen a HSV y Lab para K-Means
+    image_hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
     pixels_hsv = image_hsv.reshape((-1, 3))
-
-    image_lab = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2Lab)
+    
+    image_lab = cv2.cvtColor(image, cv2.COLOR_BGR2Lab)
     pixels_lab = image_lab.reshape((-1, 3))
-
-    # Usar un número fijo de clusters
+    
+    # Usar un número fijo de clusters para K-Means
     n_clusters = 20
-
-    # Aplicar K-Means en cada espacio de color
-    labels_rgb, centers_rgb = apply_kmeans(pixels, n_clusters)
+    
+    # Aplicar K-Means
+    labels_rgb, centers_rgb = apply_kmeans(pixels_rgb, n_clusters)
     labels_hsv, centers_hsv = apply_kmeans(pixels_hsv, n_clusters)
     labels_lab, centers_lab = apply_kmeans(pixels_lab, n_clusters)
-
+    
     # Reconstruir las imágenes segmentadas
     segmented_image_rgb = reconstruct_image(labels_rgb, centers_rgb, image_rgb.shape)
-    segmented_image_hsv = reconstruct_image(labels_hsv, centers_hsv, image_rgb.shape)
+    segmented_image_hsv = reconstruct_image(labels_hsv, centers_hsv, image.shape)
     segmented_image_lab = reconstruct_image(labels_lab, centers_lab, image_rgb.shape)
 
-    # Mostrar los resultados
-    plt.figure(figsize=(20, 10))
-    plt.title(f"Color-Based Clustering\nClusters: {n_clusters}\n")
-    plt.axis("off")
-
-    # Imagen original
-    plt.subplot(2, 2, 1)
-    plt.imshow(image_rgb)
-    plt.title("Original")
-    plt.axis('off')
-
-    # Imagen segmentada en RGB
-    plt.subplot(2, 2, 2)
-    plt.imshow(segmented_image_rgb)
-    plt.title("RGB")
-    plt.axis('off')
-
-    # Imagen segmentada en HSV
-    plt.subplot(2, 2, 3)
-    plt.imshow(segmented_image_hsv)
-    plt.title("HSV")
-    plt.axis('off')
-
-    # Imagen segmentada en Lab
-    plt.subplot(2, 2, 4)
-    plt.imshow(segmented_image_lab)
-    plt.title("Lab")
-    plt.axis('off')
-
-    plt.tight_layout()
-    plt.show()
-
-
-
-    #######################################################################################################
-    ###Nivel 3: Clustering basado en textura con patrones binarios locales (LBP) combinados con K-Means.###
-    #######################################################################################################
     print("Nivel 3: Clustering basado en textura con patrones binarios locales (LBP) combinados con K-Means.")
-    ################
-    ###Parámetros###
-    ################
+    n_clusters = 3
+    radius = 3
+    n_points = 24
+    min_segment_size = 81
 
-    n_clusters = 3         # Número de clusters
-    radius = 3             # Radio de LBP
-    n_points = 24          # Número de puntos de LBP
-    min_segment_size = 81  # Tamaño mínimo de segmento para mantener
-
-    ##############################
-    ###SIN ELIMINACIÓN DE RUIDO###
-    ##############################
-
-    # Aplicar el nivel 3 con los parámetros dados
+    # Con ruido
     overlay_level3_1 = level3_texture_clustering_overlay_1(image, n_clusters, radius, n_points)
-
-    ######################################################
-    ###CON ELIMINACIÓN DE RUIDO MEDIANTE PUNTOS MÍNIMOS###
-    ######################################################
-
-    # Aplicar el nivel 3 con los parámetros dados
+    # Sin ruido (puntos mínimos)
     overlay_level3_2 = level3_texture_clustering_overlay_2(image, n_clusters, radius, n_points, min_segment_size)
-    
-    #######################################################################
-    #CON ELIMINACIÓN DE RUIDO MEDIANTE LA ELIMINACIÓN DEL TERCER CLUSTER###
-    #######################################################################
-
-    # Aplicar el nivel 3 con los parámetros dados
+    # Sin ruido (eliminación de cluster)
     segmented_image = level3_texture_clustering_overlay_3(image, n_clusters, radius, n_points)
-
-    # Eliminar el tercer cluster
     overlay_level3_3 = remove_third_cluster(image, segmented_image)
 
-    ################
-    ###Resultados###
-    ################
-
-    plt.figure(figsize=(20, 10))
-    plt.title(f"\nTexture-Based Clustering\n Clusters: {n_clusters}, Radius: {radius}, Points: {n_points}, Minimum Points: {min_segment_size}\n")
-    plt.axis("off")
-
-    # Imagen original
-    plt.subplot(2, 2, 1)
-    plt.imshow(image_rgb)
-    plt.title("Original")
-    plt.axis('off')
-
-    # Imagen segmentada sin eliminación de ruido
-    plt.subplot(2, 2, 2)
-    plt.imshow(overlay_level3_1)
-    plt.title('Without Noise Removal')
-    plt.axis('off')
-
-    # Imagen segmentada con eliminación de ruido mediante puntos mínimos
-    plt.subplot(2, 2, 3)
-    plt.imshow(overlay_level3_2)
-    plt.title('With Noise Removal by Minimum Points')
-    plt.axis('off')
-
-    # Imagen segmentada con eliminación de ruido mediante la eliminación del tercer cluster
-    plt.subplot(2, 2, 4)
-    plt.imshow(overlay_level3_3)
-    plt.title('With Noise Removal by Removing the Third Cluster \n(index 2)')
-    plt.axis('off')
-
-    plt.tight_layout()
-    plt.show()
-
-
-
-    #############################################################################################
-    ###Nivel 4: Clustering Usando Color (RGB, HSV, Lab) y Textura (LBP) combiando con K-Means.###
-    #############################################################################################
     print("Nivel 4: Clustering Usando Color (RGB, HSV, Lab) y Textura (LBP) combiando con K-Means.")
-    #Cambio de número de clusters para mejores resultados
     n_clusters = 25
 
     # Generar superposiciones para cada espacio de color
@@ -176,37 +71,100 @@ def stratigraphic_profile(image):
     overlay_hsv = level4_combined_clustering_overlay(image_rgb, n_clusters, 'hsv', radius, n_points)
     overlay_lab = level4_combined_clustering_overlay(image_rgb, n_clusters, 'lab', radius, n_points)
 
-    # Mostrar las imágenes
-    plt.figure(figsize=(20, 10))
-    plt.title(f"\nClustering Based on Color and Texture\nClusters: {n_clusters}\n")
-    plt.axis("off")
-
-    # Imagen original
-    plt.subplot(2, 2, 1)
-    plt.imshow(image_rgb)
-    plt.title("Original")
-    plt.axis('off')
-
-    # Segmentación RGB
-    plt.subplot(2, 2, 2)
-    plt.imshow(overlay_rgb)
-    plt.title("RGB")
-    plt.axis('off')
-
-    # Segmentación HSV
-    plt.subplot(2, 2, 3)
-    plt.imshow(overlay_hsv)
-    plt.title("HSV")
-    plt.axis('off')
-
-    # Segmentación Lab
-    plt.subplot(2, 2, 4)
-    plt.imshow(overlay_lab)
-    plt.title("Lab")
-    plt.axis('off')
-
-    plt.tight_layout()
-    plt.show()
-    fin= time.time()
-
+    fin = time.time()
     print(f"Tiempo de ejecucion: {fin - inicio} segundos")
+
+    return original_image, gray_image, binary_image, segmented_image_rgb, segmented_image_hsv, segmented_image_lab, overlay_level3_1, overlay_level3_2, overlay_level3_3, overlay_rgb, overlay_hsv, overlay_lab
+
+
+if __name__ == "__main__":
+    
+    # Solicitar la ruta de la imagen al usuario
+    image_path = input("Por favor ingrese la ruta de la imagen: ")
+
+    try:
+        # Llamar a la función para obtener los resultados
+        original_image, gray_image, binary_image, segmented_image_rgb, segmented_image_hsv, segmented_image_lab, overlay_level3_1, overlay_level3_2, overlay_level3_3, overlay_rgb, overlay_hsv, overlay_lab = stratigraphic_profile(image_path)
+
+        # Mostrar todas las imágenes procesadas
+        # Para mostrar imágenes usando matplotlib, OpenCV usa el formato BGR, por lo que simplemente las mostramos directamente
+        plt.figure(figsize=(12, 12))
+
+        # Mostrar imagen original
+        plt.subplot(4, 3, 1)
+        plt.imshow(original_image)
+        plt.title("Original")
+        plt.axis('off')
+
+        # Mostrar imagen en escala de grises
+        plt.subplot(4, 3, 2)
+        plt.imshow(gray_image, cmap='gray')
+        plt.title("Grayscale")
+        plt.axis('off')
+
+        # Mostrar imagen binarizada
+        plt.subplot(4, 3, 3)
+        plt.imshow(binary_image, cmap='gray')
+        plt.title("Binary")
+        plt.axis('off')
+
+        # Mostrar imagen segmentada RGB
+        plt.subplot(4, 3, 4)
+        plt.imshow(segmented_image_rgb)
+        plt.title("Segmented RGB")
+        plt.axis('off')
+
+        # Mostrar imagen segmentada HSV
+        plt.subplot(4, 3, 5)
+        plt.imshow(segmented_image_hsv)
+        plt.title("Segmented HSV")
+        plt.axis('off')
+
+        # Mostrar imagen segmentada Lab
+        plt.subplot(4, 3, 6)
+        plt.imshow(segmented_image_lab)
+        plt.title("Segmented Lab")
+        plt.axis('off')
+
+        # Mostrar overlay level 3.1
+        plt.subplot(4, 3, 7)
+        plt.imshow(overlay_level3_1)
+        plt.title("Overlay Level 3.1")
+        plt.axis('off')
+
+        # Mostrar overlay level 3.2
+        plt.subplot(4, 3, 8)
+        plt.imshow(overlay_level3_2)
+        plt.title("Overlay Level 3.2")
+        plt.axis('off')
+
+        # Mostrar overlay level 3.3
+        plt.subplot(4, 3, 9)
+        plt.imshow(overlay_level3_3)
+        plt.title("Overlay Level 3.3")
+        plt.axis('off')
+
+        # Mostrar overlay RGB
+        plt.subplot(4, 3, 10)
+        plt.imshow(overlay_rgb)
+        plt.title("Overlay RGB")
+        plt.axis('off')
+
+        # Mostrar overlay HSV
+        plt.subplot(4, 3, 11)
+        plt.imshow(overlay_hsv)
+        plt.title("Overlay HSV")
+        plt.axis('off')
+
+        # Mostrar overlay Lab
+        plt.subplot(4, 3, 12)
+        plt.imshow(overlay_lab)
+        plt.title("Overlay Lab")
+        plt.axis('off')
+
+        # Mostrar todas las imágenes juntas
+        plt.tight_layout()
+        plt.show()
+
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")

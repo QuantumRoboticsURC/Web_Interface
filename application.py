@@ -10,15 +10,21 @@ from flask import Flask, Response, render_template, jsonify, g, request, redirec
 from db_actions.rock_db import *
 import sys
 from static.python.Stratigraphic_Profile import stratigraphic_profile
+from static.python.extra import normalize_and_save_image, convert_to_8bit
+import	cv2
+import os
 
 application = Flask(__name__, static_url_path='/static')
 random.seed
-UPLOAD_FOLDER = 'uploads'
-RESULT_FOLDER = 'results'
+UPLOAD_FOLDER_SITE_1 = 'static/uploads/site_1'
+UPLOAD_FOLDER_SITE_2 = 'static/uploads/site_2'
+PROCESSED_FOLDER_SITE_1 = 'static/processed/site_1'
+PROCESSED_FOLDER_SITE_2 = 'static/processed/site_2'
 
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(RESULT_FOLDER, exist_ok=True)
-
+os.makedirs(UPLOAD_FOLDER_SITE_1, exist_ok=True)
+os.makedirs(UPLOAD_FOLDER_SITE_2, exist_ok=True)
+os.makedirs(PROCESSED_FOLDER_SITE_1, exist_ok=True)
+os.makedirs(PROCESSED_FOLDER_SITE_2, exist_ok=True)
 
 
 ########################################################################################################
@@ -41,38 +47,207 @@ def rocks():
 ########################################################################################################
 ########################################################################################################
 
-@application.route('/upload', methods=['POST'])
-def upload_image():
-    if 'image' not in request.files:
-        return jsonify({"error": "No image file found in request"}), 400
-
-    file = request.files['image']
-
+@application.route('/analyze_site_1', methods=['POST'])
+def analyze_site_1():
+    if 'image_site_1' not in request.files:
+        return 'No file part', 400
+    
+    file = request.files['image_site_1']
+    
     if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
+        return 'No selected file', 400
 
-    # Guardar la imagen temporalmente
-    file_path = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(file_path)
+    if file:
+        sanitized_filename = "imageSite1.jpg"
+        image_path = os.path.join(UPLOAD_FOLDER_SITE_1, sanitized_filename)
+        file.save(image_path)
+
+    # Lista para almacenar las URLs de las imágenes procesadas
+    processed_images_site_1 = []
 
     try:
-        # Procesar la imagen
-        stratigraphic_profile(file_path)
 
-        # (Opcional) Si el procesamiento genera una imagen de salida, envíala al cliente
-        result_path = os.path.join(RESULT_FOLDER, "output.png")  # Ajusta según el resultado de tu procesamiento
-        if os.path.exists(result_path):
-            return send_file(result_path, mimetype='image/png')
+        # Aquí estamos procesando la imagen en diferentes pasos
+        original_image, gray_image, binary_image, segmented_image_rgb, segmented_image_hsv, segmented_image_lab, overlay_level3_1, overlay_level3_2, overlay_level3_3, overlay_rgb, overlay_hsv, overlay_lab = stratigraphic_profile(image_path)
 
-        return jsonify({"success": "Image processed successfully"}), 200
+        # Convertir las imágenes a 8 bits y asegurarse que están en formato RGB
+        original_image = convert_to_8bit(original_image)
+        binary_image = convert_to_8bit(binary_image)
+        segmented_image_rgb = convert_to_8bit(segmented_image_rgb)
+        segmented_image_hsv = convert_to_8bit(segmented_image_hsv)
+        segmented_image_lab = convert_to_8bit(segmented_image_lab)
+        
+        # Convertir a formato RGB (opcional si es necesario)
+        original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
+        binary_image = cv2.cvtColor(binary_image, cv2.COLOR_BGR2RGB)
+        segmented_image_rgb = cv2.cvtColor(segmented_image_rgb, cv2.COLOR_BGR2RGB)
+        segmented_image_hsv = cv2.cvtColor(segmented_image_hsv, cv2.COLOR_BGR2RGB)
+        segmented_image_lab = cv2.cvtColor(segmented_image_lab, cv2.COLOR_BGR2RGB)
+
+        # Guardar las imágenes procesadas en el orden
+        processed_image_path_original = os.path.join(PROCESSED_FOLDER_SITE_1, f"original_{sanitized_filename}")
+        processed_image_path_gray = os.path.join(PROCESSED_FOLDER_SITE_1, f"gray_{sanitized_filename}")
+        processed_image_path_binary = os.path.join(PROCESSED_FOLDER_SITE_1, f"binary_{sanitized_filename}")
+        
+        normalize_and_save_image(original_image, processed_image_path_original)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/original_{sanitized_filename}'))
+
+        normalize_and_save_image(gray_image, processed_image_path_gray)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/gray_{sanitized_filename}'))
+
+        normalize_and_save_image(binary_image, processed_image_path_binary)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/binary_{sanitized_filename}'))
+
+        # Guardar las imágenes segmentadas
+        segmented_path_rgb = os.path.join(PROCESSED_FOLDER_SITE_1, f"segmented_rgb_{sanitized_filename}")
+        segmented_path_hsv = os.path.join(PROCESSED_FOLDER_SITE_1, f"segmented_hsv_{sanitized_filename}")
+        segmented_path_lab = os.path.join(PROCESSED_FOLDER_SITE_1, f"segmented_lab_{sanitized_filename}")
+        
+        normalize_and_save_image(segmented_image_rgb, segmented_path_rgb)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/segmented_rgb_{sanitized_filename}'))
+
+        normalize_and_save_image(segmented_image_hsv, segmented_path_hsv)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/segmented_hsv_{sanitized_filename}'))
+
+        normalize_and_save_image(segmented_image_lab, segmented_path_lab)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/segmented_lab_{sanitized_filename}'))
+
+        # Guardar las imágenes de overlay
+        overlay_path_level3_1 = os.path.join(PROCESSED_FOLDER_SITE_1, f"overlay_level3_1_{sanitized_filename}")
+        overlay_path_level3_2 = os.path.join(PROCESSED_FOLDER_SITE_1, f"overlay_level3_2_{sanitized_filename}")
+        overlay_path_level3_3 = os.path.join(PROCESSED_FOLDER_SITE_1, f"overlay_level3_3_{sanitized_filename}")
+        
+        normalize_and_save_image(overlay_level3_1, overlay_path_level3_1)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/overlay_level3_1_{sanitized_filename}'))
+
+        normalize_and_save_image(overlay_level3_2, overlay_path_level3_2)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/overlay_level3_2_{sanitized_filename}'))
+
+        normalize_and_save_image(overlay_level3_3, overlay_path_level3_3)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/overlay_level3_3_{sanitized_filename}'))
+
+        # Guardar las imágenes de overlay combinadas con color
+        overlay_path_rgb = os.path.join(PROCESSED_FOLDER_SITE_1, f"overlay_rgb_{sanitized_filename}")
+        overlay_path_hsv = os.path.join(PROCESSED_FOLDER_SITE_1, f"overlay_hsv_{sanitized_filename}")
+        overlay_path_lab = os.path.join(PROCESSED_FOLDER_SITE_1, f"overlay_lab_{sanitized_filename}")
+        
+        normalize_and_save_image(overlay_rgb, overlay_path_rgb)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/overlay_rgb_{sanitized_filename}'))
+
+        normalize_and_save_image(overlay_hsv, overlay_path_hsv)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/overlay_hsv_{sanitized_filename}'))
+
+        normalize_and_save_image(overlay_lab, overlay_path_lab)
+        processed_images_site_1.append(url_for('static', filename=f'processed/site_1/overlay_lab_{sanitized_filename}'))
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
+        print(f"Error durante el procesamiento de la imagen: {e}")
     finally:
-        # Limpia archivos temporales
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        cv2.destroyAllWindows()
+
+    # Regresar la lista de imágenes procesadas para este sitio
+    return render_template('strat_profile.html', images_site_1=processed_images_site_1)
+
+@application.route('/analyze_site_2', methods=['POST'])
+def analyze_site_2():
+    if 'image_site_2' not in request.files:
+        return 'No file part', 400
+    
+    file = request.files['image_site_2']
+    
+    if file.filename == '':
+        return 'No selected file', 400
+
+    if file:
+        sanitized_filename = "imageSite2.jpg"
+        image_path = os.path.join(UPLOAD_FOLDER_SITE_2, sanitized_filename)
+        file.save(image_path)
+
+    processed_images_site_2 = []
+
+    try:
+
+    # Aquí estamos procesando la imagen en diferentes pasos
+        original_image, gray_image, binary_image, segmented_image_rgb, segmented_image_hsv, segmented_image_lab, overlay_level3_1, overlay_level3_2, overlay_level3_3, overlay_rgb, overlay_hsv, overlay_lab = stratigraphic_profile(image_path)
+
+        # Convertir las imágenes a 8 bits y asegurarse que están en formato RGB
+        original_image = convert_to_8bit(original_image)
+        binary_image = convert_to_8bit(binary_image)
+        segmented_image_rgb = convert_to_8bit(segmented_image_rgb)
+        segmented_image_hsv = convert_to_8bit(segmented_image_hsv)
+        segmented_image_lab = convert_to_8bit(segmented_image_lab)
+        
+        # Convertir a formato RGB (opcional si es necesario)
+        original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
+        binary_image = cv2.cvtColor(binary_image, cv2.COLOR_BGR2RGB)
+        segmented_image_rgb = cv2.cvtColor(segmented_image_rgb, cv2.COLOR_BGR2RGB)
+        segmented_image_hsv = cv2.cvtColor(segmented_image_hsv, cv2.COLOR_BGR2RGB)
+        segmented_image_lab = cv2.cvtColor(segmented_image_lab, cv2.COLOR_BGR2RGB)
+
+        # Guardar las imágenes procesadas en el orden
+        processed_image_path_original = os.path.join(PROCESSED_FOLDER_SITE_2, f"original_{sanitized_filename}")
+        processed_image_path_gray = os.path.join(PROCESSED_FOLDER_SITE_2, f"gray_{sanitized_filename}")
+        processed_image_path_binary = os.path.join(PROCESSED_FOLDER_SITE_2, f"binary_{sanitized_filename}")
+        
+        normalize_and_save_image(original_image, processed_image_path_original)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/original_{sanitized_filename}'))
+
+        normalize_and_save_image(gray_image, processed_image_path_gray)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/gray_{sanitized_filename}'))
+
+        normalize_and_save_image(binary_image, processed_image_path_binary)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/binary_{sanitized_filename}'))
+
+        # Guardar las imágenes segmentadas
+        segmented_path_rgb = os.path.join(PROCESSED_FOLDER_SITE_2, f"segmented_rgb_{sanitized_filename}")
+        segmented_path_hsv = os.path.join(PROCESSED_FOLDER_SITE_2, f"segmented_hsv_{sanitized_filename}")
+        segmented_path_lab = os.path.join(PROCESSED_FOLDER_SITE_2, f"segmented_lab_{sanitized_filename}")
+        
+        normalize_and_save_image(segmented_image_rgb, segmented_path_rgb)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/segmented_rgb_{sanitized_filename}'))
+
+        normalize_and_save_image(segmented_image_hsv, segmented_path_hsv)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/segmented_hsv_{sanitized_filename}'))
+
+        normalize_and_save_image(segmented_image_lab, segmented_path_lab)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/segmented_lab_{sanitized_filename}'))
+
+        # Guardar las imágenes de overlay
+        overlay_path_level3_1 = os.path.join(PROCESSED_FOLDER_SITE_2, f"overlay_level3_1_{sanitized_filename}")
+        overlay_path_level3_2 = os.path.join(PROCESSED_FOLDER_SITE_2, f"overlay_level3_2_{sanitized_filename}")
+        overlay_path_level3_3 = os.path.join(PROCESSED_FOLDER_SITE_2, f"overlay_level3_3_{sanitized_filename}")
+        
+        normalize_and_save_image(overlay_level3_1, overlay_path_level3_1)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/overlay_level3_1_{sanitized_filename}'))
+
+        normalize_and_save_image(overlay_level3_2, overlay_path_level3_2)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/overlay_level3_2_{sanitized_filename}'))
+
+        normalize_and_save_image(overlay_level3_3, overlay_path_level3_3)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/overlay_level3_3_{sanitized_filename}'))
+
+        # Guardar las imágenes de overlay combinadas con color
+        overlay_path_rgb = os.path.join(PROCESSED_FOLDER_SITE_2, f"overlay_rgb_{sanitized_filename}")
+        overlay_path_hsv = os.path.join(PROCESSED_FOLDER_SITE_2, f"overlay_hsv_{sanitized_filename}")
+        overlay_path_lab = os.path.join(PROCESSED_FOLDER_SITE_2, f"overlay_lab_{sanitized_filename}")
+        
+        normalize_and_save_image(overlay_rgb, overlay_path_rgb)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/overlay_rgb_{sanitized_filename}'))
+
+        normalize_and_save_image(overlay_hsv, overlay_path_hsv)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/overlay_hsv_{sanitized_filename}'))
+
+        normalize_and_save_image(overlay_lab, overlay_path_lab)
+        processed_images_site_2.append(url_for('static', filename=f'processed/site_2/overlay_lab_{sanitized_filename}'))
+
+    except Exception as e:
+        print(f"Error durante el procesamiento de la imagen: {e}")
+    finally:
+        cv2.destroyAllWindows()
+
+    # Regresar la lista de imágenes procesadas para este sitio
+    return render_template('strat_profile.html', images_site_2=processed_images_site_2)
+
             
 @application.route('/lab')
 def ciencias():

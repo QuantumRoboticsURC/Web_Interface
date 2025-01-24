@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", function() {
               imgElement.src = e.target.result;
 
               imgElement.onload = async function() {
-                  if (index % 3 == 0) {
+                  if (index % 2 == 0) {
                       superponerImagenes(index, imgElement);
-                  } else if (index % 3 == 1) {
+                  } else if (index % 2 == 1) {
                       superponerEscala(index, imgElement);
                   } else {
                       console.log("Perfil estatigráfico");
