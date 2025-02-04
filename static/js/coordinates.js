@@ -58,6 +58,52 @@ function botonClick() {
     statusPublisher.publish(statusMessage);
 }
 
+var listener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/matrix_signal',
+    messageType : 'std_msgs/Int8'
+  });
+
+  listener.subscribe(function(message) {
+        switch(message.data){
+          case 1:
+            document.getElementById("ledLabel").style.backgroundColor = "#0000ff";
+            document.getElementById("ledText").innerHTML = "Teleoperated";
+            break;
+          case 2:
+            document.getElementById("ledLabel").style.backgroundColor = "#ff0000";
+            document.getElementById("ledText").innerHTML = "Autonomous";
+            break;
+          case 3:
+            document.getElementById("ledLabel").style.backgroundColor = "#00ff00";
+            document.getElementById("ledText").innerHTML = "Successfull arrival";
+            break;
+          default:
+            document.getElementById("ledLabel").style.backgroundColor = "#ffffff";
+            document.getElementById("ledText").innerHTML = " ";
+            break;
+
+        }
+  });
+
+  var listener2 = new ROSLIB.Topic({
+      ros : ros,
+      name : '/cmd_vel',
+      messageType : 'geometry_msgs/Twist'
+    });
+
+  listener2.subscribe(function(message) {
+        var angular = message.angular.z;
+        var linear = message.linear.x;
+        var lineary = message.linear.y;
+        document.getElementById("VeloAngular").innerHTML=(angular);
+        document.getElementById("VeloLinearx").innerHTML=(linear);
+        document.getElementById("VeloLineary").innerHTML=(lineary);
+        document.getElementById("VeloLinear").innerHTML=(linear+lineary);
+        //document.getElementById("leftTrac").innerHTML=((angular+linear)*303).toFixed(2) + ' RPM';
+        //document.getElementById("rigthTrac").innerHTML=Math.abs((-angular+linear)*303).toFixed(2) + ' RPM';
+  });
+
 
 
 

@@ -130,56 +130,106 @@
 				<div class="container-fluid">
 					<h4 style="margin-top: 2%; margin-bottom: 2%;">Dashboard Nav</h4>
 
-                    <div class="row">	
-						<div class="col-lg-4">									
-									
-								</div>								
-							</div>
-						</div>
-						
-										<div class="card" style="width: 40%; padding: 1%;">
-											<div class="card-header">
-												<h4 class="card-title">Coordinates</h4>
-											</div>
-											<big class="text-center">Objective</big>
-											
-											<div class="card-body text-center">
-                        <select name="Objective_type" id="Objective_type" class="btn btn-secondary btn-look-value-plus">     
-                          <option value="0">GNSS ONLY</option>
-                          <option value="1">ARUCO</option>
-                          <option value="2">MALLET</option>
-                          <option value="3">BOTTLE</option>
-                        </select>
-                      </div>
-													<!--<div class="col-md-12">	-->			
-														<big class="text-center">Latitud</big>
-														<div class="card-body text-center">
-															<input id="Latitud_Txt" type="text" class="form-control-go" value="38.39865" aria-label="Input group example" aria-describedby="btnGroupAddon">
-														</div>
-														<big class="text-center">Longitud</big>
-														
-														<div class="card-body text-center">
-														
-															<input id="Longitud_Txt" type="text" class="form-control-go" value="-110.79025 " aria-label="Input group example" aria-describedby="btnGroupAddon">
-														</div>
-														
-														<button type="button" class="btn btn-secondary btn-look-value-plus" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem;" onclick="botonClick();publish_coordinates()">&nbsp;Go&nbsp;</button>
-														 				
-						<div class="col-lg-4">
-							
-						</div>
-						<div class="col-lg-4">
-							
-						</div>
-					</div>	
-
-
+          <div class="row" style="display: flex; gap: 2%; justify-content: start;">	
+            <div class="col-lg-4">									
+              <div class="card" style="width: 100%; padding: 1%;">
+                <div class="card-header">
+                  <h4 class="card-title">Coordinates</h4>
                 </div>
-
-                
-
-          
+                <big class="text-center">Objective</big>
+                <div class="card-body text-center">
+                  <select name="Objective_type" id="Objective_type" class="btn btn-secondary btn-look-value-plus">     
+                    <option value="0">GNSS ONLY</option>
+                    <option value="1">ARUCO</option>
+                    <option value="2">MALLET</option>
+                    <option value="3">BOTTLE</option>
+                  </select>
+                </div>
+                <!--<div class="col-md-12">	-->			
+                  <big class="text-center">Latitud</big>
+                  <div class="card-body text-center">
+                    <input id="Latitud_Txt" type="text" class="form-control-go" value="38.39865" aria-label="Input group example" aria-describedby="btnGroupAddon">
+                  </div>
+                  <big class="text-center">Longitud</big>
+                  
+                  <div class="card-body text-center">
+                  
+                    <input id="Longitud_Txt" type="text" class="form-control-go" value="-110.79025 " aria-label="Input group example" aria-describedby="btnGroupAddon">
+                  </div>
+                  
+                  <button type="button" class="btn btn-secondary btn-look-value-plus" style="margin-bottom: 25px; background-color:#0C76C4; border-color:#ffffff; color:white; border-radius: 1rem; align:center;" onclick="botonClick();publish_coordinates()">&nbsp;Go&nbsp;</button>
+              </div>
+              <div class="col-lg-4">
+                <div class="card" style="width: 100%; padding: 1%;">
+                  <h4 style="margin-bottom: 4%;">Speed</h4>
+                  <div class="class body">
+                    <div class="col-lg-6">
+                      <div class="card-body text-center">
+                        <div>Angular:
+                          <div id="VeloAngular"> </div>
+                        </div>
+                        <br>
+                        <div>Linear:
+                          <div id="VeloLinear"> </div>
+                        </div>
+                        <p id="mensajeROSL"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>					 				
+            <div class="col-lg-4">
+              <div class="card" style="height: 11rem; padding: 1.5rem;">
+                <h4 style="margin-bottom: 4%;">Navigation</h4>
+                <div class="card-body text-center">
+                  <div id="ledLabel" style="height: 5vh; width: 100%; background-color: #ffffff;"></div>
+                  <p id="ledText"></p>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card" style= "padding: 1.5rem;">
+                  <h4 style="margin-bottom: 4%;">Rover Data</h4>
+                  <div class="card-body text-center">
+                    <div>Latitude:
+                      <div id="Latitud"> </div>
+                    </div>
+                    <br>
+                    <div>Longitude:
+                      <div id="Longitud"> </div>
+                    </div>
+                    <br>
+                    <div>Mode:
+                      <div id="Mode"> </div>
+                    </div>
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="card" style="height: 12rem; padding: 1.5rem; width: 15rem;">
+                <h4 style="margin-bottom: 4%;">Angles</h4>
+                <div class="card-body text-center">
+                  <div>Angle X:
+                    <div id="Angle"> </div>
+                  </div>
+                  <br>
+                  <div>Angle Y:
+                    <div id="AngleY"> </div>
+                  </div>
+                  <br>
+                  <div>Angle Z:
+                    <div id="AngleZ"> </div>
+                  </div>
+                  <br>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div
   </section>
 
 
