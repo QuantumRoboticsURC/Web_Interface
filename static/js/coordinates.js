@@ -95,15 +95,40 @@ var listener = new ROSLIB.Topic({
   listener2.subscribe(function(message) {
         var angular = message.angular.z;
         var linear = message.linear.x;
-        var lineary = message.linear.y;
         document.getElementById("VeloAngular").innerHTML=(angular);
-        document.getElementById("VeloLinearx").innerHTML=(linear);
-        document.getElementById("VeloLineary").innerHTML=(lineary);
-        document.getElementById("VeloLinear").innerHTML=(linear+lineary);
+        document.getElementById("VeloLinear").innerHTML=(linear);
         //document.getElementById("leftTrac").innerHTML=((angular+linear)*303).toFixed(2) + ' RPM';
         //document.getElementById("rigthTrac").innerHTML=Math.abs((-angular+linear)*303).toFixed(2) + ' RPM';
   });
 
+  var listener3 = new ROSLIB.Topic({
+    ros : ros,
+    name : '/latitude',
+    messageType : 'std_msgs/Float64'
+  });
+  listener3.subscribe(function(message){
+    document.getElementById("Latitud").innerHTML = message.data
+  })
 
 
+  var listener4 = new ROSLIB.Topic({
+    ros : ros,
+    name : '/longitude',
+    messageType : 'std_msgs/Float64'
+  });
+  listener4.subscribe(function(message){
+    document.getElementById("Longitud").innerHTML = message.data
+  })
 
+  var listener5 = new ROSLIB.Topic({
+    ros: ros,
+    name: "/predicted_angle",
+    messageType: 'std_msgs/Float32MultiArray'
+  })
+  
+  listener5.subscribe(function(message){
+    var data = message.data
+    document.getElementById("Angle").innerHTML = data[0];
+    document.getElementById("AngleY").innerHTML = data[1];
+    document.getElementById("AngleZ").innerHTML = data[2];
+  })
