@@ -140,7 +140,7 @@
 					<!--Tarjetas pequeñas-->
 					<!--<div class= "card"  style="width: 25%; float:left; padding: 2%; margin-left: 0%;" >-->
 
-					<div class="card" style="height: 310rem;">
+					<div class="card" style="height: 50rem;">
 						<div class="card-header">
 							<h4 class="card-title">Biology Lab Mechanisms</h4>
 						</div>
@@ -150,97 +150,80 @@
 								style="display: grid; width: 100%; grid-template-columns: 100%; justify-self: center;">
 								
 
-								<div class="card new-buttons-armlab" style="margin-top: 2rem;">
+								<div class="card new-buttons-armlab" style="margin-top: 0.5rem;">
 									<div class="col-md-12" style="display: inline-block; text-align: center;">
 										<button type="button" class="btn btn-secondary btn-look-one"
-											style="margin-top: 1rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											style="margin-top: 0.5rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
 											onmouseup="arm.Up_Down(0)"
 											onmousedown="arm.Up_Down(-1);">Put Down</button>
 										<button type="button" class="btn btn-secondary btn-look-two"
-											style="margin-bottom: 1rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											style="margin-bottom: 0.5rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
 											onmouseup="arm.Up_Down(0)"
 											onmousedown="arm.Up_Down(1);">Put Up</button>
 									</div>
 								</div>
 								<div class="card new-buttons-armlab">
-									<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Garra Derecha
-									</medium>
-
+									<medium class="text-muted" style="display: block; text-align: center; margin-top: 0.5rem;">Site 1</medium>
 									<!--Garra 1-->
 									<div class="col-md-12" style="display: inline-block; text-align: center;">
 										<button type="button" class="btn btn-secondary btn-look-one"
-											style="margin-top: 1rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											style="margin-top: 0.5rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
 											onclick="arm.servo_posicion(1,-1);">Open</button>
 										<button type="button" class="btn btn-secondary btn-look-two"
-											style="width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onclick="arm.servo_posicion(1,0);">Gather</button>
-										<button type="button" class="btn btn-secondary btn-look-two"
-											style="margin-bottom: 25px; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onclick="arm.servo_posicion(1,1);">Introduce Sample</button>
+											style="margin-bottom: 25px; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
+											onclick="arm.servo_posicion(1,1);">Close</button>
 									</div>
 									<hr>
-									<medium class="text-muted" style="display: block; text-align: center; margin-top: 2rem;">Garra Izquierda
-									</medium>
-
+									<medium class="text-muted" style="display: block; text-align: center; margin-top: 0.5rem;">Site 2</medium>
 									<!--Garra 2-->
 									<div class="col-md-12" style="display: inline-block; text-align: center;">
 										<button type="button" class="btn btn-secondary btn-look-one"
-											style="margin-top: 1rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
+											style="margin-top: 0.5rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
 											onclick="arm.servo_posicion(2,-1);">Open</button>
 										<button type="button" class="btn btn-secondary btn-look-two"
-											style="width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onclick="arm.servo_posicion(2,0);">Gather</button>
-										<button type="button" class="btn btn-secondary btn-look-two"
-											style="margin-bottom: 25px; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-											onclick="arm.servo_posicion(2,1);">Introduce Sample</button>
+											style="margin-bottom: 25px; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
+											onclick="arm.servo_posicion(2,1);">Close</button>
 									</div>
 								</div>
-								
-
-
-								<!--
-								<medium class="text-muted" style="margin-left: 2rem; margin-top: 2rem;">Centrifuge
-								</medium>
-								<div class="col-md-12" style="display: inline-block; text-align: center;">
-									<button type="button" class="btn btn-secondary btn-look-one"
-										style="margin-top: 1rem; width: 9rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-										onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(0.09)">Slow</button>
-									<button type="button" class="btn btn-secondary btn-look-two"
-										style="width: 9rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-										onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(.7)">Fast</button>
-									<button type="button" class="btn btn-secondary btn-look-two"
-										style="margin-bottom: 25px; width: 9rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;"
-										onmouseup="moveCentrifuge(0)" onmousedown="moveCentrifuge(-0.09)">Slow
-										Negativo</button>
+								<div>
+									<div class="card new-buttons-armlab">
+										<medium class="text-muted" style="display: block; text-align: center; margin-top: 0.5rem;">Lab Site 1</medium>
+										<div class="col-md-12" style="display: inline-block; text-align: center;">
+											<button type="button" class="btn btn-secondary btn-look-one"
+												style="margin-top: 0.5rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
+												onclick="arm.servo_posicion(3,-1);">Open</button>
+											<button type="button" class="btn btn-secondary btn-look-two"
+												style="margin-bottom: 25px; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
+												onclick="arm.servo_posicion(3,1);">Close</button>
+										</div>
+									</div>
 								</div>
-								<medium class="text-muted" style="margin-left: 2rem;">Left Servo</medium>
-								<div class="col-md-12" style="display: inline-block; text-align: center;">
-									<button type="button" class="btn btn-secondary btn-look-one"
-										onclick="go(150,4);getTxt();"
-										style="margin-top: 1rem; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Close</button>
-									<button type="button" class="btn btn-secondary btn-look-two"
-										onclick="go(0,4);getTxt();"
-										style="margin-bottom: 25px; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Open</button>
+								<div>
+									<div class="card new-buttons-armlab">
+										<medium class="text-muted" style="display: block; text-align: center; margin-top: 0.5rem;">Lab Site 2</medium>
+										<div class="col-md-12" style="display: inline-block; text-align: center;">
+											<button type="button" class="btn btn-secondary btn-look-one"
+												style="margin-top: 0.5rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
+												onclick="arm.servo_posicion(4,-1);">Open</button>
+											<button type="button" class="btn btn-secondary btn-look-two"
+												style="margin-bottom: 25px; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
+												onclick="arm.servo_posicion(4,1);">Close</button>
+										</div>
+									</div>
 								</div>
-								<medium class="text-muted" style="margin-left: 2rem;">Center Servo</medium>
-								<div class="col-md-12" style="display: inline-block; text-align: center;">
-									<button type="button" class="btn btn-secondary btn-look-one"
-										onclick="go(170,5);getTxt();"
-										style="margin-top: 1rem; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Close</button>
-									<button type="button" class="btn btn-secondary btn-look-two"
-										onclick="go(0,5);getTxt();"
-										style="margin-bottom: 25px;width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Open</button>
+								<div>
+									<div class="card new-buttons-armlab">
+										<medium class="text-muted" style="display: block; text-align: center; margin-top: 0.5rem;">Camera</medium>
+										<div class="col-md-12" style="display: inline-block; text-align: center;">
+											<button type="button" class="btn btn-secondary btn-look-one"
+												style="margin-top: 0.5rem; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
+												onclick="arm.move_cam(5,-1);">Left</button>
+											<button type="button" class="btn btn-secondary btn-look-two"
+												style="margin-bottom: 25px; width: 10rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 0.5rem;"
+												onclick="arm.move_cam(5,1);">Right</button>
+										</div>
+									</div>
 								</div>
-								<medium class="text-muted" style="margin-left: 2rem;">Right Servo</medium>
-								<div class="col-md-12" style="display: inline-block; text-align: center;">
-									<button type="button" class="btn btn-secondary btn-look-one"
-										onclick="go(170,6);getTxt();"
-										style="margin-top: 1rem; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Close</button>
-									<button type="button" class="btn btn-secondary btn-look-two"
-										onclick="go(0,6);getTxt();"
-										style="margin-bottom: 25px; width: 6rem; background-color:#0C76C4; border-color:#F4F4F4; color:white; border-radius: 1rem;">Open</button>
-								</div>
-							-->
 							</div>
 						</div>
 

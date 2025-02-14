@@ -170,8 +170,8 @@ var l4 = 0.213;
 var limits_map = {
     q1:[-90,90],
     q2:[-10,190],
-    q3:[-170,160],
-    q4:[-160,160],
+    q3:[-150,150],
+    q4:[-150,150],
     joint5:[-90,90], 
     camera:[0,180],
     cameraA:[0,180]
@@ -193,9 +193,9 @@ function predefinedPosition(position){
     
     //Se actualizan los valores del ValuesMap para la posicion predefinida seleccionada
     if (position === "HOME"){
-        values_map.x = 0.2;
+        values_map.x = 0.15;
         values_map.y =  0;
-        values_map.z =  0.2;
+        values_map.z =  0.35;
         values_map.rotacion = 0;
         values_map.phi = 0;
         
@@ -203,31 +203,31 @@ function predefinedPosition(position){
     else if(position === "INTERMEDIATE"){
         values_map.x = 0.2;
         values_map.y =  0;
-        values_map.z =  0.4;
+        values_map.z =  0.6;
         values_map.rotacion = 0;
         values_map.phi = 0;        
     }
     else if (position === "PREFLOOR"){
-        values_map.x = 0.3;
+        values_map.x = 0.25;
         values_map.y =  0;
-        values_map.z =  0.1;
+        values_map.z =  0.35;
         values_map.rotacion = 0;
-        values_map.phi = -45; 
+        values_map.phi = -75; 
     }
 
     else if (position === "FLOOR"){
-        values_map.x = 0.3;
+        values_map.x = 0.35;
         values_map.y =  0;
-        values_map.z =  -0.1;
+        values_map.z =  0.1;
         values_map.rotacion = 0;
-        values_map.phi = -90;
+        values_map.phi = -75;
     }
     else if (position === "STORAGE"){
         values_map.x = 0;
         values_map.y =  0;
-        values_map.z =  0.42;
+        values_map.z =  0.55;
         values_map.rotacion = 0;
-        values_map.phi = 90; 
+        values_map.phi = 100; 
 
     }
 
