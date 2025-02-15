@@ -109,7 +109,7 @@ var pub_q_string = new ROSLIB.Topic({
 //gripper rotation
 var joint5 = new ROSLIB.Topic({
     ros : ros,
-    name : 'arm_teleop/servo_gripper', //Joint 5
+    name : 'arm_teleop/servo_rotacion', //Joint 5
     messageType : 'std_msgs/Int32',
     queue_size: 1   
 });
@@ -172,7 +172,7 @@ var limits_map = {
     q2:[-10,190],
     q3:[-150,150],
     q4:[-150,150],
-    joint5:[-90,90], 
+    q5:[-90,90], 
     camera:[0,180],
     cameraA:[0,180]
 };
@@ -246,7 +246,8 @@ function publish_angles(){
     var q2 = angles_map.q2;
     var q3 = angles_map.q3;
     var q4 = angles_map.q4;
-    var q5 = angles_map.q5;
+
+    var q5 = parseInt(my_map(-90,90,88,268, angles_map.q5));
 
 
     var txt = String(q1)+" "+String(q2)+" "+String(q3)+" "+String(q4)+ " "+String(q5)
@@ -352,7 +353,7 @@ function inverseKinematics(x, y, z, roll, pitch) {
     const q4 = pitch - q2 - q3;
 
    
-    if (qlimit(limits_map.q1,radToDeg(q1))||qlimit(limits_map.q2,radToDeg(q2))||qlimit(limits_map.q3,radToDeg(q3))||qlimit(limits_map.q4,radToDeg(q4))){
+    if (qlimit(limits_map.q1,radToDeg(q1))||qlimit(limits_map.q2,radToDeg(q2))||qlimit(limits_map.q3,radToDeg(q3))||qlimit(limits_map.q4,radToDeg(q4)) || qlimit(limits_map.q5,radToDeg(q5))){
         return {
             q1: angles_map.q1,
             q2: angles_map.q2,
