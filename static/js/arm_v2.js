@@ -458,6 +458,10 @@ function adjustValue(id, delta) {
 
 }
 
+//PAra que los inputs provisionales modifiquen control
+function updateControl(joint, value) {
+    document.getElementById('control-' + joint).textContent = value + "°";
+}
 
 // Función para la interfaz gráfica del brazo
   function arm_interface(q2, q3, q4) {
