@@ -458,10 +458,29 @@ function adjustValue(id, delta) {
 
 }
 
-//PAra que los inputs provisionales modifiquen control
-function updateControl(joint, value) {
-    document.getElementById('control-' + joint).textContent = value + "°";
+// FUnción para remplazar el valor que calcula la cinemática inversa por el del input
+function overrideInverseKinematics(joint, value) {
+    // Actualiza la interfaz gráfica
+    document.getElementById(`angle-${joint}`).textContent = value;
+    
+    // Convierte el valor a número y actualiza el mapa de los ángulos
+    angles_map[joint] = parseFloat(value);
+    
+    // Actualiza la gráfica del brazo
+    arm_interface(angles_map.q2, angles_map.q3, angles_map.q4);
+
+    // Publicar en ROS
+    publish_angles();
 }
+
+// Reemplaza el valor del ángulo que viene desde el input (en interfaz y gráfica)
+function adjustAngle(joint, delta) {
+    let input = document.getElementById(`input-${joint}`);
+    let newValue = parseFloat(input.value) + delta;
+    input.value = newValue;
+    overrideInverseKinematics(joint, newValue);
+  }
+
 
 // Función para la interfaz gráfica del brazo
   function arm_interface(q2, q3, q4) {
@@ -479,6 +498,8 @@ function updateControl(joint, value) {
     // Rango dinámico para ejes
     let maxReach = 1.2;
 
+    console.log(`Actualizando gráfica con: x2=${x2}, y2=${y2}, x3=${x3}, y3=${y3}, x4=${x4}, y4=${y4}`);
+
     // Crear o actualizar la gráfica
     if (window.armChart) {
         // Actualizar datos si ya existe la gráfica
@@ -494,11 +515,13 @@ function updateControl(joint, value) {
             { x: x3, y: y3 },
             { x: x4, y: y4 }
         ];
-        armChart.options.scales.xAxes[0].ticks.min = -maxReach;
-        armChart.options.scales.xAxes[0].ticks.max = maxReach;
-        armChart.options.scales.yAxes[0].ticks.min = -maxReach/2;
-        armChart.options.scales.yAxes[0].ticks.max = maxReach;
-        armChart.update();
+        window.armChart.options.scales.xAxes[0].ticks.min = -maxReach;
+        window.armChart.options.scales.xAxes[0].ticks.max = maxReach;
+        window.armChart.options.scales.yAxes[0].ticks.min = -maxReach/2;
+        window.armChart.options.scales.yAxes[0].ticks.max = maxReach;
+        //armChart.update();
+        window.armChart.update();
+
     } else {
         // Crear nueva gráfica si no existe
         var armData = {
@@ -626,3 +649,6 @@ function updateControl(joint, value) {
 function deg2rad(degrees) {
     return degrees * (Math.PI / 180);
 }
+
+
+

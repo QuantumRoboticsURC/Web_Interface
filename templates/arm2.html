@@ -166,18 +166,58 @@
 												<canvas id="Ángulos" style="width:100%;height:100%;margin: 0 auto;"></canvas>											
 											</div>
 
-											<div class="row">
-												<div class="col-md-12">
-													<div class="btn-group-vertical modal-dialog-centered btn-sm" style="width: 100%;">
-														<button type="button" class="btn btn-secondary" style="margin-bottom: 10px;">Ángulo 1 (Q1): <input id="input-q1" type="number" class="form-control" value="0" step="5" style="width: 80px; display: inline;" oninput="updateControl('q1', this.value)"></button>
-														<button type="button" class="btn btn-secondary" style="margin-bottom: 10px;">Ángulo 2 (Q2): <input id="input-q2" type="number" class="form-control" value="0" step="5" style="width: 80px; display: inline;" oninput="updateControl('q2', this.value)"></button>
-														<button type="button" class="btn btn-secondary" style="margin-bottom: 10px;">Ángulo 3 (Q3): <input id="input-q3" type="number" class="form-control" value="0" step="5" style="width: 80px; display: inline;" oninput="updateControl('q3', this.value)"></button>
-														<button type="button" class="btn btn-secondary" style="margin-bottom: 10px;">Ángulo 4 (Q4): <input id="input-q4" type="number" class="form-control" value="0" step="5" style="width: 80px; display: inline;" oninput="updateControl('q4', this.value)"></button>
-														<button type="button" class="btn btn-secondary" style="margin-bottom: 10px;">Ángulo 5 (Q5): <input id="input-q5" type="number" class="form-control" value="0" step="5" style="width: 80px; display: inline;" oninput="updateControl('q5', this.value)"></button>
-													</div>
-													
+											<div class="row d-flex justify-content-center align-items-center text-center mt-3">
+												<div class="col-auto">
+												  <label for="input-q1" class="text-muted">Q1:</label>
+												  <div class="input-group">
+													<input id="input-q1" type="number" class="form-control text-center" value="0" step="5" oninput="overrideInverseKinematics('q1', this.value)">
+													<button class="btn btn-primary" onclick="adjustAngle('q1', 5)">+</button>
+													<button class="btn btn-primary" onclick="adjustAngle('q1', -5)">-</button>
+
+												  </div>
 												</div>
-											</div>
+											  
+												<div class="col-auto">
+												  <label for="input-q2" class="text-muted">Q2:</label>
+												  <div class="input-group">
+													<input id="input-q2" type="number" class="form-control text-center" value="0" step="5" oninput="overrideInverseKinematics('q2', this.value)">
+													<button class="btn btn-primary" onclick="adjustAngle('q2', 5)">+</button>
+													<button class="btn btn-primary" onclick="adjustAngle('q2', -5)">-</button>
+
+												  </div>
+												</div>
+											  
+												<div class="col-auto">
+												  <label for="input-q3" class="text-muted">Q3:</label>
+												  <div class="input-group">
+													<input id="input-q3" type="number" class="form-control text-center" value="0" step="5" oninput="overrideInverseKinematics('q3', this.value)">
+													<button class="btn btn-primary" onclick="adjustAngle('q3', 5)">+</button>
+													<button class="btn btn-primary" onclick="adjustAngle('q3', -5)">-</button>
+
+												  </div>
+												</div>
+											  
+												<div class="col-auto">
+												  <label for="input-q4" class="text-muted">Q4:</label>
+												  <div class="input-group">
+													<input id="input-q4" type="number" class="form-control text-center" value="0" step="5" oninput="overrideInverseKinematics('q4', this.value)">
+													<button class="btn btn-primary" onclick="adjustAngle('q4', 5)">+</button>
+													<button class="btn btn-primary" onclick="adjustAngle('q4', -5)">-</button>
+
+												  </div>
+												</div>
+											  
+												<div class="col-auto">
+												  <label for="input-q5" class="text-muted">Q5:</label>
+												  <div class="input-group">
+													<input id="input-q5" type="number" class="form-control text-center" value="0" step="5" oninput="overrideInverseKinematics('q5', this.value)">
+													<button class="btn btn-primary" onclick="adjustAngle('q5', 5)">+</button>
+													<button class="btn btn-primary" onclick="adjustAngle('q5', -5)">-</button>
+												  </div>
+												</div>
+											  </div>
+											  
+											
 										</div>								
 									</div>
 								</div>
