@@ -475,10 +475,25 @@ function overrideInverseKinematics(joint, value) {
 
 // Reemplaza el valor del ángulo que viene desde el input (en interfaz y gráfica)
 function adjustAngle(joint, delta) {
-    let input = document.getElementById(`input-${joint}`);
-    let newValue = parseFloat(input.value) + delta;
-    input.value = newValue;
-    overrideInverseKinematics(joint, newValue);
+    console.log(`Ajustando ángulo ${joint} con delta ${delta}`);
+    console.log("antes",angles_map[joint]);
+    
+    angles_map[joint] = angles_map[joint] + delta;
+    console.log("despues",angles_map[joint]);
+    //let input = document.getElementById(`input-${joint}`);
+    //let newValue = parseFloat(input.value) + delta;
+    //input.value = newValue;
+    // Actualiza la gráfica del brazo
+    arm_interface(angles_map.q2, angles_map.q3, angles_map.q4);
+
+    // Publicar en ROS
+    publish_angles();
+    //overrideInverseKinematics(joint, newValue);
+    document.getElementById('angle-q1').textContent = `${angles_map.q1.toFixed(2)}°`;
+    document.getElementById('angle-q2').textContent = `${angles_map.q2.toFixed(2)}°`;
+    document.getElementById('angle-q3').textContent = `${angles_map.q3.toFixed(2)}°`;
+    document.getElementById('angle-q4').textContent = `${angles_map.q4.toFixed(2)}°`;
+    document.getElementById('angle-q5').textContent = `${angles_map.q5.toFixed(2)}°`;
   }
 
 
